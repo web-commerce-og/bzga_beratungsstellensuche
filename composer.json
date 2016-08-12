@@ -1,0 +1,23 @@
+{
+  "name": "bzga/bzga-beratungsstellensuche",
+  "type": "typo3-cms-extension",
+  "description": "Beratungsstellensuche der BZgA",
+  "version": "6.2.0",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Sebastian Schreiber",
+      "email": "ssch@hauptweg-nebenwege.de",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "BZgA\\BzgaBeratungsstellensuche\\": "Classes"
+    }
+  },
+  "replace": {
+    "bzga_beratungsstellensuche": "self.version",
+    "bzga/bzga-beratungsstellensuche": "self.version"
+  }
+}

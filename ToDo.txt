@@ -1,0 +1,5 @@
+Fragen:
+1. Welche PHP-Version muss mind. unterstützt werden?
+
+1. Models
+2. Validation for Import with Options resolver?
