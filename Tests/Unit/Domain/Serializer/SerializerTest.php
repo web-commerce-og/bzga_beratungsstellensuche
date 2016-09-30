@@ -8,8 +8,8 @@ use BZgA\BzgaBeratungsstellensuche\Domain\Model\Category;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion;
 use BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
-use BZgA\BzgaBeratungsstellensuche\Domain\Repository\CountryZoneRepository;
 use BZgA\BzgaBeratungsstellensuche\Domain\Repository\ReligionRepository;
+use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\CategoryNormalizer;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\ReligionNormalizer;
@@ -21,7 +21,6 @@ use SJBR\StaticInfoTables\Domain\Repository\LanguageRepository;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class SerializerTest extends UnitTestCase
 {
@@ -67,13 +66,13 @@ class SerializerTest extends UnitTestCase
 
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader($reader));
         $this->entryNormalizer = new EntryNormalizer($classMetadataFactory);
-        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class,
-            array('findOneByZnCodeFromGermany'));
+        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, array('findOneByExternalId'),
+            array(), '', false);
         $this->religionRepository = $this->getMock(ReligionRepository::class, array('findOneByExternalId'), array(), '',
             false);
         $this->categoryRepository = $this->getMock(CategoryRepository::class, array('findOneByExternalId'), array(), '',
             false);
-        $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByIsoCodes'), array(), '',
+        $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByExternalId'), array(), '',
             false);
         $this->inject($this->entryNormalizer, 'religionRepository', $this->religionRepository);
         $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
@@ -88,46 +87,6 @@ class SerializerTest extends UnitTestCase
 
     }
 
-    /**
-     * @test
-     * @dataProvider xmlProvider
-     */
-    public function serializeEntryToXml($xml)
-    {
-
-        $religion = new Religion();
-        $religion->setTitle('Evangelisch');
-        $religion->setExternalId(1);
-
-        $category1 = new Category();
-        $category1->setTitle('Kategorie 1');
-        $category1->setExternalId(1);
-
-        $category2 = new Category();
-        $category2->setTitle('Kategorie 2');
-        $category2->setExternalId(2);
-
-        $language1 = new Language();
-        $language1->setIsoCodeA2('DE');
-
-        $language2 = new Language();
-        $language2->setIsoCodeA2('TR');
-
-        $this->categoryRepository->expects($this->at(0))->method('findOneByExternalId')->willReturn($category1);
-        $this->categoryRepository->expects($this->at(1))->method('findOneByExternalId')->willReturn($category2);
-        $this->languageRepository->expects($this->at(0))->method('findOneByIsoCodes')->willReturn($language1);
-        $this->languageRepository->expects($this->at(1))->method('findOneByIsoCodes')->willReturn($language2);
-        $this->religionRepository->expects($this->any())->method('findOneByExternalId')->willReturn($religion);
-
-        $countryZone = new CountryZone();
-        $countryZone->setNameLocalized('Name');
-        $this->countryZoneRepository->expects($this->any())->method('findOneByZnCodeFromGermany')->willReturn($countryZone);
-
-        $entry = $this->subject->deserialize($xml, Entry::class, 'xml');
-        $serializedData = $this->subject->serialize($entry, 'xml', array('groups' => array('exportPublic')));
-        DebuggerUtility::var_dump($serializedData);
-        exit;
-    }
 
     /**
      * @test
@@ -159,13 +118,17 @@ class SerializerTest extends UnitTestCase
      */
     public function deserializeEntryFromXml($xml)
     {
-        $this->categoryRepository->expects($this->any())->method('findOneByExternalId')->willReturn(new Category());
-        $this->languageRepository->expects($this->any())->method('findOneByIsoCodes')->willReturn(new Language());
-        $this->religionRepository->expects($this->any())->method('findOneByExternalId')->willReturn(new Religion());
+        $categoryMock = $this->getMock(Category::class);
+        $this->categoryRepository->expects($this->any())->method('findOneByExternalId')->willReturn($categoryMock);
 
-        $countryZone = new CountryZone();
-        $countryZone->setNameLocalized('Name');
-        $this->countryZoneRepository->expects($this->any())->method('findOneByZnCodeFromGermany')->willReturn($countryZone);
+        $languageMock = $this->getMock(Language::class);
+        $this->languageRepository->expects($this->any())->method('findOneByExternalId')->willReturn($languageMock);
+
+        $religionMock = $this->getMock(Religion::class);
+        $this->religionRepository->expects($this->any())->method('findOneByExternalId')->willReturn($religionMock);
+
+        $countryZoneMock = $this->getMock(CountryZone::class);
+        $this->countryZoneRepository->expects($this->any())->method('findOneByExternalId')->willReturn($countryZoneMock);
 
         $object = $this->subject->deserialize($xml, Entry::class, 'xml');
         /* @var $object Entry */

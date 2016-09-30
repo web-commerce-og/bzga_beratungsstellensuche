@@ -3,22 +3,22 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class CategoryManager extends AbstractManager
 {
-    /**
-     * @param AbstractEntity $entity
-     */
-    public function create(AbstractEntity $entity)
-    {
-    }
 
     /**
-     * @param AbstractEntity $entity
+     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     * @inject
      */
-    public function remove(AbstractEntity $entity)
+    protected $repository;
+
+    /**
+     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     */
+    public function getRepository()
     {
+        return $this->repository;
     }
 
 

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-08-14T12:41:03Z" product-name="bzga_beratungsstellensuche">
+		<header/>
+		<body>
+			<trans-unit id="list_title" xml:space="preserve">
+				<source>Beratungsstellendatenbank</source>
+			</trans-unit>
+			<trans-unit id="list_plus_wiz_description" xml:space="preserve">
+				<source>Suche und Anzeige von bundesweiten Beratungsstellen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry" xml:space="preserve">
+				<source>Eintrag einer Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.title" xml:space="preserve">
+				<source>Name der Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.link" xml:space="preserve">
+				<source>Link zur Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.teaser" xml:space="preserve">
+				<source>Kurzer Aufmacher zur Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.zip" xml:space="preserve">
+				<source>PLZ der Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.city" xml:space="preserve">
+				<source>Ort der Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.street" xml:space="preserve">
+				<source>Straße der Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.state" xml:space="preserve">
+				<source>Bundesland der Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.telephone" xml:space="preserve">
+				<source>Telefon</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.consulting_telephone" xml:space="preserve">
+				<source>Beratungstelefon</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.categories" xml:space="preserve">
+				<source>Beratungsarten</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.offer" xml:space="preserve">
+				<source>Angebot</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.contact" xml:space="preserve">
+				<source>AnsprechpartnerIn</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.institution" xml:space="preserve">
+				<source>Träger</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.longitude" xml:space="preserve">
+				<source>Längengrad</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.latitude" xml:space="preserve">
+				<source>Breitengrad</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.map" xml:space="preserve">
+				<source>Karte in Ordnung?</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.description" xml:space="preserve">
+				<source>Suchinhalt</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.zip_city" xml:space="preserve">
+				<source>PLZ und Ort</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.religious_denomination" xml:space="preserve">
+				<source>Konfession</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.area_of_consulting" xml:space="preserve">
+				<source>Beratungsfeld</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.consulting_agreement" xml:space="preserve">
+				<source>Beratungsschein</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_religiousdenomination" xml:space="preserve">
+				<source>Konfession</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_religiousdenomination.title" xml:space="preserve">
+				<source>Konfession</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_areaofconsulting" xml:space="preserve">
+				<source>AreaOfConsulting</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_areaofconsulting.title" xml:space="preserve">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_areaofconsulting.parent_area_of_consulting" xml:space="preserve">
+				<source>Elternkategorie</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_areaofconsulting.area_of_consulting_category" xml:space="preserve">
+				<source>Beratungsfeldgruppe</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_areaofconsultingcategory" xml:space="preserve">
+				<source>Beratungsfeldgruppe</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_areaofconsultingcategory.title" xml:space="preserve">
+				<source>Titel</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.any" xml:space="preserve">
+				<source>Bitte wählen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.all" xml:space="preserve">
+				<source>alle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.consulting_agreement.notice.headline" xml:space="preserve">
+				<source>Hinweis</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.consulting_agreement.notice" xml:space="preserve">
+				<source>Wenn Sie hier ein Häkchen setzen, werden alle Beratungsstellen angezeigt, die einen Beratungsschein ausstellen. Der Beratungsschein ist eine gesetzlich vorgeschriebene Voraussetzung für einen straffreien Schwangerschaftsabbruch. Zum Hintergrund: In dieser Datenbank finden Sie zum einen Beratungsstellen, die eine staatliche Anerkennung nach den §§ 5 und 6 des Schwangerschaftskonfliktgesetztes (SchKG) haben und deshalb einen Beratungsschein ausstellen. Zum anderen werden Beratungsstellen angezeigt, die nach § 2 SchKG beraten, staatlich gefördert werden, aber keinen Beratungsschein ausgeben.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.remove_filter" xml:space="preserve">
+				<source>Filter zurücksetzen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.consulting_agreement.yes" xml:space="preserve">
+				<source>Diese Beratungsstelle vergibt einen Beratungsschein nach §§5 und 6 des Schwangerschaftkonfliktgesetzes (SchKG).</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.consulting_agreement.no" xml:space="preserve">
+				<source>Diese Beratungsstelle vergibt &lt;strong&gt;keinen&lt;/strong&gt; Beratungsschein nach §§5 und 6 des Schwangerschaftkonfliktgesetzes (SchKG).</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.religion_all" xml:space="preserve">
+				<source>alle</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.multiple_cities_found" xml:space="preserve">
+				<source>Achtung: Es wurden mehrere Städte zu Ihrer Eingabe gefunden.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.no_result" xml:space="preserve">
+				<source>Es wurden keine Beratungsstellen gefunden.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.change_request" xml:space="preserve">
+				<source>Bitte ändern Sie Ihre Suche ab und versuchen es erneut.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.zip_placeholder" xml:space="preserve">
+				<source>PLZ</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.city_placeholder" xml:space="preserve">
+				<source>Ort</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.radius" xml:space="preserve">
+				<source>Umkreis in km</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.religion" xml:space="preserve">
+				<source>Konfession</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.consult" xml:space="preserve">
+				<source>Beratungsschein</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.form_legend" xml:space="preserve">
+				<source>Es können ein oder mehrere Suchfelder eigegeben werden.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.preselection" xml:space="preserve">
+				<source>Vorauswahl</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.search" xml:space="preserve">
+				<source>Suchen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.reset" xml:space="preserve">
+				<source>Zurücksetzen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.legend_actions" xml:space="preserve">
+				<source>Aktionen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.nearby" xml:space="preserve">
+				<source>Beratungsstellen in Ihrer Nähe</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.findy_nearby" xml:space="preserve">
+				<source>Suchen und finden Sie eine Schwangerschaftsberatungsstelle in Ihrer Nähe. Bitte geben Sie eine Postleitzahl oder einen Ort ein.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.back_to_overview" xml:space="preserve">
+				<source>zurück zur Übersicht</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.result.header" xml:space="preserve">
+				<source>Suchergebnis</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.result.change" xml:space="preserve">
+				<source>Suche ändern</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.result.no_result" xml:space="preserve">
+				<source>Es wurden keine Beratungsstellen gefunden.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.result.details" xml:space="preserve">
+				<source>Details anzeigen...</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.sidebar_search.legend" xml:space="preserve">
+				<source>Beratungsstelle in Ihrer Nähe finden...</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.sidebar_search.zip_or_city" xml:space="preserve">
+				<source>PLZ oder Ort</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.sidebar_search.submit" xml:space="preserve">
+				<source>suchen</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.sidebar_search.formal" xml:space="preserve">
+				<source>Beratungsstelle in Ihrer Nähe finden...</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.sidebar_search.informal" xml:space="preserve">
+				<source>Beratungsstelle in deiner Nähe finden</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.kilometers_choose" xml:space="preserve">
+				<source>Entfernung in km</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.error.fatal" xml:space="preserve">
+				<source>Ein schwerwiegender Fehler ist aufgetreten. Bitte wenden Sie sich an den Administrator dieser Seite.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.error.coordinates" xml:space="preserve">
+				<source>Sie müssten uns erlauben auf Ihre Koordinaten zugreifen zu können.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.error.multiple_names" xml:space="preserve">
+				<source>Dieser Ortsname scheint mehrfach vorzukommen. Bitte präzisieren Sie Ihre Eingabe.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.error.radius" xml:space="preserve">
+				<source>Bitte geben Sie einen Umkreis an.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.city.city" xml:space="preserve">
+				<source>Stadt</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.administation.entry.created" xml:space="preserve">
+				<source>Eintrag wurde erfolgreich angelegt.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.administation.entry.updated" xml:space="preserve">
+				<source>Eintrag wurde erfolgreich aktualisiert.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.administation.entry.deleted" xml:space="preserve">
+				<source>Eintrag wurde erfolgreich gelöscht.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.administation.entry.imageDeleted" xml:space="preserve">
+				<source>Das Bild wurde gelöscht.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.administation.entry.reminder" xml:space="preserve">
+				<source>Der Reminder wurde verschickt.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.administation.entry.password" xml:space="preserve">
+				<source>Die Benutzerdaten wurden verschickt.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting.label" xml:space="preserve">
+				<source>Beratung zu Pränataldiagnostik</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting" xml:space="preserve">
+				<source>Unsere Beratungsstelle versteht sich als Schwerpunktberatungsstelle im Bereich Pränataldiagnostik.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting.languages" xml:space="preserve">
+				<source>Wir bieten PND-Beratung in folgenden Sprachen an</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting.notice" xml:space="preserve">
+				<source>Beratungsstellen, die über Beraterinnen und Berater mit spezieller Zusatzqualifikation im Bereich Pränataldiagnostik verfügen und sich als Schwerpunktberatungsstellen für Pränataldiagnostik verstehen.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting.headline" xml:space="preserve">
+				<source>PND-Beratung</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.motherAndChild.label" xml:space="preserve">
+				<source>Finanzielle Unterstützung</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.motherAndChild.text" xml:space="preserve">
+				<source>Über diese Beratungsstelle können Mittel der &quot;Bundesstiftung Mutter und Kind&quot; vergeben werden.</source>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.mother_and_child.form.label" xml:space="preserve">
+				<source>Vergabe von Mitteln der Bundesstiftung Mutter und Kind</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -52,11 +52,10 @@ class GetSetMethodNormalizerTest extends \PHPUnit_Framework_TestCase
     public function denormalizeEntryWithEntryNameConverterAndStateCallback()
     {
 
-        $stateCallback = function ($bundesland) {
-            $countryZone = new CountryZone();
-            $countryZone->setNameLocalized('Name');
+        $countryZoneMock = $this->getMock(CountryZone::class);
 
-            return $countryZone;
+        $stateCallback = function ($bundesland) use ($countryZoneMock) {
+            return $countryZoneMock;
         };
 
         $this->subject->setDenormalizeCallbacks(array('state' => $stateCallback));
@@ -64,9 +63,9 @@ class GetSetMethodNormalizerTest extends \PHPUnit_Framework_TestCase
         $data = array(
             'bundesland' => 81,
         );
-        $object = $this->subject->denormalize($data, 'BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry');
+        $object = $this->subject->denormalize($data, Entry::class);
         /* @var $object Entry */
-        self::assertSame('Name', $object->getState());
+        self::assertSame($countryZoneMock, $object->getState());
 
     }
 

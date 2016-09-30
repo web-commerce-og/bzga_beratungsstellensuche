@@ -23,14 +23,6 @@ class CategoryNormalizer extends GetSetMethodNormalizer
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
-    {
-        return is_object($data) && $data instanceof Category;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === Category::class;

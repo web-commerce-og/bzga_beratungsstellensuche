@@ -23,14 +23,6 @@ class ReligionNormalizer extends GetSetMethodNormalizer
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
-    {
-        return is_object($data) && $data instanceof Religion;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === Religion::class;

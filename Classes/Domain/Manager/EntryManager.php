@@ -4,30 +4,22 @@
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
 
-use BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class EntryManager extends AbstractManager
 {
 
     /**
-     * @var EntryRepository
+     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
      * @inject
      */
-    protected $entryRepository;
+    protected $repository;
 
     /**
-     * @param AbstractEntity $entity
+     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
      */
-    public function create(AbstractEntity $entity)
+    public function getRepository()
     {
-    }
-
-    /**
-     * @param AbstractEntity $entity
-     */
-    public function remove(AbstractEntity $entity)
-    {
+        return $this->repository;
     }
 
 

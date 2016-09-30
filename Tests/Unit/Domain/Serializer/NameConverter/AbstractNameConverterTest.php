@@ -26,16 +26,6 @@ abstract class AbstractNameConverterTest extends \PHPUnit_Framework_TestCase
         self::assertSame($expected, $propertyName);
     }
 
-    /**
-     * @test
-     * @dataProvider dataProvider
-     */
-    public function normalize($expected, $input)
-    {
-        $propertyName = $this->subject->normalize($input);
-        self::assertSame($expected, $propertyName);
-    }
-
     abstract public function dataProvider();
 
 }

@@ -2,8 +2,6 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
 
-use Symfony\Component\Serializer\Annotation\Groups;
-
 trait ExternalIdTrait
 {
     /**
@@ -13,7 +11,6 @@ trait ExternalIdTrait
     protected $externalId;
 
     /**
-     * @Groups({"exportPublic"})
      * @return int
      */
     public function getExternalId()

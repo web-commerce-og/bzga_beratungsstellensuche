@@ -5,11 +5,14 @@ namespace BZgA\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer
 
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion;
-use BZgA\BzgaBeratungsstellensuche\Domain\Repository\CountryZoneRepository;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Doctrine\Common\Annotations\AnnotationReader;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
+use SJBR\StaticInfoTables\Domain\Repository\LanguageRepository;
+use BZgA\BzgaBeratungsstellensuche\Domain\Repository\ReligionRepository;
+use BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
+use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -34,16 +37,37 @@ class EntryNormalizerTest extends UnitTestCase
     protected $countryZoneRepository;
 
     /**
+     * @var LanguageRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $languageRepository;
+
+    /**
+     * @var ReligionRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $religionRepository;
+
+    /**
+     * @var CategoryRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $categoryRepository;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
-        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class);
+        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, array('findOneByExternalId'), array(), '', false);
+        $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByExternalId'), array(), '', false);
+        $this->categoryRepository = $this->getMock(CategoryRepository::class, array('findOneByExternalId'), array(), '', false);
+        $this->religionRepository = $this->getMock(ReligionRepository::class, array('findOneByExternalId'), array(), '', false);
         $this->serializer = $this->getMock(__NAMESPACE__.'\SerializerNormalizer');
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $this->subject = new EntryNormalizer($classMetadataFactory, new EntryNameConverter());
         $this->subject->setSerializer($this->serializer);
         $this->inject($this->subject, 'countryZoneRepository', $this->countryZoneRepository);
+        $this->inject($this->subject, 'religionRepository', $this->religionRepository);
+        $this->inject($this->subject, 'languageRepository', $this->languageRepository);
+        $this->inject($this->subject, 'categoryRepository', $this->categoryRepository);
     }
 
     /**
@@ -86,13 +110,15 @@ class EntryNormalizerTest extends UnitTestCase
             'pndberatunglang' => array(),
         );
 
-        $countryZone = new CountryZone();
-        $countryZone->setNameLocalized('Namelocalized');
-        $this->countryZoneRepository->expects($this->once())->method('findOneByZnCodeFromGermany')->willReturn($countryZone);
 
-        $object = $this->subject->denormalize($data, 'BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry');
+        $countryZoneMock = $this->getMock(CountryZone::class);
+        $religionMock = $this->getMock(Religion::class);
+        $this->countryZoneRepository->expects($this->once())->method('findOneByExternalId')->willReturn($countryZoneMock);
+        $this->religionRepository->expects($this->once())->method('findOneByExternalId')->willReturn($religionMock);
+
+        $object = $this->subject->denormalize($data, Entry::class);
         /* @var $object Entry */
-        self::assertSame('Namelocalized', $object->getState());
+        self::assertSame($countryZoneMock, $object->getState());
         self::assertSame('Institution', $object->getInstitution());
         self::assertSame('Title', $object->getTitle());
         self::assertSame('Subtitle', $object->getSubtitle());
@@ -119,7 +145,7 @@ class EntryNormalizerTest extends UnitTestCase
         self::assertSame('Association', $object->getAssociation());
         self::assertSame('Contact email', $object->getContactEmail());
         self::assertSame('Keywords', $object->getKeywords());
-        self::assertNull($object->getReligiousDenomination());
+        self::assertSame($religionMock, $object->getReligiousDenomination());
 
     }
 

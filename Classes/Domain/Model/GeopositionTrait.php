@@ -2,7 +2,6 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
 
-use Symfony\Component\Serializer\Annotation\Groups;
 
 trait GeopositionTrait
 {
@@ -22,7 +21,6 @@ trait GeopositionTrait
 
     /**
      * Returns the longitude.
-     * @Groups({"exportPublic"})
      * @return float $longitude
      */
     public function getLongitude()
@@ -42,7 +40,6 @@ trait GeopositionTrait
 
     /**
      * Returns the latitude.
-     * @Groups({"exportPublic"})
      * @return float $latitude
      */
     public function getLatitude()

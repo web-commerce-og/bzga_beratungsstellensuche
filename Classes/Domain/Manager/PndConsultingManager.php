@@ -3,23 +3,22 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class PndConsultingManager extends AbstractManager
 {
-    /**
-     * @param AbstractEntity $entity
-     */
-    public function create(AbstractEntity $entity)
-    {
-    }
 
     /**
-     * @param AbstractEntity $entity
+     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\PndConsultingRepository
+     * @inject
      */
-    public function remove(AbstractEntity $entity)
-    {
-    }
+    protected $repository;
 
+    /**
+     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Repository\PndConsultingRepository
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
 
 }

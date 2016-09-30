@@ -45,12 +45,5 @@ class EntryNameConverter extends AbstractMappingNameConverter
         'pndberatunglang' => 'pnd_languages',
     );
 
-    /**
-     * @return void
-     */
-    protected function emitMapNamesSignal()
-    {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_MapNames, array($this, $this->mapNames));
-    }
 
 }

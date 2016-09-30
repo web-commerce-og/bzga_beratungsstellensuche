@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-08-14T12:40:43Z" product-name="bzga_beratungsstellensuche">
+		<header/>
+		<body>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry" xml:space="preserve" approved="yes">
+				<source>Entry</source>
+				<target>Beratungsstelle</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.title" xml:space="preserve" approved="yes">
+				<source>Title</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.subtitle" xml:space="preserve" approved="yes">
+				<source>Subtitle</source>
+				<target>Untertitel</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.link" xml:space="preserve" approved="yes">
+				<source>Link</source>
+				<target>Link</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.teaser" xml:space="preserve" approved="yes">
+				<source>Teaser</source>
+				<target>Teaser</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.zip" xml:space="preserve" approved="yes">
+				<source>Zip</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.city" xml:space="preserve" approved="yes">
+				<source>City</source>
+				<target>Ort</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.street" xml:space="preserve" approved="yes">
+				<source>Street</source>
+				<target>Straße</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.state" xml:space="preserve" approved="yes">
+				<source>State</source>
+				<target>Bundesland</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.longitude" xml:space="preserve" approved="yes">
+				<source>Longitude</source>
+				<target>Breitengrad</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.latitude" xml:space="preserve" approved="yes">
+				<source>Latitude</source>
+				<target>Längengrad</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.map" xml:space="preserve" approved="yes">
+				<source>Map</source>
+				<target>Karte</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.description" xml:space="preserve" approved="yes">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.zip_city" xml:space="preserve" approved="yes">
+				<source>Zip City</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.religious_denomination" xml:space="preserve" approved="yes">
+				<source>Religious Denomination</source>
+				<target>Konfession</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_religiousdenomination" xml:space="preserve" approved="yes">
+				<source>Religious Denomination</source>
+				<target>Konfession</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_religiousdenomination.title" xml:space="preserve" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_association" xml:space="preserve" approved="yes">
+				<source>Verband</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_association.title" xml:space="preserve" approved="yes">
+				<source>Titel</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_association.import_url" xml:space="preserve" approved="yes">
+				<source>Externe URL Datenimport</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_department" xml:space="preserve" approved="yes">
+				<source>Referat</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_department.title" xml:space="preserve" approved="yes">
+				<source>Titel</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.contact_person" xml:space="preserve" approved="yes">
+				<source>Ansprechpartner</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.contact_email" xml:space="preserve" approved="yes">
+				<source>Kontaktemail</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.telephone" xml:space="preserve" approved="yes">
+				<source>Telefon</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.telefax" xml:space="preserve" approved="yes">
+				<source>Fax</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.email" xml:space="preserve" approved="yes">
+				<source>E-Mail</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.institution" xml:space="preserve" approved="yes">
+				<source>Träger</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.association" xml:space="preserve" approved="yes">
+				<source>Verband</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.hotline" xml:space="preserve" approved="yes">
+				<source>Beratertelefon</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.notice" xml:space="preserve" approved="yes">
+				<source>Hinweistext</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.mother_and_child" xml:space="preserve" approved="yes">
+				<source>Mutter und Kind</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.mother_and_child_notice" xml:space="preserve" approved="yes">
+				<source>Mutter und Kind - Hinweistext</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.consulting_agreement" xml:space="preserve" approved="yes">
+				<source>Beratungsschein</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.keywords" xml:space="preserve" approved="yes">
+				<source>Keywords</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.distance" xml:space="preserve" approved="yes">
+				<source>Distanz</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.pi_flexform.display" xml:space="preserve" approved="yes">
+				<source>Allgemeine Einstellungen</source>
+				<target>Allgemeine Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche.pi_flexform.entrySidebarSearch" xml:space="preserve" approved="yes">
+				<source>Sidebar-Suche</source>
+				<target>Sidebar-Suche</target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.image" xml:space="preserve" approved="yes">
+				<source>Logo</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_category" xml:space="preserve" approved="yes">
+				<source>Beratungsart</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_category.title" xml:space="preserve" approved="yes">
+				<source>Bezeichnung</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_category.external_id" xml:space="preserve" approved="yes">
+				<source>Externe ID</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.categories" xml:space="preserve" approved="yes">
+				<source>Beratungsarten</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_user.tx_extbase_type.0" xml:space="preserve" approved="yes">
+				<source>Person</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_user.tx_extbase_type" xml:space="preserve" approved="yes">
+				<source>Datensatztyp</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_association.image" xml:space="preserve" approved="yes">
+				<source>Bild</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consultants" xml:space="preserve" approved="yes">
+				<source>PND-Berater</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting" xml:space="preserve" approved="yes">
+				<source>PND-Beratung</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_languages" xml:space="preserve" approved="yes">
+				<source>PND in folgenden Sprachen</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_other_language" xml:space="preserve" approved="yes">
+				<source>PND andere Sprachen</source>
+				<target></target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

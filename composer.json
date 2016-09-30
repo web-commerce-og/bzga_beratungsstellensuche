@@ -2,19 +2,36 @@
   "name": "bzga/bzga-beratungsstellensuche",
   "type": "typo3-cms-extension",
   "description": "Beratungsstellensuche der BZgA",
-  "version": "6.2.0",
+  "version": "1.0.0",
   "license": "GPL-2.0+",
   "authors": [
     {
       "name": "Sebastian Schreiber",
       "email": "ssch@hauptweg-nebenwege.de",
       "role": "Developer"
+    },
+    {
+      "name": "Sebastian Hebler",
+      "email": "sh@hauptweg-nebenwege.de",
+      "role": "Projectmanager"
     }
   ],
   "autoload": {
     "psr-4": {
       "BZgA\\BzgaBeratungsstellensuche\\": "Classes"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BZgA\\BzgaBeratungsstellensuche\\": "Tests"
+    }
+  },
+  "require": {
+    "typo3/cms-core": ">=6.2.10,<7.0",
+    "php": ">=5.5.9"
+  },
+  "suggest": {
+    "typo3-ter/static-info-tables": "We need it to map Languages and Country-Zones"
   },
   "replace": {
     "bzga_beratungsstellensuche": "self.version",

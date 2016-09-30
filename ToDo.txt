@@ -1,5 +1,21 @@
 Fragen:
-1. Welche PHP-Version muss mind. unterstützt werden?
 
-1. Models
-2. Validation for Import with Options resolver?
+
+6. Realurl-Konfiguration mitliefern
+7. FlexForm-Konfiguration dynamisch bzw. mittels Hooks manipulier- und / oder erweiterbar
+8. Bootstrap für die Vorlagen verwenden
+10. Create Factory for the HttpAdapterInterface depending on the settings either curl or file_get_contents
+
+
+
+Fragen zur Abstimmung:
+
+2. Die Essstörungen müssten noch auf die Version 2.1 umgestellt werden. Aktuell ist die Datei nicht ausreichend befüllt.
+
+
+Nice to have
+- Schema für Validierung
+- Testing
+
+To Check
+- Encoding-Probleme? Da XML ISO und nicht UTF-8

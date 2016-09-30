@@ -8,14 +8,15 @@ use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use BZgA\BzgaBeratungsstellensuche\Events;
 
 abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
 
-    const SIGNAL_MapNames = 'mapNames';
 
     /**
-     * @var Dispatcher
+     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @inject
      */
     protected $signalSlotDispatcher;
 
@@ -41,24 +42,11 @@ abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConv
     public function __construct(array $attributes = null, $lowerCamelCase = true)
     {
         parent::__construct($attributes, $lowerCamelCase);
-        $this->signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        if (!$this->signalSlotDispatcher instanceof Dispatcher) {
+            $this->signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        }
         $this->emitMapNamesSignal();
         $this->mapNamesFlipped();
-    }
-
-
-    /**
-     * @param string $propertyName
-     * @return string
-     */
-    public function normalize($propertyName)
-    {
-        $propertyName = parent::normalize($propertyName);
-        if (isset($this->mapNamesFlipped[$propertyName])) {
-            $propertyName = $this->mapNamesFlipped[$propertyName];
-        }
-
-        return $propertyName;
     }
 
     /**
@@ -92,7 +80,13 @@ abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConv
         return $propertyName;
     }
 
-    abstract protected function emitMapNamesSignal();
+    /**
+     * @return void
+     */
+    protected function emitMapNamesSignal()
+    {
+        $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MapNames, array($this, $this->mapNames));
+    }
 
 
 }

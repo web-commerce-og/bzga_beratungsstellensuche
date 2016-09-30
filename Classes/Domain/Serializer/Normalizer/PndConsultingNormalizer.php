@@ -4,6 +4,7 @@
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
 
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\PndConsulting;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\PndConsultingNameConverter;
 
@@ -17,14 +18,6 @@ class PndConsultingNormalizer extends GetSetMethodNormalizer
     public function __construct(ClassMetadataFactory $classMetadataFactory = null)
     {
         parent::__construct($classMetadataFactory, new PndConsultingNameConverter());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsNormalization($data, $format = null)
-    {
-        return is_object($data) && $data instanceof PndConsulting;
     }
 
     /**

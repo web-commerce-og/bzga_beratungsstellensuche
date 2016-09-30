@@ -5,21 +5,10 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Model\Language;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 class Entry extends AbstractEntity implements GeopositionInterface
 {
     use GeopositionTrait;
-    use DummyTrait;
-    use ExternalIdTrait;
-
-    /**
-     * Name der Beratungsstelle.
-     * @var string
-     * @validate NotEmpty
-     */
-    protected $title;
 
     /**
      * @var string
@@ -175,36 +164,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     protected $categories;
 
     /**
-     * @var string
-     */
-    protected $iconFileName;
-
-    /**
-     * @var string
-     */
-    protected $uriBuilder = null;
-
-    /**
-     * @var array
-     */
-    protected $demand;
-
-    /**
-     * @var int
-     */
-    protected $country = 1;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
-     */
-    protected $owner;
-
-    /**
-     * @var string
-     */
-    protected $hash;
-
-    /**
      * @var bool
      */
     protected $pndConsulting = false;
@@ -230,12 +189,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     protected $allLanguages = null;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\GeoLocationService
-     * @inject
-     */
-    protected $geoLocationService;
-
-    /**
      */
     public function __construct()
     {
@@ -251,7 +204,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category>
      */
     public function getCategories()
@@ -300,7 +252,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SJBR\StaticInfoTables\Domain\Model\Language>
      */
     public function getPndLanguages()
@@ -349,7 +300,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getPndOtherLanguage()
@@ -401,55 +351,8 @@ class Entry extends AbstractEntity implements GeopositionInterface
         return $this->pndConsultants && $this->pndConsulting ? true : false;
     }
 
-    /**
-     * @return string
-     */
-    public function getListOfCategories()
-    {
-        $listOfCategories = array();
-        if ($this->categories->count() > 0) {
-            $categories = $this->categories->toArray();
-            foreach ($categories as $category) {
-                /* @var $category \BZgA\BzgaBeratungsstellensuche\Domain\Model\Category */
-                $listOfCategories[] = $category->getEtbId();
-            }
-        }
-
-        return implode(',', $listOfCategories);
-    }
 
     /**
-     * Get type of entry. This is static. All entries are of type 142.
-     *
-     * @return int
-     */
-    public function getType()
-    {
-        return 142;
-    }
-
-    /**
-     * Returns the title.
-     * @Groups({"exportPublic"})
-     * @return string $title
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Sets the title.
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getSubtitle()
@@ -467,7 +370,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
 
     /**
      * Returns the link.
-     * @Groups({"exportPublic"})
      * @return string $link
      */
     public function getLink()
@@ -487,7 +389,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
 
     /**
      * Returns the teaser.
-     * @Groups({"exportPublic"})
      * @return string $teaser
      */
     public function getTeaser()
@@ -507,7 +408,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
 
     /**
      * Returns the zip.
-     * @Groups({"exportPublic"})
      * @return string $zip
      */
     public function getZip()
@@ -527,7 +427,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
 
     /**
      * Returns the city.
-     * @Groups({"exportPublic"})
      * @return string $city
      */
     public function getCity()
@@ -547,7 +446,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
 
     /**
      * Returns the street.
-     * @Groups({"exportPublic"})
      * @return string $street
      */
     public function getStreet()
@@ -567,12 +465,11 @@ class Entry extends AbstractEntity implements GeopositionInterface
 
     /**
      * Returns the state.
-     * @Groups({"exportPublic"})
      * @return \SJBR\StaticInfoTables\Domain\Model\CountryZone $state
      */
     public function getState()
     {
-        return $this->state instanceof CountryZone ? $this->state->getNameLocalized() : '';
+        return $this->state;
     }
 
     /**
@@ -586,57 +483,12 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @return int
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param int $country
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * @return float
-     */
-    public function getDistance()
-    {
-        if (null !== $this->distance) {
-            $this->distance = $this->geoLocationService->calculateDistance(
-                $this->geoLocationService->getDemand(),
-                $this
-            );
-        }
-
-        return $this->distance;
-    }
-
-    /**
      * Returns the description.
-     * @Groups({"exportPublic"})
      * @return string $description
      */
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Returns the description.
-     *
-     * @return string $description
-     */
-    public function getDescriptionEtb()
-    {
-        $description = strip_tags($this->description, '<br><br />');
-        $description = str_replace(array('<br>', '<br />'), array('+++br+++'), $description);
-
-        return $description;
     }
 
     /**
@@ -650,28 +502,7 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * Returns the zipCity.
-     *
-     * @return string $zipCity
-     */
-    public function getZipCity()
-    {
-        return $this->zipCity;
-    }
-
-    /**
-     * Sets the zipCity.
-     *
-     * @param string $zipCity
-     */
-    public function setZipCity($zipCity)
-    {
-        $this->zipCity = $zipCity;
-    }
-
-    /**
      * Returns the religiousDenomination.
-     * @Groups({"exportPublic"})
      * @return \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion $religiousDenomination
      */
     public function getReligiousDenomination()
@@ -712,15 +543,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     /**
      * @return string
      */
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
-    /**
-     * @Groups({"exportPublic"})
-     * @return string
-     */
     public function getContactPerson()
     {
         return $this->contactPerson;
@@ -735,7 +557,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getContactEmail()
@@ -752,7 +573,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getTelephone()
@@ -769,7 +589,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getTelefax()
@@ -786,7 +605,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getEmail()
@@ -803,7 +621,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getInstitution()
@@ -820,7 +637,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getAssociation()
@@ -837,7 +653,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getHotline()
@@ -854,7 +669,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getNotice()
@@ -871,7 +685,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return bool
      */
     public function getMotherAndChild()
@@ -888,7 +701,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getMotherAndChildNotice()
@@ -905,7 +717,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return bool
      */
     public function getConsultingAgreement()
@@ -922,7 +733,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getKeywords()
@@ -939,7 +749,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getWebsite()
@@ -956,7 +765,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return string
      */
     public function getImage()
@@ -973,7 +781,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @Groups({"exportPublic"})
      * @return bool
      */
     public function getMap()

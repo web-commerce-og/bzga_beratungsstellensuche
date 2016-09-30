@@ -7,11 +7,10 @@ use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\CategoryNormaliz
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\PndConsultingNormalizer;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\ReligionNormalizer;
-use Doctrine\Common\Annotations\AnnotationReader;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Encoder\EntryXmlEncoder;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer as BaseSerializer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class Serializer extends BaseSerializer
 {
@@ -24,21 +23,19 @@ class Serializer extends BaseSerializer
     public function __construct(array $normalizers = array(), array $encoders = array())
     {
         if (empty($normalizers)) {
-            $reader = new AnnotationReader();
-            AnnotationReader::addGlobalIgnoredName('validate');
-            AnnotationReader::addGlobalIgnoredName('inject');
 
-            $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader($reader));
+            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+            /* @var $objectManager ObjectManager */
             $normalizers = array(
-                new PndConsultingNormalizer($classMetadataFactory),
-                new ReligionNormalizer($classMetadataFactory),
-                new EntryNormalizer($classMetadataFactory),
-                new CategoryNormalizer($classMetadataFactory),
+                $objectManager->get(PndConsultingNormalizer::class),
+                $objectManager->get(ReligionNormalizer::class),
+                $objectManager->get(EntryNormalizer::class),
+                $objectManager->get(CategoryNormalizer::class),
             );
         }
         if (empty($encoders)) {
             $encoders = array(
-                new EntryXmlEncoder('beratungsstellen'),
+                new XmlEncoder('beratungsstellen'),
             );
         }
         parent::__construct($normalizers, $encoders);
