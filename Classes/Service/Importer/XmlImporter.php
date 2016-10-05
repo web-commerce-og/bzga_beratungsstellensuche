@@ -35,7 +35,7 @@ class XmlImporter extends AbstractImporter
         foreach ($sxe->konfessionen as $religions) {
             foreach ($religions as $religionData) {
                 $externalId = (integer)$religionData->index;
-                $objectToPopulate = $this->religionManager->findOneByExternalId($externalId);
+                $objectToPopulate = $this->religionManager->getRepository()->findOneByExternalId($externalId);
                 $religion = $this->serializer->deserialize($religionData->asXml(), Religion::class, self::FORMAT,
                     array('object_to_populate' => $objectToPopulate));
                 /* @var $religion Religion */
@@ -48,7 +48,7 @@ class XmlImporter extends AbstractImporter
         foreach ($sxe->beratungsarten as $categories) {
             foreach ($categories as $categoryData) {
                 $externalId = (integer)$categoryData->index;
-                $objectToPopulate = $this->categoryManager->findOneByExternalId($externalId);
+                $objectToPopulate = $this->categoryManager->getRepository()->findOneByExternalId($externalId);
                 $category = $this->serializer->deserialize($categoryData->asXml(), Category::class, self::FORMAT,
                     array('object_to_populate' => $objectToPopulate));
                 /* @var $category Category */
@@ -61,7 +61,7 @@ class XmlImporter extends AbstractImporter
         foreach ($sxe->pndberatungen as $pndConsultings) {
             foreach ($pndConsultings as $pndConsultingData) {
                 $externalId = (integer)$pndConsultingData->index;
-                $objectToPopulate = $this->pndConsultingManager->findOneByExternalId($externalId);
+                $objectToPopulate = $this->pndConsultingManager->getRepository()->findOneByExternalId($externalId);
                 $pndConsulting = $this->serializer->deserialize($pndConsultingData->asXml(), PndConsulting::class,
                     self::FORMAT, array('object_to_populate' => $objectToPopulate));
                 /* @var $pndConsulting PndConsulting */
@@ -73,7 +73,7 @@ class XmlImporter extends AbstractImporter
         foreach ($sxe->entrys as $entries) {
             foreach ($entries as $entryData) {
                 $externalId = (integer)$entryData->index;
-                $objectToPopulate = $this->entryManager->findOneByExternalId($externalId);
+                $objectToPopulate = $this->entryManager->getRepository()->findOneByExternalId($externalId);
                 $entry = $this->serializer->deserialize($entryData->asXml(), Entry::class, self::FORMAT,
                     array('object_to_populate' => $objectToPopulate));
                 /* @var $entry Entry */

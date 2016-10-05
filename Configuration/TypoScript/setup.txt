@@ -1,0 +1,37 @@
+plugin.tx_bzgaberatungsstellensuche {
+    mvc.callDefaultActionIfActionCantBeResolved = 1
+    view {
+        templateRootPaths {
+            0 = EXT:bzga_beratungsstellensuche/Resources/Private/Templates/
+            1 = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
+        }
+
+        partialRootPaths {
+            0 = EXT:bzga_beratungsstellensuche/Resources/Private/Partials/
+            1 = {$plugin.tx_bzgaberatungsstellensuche.view.partialRootPath}
+        }
+
+        layoutRootPaths {
+            0 = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
+            1 = {$plugin.tx_bzgaberatungsstellensuche.view.layoutRootPath}
+        }
+    }
+
+    # settings
+    settings {
+        list {
+            itemsPerPage = {$plugin.tx_bzgaberatungsstellensuche.settings.list.itemsPerPage}
+            append = {$plugin.tx_bzgaberatungsstellensuche.settings.list.append}
+            maxCharacters = {$plugin.tx_bzgaberatungsstellensuche.settings.list.maxCharacters}
+        }
+    }
+
+    # Modify the translation
+    _LOCAL_LANG {
+        default {
+
+        }
+    }
+}
+
+plugin.tx_bzgaberatungsstellensuche.view.widget.TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper.templateRootPath = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}

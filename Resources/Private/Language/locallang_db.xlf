@@ -4,13 +4,13 @@
 		<header/>
 		<body>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry" xml:space="preserve">
-				<source>Entry</source>
+				<source>Beratungsstelle</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.title" xml:space="preserve">
-				<source>Title</source>
+				<source>Titel</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.subtitle" xml:space="preserve">
-				<source>Subtitle</source>
+				<source>Unterzeile</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.link" xml:space="preserve">
 				<source>Link</source>
@@ -19,22 +19,22 @@
 				<source>Teaser</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.zip" xml:space="preserve">
-				<source>Zip</source>
+				<source>PLZ</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.city" xml:space="preserve">
-				<source>City</source>
+				<source>Stadt</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.street" xml:space="preserve">
-				<source>Street</source>
+				<source>Straße</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.state" xml:space="preserve">
-				<source>State</source>
+				<source>Bundesland</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.longitude" xml:space="preserve">
-				<source>Longitude</source>
+				<source>Längengrad</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.latitude" xml:space="preserve">
-				<source>Latitude</source>
+				<source>Breitengrad</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.map" xml:space="preserve">
 				<source>Map</source>

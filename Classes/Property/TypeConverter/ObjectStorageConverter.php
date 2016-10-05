@@ -3,18 +3,20 @@
 
 namespace BZga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
+use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use InvalidArgumentException;
 
-class ObjectStorageConverter implements TypeConverterInterface
+class ObjectStorageConverter implements TypeConverterBeforeInterface
 {
     /**
-     * @param $source
+     * @param mixed $source
+     * @param string $type
      * @return bool
      */
-    public function supports($source)
+    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         if (!$source instanceof ObjectStorage) {
             return false;
@@ -25,9 +27,10 @@ class ObjectStorageConverter implements TypeConverterInterface
 
     /**
      * @param $source
+     * @param array|null|AbstractEntity $configuration
      * @return string
      */
-    public function convert($source)
+    public function convert($source, array $configuration = null)
     {
         if (!$source instanceof ObjectStorage) {
             throw new InvalidArgumentException('The type is not allowed');

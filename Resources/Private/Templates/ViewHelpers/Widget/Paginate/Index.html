@@ -1,0 +1,107 @@
+{namespace bzga=BZgA\BzgaBeratungsstellensuche\ViewHelpers}
+
+<f:if condition="{configuration.insertAbove}">
+    <f:render section="paginator" arguments="{pagination: pagination,configuratiobzga:configuration}"/>
+</f:if>
+
+<f:renderChildren arguments="{contentArguments}"/>
+
+<f:if condition="{configuration.insertBelow}">
+    <f:render section="paginator" arguments="{pagination: pagination,configuratiobzga:configuration}"/>
+</f:if>
+
+<f:section name="paginator">
+
+    <f:comment>This is for SEO and adds some special header tags:</f:comment>
+
+    <f:if condition="{pagination.numberOfPages} > 1">
+        <f:if condition="{pagination.previousPage}">
+            <f:if condition="{pagination.previousPage} > 1">
+                <f:then>
+                    <bzga:headerData>
+                        <link rel="prev"
+                              href="{f:widget.uri(arguments: {currentPage: pagination.previousPage}) -> f:format.htmlentities()}"/>
+                    </bzga:headerData>
+                </f:then>
+                <f:else>
+                    <bzga:headerData>
+                        <link rel="prev" href="{f:widget.uri() -> f:format.htmlentities()}"/>
+                    </bzga:headerData>
+                </f:else>
+            </f:if>
+        </f:if>
+        <f:if condition="{pagination.nextPage}">
+            <bzga:headerData>
+                <link rel="next"
+                      href="{f:widget.uri(arguments: {currentPage: pagination.nextPage}) -> f:format.htmlentities()}"/>
+            </bzga:headerData>
+        </f:if>
+    </f:if>
+
+    <nav aria-label="{f:translate(key: 'page-navigation')}">
+        <ul class="pagination">
+            <f:if condition="{pagination.previousPage}">
+                <li>
+                    <f:if condition="{pagination.previousPage} > 1">
+                        <f:then>
+                            <f:widget.link additionalAttributes="{aria-label: '{f:translate(key: \'previous-page\')}'}"
+                                           arguments="{currentPage: pagination.previousPage}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </f:widget.link>
+                        </f:then>
+                        <f:else>
+                            <f:widget.link additionalAttributes="{aria-label: '{f:translate(key: \'previous-page\')}'}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </f:widget.link>
+                        </f:else>
+                    </f:if>
+                </li>
+            </f:if>
+            <f:if condition="{pagination.displayRangeStart} > 1">
+                <li>
+                    <f:widget.link>1</f:widget.link>
+                </li>
+            </f:if>
+            <f:if condition="{pagination.hasLessPages}">
+                <li>....</li>
+            </f:if>
+            <f:for each="{pagination.pages}" as="page">
+                <f:if condition="{page.isCurrent}">
+                    <f:then>
+                        <li class="active"><f:link.page>{page.number} <span class="sr-only">(current)</span></f:link.page></li>
+                    </f:then>
+                    <f:else>
+                        <li>
+                            <f:if condition="{page.number} > 1">
+                                <f:then>
+                                    <f:widget.link arguments="{currentPage: page.number}">{page.number}
+                                    </f:widget.link>
+                                </f:then>
+                                <f:else>
+                                    <f:widget.link>{page.number}</f:widget.link>
+                                </f:else>
+                            </f:if>
+                        </li>
+                    </f:else>
+                </f:if>
+            </f:for>
+            <f:if condition="{pagination.hasMorePages}">
+                <li>....</li>
+            </f:if>
+            <f:if condition="{pagination.displayRangeEnd} < {pagination.numberOfPages}">
+                <li>
+                    <f:widget.link arguments="{currentPage: pagination.numberOfPages}">{pagination.numberOfPages}
+                    </f:widget.link>
+                </li>
+            </f:if>
+            <f:if condition="{pagination.nextPage}">
+                <li>
+                    <f:widget.link additionalAttributes="{aria-label: '{f:translate(key: \'next-page\')}'}"
+                                   arguments="{currentPage: pagination.nextPage}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </f:widget.link>
+                </li>
+            </f:if>
+        </ul>
+    </nav>
+</f:section>

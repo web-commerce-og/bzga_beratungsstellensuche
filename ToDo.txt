@@ -1,21 +1,27 @@
 Fragen:
 
-
-6. Realurl-Konfiguration mitliefern
-7. FlexForm-Konfiguration dynamisch bzw. mittels Hooks manipulier- und / oder erweiterbar
 8. Bootstrap für die Vorlagen verwenden
-10. Create Factory for the HttpAdapterInterface depending on the settings either curl or file_get_contents
+9. Google Maps Karte darstellen
+10. Session Service zur Speicherung des Formulars
+7. FlexForm-Konfiguration dynamisch bzw. mittels Hooks manipulier- und / oder erweiterbar
+11. Unterschiedliche Templates/Layouts ähnlich wie News-Erweiterung bereitstellen
 
-
+# 52.16353
+# 10.5298
 
 Fragen zur Abstimmung:
 
 2. Die Essstörungen müssten noch auf die Version 2.1 umgestellt werden. Aktuell ist die Datei nicht ausreichend befüllt.
-
+Dabei ist zu beachten, dass es eine Reihe weiterer Kriterien gibt, die im Vergleich zu familienplanung.de abgefragt werden.
 
 Nice to have
+- Additional extension to show some demonstrations
 - Schema für Validierung
 - Testing
+- Add a Solr-Konfiguration
 
 To Check
 - Encoding-Probleme? Da XML ISO und nicht UTF-8
+- Sitemap Generator
+- RealUrl-Konfiguration
+- Linkvalidator-Konfiguration

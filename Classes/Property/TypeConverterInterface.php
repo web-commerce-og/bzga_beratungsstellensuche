@@ -8,15 +8,25 @@ interface TypeConverterInterface
 {
 
     /**
-     * @param $source
-     * @return mixed
+     * @var string
      */
-    public function supports($source);
+    const CONVERT_BEFORE = 'before.converter';
+
+    /**
+     * @var string
+     */
+    const CONVERT_AFTER = 'after.converter';
 
     /**
      * @param $source
      * @return mixed
      */
-    public function convert($source);
+    public function supports($source, $type = self::CONVERT_BEFORE);
+
+    /**
+     * @param $source
+     * @param array $configuration
+     */
+    public function convert($source, array $configuration = null);
 
 }

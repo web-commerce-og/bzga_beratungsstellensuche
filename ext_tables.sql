@@ -17,7 +17,7 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_entry (
 	longitude varchar(255) DEFAULT '' NOT NULL,
 	latitude varchar(255) DEFAULT '' NOT NULL,
   distance varchar(255) DEFAULT '' NOT NULL,
-  image varchar(255) DEFAULT '' NOT NULL,
+  image int(11) DEFAULT '0' NOT NULL,
   hash varchar(32) DEFAULT '' NOT NULL,
 	map varchar(255) DEFAULT '' NOT NULL,
   description text NOT NULL,

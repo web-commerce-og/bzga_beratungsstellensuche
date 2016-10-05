@@ -1,0 +1,12 @@
+<f:form method="post" noCacheHash="TRUE" controller="Entry" action="list" name="demand" object="{demand}">
+    <f:render partial="Entry/FormFields/Keywords" arguments="{_all}" />
+    <f:render partial="Entry/FormFields/Location" arguments="{_all}" />
+    <f:render partial="Entry/FormFields/Religion" arguments="{_all}" />
+    <f:render partial="Entry/FormFields/Kilometers" arguments="{_all}" />
+    <f:render partial="Entry/FormFields/ConsultingAgreement" arguments="{_all}" />
+    <f:render partial="Entry/FormFields/PndConsultingAgreement" arguments="{_all}" />
+    <f:render partial="Entry/FormFields/MotherAndChild" arguments="{_all}" />
+
+    <f:form.submit name="search" class="btn btn-default"
+                   value="{f:translate(key:'search-btn')}"/>
+</f:form>

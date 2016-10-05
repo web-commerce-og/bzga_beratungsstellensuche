@@ -1,0 +1,32 @@
+<f:layout name="Default"/>
+
+<f:section name="main">
+    <f:render partial="Entry/Form" arguments="{_all}"/>
+    <f:if condition="{entries}">
+        <f:then>
+            <div class="list-group">
+                <f:widget.paginate as="paginatedEntries"
+                                   configuration="{itemsPerPage: settings.list.itemsPerPage, insertAbove: 1, insertBelow: 1}"
+                                   objects="{entries}">
+                    <f:for each="{paginatedEntries}" as="entry">
+                        <f:link.action action="show" arguments="{entry: entry}" class="list-group-item">
+                            <h4 class="list-group-item-heading">{entry.title}</h4>
+                            <div class="list-group-item-text">
+                                <f:format.crop append="{settings.list.append}" respectHtml="true"
+                                               respectWordBoundaries="false"
+                                               maxCharacters="{settings.list.maxCharacters}">
+                                    <f:format.html parseFuncTSPath="lib.parseFunc">{entry.description}</f:format.html>
+                                </f:format.crop>
+                            </div>
+                        </f:link.action>
+                    </f:for>
+                </f:widget.paginate>
+            </div>
+        </f:then>
+        <f:else>
+            <div class="alert alert-info" role="alert">
+                <f:translate key="no-entries-found"></f:translate>
+            </div>
+        </f:else>
+    </f:if>
+</f:section>

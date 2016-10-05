@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2016-08-14T12:41:03Z"
+          product-name="bzga_beratungsstellensuche">
+        <header/>
+        <body>
+            <trans-unit id="pi1_title" xml:space="preserve">
+				<source>Beratungsstellensuche</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

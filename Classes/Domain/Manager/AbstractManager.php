@@ -7,12 +7,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
+use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
+use BZgA\BzgaBeratungsstellensuche\Persistence\ExternalIdObjectStorage;
 use IteratorAggregate;
 use Countable;
-use ArrayIterator;
 
 abstract class AbstractManager implements ManagerInterface, Countable, IteratorAggregate
 {
@@ -30,17 +29,17 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     /**
      * @var array
      */
-    private $typeConverters;
+    private $dataMap = array();
 
     /**
-     * @var array
-     */
-    private $dataMap;
-
-    /**
-     * @var array
+     * @var ExternalIdObjectStorage
      */
     private $entries;
+
+    /**
+     * @var array
+     */
+    private $externalUids;
 
     /**
      * @var \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap
@@ -48,31 +47,31 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     private $dataMapFactory;
 
     /**
+     * @var \BZgA\BzgaBeratungsstellensuche\Property\PropertyMapper
+     */
+    private $propertyMapper;
+
+
+    /**
      * AbstractManager constructor.
      * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      * @param \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory
+     * @param \BZgA\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
      */
     public function __construct(
         \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher,
         \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler,
-        \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory
+        \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory,
+        \BZgA\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
     ) {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
         $this->dataHandler->admin = true;
         $this->dataMapFactory = $dataMapFactory;
-        $this->initializeTypeConverters();
-    }
-
-    /**
-     * @param $externalId
-     * @return AbstractEntity|null
-     */
-    public function findOneByExternalId($externalId)
-    {
-        return $this->getRepository()->findOneByExternalId($externalId);
+        $this->propertyMapper = $propertyMapper;
+        $this->entries = new ExternalIdObjectStorage();
     }
 
     /**
@@ -85,7 +84,8 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $tableUid = $this->getUid($entity);
 
         # Add external uid to stack of updated, or inserted entries, we need this for the clean up
-        $this->addEntryUid($entity->getExternalId());
+        $this->entries->attach($entity);
+        $this->externalUids[] = $entity->getExternalId();
 
 
         $data = array();
@@ -95,16 +95,21 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
             $propertyNameLowercase = GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
             if (isset($GLOBALS['TCA'][$tableName]['columns'][$propertyNameLowercase])) {
                 $propertyValue = ObjectAccess::getProperty($entity, $propertyName);
-                foreach ($this->typeConverters as $typeConverter) {
-                    /* @var $typeConverter TypeConverterInterface */
-                    if (true === $typeConverter->supports($propertyValue)) {
-                        $propertyValue = $typeConverter->convert($propertyValue);
-                        break;
-                    }
+                if ($typeConverter = $this->propertyMapper->supports($propertyValue,
+                    TypeConverterInterface::CONVERT_BEFORE)
+                ) {
+                    $propertyValue = $typeConverter->convert($propertyValue,
+                        array(
+                            'manager' => $this,
+                            'tableUid' => $tableUid,
+                            'tableName' => $tableName,
+                            'entity' => $entity,
+                        ));
                 }
                 $data[$propertyNameLowercase] = $propertyValue;
             }
         }
+
 
         // We only update the entry if something has really changed. Speeding import drastically
         $entryHash = md5(serialize($data));
@@ -128,6 +133,16 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     }
 
     /**
+     * @param $tableName
+     * @param $tableUid
+     * @param array $data
+     */
+    public function addDataMap($tableName, $tableUid, array $data)
+    {
+        $this->dataMap[$tableName][$tableUid] = $data;
+    }
+
+    /**
      * @return void
      * @see \BZgA\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor
      */
@@ -135,7 +150,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     {
         $repository = $this->getRepository();
         $table = $this->dataMapFactory->getTableNameByClassName($repository->getObjectType());
-        $oldEntries = $repository->findOldEntriesByExternalUidsDiffForTable($table, $this->entries);
+        $oldEntries = $repository->findOldEntriesByExternalUidsDiffForTable($table, $this->externalUids);
 
         # Now we delete then entries via the datahandler, the actual deletion is done by a HOOK
         $cmd = array();
@@ -149,11 +164,11 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
 
     /**
-     * @return ArrayIterator
+     * @return ExternalIdObjectStorage
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->entries);
+        return $this->entries;
     }
 
     /**
@@ -170,13 +185,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      */
     abstract public function getRepository();
 
-    /**
-     * @param $uid
-     */
-    private function addEntryUid($uid)
-    {
-        $this->entries[] = (integer)$uid;
-    }
 
     /**
      * @param AbstractEntity $entity
@@ -184,25 +192,12 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      */
     private function getUid(AbstractEntity $entity)
     {
-        # @TODO: Is there a better solution to check?
+        # @TODO: Is there a better solution to check? Can we bind it directly to the object? At the moment i am getting an error
         if ($entity->_isNew()) {
-            return 'NEW'.uniqid();
+            return uniqid('NEW_');
         }
 
         return $entity->getUid();
-    }
-
-    /**
-     * @return void
-     */
-    private function initializeTypeConverters()
-    {
-        # @TODO: Move this to a dedicated class
-        $registeredTypeConverters = ExtensionManagementUtility::getRegisteredTypeConverters();
-        foreach ($registeredTypeConverters as $typeConverterClassName) {
-            // @TODO Maybe we have to use better the objectmanager for the DI-Graph
-            $this->typeConverters[] = GeneralUtility::makeInstance($typeConverterClassName);
-        }
     }
 
 

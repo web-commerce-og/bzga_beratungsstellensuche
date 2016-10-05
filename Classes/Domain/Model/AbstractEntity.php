@@ -5,11 +5,10 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity as CoreAbstractEntity;
 
-abstract class AbstractEntity extends CoreAbstractEntity
+abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterface, ExternalIdInterface
 {
 
-    use DummyTrait;
-    use ExternalIdTrait;
+    use DummyTrait, ExternalIdTrait;
 
     /**
      * The title of the category.

@@ -12,10 +12,10 @@ class DataHandlerProcessor
 {
 
     /**
-     * @param $table
-     * @param $id
-     * @param $recordToDelete
-     * @param $recordWasDeleted
+     * @param string $table
+     * @param integer $id
+     * @param integer $recordToDelete
+     * @param boolean $recordWasDeleted
      * @param DataHandler $tceMain
      */
     public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $tceMain)

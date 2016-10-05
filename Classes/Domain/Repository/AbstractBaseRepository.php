@@ -39,16 +39,22 @@ abstract class AbstractBaseRepository extends Repository
      */
     const PNDCONSULTING_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_pndconsulting';
 
+    /**
+     * @var string
+     */
+    const SYS_FILE_REFERENCE = 'sys_file_reference';
+
 
     /**
-     * @param $table
-     * @return array
+     * @param string $table
+     * @param array $entries
+     * @return array|NULL
      */
     public function findOldEntriesByExternalUidsDiffForTable($table, $entries)
     {
         $databaseConnection = $this->getDatabaseConnection();
         # We fetch all entries in database which has not been imported
-        $importedExternalUids = implode(',', $entries);
+        $importedExternalUids = implode(',', $databaseConnection->cleanIntArray($entries));
         $oldEntries = $databaseConnection->exec_SELECTgetRows('uid', $table,
             'deleted = 0 AND external_id NOT IN('.$importedExternalUids.')');
 

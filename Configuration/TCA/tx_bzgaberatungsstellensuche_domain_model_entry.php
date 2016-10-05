@@ -411,11 +411,8 @@ return array(
         'image' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.image',
-            'config' => array(
-                'type' => 'input',
-                'size' => 255,
-                'eval' => 'trim',
-            ),
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig('image',
+                array('maxitems' => 1)),
         ),
         'is_dummy_record' => array(
             'exclude' => 1,

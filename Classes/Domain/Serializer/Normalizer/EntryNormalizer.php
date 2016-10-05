@@ -4,14 +4,12 @@
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
 
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Category;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 use BZgA\BzgaBeratungsstellensuche\Utility\Utility;
-use SJBR\StaticInfoTables\Domain\Model\Language;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 
 class EntryNormalizer extends GetSetMethodNormalizer
 {
@@ -96,12 +94,17 @@ class EntryNormalizer extends GetSetMethodNormalizer
             return $objectStorage;
         };
 
+        $logoCallback = function ($logo) {
+            return new ImageLink($logo);
+        };
+
         $this->setDenormalizeCallbacks(
             array(
                 'state' => $stateCallback,
                 'religiousDenomination' => $religionCallback,
                 'pndLanguages' => $pndLanguagesCallback,
                 'categories' => $categoriesCallback,
+                'image' => $logoCallback,
             )
         );
 

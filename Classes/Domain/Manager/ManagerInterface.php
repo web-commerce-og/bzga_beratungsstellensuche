@@ -20,11 +20,5 @@ interface ManagerInterface
      */
     public function getRepository();
 
-    /**
-     * @param $externalId
-     * @return mixed
-     */
-    public function findOneByExternalId($externalId);
-
 
 }

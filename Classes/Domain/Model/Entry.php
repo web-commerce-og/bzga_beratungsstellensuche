@@ -79,11 +79,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
     protected $religiousDenomination;
 
     /**
-     * @var float
-     */
-    protected $distance = null;
-
-    /**
      * @var string
      */
     protected $contactPerson;
@@ -154,7 +149,7 @@ class Entry extends AbstractEntity implements GeopositionInterface
     protected $website;
 
     /**
-     * @var string
+     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     protected $image;
 
@@ -186,7 +181,7 @@ class Entry extends AbstractEntity implements GeopositionInterface
     /**
      * @var string
      */
-    protected $allLanguages = null;
+    protected $pndAllLanguages = null;
 
     /**
      */
@@ -320,7 +315,7 @@ class Entry extends AbstractEntity implements GeopositionInterface
      */
     public function getPndAllLanguages()
     {
-        if (null === $this->allLanguages) {
+        if (null === $this->pndAllLanguages) {
             if ($this->pndLanguages || $this->pndOtherLanguage) {
                 $allLanguages = array();
                 foreach ($this->pndLanguages as $pndLanguage) {
@@ -334,13 +329,13 @@ class Entry extends AbstractEntity implements GeopositionInterface
                     }
                 }
                 sort($allLanguages);
-                $this->allLanguages = implode(', ', $allLanguages);
+                $this->pndAllLanguages = implode(', ', $allLanguages);
             } else {
-                $this->allLanguages = '';
+                $this->pndAllLanguages = '';
             }
         }
 
-        return $this->allLanguages;
+        return $this->pndAllLanguages;
     }
 
     /**
@@ -765,7 +760,7 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @return string
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     public function getImage()
     {
@@ -773,7 +768,7 @@ class Entry extends AbstractEntity implements GeopositionInterface
     }
 
     /**
-     * @param string $image
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
      */
     public function setImage($image)
     {

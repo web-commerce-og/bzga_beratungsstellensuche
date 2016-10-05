@@ -9,6 +9,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
 {
     /**
+     * @var string
+     */
+    const MESSAGE = 'allow_url_fopen must be on or curl must be enabled to allow
+				communication between TYPO3 and the remote Server to fetch the XML-Url.';
+
+    /**
      * Checks whether allow_url_fopen is enabled.
      *
      * @see typo3/sysext/reports/interfaces/tx_reports_StatusProvider::getStatus()
@@ -23,8 +29,7 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
         if (!ini_get('allow_url_fopen') && !$GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse']) {
             $severity = Status::ERROR;
             $value = 'Off';
-            $message = 'allow_url_fopen must be on or curl must be enabled to allow
-				communication between TYPO3 and the remote Server to fetch the XML-Url.';
+            $message = self::MESSAGE;
         }
 
         $reports[] = GeneralUtility::makeInstance(
