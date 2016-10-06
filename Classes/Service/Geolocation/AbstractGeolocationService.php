@@ -4,6 +4,7 @@
 namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
 
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use BZgA\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
 use BZgA\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
 
@@ -62,14 +63,14 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     }
 
     /**
-     * @param float $latitude
-     * @param float $longitude
-     * @param int $radius
+     * @param GeoPositionDemandInterface $demandPosition
+     * @param $table
      * @param string $alias
+     * @return mixed
      */
-    public function getDistanceSqlField($latitude, $longitude, $radius, $alias = 'distance')
+    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
     {
-        return sprintf(self::DISTANCE_SQL_FIELD, $latitude, $longitude, $radius).' AS '.$alias;
+        return sprintf(self::DISTANCE_SQL_FIELD, $demandPosition->getLatitude(), $demandPosition->getLongitude(), $demandPosition->getKilometers()).' AS '.$alias;
     }
 
 }

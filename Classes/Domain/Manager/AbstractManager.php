@@ -12,6 +12,7 @@ use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use BZgA\BzgaBeratungsstellensuche\Persistence\ExternalIdObjectStorage;
 use IteratorAggregate;
 use Countable;
+use TYPO3\CMS\Core\SingletonInterface;
 
 abstract class AbstractManager implements ManagerInterface, Countable, IteratorAggregate
 {
@@ -29,7 +30,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     /**
      * @var array
      */
-    private $dataMap = array();
+    protected $dataMap = array();
 
     /**
      * @var ExternalIdObjectStorage
@@ -39,7 +40,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     /**
      * @var array
      */
-    private $externalUids;
+    private $externalUids = array();
 
     /**
      * @var \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap
@@ -111,7 +112,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         }
 
 
-        // We only update the entry if something has really changed. Speeding import drastically
+        // We only update the entry if something has really changed. Speeding up import drastically
         $entryHash = md5(serialize($data));
         if (0 === $this->getRepository()->countByExternalIdAndHash($entity->getExternalId(), $entryHash)) {
             $data['hash'] = $entryHash;

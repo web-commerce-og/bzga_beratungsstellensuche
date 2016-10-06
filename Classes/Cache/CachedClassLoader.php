@@ -72,8 +72,9 @@ class CachedClassLoader
             $classCacheManager = $objectManager->get(ClassCacheManager::class);
             $classCache = $cacheManager->getCache(static::$extensionKey);
             foreach ($entities as $entity) {
-                if ($className === static::$namespace.$entity) {
-                    $entryIdentifier = 'DomainModel'.$entity;
+                $entityClassName = static::$namespace.str_replace('/', '\\', $entity);
+                if ($className === $entityClassName) {
+                    $entryIdentifier = 'DomainModel'.str_replace('/', '', $entity);
                     if (!$classCache->has($entryIdentifier)) {
                         // The class cache needs to be rebuilt
                         $classCacheManager->reBuild();

@@ -17,6 +17,8 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\SerializerInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 
 class EntryNormalizerTest extends UnitTestCase
 {
@@ -52,18 +54,29 @@ class EntryNormalizerTest extends UnitTestCase
     protected $categoryRepository;
 
     /**
+     * @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $signalSlotDispatcher;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
-        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, array('findOneByExternalId'), array(), '', false);
-        $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByExternalId'), array(), '', false);
-        $this->categoryRepository = $this->getMock(CategoryRepository::class, array('findOneByExternalId'), array(), '', false);
-        $this->religionRepository = $this->getMock(ReligionRepository::class, array('findOneByExternalId'), array(), '', false);
+        $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
+        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, array('findOneByExternalId'),
+            array(), '', false);
+        $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByExternalId'), array(), '',
+            false);
+        $this->categoryRepository = $this->getMock(CategoryRepository::class, array('findOneByExternalId'), array(), '',
+            false);
+        $this->religionRepository = $this->getMock(ReligionRepository::class, array('findOneByExternalId'), array(), '',
+            false);
         $this->serializer = $this->getMock(__NAMESPACE__.'\SerializerNormalizer');
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $this->subject = new EntryNormalizer($classMetadataFactory, new EntryNameConverter());
         $this->subject->setSerializer($this->serializer);
+        $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->subject, 'countryZoneRepository', $this->countryZoneRepository);
         $this->inject($this->subject, 'religionRepository', $this->religionRepository);
         $this->inject($this->subject, 'languageRepository', $this->languageRepository);
@@ -82,8 +95,8 @@ class EntryNormalizerTest extends UnitTestCase
             'titel' => 'Title',
             'untertitel' => 'Subtitle',
             'ansprechpartner' => 'Contact Person',
-            'mapx' => 'Latitude',
-            'mapy' => 'Longitude',
+            'mapy' => 'Latitude',
+            'mapx' => 'Longitude',
             'kurztext' => 'Teaser',
             'plz' => 'Zip',
             'ort' => 'City',
@@ -128,7 +141,7 @@ class EntryNormalizerTest extends UnitTestCase
         self::assertSame('Teaser', $object->getTeaser());
         self::assertSame('Zip', $object->getZip());
         self::assertSame('City', $object->getCity());
-        self::assertSame('Image', $object->getImage());
+        self::assertInstanceOf(ImageLink::class, $object->getImage());
         self::assertSame('Other language', $object->getPndOtherLanguage());
         self::assertSame('Street', $object->getStreet());
         self::assertSame('Telephone', $object->getTelephone());

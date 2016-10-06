@@ -13,7 +13,7 @@
 			<trans-unit id="next-page" xml:space="preserve">
 				<source>nächste Seite</source>
 			</trans-unit>
-			<trans-unit id="consulting-agreement" xml:space="preserve">
+			<trans-unit id="consulting-agreement-form-label" xml:space="preserve">
 				<source>Beratungsschein</source>
 			</trans-unit>
 			<trans-unit id="consulting-agreement-notice-headline" xml:space="preserve">
@@ -22,7 +22,7 @@
 			<trans-unit id="consulting-agreement-notice-body" xml:space="preserve">
 				<source>Wenn Sie hier ein Häkchen setzen, werden alle Beratungsstellen angezeigt, die einen Beratungsschein ausstellen. Der Beratungsschein ist eine gesetzlich vorgeschriebene Voraussetzung für einen straffreien Schwangerschaftsabbruch. Zum Hintergrund: In dieser Datenbank finden Sie zum einen Beratungsstellen, die eine staatliche Anerkennung nach den §§ 5 und 6 des Schwangerschaftskonfliktgesetztes (SchKG) haben und deshalb einen Beratungsschein ausstellen. Zum anderen werden Beratungsstellen angezeigt, die nach § 2 SchKG beraten, staatlich gefördert werden, aber keinen Beratungsschein ausgeben.</source>
 			</trans-unit>
-			<trans-unit id="consulting-agreement-pnd" xml:space="preserve">
+			<trans-unit id="consulting-agreement-pnd-form-label" xml:space="preserve">
 				<source>Beratung zu Pränataldiagnostik</source>
 			</trans-unit>
 			<trans-unit id="cosulting-agreement-pnd-notice-headline" xml:space="preserve">
@@ -31,26 +31,38 @@
 			<trans-unit id="consulting-agreement-pnd-notice-body" xml:space="preserve">
 				<source>Beratungsstellen, die über Beraterinnen und Berater mit spezieller Zusatzqualifikation im Bereich Pränataldiagnostik verfügen und sich als Schwerpunktberatungsstellen für Pränataldiagnostik verstehen.</source>
 			</trans-unit>
-			<trans-unit id="mother-and-child" xml:space="preserve">
+			<trans-unit id="mother-and-child-form-label" xml:space="preserve">
 				<source>Vergabe von Mitteln der Bundesstiftung Mutter und Kind</source>
 			</trans-unit>
 			<trans-unit id="search-btn" xml:space="preserve">
 				<source>suchen</source>
 			</trans-unit>
-			<trans-unit id="religions" xml:space="preserve">
+			<trans-unit id="religions-form-label" xml:space="preserve">
 				<source>Konfession</source>
 			</trans-unit>
 			<trans-unit id="please-choose" xml:space="preserve">
 				<source>Bitte wählen</source>
 			</trans-unit>
-			<trans-unit id="kilometers" xml:space="preserve">
+			<trans-unit id="kilometers-form-label" xml:space="preserve">
 				<source>Umkreis (in km)</source>
 			</trans-unit>
-			<trans-unit id="location" xml:space="preserve">
+			<trans-unit id="location-form-label" xml:space="preserve">
 				<source>Standort</source>
 			</trans-unit>
-			<trans-unit id="keywords" xml:space="preserve">
+			<trans-unit id="keywords-form-label" xml:space="preserve">
 				<source>Schlüsselbegriffe</source>
+			</trans-unit>
+			<trans-unit id="pnd-consulting" xml:space="preserve">
+				<source>Unsere Beratungsstelle versteht sich als Schwerpunktberatungsstelle im Bereich Pränataldiagnostik.</source>
+			</trans-unit>
+			<trans-unit id="pnd-consulting-languages" xml:space="preserve">
+				<source>Wir bieten PND-Beratung in folgenden Sprachen an: %s</source>
+			</trans-unit>
+			<trans-unit id="mother-and-child" xml:space="preserve">
+				<source>Über diese Beratungsstelle können Mittel der "Bundesstiftung Mutter und Kind" vergeben werden.</source>
+			</trans-unit>
+			<trans-unit id="consulting-agreement" xml:space="preserve">
+				<source>Diese Beratungsstelle vergibt einen Beratungsschein nach §§5 und 6 des Schwangerschaftkonfliktgesetzes (SchKG).</source>
 			</trans-unit>
         </body>
     </file>

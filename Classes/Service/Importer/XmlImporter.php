@@ -29,7 +29,8 @@ class XmlImporter extends AbstractImporter
     {
         $sxe = new \SimpleXMLIterator($content);
 
-        $this->emitPreImportSignal($sxe);
+        $signalArguments = array($this, $sxe, $pid, $this->serializer);
+        $this->emitImportSignal($signalArguments, Events::PRE_IMPORT_SIGNAL);
 
         # Import religions
         foreach ($sxe->konfessionen as $religions) {
@@ -82,24 +83,17 @@ class XmlImporter extends AbstractImporter
             }
         }
         # In the end we are calling all the managers to persist, this saves a lot of memory
+        $this->emitImportSignal($signalArguments, Events::POST_IMPORT_SIGNAL);
         $this->persist();
-        $this->emitPostImportSignal($sxe);
     }
 
     /**
-     * @param \SimpleXMLIterator $sxe
+     * @param array $signalArguments
+     * @param string $signal
      */
-    private function emitPreImportSignal(\SimpleXMLIterator $sxe)
+    private function emitImportSignal(array $signalArguments, $signal)
     {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, Events::PRE_IMPORT_SIGNAL, array($this, $sxe));
-    }
-
-    /**
-     * @param \SimpleXMLIterator $sxe
-     */
-    private function emitPostImportSignal(\SimpleXMLIterator $sxe)
-    {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, Events::POST_IMPORT_SIGNAL, array($this, $sxe));
+        $this->signalSlotDispatcher->dispatch(static::class, $signal, $signalArguments);
     }
 
 }

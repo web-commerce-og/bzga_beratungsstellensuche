@@ -5,9 +5,17 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
 
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Core\Utility\DebugUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 abstract class AbstractBaseRepository extends Repository
 {
+
+    /**
+     * @var array
+     */
+    protected $defaultOrderings = array('title' => QueryInterface::ORDER_ASCENDING);
 
     /**
      * @var string
@@ -44,6 +52,28 @@ abstract class AbstractBaseRepository extends Repository
      */
     const SYS_FILE_REFERENCE = 'sys_file_reference';
 
+    /**
+     * Debugs a SQL query from a QueryResult
+     *
+     * @param QueryResultInterface $queryResult
+     * @param boolean $explainOutput
+     * @return void
+     */
+    public function debugQuery(QueryResultInterface $queryResult, $explainOutput = false)
+    {
+        $databaseConnection = $this->getDatabaseConnection();
+        $databaseConnection->debugOutput = 2;
+        if ($explainOutput) {
+            $databaseConnection->explainOutput = true;
+        }
+        $databaseConnection->store_lastBuiltQuery = true;
+        $queryResult->toArray();
+        DebugUtility::debug($databaseConnection->debug_lastBuiltQuery);
+
+        $databaseConnection->store_lastBuiltQuery = false;
+        $databaseConnection->explainOutput = false;
+        $databaseConnection->debugOutput = false;
+    }
 
     /**
      * @param string $table
@@ -55,15 +85,19 @@ abstract class AbstractBaseRepository extends Repository
         $databaseConnection = $this->getDatabaseConnection();
         # We fetch all entries in database which has not been imported
         $importedExternalUids = implode(',', $databaseConnection->cleanIntArray($entries));
-        $oldEntries = $databaseConnection->exec_SELECTgetRows('uid', $table,
-            'deleted = 0 AND external_id NOT IN('.$importedExternalUids.')');
+        if ($importedExternalUids) {
+            $oldEntries = $databaseConnection->exec_SELECTgetRows('uid', $table,
+                'deleted = 0 AND external_id NOT IN('.$importedExternalUids.')');
 
-        return $oldEntries;
+            return $oldEntries;
+        }
+
+        return array();
     }
 
     /**
-     * @param $externalId
-     * @param $hash
+     * @param integer $externalId
+     * @param string $hash
      * @return integer
      */
     public function countByExternalIdAndHash($externalId, $hash)
@@ -116,5 +150,6 @@ abstract class AbstractBaseRepository extends Repository
     {
         return $GLOBALS['TYPO3_DB'];
     }
+
 
 }

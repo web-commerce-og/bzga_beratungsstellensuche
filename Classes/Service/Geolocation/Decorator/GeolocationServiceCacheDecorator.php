@@ -7,6 +7,7 @@ use BZgA\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterfa
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface as CacheInterface;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use BZgA\BzgaBeratungsstellensuche\Factories\CacheFactory;
 
 class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
@@ -47,16 +48,16 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
         return $address;
     }
 
+
     /**
-     * @param float $latitude
-     * @param float $longitude
-     * @param int $radius
+     * @param GeoPositionDemandInterface $demandPosition
+     * @param string $table
      * @param string $alias
      * @return mixed
      */
-    public function getDistanceSqlField($latitude, $longitude, $radius, $alias = 'distance')
+    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
     {
-        return $this->geolocationService->getDistanceSqlField($latitude, $latitude, $radius, $alias);
+        return $this->geolocationService->getDistanceSqlField($demandPosition, $alias);
     }
 
     /**

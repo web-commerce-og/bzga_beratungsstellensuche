@@ -5,5 +5,57 @@
 <f:section name="main">
     <bzga:title>{entry.title}</bzga:title>
     <h1>{entry.title}</h1>
-
+    <f:if condition="{entry.image}">
+        <f:image image="{entry.image}"/>
+    </f:if>
+    <f:if condition="{entry.address}">
+        {entry.address}
+    </f:if>
+    <f:if condition="{entry.telephone}">
+        {entry.telephone}
+    </f:if>
+    <f:if condition="{entry.telefax}">
+        {entry.telefax}
+    </f:if>
+    <f:if condition="{entry.email}">
+        <f:link.email email="{entry.email}"/>
+    </f:if>
+    <f:if condition="{entry.website}">
+        <f:link.external uri="{entry.website}"/>
+    </f:if>
+    <f:if condition="{entry.notice}">
+        <f:format.html>{entry.notice}</f:format.html>
+    </f:if>
+    <f:if condition="{entry.description}">
+        <f:format.html>{entry.description}</f:format.html>
+    </f:if>
+    <f:if condition="{entry.pndConsulting}">
+        <f:translate key="pnd-consulting"/>
+        <f:translate key="pnd-consulting-languages" arguments="{0: entry.pndAllLanguages}"/>
+    </f:if>
+    <f:if condition="{entry.motherAndChild}">
+        <f:translate key="mother-and-child"/>
+    </f:if>
+    <f:if condition="{entry.categories}">
+        <bzga:implode delimiter=", ">{entry.categories}</bzga:implode>
+    </f:if>
+    <f:if condition="{entry.association}">
+        {entry.association}
+    </f:if>
+    <f:if condition="{entry.institution}">
+        {entry.institution}
+    </f:if>
+    <f:if condition="{entry.hotline}">
+        {entry.hotline}
+    </f:if>
+    <f:if condition="{entry.contactEmail}">
+        {entry.contactEmail}
+    </f:if>
+    <f:if condition="{entry.contactPerson}">
+        {entry.contactPerson}
+    </f:if>
+    <f:if condition="{entry.teaser}">
+        <f:format.nl2br>{entry.teaser}</f:format.nl2br>
+    </f:if>
+    <bzga:widget.map demand="{demand}" />
 </f:section>

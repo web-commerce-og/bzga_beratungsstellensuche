@@ -29,10 +29,10 @@ return array(
         'searchFields' => 'title',
     ),
     'interface' => array(
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, entries, external_id',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, external_id',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, entries, external_id,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, external_id,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
@@ -65,7 +65,9 @@ return array(
             ),
         ),
         'l10n_diffsource' => array(
-            extr
+            'config' => array(
+                'type' => 'passthrough',
+            ),
         ),
         't3ver_label' => array(
             'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
@@ -138,32 +140,6 @@ return array(
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.is_dummy_record',
             'config' => array(
                 'type' => 'check',
-            ),
-        ),
-        'entries' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_category.entries',
-            'config' => Array(
-                'type' => 'select',
-                'internal_type' => 'db',
-                'foreign_table' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
-                'foreign_table_where' => 'ORDER BY tx_bzgaberatungsstellensuche_domain_model_entry.title asc',
-                'foreign_sortby' => 'tx_bzgaberatungsstellensuche_domain_model_entry.title',
-                'size' => 20,
-                'autoSizeMax' => 20,
-                'minitems' => 0,
-                'maxitems' => 500,
-                'allowed' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
-                'prepend_tname' => 1,
-                'MM' => 'tx_bzgaberatungsstellensuche_domain_model_entry_category_mm',
-                'MM_match_fields' => Array(
-                    'tablenames' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
-                ),
-                'wizards' => array(
-                    'suggest' => array(
-                        'type' => 'suggest',
-                    ),
-                ),
             ),
         ),
     ),

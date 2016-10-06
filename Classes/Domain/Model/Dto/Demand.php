@@ -4,10 +4,10 @@
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 
-class Demand extends AbstractValueObject implements GeopositionInterface
+class Demand extends AbstractValueObject implements GeoPositionDemandInterface
 {
 
     use GeopositionTrait;
@@ -31,6 +31,11 @@ class Demand extends AbstractValueObject implements GeopositionInterface
      * @var \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion
      */
     protected $religion;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category>
+     */
+    protected $categories;
 
     /**
      * @var integer
@@ -57,6 +62,31 @@ class Demand extends AbstractValueObject implements GeopositionInterface
      * @inject
      */
     protected $geolocationService;
+
+    /**
+     * Demand constructor.
+     */
+    public function __construct()
+    {
+        $this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+    }
+
 
     /**
      * @return string

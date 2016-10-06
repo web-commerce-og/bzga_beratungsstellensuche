@@ -1,4 +1,7 @@
 <div class="form-group">
-    <label for="religion"><f:translate key="religions" /></label>
-    <f:form.select property="religion" id="religion" prependOptionLabel="{f:translate(key: 'please-choose')}" prependOptionValue="" options="{religions}" />
+    <label for="religion">
+        <f:translate key="religions-form-label"/>
+    </label>
+    <f:form.select property="religion" id="religion" prependOptionLabel="{f:translate(key: 'please-choose')}"
+                   prependOptionValue="" options="{religions}"/>
 </div>

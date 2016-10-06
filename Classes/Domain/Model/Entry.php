@@ -5,6 +5,7 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Model\Language;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Entry extends AbstractEntity implements GeopositionInterface
 {
@@ -187,15 +188,8 @@ class Entry extends AbstractEntity implements GeopositionInterface
      */
     public function __construct()
     {
-        $this->initStorageObjects();
-    }
-
-    /**
-     */
-    public function initStorageObjects()
-    {
-        $this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->pndLanguages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->categories = new ObjectStorage();
+        $this->pndLanguages = new ObjectStorage();
     }
 
     /**
@@ -773,13 +767,5 @@ class Entry extends AbstractEntity implements GeopositionInterface
     public function setImage($image)
     {
         $this->image = $image;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getMap()
-    {
-        return $this->latitude && $this->longitude ? true : false;
     }
 }

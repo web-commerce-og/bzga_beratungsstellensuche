@@ -45,7 +45,9 @@ class TitleViewHelper extends AbstractViewHelper
         if ('BE' === TYPO3_MODE) {
             return '';
         }
-        if (false === empty($this->arguments['title'])) {
+
+        $typoscriptFrontendController = $this->getTyposcriptFrontendController();
+        if ($this->arguments['title']) {
             $title = $this->arguments['title'];
         } else {
             $title = $this->renderChildren();
@@ -57,14 +59,23 @@ class TitleViewHelper extends AbstractViewHelper
             $this->controllerContext->getRequest()->getControllerName(),
             $this->controllerContext->getRequest()->getControllerActionName())
         ) {
-            $GLOBALS['TSFE']->getPageRenderer()->setTitle($title);
+            $typoscriptFrontendController->getPageRenderer()->setTitle($title);
             if (true === $this->arguments['setIndexedDocTitle']) {
-                $GLOBALS['TSFE']->indexedDocTitle = $title;
+                $typoscriptFrontendController->indexedDocTitle = $title;
             }
         } else {
-            $GLOBALS['TSFE']->content = preg_replace('#<title>.*<\/title>#', '<title>'.htmlentities($title).'</title>',
-                $GLOBALS['TSFE']->content);
+            $typoscriptFrontendController->content = preg_replace('#<title>.*<\/title>#',
+                '<title>'.htmlentities($title).'</title>',
+                $typoscriptFrontendController->content);
         }
+    }
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    private function getTyposcriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 
 }

@@ -1,10 +1,10 @@
 plugin.tx_bzgaberatungsstellensuche {
     view {
-        # cat=plugin.tx_tx_bzgaberatungsstellensuche/file; type=string; label=Path to template root (FE)
+        # cat=plugin.tx_bzgaberatungsstellensuche/file; type=string; label=Path to template root (FE)
         templateRootPath = EXT:bzga_beratungsstellensuche/Resources/Private/Templates/
-        # cat=plugin.tx_tx_bzgaberatungsstellensuche/file; type=string; label=Path to template partials (FE)
+        # cat=plugin.tx_bzgaberatungsstellensuche/file; type=string; label=Path to template partials (FE)
         partialRootPath = EXT:bzga_beratungsstellensuche/Resources/Private/Partials/
-        # cat=plugin.tx_tx_bzgaberatungsstellensuche/file; type=string; label=Path to template layouts (FE)
+        # cat=plugin.tx_bzgaberatungsstellensuche/file; type=string; label=Path to template layouts (FE)
         layoutRootPath = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
     }
     settings {

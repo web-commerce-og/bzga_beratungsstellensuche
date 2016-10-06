@@ -6,14 +6,14 @@ namespace BZgA\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConver
 
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 
-abstract class AbstractNameConverterTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractNameConverterTest extends UnitTestCase
 {
     /**
      * @var NameConverterInterface
      */
     protected $subject;
-
 
     /**
      * @test

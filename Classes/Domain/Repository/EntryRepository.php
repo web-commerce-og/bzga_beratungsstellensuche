@@ -10,17 +10,9 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use BZgA\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
-use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
 class EntryRepository extends AbstractBaseRepository
 {
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser
-     * @inject
-     */
-    protected $queryParser;
 
     /**
      * @var \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
@@ -35,10 +27,7 @@ class EntryRepository extends AbstractBaseRepository
     public function findDemanded(Demand $demand)
     {
         $query = $this->createQuery();
-
         $constraints = $this->createCoordsConstraints($demand, $query, $demand->getKilometers());
-
-
         if ($demand->isMotherAndChild()) {
             $constraints[] = $query->equals('motherAndChild', 1);
         }
@@ -76,6 +65,16 @@ class EntryRepository extends AbstractBaseRepository
             }
         }
 
+        if($demand->getCategories()->count() > 0) {
+            $categoryConstraints = array();
+            foreach($demand->getCategories() as $category) {
+                $categoryConstraints[] = $query->contains('categories', $category);
+            }
+            if(!empty($categoryConstraints)) {
+                $constraints[] = $query->logicalOr($categoryConstraints);
+            }
+        }
+
         // Call hook functions for additional constraints
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'])) {
             $params = array(
@@ -93,88 +92,10 @@ class EntryRepository extends AbstractBaseRepository
             $query->matching($query->logicalAnd($constraints));
         }
 
-        $sql = $this->createSqlFromQuery($query, $demand);
+        return $query->execute();
 
-        return $query->statement($sql)->execute();
     }
 
-    /**
-     * @param QueryInterface $query
-     * @param Demand $demand
-     * @return int|string
-     */
-    private function createSqlFromQuery(QueryInterface $query, Demand $demand)
-    {
-        $databaseConnection = $this->getDatabaseConnection();
-
-        list($hash, $parameters) = $this->queryParser->preparseQuery($query);
-        $statementParts = $this->queryParser->parseQuery($query);
-
-        // Limit and offset are not cached to allow caching of pagebrowser queries.
-        $statementParts['limit'] = ((int)$query->getLimit() ?: null);
-        $statementParts['offset'] = ((int)$query->getOffset() ?: null);
-
-        $tableNameForEscape = (reset($statementParts['tables']) ?: 'foo');
-        foreach ($parameters as $parameterPlaceholder => $parameter) {
-            if ($parameter instanceof LazyLoadingProxy) {
-                $parameter = $parameter->_loadRealInstance();
-            }
-
-            if ($parameter instanceof \DateTime) {
-                $parameter = $parameter->format('U');
-            } elseif ($parameter instanceof DomainObjectInterface) {
-                $parameter = (int)$parameter->getUid();
-            } elseif (is_array($parameter)) {
-                $subParameters = array();
-                foreach ($parameter as $subParameter) {
-                    $subParameters[] = $databaseConnection->fullQuoteStr($subParameter, $tableNameForEscape);
-                }
-                $parameter = implode(',', $subParameters);
-            } elseif ($parameter === null) {
-                $parameter = 'NULL';
-            } elseif (is_bool($parameter)) {
-                return ($parameter === true ? 1 : 0);
-            } else {
-                $parameter = $databaseConnection->fullQuoteStr((string)$parameter, $tableNameForEscape);
-            }
-
-            $statementParts['where'] = str_replace($parameterPlaceholder, $parameter, $statementParts['where']);
-        }
-
-        $statementParts = array(
-            'selectFields' => implode(' ', $statementParts['keywords']).' '.implode(',', $statementParts['fields']),
-            'fromTable' => implode(' ', $statementParts['tables']).' '.implode(' ', $statementParts['unions']),
-            'whereClause' => (!empty($statementParts['where']) ? implode('', $statementParts['where']) : '1')
-                .(!empty($statementParts['additionalWhereClause'])
-                    ? ' AND '.implode(' AND ', $statementParts['additionalWhereClause'])
-                    : ''
-                ),
-            'orderBy' => (!empty($statementParts['orderings']) ? implode(', ', $statementParts['orderings']) : ''),
-            'limit' => ($statementParts['offset'] ? $statementParts['offset'].', ' : '')
-                .($statementParts['limit'] ? $statementParts['limit'] : ''),
-        );
-
-        if ($demand->getLocation()) {
-            $distanceField = $this->geolocationService->getDistanceSqlField(
-                $demand->getLatitude(),
-                $demand->getLongitude(),
-                $demand->getKilometers()
-            );
-            $statementParts['selectFields'] = $distanceField.','.$statementParts['selectFields'];
-            $statementParts['orderBy'] = 'distance';
-        }
-
-        $sql = $databaseConnection->SELECTquery(
-            $statementParts['selectFields'],
-            $statementParts['fromTable'],
-            $statementParts['whereClause'],
-            '',
-            $statementParts['orderBy'],
-            $statementParts['limit']
-        );
-
-        return $sql;
-    }
 
     /**
      * @param GeopositionInterface $userLocation

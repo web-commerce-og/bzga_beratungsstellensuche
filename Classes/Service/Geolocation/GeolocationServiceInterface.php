@@ -4,6 +4,7 @@
 namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
 
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 
 interface GeolocationServiceInterface
@@ -16,13 +17,12 @@ interface GeolocationServiceInterface
     public function findAddressByDemand(Demand $demand);
 
     /**
-     * @param float $latitude
-     * @param float $longitude
-     * @param integer $radius
+     * @param GeoPositionDemandInterface $demandPosition
+     * @param string $table
      * @param string $alias
      * @return mixed
      */
-    public function getDistanceSqlField($latitude, $longitude, $radius, $alias = 'distance');
+    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance');
 
 
     /**

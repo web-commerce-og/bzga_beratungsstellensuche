@@ -10,6 +10,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
+use BZgA\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 
 class ImageLinkConverter implements TypeConverterBeforeInterface
 {
@@ -79,10 +80,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             return false;
         }
 
-        if (!$source->getExternalUrl()) {
-            return false;
-        }
-
         return true;
     }
 
@@ -94,25 +91,12 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     public function convert($source, array $configuration = null)
     {
+        // First of all we delete the old references
         $entity = $configuration['entity'];
-        /* @var $entity \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry */
-        // @TODO: Make this mockable via vfstream
-        $imageContent = GeneralUtility::getUrl($source->getExternalUrl());
-        $imageInfo = getimagesizefromstring($imageContent);
-        $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
-        $pathToUploadFile = $this->tempFolder.GeneralUtility::stdAuthCode($entity->getExternalId()).'.'.$extension;
+        /* @var $entity \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry|ExternalIdInterface */
 
-
-        if ($error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent)) {
-            throw new TypeConverterException($error, 1399312443);
-        };
-
-
-        $falFile = $this->importResource($pathToUploadFile);
-        $fileReferenceUid = uniqid('NEW_');
         $fileReferenceData = array(
             'table_local' => 'sys_file',
-            'uid_local' => $falFile->getUid(),
             'tablenames' => $configuration['tableName'],
             'uid_foreign' => $configuration['tableUid'],
             'fieldname' => 'image',
@@ -123,12 +107,48 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             $this->deleteOldFileReferences($fileReferenceData);
         }
 
+        // Check if we have no image url, return 0 if not
+        if ('' === $source->getExternalUrl()) {
+            return 0;
+        }
+
+
+        // Download the file
+        $pathToUploadFile = $this->downloadFile($source, $entity);
+
+
+        $falFile = $this->importResource($pathToUploadFile);
+        $fileReferenceUid = uniqid('NEW_');
+        $fileReferenceData['uid_local'] = $falFile->getUid();
+
         $manager = $configuration['manager'];
         /* @var $manager \Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager */
         $manager->addDataMap('sys_file_reference', $fileReferenceUid, $fileReferenceData);
 
         return $fileReferenceUid;
 
+    }
+
+    /**
+     * @param ImageLink $source
+     * @param ExternalIdInterface $entity
+     * @return string
+     * @throws TypeConverterException
+     */
+    private function downloadFile(ImageLink $source, ExternalIdInterface $entity)
+    {
+        // @TODO: Make this mockable via vfstream
+        $imageContent = GeneralUtility::getUrl($source->getExternalUrl());
+
+        $imageInfo = getimagesizefromstring($imageContent);
+        $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
+        $pathToUploadFile = $this->tempFolder.GeneralUtility::stdAuthCode($entity->getExternalId()).'.'.$extension;
+
+        if ($error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent)) {
+            throw new TypeConverterException($error, 1399312443);
+        }
+
+        return $pathToUploadFile;
     }
 
     /**
@@ -162,13 +182,17 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     private function deleteOldFileReferences(array $fileReferenceData)
     {
-        unset($fileReferenceData['uid_local']);
+        if (isset($fileReferenceData['uid_local'])) {
+            unset($fileReferenceData['uid_local']);
+        }
+
+        $databaseConnection = $this->getDatabaseConnection();
 
         $where = array();
         foreach ($fileReferenceData as $key => $value) {
-            $where[] = $key.'='.$this->getDatabaseConnection()->fullQuoteStr($value, 'sys_file_reference');
+            $where[] = $key.'='.$databaseConnection->fullQuoteStr($value, 'sys_file_reference');
         }
-        $this->getDatabaseConnection()->exec_DELETEquery('sys_file_reference', implode(' AND ', $where));
+        $databaseConnection->exec_DELETEquery('sys_file_reference', implode(' AND ', $where));
     }
 
     /**

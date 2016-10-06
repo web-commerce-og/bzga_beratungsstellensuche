@@ -153,6 +153,9 @@
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.pnd_other_language" xml:space="preserve">
 				<source>PND andere Sprachen</source>
 			</trans-unit>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_pndconsulting" xml:space="preserve">
+				<source>PND-Beratung</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

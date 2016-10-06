@@ -45,6 +45,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['entities'] = array(
     'Entry',
     'Category',
     'Religion',
+    'Dto/Demand'
 );
 
 # Caching of user requests

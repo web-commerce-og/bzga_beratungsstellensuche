@@ -10,6 +10,7 @@ use BZgA\BzgaBeratungsstellensuche\Utility\Utility;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
+use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 
 class EntryNormalizer extends GetSetMethodNormalizer
 {
@@ -37,7 +38,6 @@ class EntryNormalizer extends GetSetMethodNormalizer
      */
     protected $languageRepository;
 
-
     /**
      * EntryNormalizer constructor.
      * @param null|\Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface $classMetadataFactory
@@ -64,38 +64,22 @@ class EntryNormalizer extends GetSetMethodNormalizer
 
         $pndLanguagesCallback = function () {
             $array = func_get_args();
-            $objectStorage = new ObjectStorage();
-            if (is_array($array[0])) {
-                foreach ($array[0] as $key => $item) {
-                    if (is_array($item)) {
-                        foreach ($item as $id) {
-                            $objectStorage->attach($this->languageRepository->findOneByExternalId($id));
-                        }
-                    }
-                }
-            }
 
-            return $objectStorage;
+            return self::convertToObjectStorage($this->languageRepository, $array);
         };
 
         $categoriesCallback = function () {
             $array = func_get_args();
-            $objectStorage = new ObjectStorage();
-            if (is_array($array[0])) {
-                foreach ($array[0] as $key => $item) {
-                    if (is_array($item)) {
-                        foreach ($item as $id) {
-                            $objectStorage->attach($this->categoryRepository->findOneByExternalId($id));
-                        }
-                    }
-                }
-            }
 
-            return $objectStorage;
+            return self::convertToObjectStorage($this->categoryRepository, $array);
         };
 
         $logoCallback = function ($logo) {
             return new ImageLink($logo);
+        };
+
+        $floatCallback = function ($value) {
+            return (float)$value;
         };
 
         $this->setDenormalizeCallbacks(
@@ -105,10 +89,33 @@ class EntryNormalizer extends GetSetMethodNormalizer
                 'pndLanguages' => $pndLanguagesCallback,
                 'categories' => $categoriesCallback,
                 'image' => $logoCallback,
+                'latitude' => $floatCallback,
+                'longitude' => $floatCallback,
             )
         );
 
         return parent::prepareForDenormalization($data);
+    }
+
+    /**
+     * @param RepositoryInterface $repository
+     * @param array $array
+     * @return ObjectStorage
+     */
+    public static function convertToObjectStorage(RepositoryInterface $repository, array $array)
+    {
+        $objectStorage = new ObjectStorage();
+        if (is_array($array[0])) {
+            foreach ($array[0] as $key => $item) {
+                if (is_array($item)) {
+                    foreach ($item as $id) {
+                        $objectStorage->attach($repository->findOneByExternalId($id));
+                    }
+                }
+            }
+        }
+
+        return $objectStorage;
     }
 
     /**

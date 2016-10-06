@@ -16,7 +16,6 @@ abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConv
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
      */
     protected $signalSlotDispatcher;
 
@@ -42,6 +41,7 @@ abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConv
     public function __construct(array $attributes = null, $lowerCamelCase = true)
     {
         parent::__construct($attributes, $lowerCamelCase);
+        // @TODO Working with DI
         if (!$this->signalSlotDispatcher instanceof Dispatcher) {
             $this->signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         }

@@ -22,6 +22,8 @@ use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Model\Language;
 use SJBR\StaticInfoTables\Domain\Repository\LanguageRepository;
+use BZgA\BzgaBeratungsstellensuche\Domain\Repository\PndConsultingRepository;
+use BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -105,9 +107,18 @@ class XmlImporterTest extends UnitTestCase
 
     /**
      * @var CountryZoneRepository
-     * @inject
      */
     protected $countryZoneRepository;
+
+    /**
+     * @var PndConsultingRepository
+     */
+    protected $pndConsultingRepository;
+
+    /**
+     * @var EntryRepository
+     */
+    protected $entryRepository;
 
     /**
      * @var Dispatcher
@@ -132,6 +143,7 @@ class XmlImporterTest extends UnitTestCase
 
 
         $this->entryNormalizer = new EntryNormalizer();
+        $this->inject($this->entryNormalizer, 'signalSlotDispatcher', $this->signalSlotDispatcher);
 
         $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class,
             array('findOneByExternalId'), array(), '', false);
@@ -144,11 +156,22 @@ class XmlImporterTest extends UnitTestCase
 
         $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByExternalId'), array(), '',
             false);
+        $this->entryRepository = $this->getMock(EntryRepository::class, array('findOneByExternalId'), array(), '',
+            false);
+        $this->pndConsultingRepository = $this->getMock(PndConsultingRepository::class, array('findOneByExternalId'),
+            array(), '',
+            false);
 
         $this->inject($this->entryNormalizer, 'religionRepository', $this->religionRepository);
         $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
         $this->inject($this->entryNormalizer, 'languageRepository', $this->languageRepository);
         $this->inject($this->entryNormalizer, 'countryZoneRepository', $this->countryZoneRepository);
+
+        $this->religionManager->expects($this->any())->method('getRepository')->willReturn($this->religionRepository);
+        $this->entryManager->expects($this->any())->method('getRepository')->willReturn($this->entryRepository);
+        $this->categoryManager->expects($this->any())->method('getRepository')->willReturn($this->categoryRepository);
+        $this->pndConsultingManager->expects($this->any())->method('getRepository')->willReturn($this->pndConsultingRepository);
+
 
         $normalizers = array(
             $this->entryNormalizer,
@@ -170,10 +193,9 @@ class XmlImporterTest extends UnitTestCase
 
         $this->religionManager->expects($this->exactly(static::$numberOfReligionsInFile))->method('create');
         $this->categoryManager->expects($this->exactly(static::$numberOfCategoriesInFile))->method('create');
-        $this->entryManager->expects($this->exactly(static::$numberOfEntriesInFile))->method('remove');
         $this->entryManager->expects($this->exactly(static::$numberOfEntriesInFile))->method('create');
         $this->pndConsultingManager->expects($this->exactly(static::$numberOfPndConsultingsInFile))->method('create');
-        $this->signalSlotDispatcher->expects($this->exactly(2))->method('dispatch');
+        $this->signalSlotDispatcher->expects($this->any())->method('dispatch');
 
     }
 
@@ -186,14 +208,6 @@ class XmlImporterTest extends UnitTestCase
         $this->subject->importFromFile($this->fixture);
     }
 
-    /**
-     * @test
-     */
-    public function importFromUrl()
-    {
-        $this->mockExpectations();
-        $this->subject->importFromUrl($this->fixture);
-    }
 
     /**
      * @return void

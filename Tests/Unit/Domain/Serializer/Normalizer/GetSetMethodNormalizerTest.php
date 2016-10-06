@@ -11,8 +11,10 @@ use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
-class GetSetMethodNormalizerTest extends \PHPUnit_Framework_TestCase
+class GetSetMethodNormalizerTest extends UnitTestCase
 {
 
     /**
@@ -21,13 +23,20 @@ class GetSetMethodNormalizerTest extends \PHPUnit_Framework_TestCase
     protected $subject;
 
     /**
+     * @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $signalSlotDispatcher;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
+        $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
         $this->serializer = $this->getMock(__NAMESPACE__.'\SerializerNormalizer');
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $this->subject = new GetSetMethodNormalizer($classMetadataFactory, new EntryNameConverter());
+        $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->subject->setSerializer($this->serializer);
     }
 
@@ -39,7 +48,7 @@ class GetSetMethodNormalizerTest extends \PHPUnit_Framework_TestCase
         $latitude = (float)81;
 
         $data = array(
-            'mapx' => $latitude,
+            'mapy' => $latitude,
         );
         $object = $this->subject->denormalize($data, 'BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry');
         /* @var $object Entry */

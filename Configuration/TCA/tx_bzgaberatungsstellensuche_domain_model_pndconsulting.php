@@ -118,7 +118,7 @@ return array(
         ),
         'title' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_pndconsulting.title',
+            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_pndconsulting',
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
@@ -137,7 +137,7 @@ return array(
         ),
         'is_dummy_record' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_pndconsulting.is_dummy_record',
+            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.is_dummy_record',
             'config' => array(
                 'type' => 'check',
             ),

@@ -21,6 +21,7 @@ use SJBR\StaticInfoTables\Domain\Repository\LanguageRepository;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 class SerializerTest extends UnitTestCase
 {
@@ -56,6 +57,11 @@ class SerializerTest extends UnitTestCase
     protected $entryNormalizer;
 
     /**
+     * @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $signalSlotDispatcher;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -66,6 +72,8 @@ class SerializerTest extends UnitTestCase
 
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader($reader));
         $this->entryNormalizer = new EntryNormalizer($classMetadataFactory);
+
+        $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
         $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, array('findOneByExternalId'),
             array(), '', false);
         $this->religionRepository = $this->getMock(ReligionRepository::class, array('findOneByExternalId'), array(), '',
@@ -74,6 +82,7 @@ class SerializerTest extends UnitTestCase
             false);
         $this->languageRepository = $this->getMock(LanguageRepository::class, array('findOneByExternalId'), array(), '',
             false);
+        $this->inject($this->entryNormalizer, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->entryNormalizer, 'religionRepository', $this->religionRepository);
         $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
         $this->inject($this->entryNormalizer, 'languageRepository', $this->languageRepository);

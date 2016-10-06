@@ -2,10 +2,39 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
+use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer as BaseGetSetMethodNormalizer;
+use BZgA\BzgaBeratungsstellensuche\Events;
 
 class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 {
+
+    /**
+     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @inject
+     */
+    protected $signalSlotDispatcher;
+
+    /**
+     * @var array
+     */
+    protected $denormalizeCallbacks;
+
+    /**
+     * Sets the {@link ClassMetadataFactoryInterface} to use.
+     *
+     * @param ClassMetadataFactoryInterface|null $classMetadataFactory
+     * @param NameConverterInterface|null $nameConverter
+     */
+    public function __construct(
+        ClassMetadataFactoryInterface $classMetadataFactory = null,
+        NameConverterInterface $nameConverter = null
+    ) {
+        $this->classMetadataFactory = $classMetadataFactory;
+        $this->nameConverter = $nameConverter;
+    }
+
 
     /**
      * Set normalization callbacks.
@@ -18,6 +47,8 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      */
     public function setDenormalizeCallbacks(array $callbacks)
     {
+
+        $callbacks = $this->emitDenormalizeCallbacksSignal($callbacks);
         foreach ($callbacks as $attribute => $callback) {
             if (!is_callable($callback)) {
                 throw new \InvalidArgumentException(sprintf(
@@ -70,6 +101,23 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         }
 
         return $object;
+    }
+
+    /**
+     * @param array $callbacks
+     * @return array
+     */
+    protected function emitDenormalizeCallbacksSignal(array $callbacks)
+    {
+        $signalArguments = array();
+        $signalArguments['extendedCallbacks'] = array();
+
+        $additionalCallbacks = $this->signalSlotDispatcher->dispatch(static::class,
+            Events::DENORMALIZE_CALLBACKS_SIGNAL,
+            $signalArguments);
+
+        $callbacks = array_merge($callbacks, $additionalCallbacks['extendedCallbacks']);
+        return $callbacks;
     }
 
 }

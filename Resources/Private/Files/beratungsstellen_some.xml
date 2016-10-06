@@ -34,6 +34,14 @@
                 <index>1</index>
                 <index>3</index>
             </beratungsart>
+            <zielgruppen>
+                <index>1</index>
+                <index>2</index>
+            </zielgruppen>
+            <massnahmen>
+                <index>1</index>
+                <index>2</index>
+            </massnahmen>
             <pndberatung>
                 <index>1</index>
                 <index>2</index>
@@ -1909,6 +1917,30 @@
             <index>3</index>
             <sort>1</sort>Online-Beratung</beratungsart>
     </beratungsarten>
+    <zielgruppen>
+        <zielgruppe>
+            <index>1</index>
+            Kinder und Jugendliche
+        </zielgruppe>
+        <zielgruppe>
+            <index>2</index>
+            Erwachsene
+        </zielgruppe>
+        <zielgruppe>
+            <index>3</index>
+            geschlechtsspezifische Angebote
+        </zielgruppe>
+    </zielgruppen>
+    <massnahmen>
+        <massnahme>
+            <index>1</index>
+            Klärung des Anliegens
+        </massnahme>
+        <massnahme>
+            <index>2</index>
+            Vermittlung zur diagnostischen Abklärung
+        </massnahme>
+    </massnahmen>
     <pndberatungen>
         <pndberatung>
             <index>1</index>
