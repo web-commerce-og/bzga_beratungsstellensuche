@@ -33,6 +33,11 @@ final class Events
     /**
      * @var string
      */
+    const FORM_ACTION_SIGNAL = 'entry.form.action';
+
+    /**
+     * @var string
+     */
     const INITIALIZE_ACTION_SIGNAL = 'entry.initialize.action';
 
     /**

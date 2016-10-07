@@ -52,6 +52,9 @@
 			<trans-unit id="keywords-form-label" xml:space="preserve">
 				<source>Schlüsselbegriffe</source>
 			</trans-unit>
+			<trans-unit id="categories-form-label" xml:space="preserve">
+				<source>Kategorien</source>
+			</trans-unit>
 			<trans-unit id="pnd-consulting" xml:space="preserve">
 				<source>Unsere Beratungsstelle versteht sich als Schwerpunktberatungsstelle im Bereich Pränataldiagnostik.</source>
 			</trans-unit>

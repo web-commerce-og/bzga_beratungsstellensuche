@@ -1,0 +1,53 @@
+plugin.tx_solr.index.queue {
+    # Indexierung von Beratungsstellen
+    beratungsstellen = 1
+    beratungsstellen {
+        table = tx_bzgaberatungsstellensuche_domain_model_entry
+        fields {
+            title = title
+            geo_location = COA
+            geo_location {
+                10 = TEXT
+                10.field = latitude
+                10.wrap = |,
+                20 = TEXT
+                20.field = longitude
+            }
+            abstract = teaser
+            description = teaser
+            content = SOLR_CONTENT
+            content {
+                field = description
+            }
+            url = TEXT
+            url {
+                typolink.parameter = {$plugin.tx_bzgaberatungsstellensuche.settings.singlePid}
+                typolink.additionalParams = &tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show&tx_bzgaberatungsstellensuche_pi1[entry]={field:uid}
+                typolink.additionalParams.insertData = 1
+                typolink.returnLast = url
+                typolink.useCacheHash = 1
+            }
+            address_textS = street
+            zip_textS = zip
+            city_textS = city
+            religionType_stringM = SOLR_RELATION
+            religionType_stringM {
+                localField = religious_denomination
+                multiValue = 0
+            }
+            categoryType_stringM = SOLR_RELATION
+            categoryType_stringM {
+                localField = categories
+                multiValue = 1
+            }
+            keywords = SOLR_MULTIVALUE
+            keywords {
+                field = keywords
+            }
+            consultingAgreement_boolS = consulting_agreement
+            motherAndChild_boolS = mother_and_child
+            pndConsulting_boolS = pnd_consulting
+            sortTitle_stringS  = title
+        }
+    }
+}

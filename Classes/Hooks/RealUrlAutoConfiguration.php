@@ -18,7 +18,7 @@ class RealUrlAutoConfiguration
         return array_merge_recursive($params['config'], array(
                 'postVarSets' => array(
                     '_DEFAULT' => array(
-                        'bzga_beratungsstellensuche' => array(
+                        'beratungsstelle' => array(
                             array(
                                 'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[entry]',
                                 'lookUpTable' => array(

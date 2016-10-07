@@ -7,5 +7,21 @@ $extKey = 'bzga_beratungsstellensuche';
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin($extKey, 'Pi1',
     'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript', 'Beratungsstellensuche');
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['bzgaberatungsstellensuche_pi1'] = 'recursive,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bzgaberatungsstellensuche_pi1'] = 'pi_flexform';
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('bzgaberatungsstellensuche_pi1',
+    'FILE:EXT:'.$extKey.'/Configuration/FlexForms/flexform_beratungsstellensuche.xml');
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript',
+    'Beratungsstellensuche');
+
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler')) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript/linkhandler',
+        'Beratungsstellensuche - Linkhandler');
+}
+
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('solr')) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript/linkhandler',
+        'Beratungsstellensuche - Solr');
+}
 

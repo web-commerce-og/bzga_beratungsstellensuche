@@ -8,6 +8,12 @@ plugin.tx_bzgaberatungsstellensuche {
         layoutRootPath = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
     }
     settings {
+        singlePid = 10095
+        listPid = 10097
+        formFields = keywords,location,kilometers,religion
+        form {
+            kilometers = 10,20,30,40,50,100
+        }
         list {
             itemsPerPage = 10
             append = ...

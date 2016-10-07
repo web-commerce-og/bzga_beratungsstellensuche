@@ -1,28 +1,26 @@
 Fragen:
 
-9. Google Maps Karte darstellen
-7. FlexForm-Konfiguration dynamisch bzw. mittels Hooks manipulier- und / oder erweiterbar
-11. Unterschiedliche Templates/Layouts ähnlich wie News-Erweiterung bereitstellen
-
+- Google Maps Karte darstellen
+- Beispiel-Template? Wie sollte es aussehen?
 
 
 Fragen zur Abstimmung:
-2. Die Essstörungen müssten noch auf die Version 2.1 umgestellt werden. Aktuell ist die Datei nicht ausreichend befüllt.
+- Wo wird die Erweiterung gehostet?
+- Die Essstörungen müssten noch auf die Version 2.1 umgestellt werden. Aktuell ist die Datei nicht ausreichend befüllt.
 Dabei ist zu beachten, dass es eine Reihe weiterer Kriterien gibt, die im Vergleich zu familienplanung.de abgefragt werden.
-3. Wo wird die Erweiterung gehostet?
-4. Beispiel-Template? Wie sollte es aussehen?
-5. Ich bräuchte einen Timestamp für jeden Eintrag, wann ist dieser das letzte Mal verändert wurden.
+- Ich bräuchte einen Timestamp für jeden Eintrag, wann ist dieser das letzte Mal verändert wurden.
 
 
 
 
 Nice to have
-- Schema für Validierung
 - Testing
-- Add a Solr-Konfiguration
+- Dokumentation + DocBlocks
+- Schema für Validierung
+- Icon und Beschreibung für Content Wizard
+
 
 To Check
-- Encoding-Probleme? Da XML ISO und nicht UTF-8
-- Sitemap Generator
-- RealUrl-Konfiguration
-- Linkvalidator-Konfiguration
+- Sitemap Generator => is working -> ?eID=dd_googlesitemap&sitemap=bzga_beratungsstellensuche&singlePid=10095&pidList=7226
+- RealUrl-Konfiguration => is working
+- Linkvalidator-Konfiguration => is working

@@ -19,6 +19,12 @@ plugin.tx_bzgaberatungsstellensuche {
 
     # settings
     settings {
+        singlePid = {$plugin.tx_bzgaberatungsstellensuche.settings.singlePid}
+        listPid = {$plugin.tx_bzgaberatungsstellensuche.settings.listPid}
+        formFields = {$plugin.tx_bzgaberatungsstellensuche.settings.formFields}
+        form {
+            kilometers = {$plugin.tx_bzgaberatungsstellensuche.settings.form.kilometers}
+        }
         list {
             itemsPerPage = {$plugin.tx_bzgaberatungsstellensuche.settings.list.itemsPerPage}
             append = {$plugin.tx_bzgaberatungsstellensuche.settings.list.append}

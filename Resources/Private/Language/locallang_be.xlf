@@ -7,6 +7,75 @@
             <trans-unit id="pi1_title" xml:space="preserve">
 				<source>Beratungsstellensuche</source>
 			</trans-unit>
+            <trans-unit id="pi1_plus_wiz_description" xml:space="preserve">
+                <source>Liste von Beratungsstellen</source>
+            </trans-unit>
+            <trans-unit id="flexforms_tab.settings" xml:space="preserve">
+                <source>Einstellungen</source>
+            </trans-unit>
+            <trans-unit id="flexforms_general.mode" xml:space="preserve">
+                <source>Ansicht</source>
+            </trans-unit>
+            <trans-unit id="flexforms_general.mode.entry_list" xml:space="preserve">
+                <source>Listenansicht</source>
+            </trans-unit>
+            <trans-unit id="flexforms_general.mode.entry_show" xml:space="preserve">
+                <source>Detailansicht</source>
+            </trans-unit>
+            <trans-unit id="flexforms_general.mode.entry_form" xml:space="preserve">
+                <source>Formular</source>
+            </trans-unit>
+            <trans-unit id="flexforms_general.categories" xml:space="preserve">
+                <source>Kategorien</source>
+            </trans-unit>
+            <trans-unit id="flexforms_tab.additional" xml:space="preserve">
+                <source>Erweiterte Einstellungen</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.singlePid" xml:space="preserve">
+                <source>Detailansicht</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.listPid" xml:space="preserve">
+                <source>Listenansicht</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.backPid" xml:space="preserve">
+                <source>Seite für zurück</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.itemsPerPage" xml:space="preserve">
+                <source>Einträge pro Seite</source>
+            </trans-unit>
+            <trans-unit id="flexforms_tab.template" xml:space="preserve">
+                <source>Template</source>
+            </trans-unit>
+            <trans-unit id="flexforms_template.templateLayout" xml:space="preserve">
+                <source>Layout</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields" xml:space="preserve">
+                <source>Formularfelder</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.keywords" xml:space="preserve">
+                <source>Schlüsselbegriffe</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.kilometers" xml:space="preserve">
+                <source>Kilometer</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.religion" xml:space="preserve">
+                <source>Konfession</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.location" xml:space="preserve">
+                <source>Standort</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.categories" xml:space="preserve">
+                <source>Kategorien</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.consultingAgreement" xml:space="preserve">
+                <source>Beratungsschein</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.pndConsultingAgreement" xml:space="preserve">
+                <source>PND Beratungsschein</source>
+            </trans-unit>
+            <trans-unit id="flexforms_additional.formFields.motherAndChild" xml:space="preserve">
+                <source>Mutter und Kind</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

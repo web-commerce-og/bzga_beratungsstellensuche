@@ -1,0 +1,12 @@
+plugin.tx_linkhandler {
+    tx_bzgaberatungsstellensuche_domain_model_entry {
+        # force link generation also when the record are hidden or deleted
+        forceLink = 0
+        # typolink settings
+        ATagParams.insertData = 1
+        ATagParams = title="Zur Beratungsstelle: {field:title}"
+        parameter = {$plugin.tx_bzgaberatungsstellensuche.settings.singlePid}
+        additionalParams = &tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show&tx_bzgaberatungsstellensuche_pi1[entry]={field:uid}
+        additionalParams.insertData = 1
+    }
+}

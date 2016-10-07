@@ -60,6 +60,32 @@ class EntryController extends ActionController
         }
     }
 
+
+    /**
+     * @return void
+     */
+    public function initializeFormAction()
+    {
+        $this->addDemandRequestArgumentFromSession();
+    }
+
+    /**
+     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @return void
+     */
+    public function formAction(Demand $demand = null)
+    {
+        if (!$demand instanceof Demand) {
+            $demand = $this->objectManager->get(Demand::class);
+        }
+        $religions = $this->religionRepository->findAll();
+        $kilometers = $this->kilometerRepository->findKilometersBySettings($this->settings);
+        $categories = $this->categoryRepository->findAll();
+        $assignedViewValues = compact('demand', 'religions', 'kilometers', 'categories');
+        $assignedViewValues = $this->emitActionSignal(Events::FORM_ACTION_SIGNAL, $assignedViewValues);
+        $this->view->assignMultiple($assignedViewValues);
+    }
+
     /**
      * @return void
      */
@@ -74,6 +100,7 @@ class EntryController extends ActionController
 
     /**
      * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @return void
      */
     public function listAction(Demand $demand = null)
     {
@@ -100,6 +127,7 @@ class EntryController extends ActionController
     /**
      * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
      * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @return void
      */
     public function showAction(Entry $entry = null, Demand $demand = null)
     {
@@ -113,6 +141,7 @@ class EntryController extends ActionController
 
     /**
      * @param $signalArguments
+     * @return void
      */
     protected function emitInitializeActionSignal($signalArguments)
     {

@@ -1,0 +1,15 @@
+RTE.default.tx_linkhandler {
+    tx_bzgaberatungsstellensuche_domain_model_entry {
+        label = Beratungsstellen
+        listTables = tx_bzgaberatungsstellensuche_domain_model_entry
+        onlyPids = 7226
+    }
+}
+
+mod.tx_linkhandler {
+    tx_bzgaberatungsstellensuche_domain_model_entry {
+        label = Beratungsstellen
+        listTables = tx_bzgaberatungsstellensuche_domain_model_entry
+        onlyPids = 7226
+    }
+}

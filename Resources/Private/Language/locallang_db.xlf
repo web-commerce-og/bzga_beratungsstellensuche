@@ -46,7 +46,7 @@
 				<source>Zip City</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.religious_denomination" xml:space="preserve">
-				<source>Religious Denomination</source>
+				<source>Konfession</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_religiousdenomination" xml:space="preserve">
 				<source>Religious Denomination</source>

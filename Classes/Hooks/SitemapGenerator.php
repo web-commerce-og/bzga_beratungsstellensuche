@@ -94,7 +94,7 @@ class SitemapGenerator extends AbstractSitemapGenerator
 
         if ($link == '') {
             $conf = array(
-                'additionalParams' => (!$skipControllerAndAction ? '&tx_bzgaberatungsstellen_pi1[controller]=Entry&tx_bzgaberatungsstellen_pi1[action]=show' : '').'&tx_bzgaberatungsstellen_pi1[entry]='.$row['uid'],
+                'additionalParams' => (!$skipControllerAndAction ? '&tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show' : '').'&tx_bzgaberatungsstellensuche_pi1[entry]='.$row['uid'],
                 'forceAbsoluteUrl' => 1,
                 'parameter' => $forceSinglePid ?: $this->singlePid,
                 'returnLast' => 'url',
