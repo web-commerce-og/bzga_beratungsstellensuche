@@ -2,6 +2,18 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Hooks;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\CMS\Backend\Template\DocumentTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
@@ -9,7 +21,13 @@ use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use BZgA\BzgaBeratungsstellensuche\Utility\TemplateLayout;
+use BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 class PageLayoutView
 {
 
@@ -25,7 +43,7 @@ class PageLayoutView
      *
      * @var string
      */
-    const LLPATH = 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:';
+    const LLPATH = 'LLL:EXT:%s/Resources/Private/Language/locallang_be.xlf:';
 
     /**
      * Table information
@@ -70,7 +88,7 @@ class PageLayoutView
     {
         $actionTranslationKey = '';
 
-        $result = '<strong>'.$this->getLanguageService()->sL(self::LLPATH.'pi1_title', true).'</strong><br>';
+        $result = '<strong>'.$this->sL('pi1_title', true).'</strong><br>';
 
         if ($params['row']['list_type'] == self::KEY.'_pi1') {
             $this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
@@ -82,12 +100,12 @@ class PageLayoutView
 
                 // translate the first action into its translation
                 $actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
-                $actionTranslation = $this->getLanguageService()->sL(self::LLPATH.'flexforms_general.mode.'.$actionTranslationKey);
+                $actionTranslation = $this->sL('flexforms_general.mode.'.$actionTranslationKey);
 
                 $result .= $actionTranslation;
 
             } else {
-                $result .= $this->getLanguageService()->sL(self::LLPATH.'flexforms_general.mode.not_configured');
+                $result .= $this->sL('flexforms_general.mode.not_configured');
             }
             $result .= '<hr>';
             if (is_array($this->flexformData)) {
@@ -98,6 +116,7 @@ class PageLayoutView
                         $this->getDetailPidSetting();
                         $this->getListPidSetting();
                         $this->getFormFieldsSetting();
+                        $this->getListItemsPerPageSetting();
                         break;
                     case 'entry_show':
                         $this->getListPidSetting();
@@ -144,7 +163,7 @@ class PageLayoutView
             $content = $this->getPageRecordData($detailPid);
 
             $this->tableData[] = array(
-                $this->getLanguageService()->sL(self::LLPATH.'flexforms_additional.singlePid'),
+                $this->sL('flexforms_additional.singlePid'),
                 $content,
             );
         }
@@ -160,10 +179,10 @@ class PageLayoutView
             $formFieldsArray = GeneralUtility::trimExplode(',', $formFields);
             $formFieldsLabels = array();
             foreach ($formFieldsArray as $formField) {
-                $formFieldsLabels[] = $this->getLanguageService()->sL(self::LLPATH.'flexforms_additional.formFields.'.$formField);
+                $formFieldsLabels[] = $this->sL('flexforms_additional.formFields.'.$formField);
             }
             $this->tableData[] = array(
-                $this->getLanguageService()->sL(self::LLPATH.'flexforms_additional.formFields'),
+                $this->sL('flexforms_additional.formFields'),
                 implode(',', $formFieldsLabels),
             );
         }
@@ -182,8 +201,26 @@ class PageLayoutView
             $content = $this->getPageRecordData($listPid);
 
             $this->tableData[] = array(
-                $this->getLanguageService()->sL(self::LLPATH.'flexforms_additional.listPid'),
+                $this->sL('flexforms_additional.listPid'),
                 $content,
+            );
+        }
+    }
+
+    /**
+     * Render listPid settings
+     *
+     * @return void
+     */
+    private function getListItemsPerPageSetting()
+    {
+        $itemsPerPage = (int)$this->getFieldFromFlexform('settings.list.itemsPerPage', 'additional');
+
+        if ($itemsPerPage > 0) {
+
+            $this->tableData[] = array(
+                $this->sL('flexforms_additional.itemsPerPage'),
+                $itemsPerPage,
             );
         }
     }
@@ -201,7 +238,7 @@ class PageLayoutView
             $content = $this->getPageRecordData($listPid);
 
             $this->tableData[] = array(
-                $this->getLanguageService()->sL(self::LLPATH.'flexforms_additional.backPid'),
+                $this->sL('flexforms_additional.backPid'),
                 $content,
             );
         }
@@ -224,7 +261,7 @@ class PageLayoutView
             $content = $this->getDocumentTemplate()->wrapClickMenuOnIcon($data, 'pages', $pageRecord['uid'], true, '',
                 '+info,edit');
         } else {
-            $text = sprintf($this->getLanguageService()->sL(self::LLPATH.'pagemodule.pageNotAvailable', true),
+            $text = sprintf($this->sL('pagemodule.pageNotAvailable', true),
                 $detailPid);
             $message = GeneralUtility::makeInstance(FlashMessage::class, $text, '',
                 FlashMessage::WARNING);
@@ -258,8 +295,8 @@ class PageLayoutView
 
         if (!empty($title)) {
             $this->tableData[] = array(
-                $this->getLanguageService()->sL(self::LLPATH.'flexforms_template.templateLayout'),
-                $this->getLanguageService()->sL($title),
+                $this->sL('flexforms_template.templateLayout'),
+                $this->sL($title),
             );
         }
     }
@@ -348,6 +385,31 @@ class PageLayoutView
         }
 
         return null;
+    }
+
+    /**
+     * splitLabel function
+     *
+     * All translations are based on $LOCAL_LANG variables.
+     * 'language-splitted' labels can therefore refer to a local-lang file + index.
+     * Refer to 'Inside TYPO3' for more details
+     *
+     * @param string $input Label key/reference
+     * @param boolean $hsc If set, the return value is htmlspecialchar'ed
+     * @return string
+     */
+    private function sL($label, $hsc = false)
+    {
+        $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
+        foreach ($registeredExtensionKeys as $extensionKey) {
+            $fullPathToLabel = sprintf(self::LLPATH, $extensionKey).$label;
+            $translation = $this->getLanguageService()->sL($fullPathToLabel, $hsc);
+            if ('' !== $translation) {
+                return $translation;
+            }
+        }
+
+        return '';
     }
 
     /**

@@ -3,10 +3,21 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\CategoryNormalizer;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\PndConsultingNormalizer;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\ReligionNormalizer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer as BaseSerializer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -14,6 +25,11 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use BZgA\BzgaBeratungsstellensuche\Events;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 class Serializer extends BaseSerializer
 {
 
@@ -34,8 +50,6 @@ class Serializer extends BaseSerializer
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             /* @var $objectManager ObjectManager */
             $normalizers = array(
-                $objectManager->get(PndConsultingNormalizer::class),
-                $objectManager->get(ReligionNormalizer::class),
                 $objectManager->get(EntryNormalizer::class),
                 $objectManager->get(CategoryNormalizer::class),
             );
@@ -68,6 +82,7 @@ class Serializer extends BaseSerializer
 
         $additionalNormalizers = $this->signalSlotDispatcher->dispatch(static::class,
             Events::ADDITIONAL_NORMALIZERS_SIGNAL, $signalArguments);
+
 
         return array_merge($normalizers, $additionalNormalizers['extendedNormalizers']);
     }

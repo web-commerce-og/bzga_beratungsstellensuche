@@ -3,11 +3,28 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Service\Importer;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use UnexpectedValueException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 abstract class AbstractImporter implements ImporterInterface
 {
 
@@ -28,18 +45,6 @@ abstract class AbstractImporter implements ImporterInterface
      * @inject
      */
     protected $categoryManager;
-
-    /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Manager\ReligionManager
-     * @inject
-     */
-    protected $religionManager;
-
-    /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Manager\PndConsultingManager
-     * @inject
-     */
-    protected $pndConsultingManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
@@ -83,8 +88,6 @@ abstract class AbstractImporter implements ImporterInterface
      */
     protected function persist()
     {
-        $this->pndConsultingManager->persist();
-        $this->religionManager->persist();
         $this->categoryManager->persist();
         $this->entryManager->persist();
     }

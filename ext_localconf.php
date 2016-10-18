@@ -5,6 +5,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
+\BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerExtensionKey($_EXTKEY, 100);
+
 # Composer autoloader for vendors
 require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'/Libraries/autoload.php';
 
@@ -56,7 +58,6 @@ require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKE
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['entities'] = array(
     'Entry',
     'Category',
-    'Religion',
     'Dto/Demand',
 );
 
@@ -70,11 +71,6 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations'][\BZgA\Bz
     );
 }
 
-# Extend the form fields in flexforms
-$GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'] = array(
-    array('LLL:EXT:bzga_beratungsstellensuche_extended/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.measures', 'measures'),
-    array('LLL:EXT:bzga_beratungsstellensuche_extended/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.targetgroups', 'targetgroups')
-);
 
 # Register some type converters so we can prepare everything for the data handler to import the xml
 \BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\BZga\BzgaBeratungsstellensuche\Property\TypeConverter\ImageLinkConverter::class);

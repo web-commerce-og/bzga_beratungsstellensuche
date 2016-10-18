@@ -3,14 +3,29 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Category;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\PndConsulting;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion;
 use BZgA\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 
-
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 class XmlImporter extends AbstractImporter
 {
 
@@ -30,61 +45,39 @@ class XmlImporter extends AbstractImporter
         $sxe = new \SimpleXMLIterator($content);
 
         $signalArguments = array($this, $sxe, $pid, $this->serializer);
+
         $this->emitImportSignal($signalArguments, Events::PRE_IMPORT_SIGNAL);
 
-        # Import religions
-        foreach ($sxe->konfessionen as $religions) {
-            foreach ($religions as $religionData) {
-                $externalId = (integer)$religionData->index;
-                $objectToPopulate = $this->religionManager->getRepository()->findOneByExternalId($externalId);
-                $religion = $this->serializer->deserialize($religionData->asXml(), Religion::class, self::FORMAT,
-                    array('object_to_populate' => $objectToPopulate));
-                /* @var $religion Religion */
-                $religion->setPid($pid);
-                $this->religionManager->create($religion);
-            }
-        }
-
         # Import beratungsarten
-        foreach ($sxe->beratungsarten as $categories) {
-            foreach ($categories as $categoryData) {
-                $externalId = (integer)$categoryData->index;
-                $objectToPopulate = $this->categoryManager->getRepository()->findOneByExternalId($externalId);
-                $category = $this->serializer->deserialize($categoryData->asXml(), Category::class, self::FORMAT,
-                    array('object_to_populate' => $objectToPopulate));
-                /* @var $category Category */
-                $category->setPid($pid);
-                $this->categoryManager->create($category);
-            }
-        }
+        $this->convertRelations($sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
 
-        # Import pnd beratungen
-        foreach ($sxe->pndberatungen as $pndConsultings) {
-            foreach ($pndConsultings as $pndConsultingData) {
-                $externalId = (integer)$pndConsultingData->index;
-                $objectToPopulate = $this->pndConsultingManager->getRepository()->findOneByExternalId($externalId);
-                $pndConsulting = $this->serializer->deserialize($pndConsultingData->asXml(), PndConsulting::class,
-                    self::FORMAT, array('object_to_populate' => $objectToPopulate));
-                /* @var $pndConsulting PndConsulting */
-                $pndConsulting->setPid($pid);
-                $this->pndConsultingManager->create($pndConsulting);
-            }
-        }
+        # Import entries
+        $this->convertRelations($sxe->entrys->entry, $this->entryManager, Entry::class, $pid);
 
-        foreach ($sxe->entrys as $entries) {
-            foreach ($entries as $entryData) {
-                $externalId = (integer)$entryData->index;
-                $objectToPopulate = $this->entryManager->getRepository()->findOneByExternalId($externalId);
-                $entry = $this->serializer->deserialize($entryData->asXml(), Entry::class, self::FORMAT,
-                    array('object_to_populate' => $objectToPopulate));
-                /* @var $entry Entry */
-                $entry->setPid($pid);
-                $this->entryManager->create($entry);
-            }
-        }
         # In the end we are calling all the managers to persist, this saves a lot of memory
         $this->emitImportSignal($signalArguments, Events::POST_IMPORT_SIGNAL);
         $this->persist();
+    }
+
+    /**
+     * @param \Traversable $relations
+     * @param AbstractManager $manager
+     * @param $relationClassName
+     * @param integer $pid
+     */
+    public function convertRelations(\Traversable $relations = null, AbstractManager $manager, $relationClassName, $pid)
+    {
+        if ($relations instanceof \Traversable) {
+            foreach ($relations as $relationData) {
+                $externalId = (integer)$relationData->index;
+                $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
+                $relationObject = $this->serializer->deserialize($relationData->asXml(), $relationClassName,
+                    self::FORMAT,
+                    array('object_to_populate' => $objectToPopulate));
+                $relationObject->setPid($pid);
+                $manager->create($relationObject);
+            }
+        }
     }
 
     /**

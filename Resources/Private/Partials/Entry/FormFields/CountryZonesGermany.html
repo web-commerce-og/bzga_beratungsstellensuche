@@ -1,0 +1,8 @@
+{namespace bzga=BZgA\BzgaBeratungsstellensuche\ViewHelpers}
+<div class="form-group">
+    <label for="country-zone">
+        <bzga:translate key="country-zones-germany-form-label"/>
+    </label>
+    <f:form.select optionLabelField="nameLocalized" prependOptionLabel="{bzga:translate(key: 'please-choose')}"
+                   prependOptionValue="" sortByOptionLabel="true"  class="form-control" property="countryZone" id="country-zone" options="{countryZonesGermany}"/>
+</div>

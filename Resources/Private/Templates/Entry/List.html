@@ -8,11 +8,12 @@
         <f:then>
             <div class="list-group">
                 <bzga:widget.paginate as="paginatedEntries" demand="{demand}"
-                                   configuration="{itemsPerPage: settings.list.itemsPerPage, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 10}"
-                                   objects="{entries}">
+                                      configuration="{itemsPerPage: settings.list.itemsPerPage, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 10}"
+                                      objects="{entries}">
                     <f:for each="{paginatedEntries}" as="entry">
-                        <f:link.action pageUid="{settings.singlePid}" controller="Entry" action="show" arguments="{entry: entry}" class="list-group-item">
-                            <h4 class="list-group-item-heading">{entry.title}</h4>
+                        <f:link.action pageUid="{settings.singlePid}" controller="Entry" action="show"
+                                       arguments="{entry: entry}" class="list-group-item">
+                            <h4 class="list-group-item-heading">{entry.title} <f:render partial="Entry/Distance" arguments="{_all}" /></h4>
                             <div class="list-group-item-text">
                                 {entry.address}
                             </div>

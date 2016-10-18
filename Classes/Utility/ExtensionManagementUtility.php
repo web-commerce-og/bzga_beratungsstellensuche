@@ -3,8 +3,26 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Utility;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility AS CoreExtensionManagementUtility;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 class ExtensionManagementUtility
 {
 
@@ -23,6 +41,47 @@ class ExtensionManagementUtility
             // Add as search field
             $GLOBALS['TCA'][$table]['ctrl']['searchFields'] .= ','.$destField;
         }
+    }
+
+    /**
+     * @param $fields
+     */
+    public static function addAdditionalFormFields(array $fields)
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'] = array();
+        }
+        foreach ($fields as $field) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'][] = $field;
+        }
+    }
+
+    /**
+     * @param string $extensionKey
+     * @param integer $priority
+     */
+    public static function registerExtensionKey($extensionKey, $priority)
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'] = array();
+        }
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'][$priority])) {
+            throw new \UnexpectedValueException(sprintf('An extension key with priority %d has already been defined',
+                $priority));
+        }
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'][$priority] = $extensionKey;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getRegisteredExtensionKeys()
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'])) {
+            return array();
+        }
+
+        return array_reverse($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys']);
     }
 
     /**

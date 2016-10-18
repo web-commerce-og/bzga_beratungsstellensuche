@@ -46,7 +46,10 @@
                 <index>1</index>
                 <index>2</index>
             </pndberatung>
-            <pndberatunglang></pndberatunglang>
+            <pndberatunglang>
+                <index>1</index>
+                <index>2</index>
+            </pndberatunglang>
             <pndberatunglangsons></pndberatunglangsons>
             <verband>AWO Landesverband Niedersachsen</verband>
             <kontaktform>0</kontaktform>
@@ -1898,7 +1901,7 @@
     <konfessionen>
         <konfession>
             <index>1</index>
-            <sort>1</sort>evangelische Beratungsstellen neue Bezeichnung</konfession>
+            <sort>1</sort>evangelische Beratungsstellen neue Bezeichnung über Extesnon famplan</konfession>
         <konfession>
             <index>2</index>
             <sort>2</sort>katholische Beratungsstellen</konfession>

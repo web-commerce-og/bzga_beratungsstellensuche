@@ -8,7 +8,7 @@ plugin.tx_bzgaberatungsstellensuche {
         layoutRootPath = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
     }
     settings {
-        singlePid = 10095
+        singlePid = 10096
         listPid = 10097
         formFields = keywords,location,kilometers,religion
         form {
@@ -18,6 +18,12 @@ plugin.tx_bzgaberatungsstellensuche {
             itemsPerPage = 10
             append = ...
             maxCharacters = 100
+        }
+        additionalCssFile = EXT:bzga_beratungsstellensuche/Resources/Public/Css/main.css
+        additionalJsFile = EXT:bzga_beratungsstellensuche/Resources/Public/Js/main.js
+        map {
+            pathToDefaultMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/default.png
+            pathToActiveMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/active.png
         }
     }
 }

@@ -3,7 +3,6 @@
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use SJBR\StaticInfoTables\Cache\ClassCacheManager;
 use SJBR\StaticInfoTables\Utility\DatabaseUpdateUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -21,10 +20,6 @@ class ext_update
     {
         $content = '';
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
-        // Clear the class cache
-        $classCacheManager = $objectManager->get(ClassCacheManager::class);
-        $classCacheManager->reBuild();
 
         // Update the database
         $databaseUpdateUtility = $objectManager->get(DatabaseUpdateUtility::class);

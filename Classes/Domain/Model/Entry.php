@@ -2,12 +2,28 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
-use SJBR\StaticInfoTables\Domain\Model\Language;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-class Entry extends AbstractEntity implements GeopositionInterface
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
+class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInterface
 {
     use GeopositionTrait;
 
@@ -15,13 +31,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
      * @var string
      */
     protected $subtitle;
-
-    /**
-     * Link zur Beratungsstelle.
-     *
-     * @var string
-     */
-    protected $link;
 
     /**
      * Kurzer Aufmacher zur Beratungsstelle.
@@ -59,25 +68,11 @@ class Entry extends AbstractEntity implements GeopositionInterface
     protected $state;
 
     /**
-     * Karte in Ordnung?
-     *
-     * @var string
-     */
-    protected $map;
-
-    /**
      * Suchinhalt.
      *
      * @var string
      */
     protected $description;
-
-    /**
-     * Konfession.
-     *
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion
-     */
-    protected $religiousDenomination;
 
     /**
      * @var string
@@ -107,37 +102,12 @@ class Entry extends AbstractEntity implements GeopositionInterface
     /**
      * @var string
      */
-    protected $institution;
-
-    /**
-     * @var string
-     */
-    protected $association;
-
-    /**
-     * @var string
-     */
     protected $hotline;
 
     /**
      * @var string
      */
     protected $notice;
-
-    /**
-     * @var bool
-     */
-    protected $motherAndChild = false;
-
-    /**
-     * @var string
-     */
-    protected $motherAndChildNotice;
-
-    /**
-     * @var bool
-     */
-    protected $consultingAgreement = false;
 
     /**
      * @var string
@@ -160,36 +130,21 @@ class Entry extends AbstractEntity implements GeopositionInterface
     protected $categories;
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $pndConsulting = false;
-
-    /**
-     * @var bool
-     */
-    protected $pndConsultants = false;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SJBR\StaticInfoTables\Domain\Model\Language>
-     */
-    protected $pndLanguages;
+    protected $institution;
 
     /**
      * @var string
      */
-    protected $pndOtherLanguage;
+    protected $association;
 
-    /**
-     * @var string
-     */
-    protected $pndAllLanguages = null;
 
     /**
      */
     public function __construct()
     {
         $this->categories = new ObjectStorage();
-        $this->pndLanguages = new ObjectStorage();
     }
 
     /**
@@ -224,122 +179,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
         $this->categories->detach($category);
     }
 
-    /**
-     * @return bool
-     */
-    public function getPndConsulting()
-    {
-        return (boolean)$this->pndConsulting;
-    }
-
-    /**
-     * @param bool $pndConsulting
-     */
-    public function setPndConsulting($pndConsulting)
-    {
-        $this->pndConsulting = (boolean)$pndConsulting;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SJBR\StaticInfoTables\Domain\Model\Language>
-     */
-    public function getPndLanguages()
-    {
-        return $this->pndLanguages;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SJBR\StaticInfoTables\Domain\Model\Language> $pndLanguages
-     */
-    public function setPndLanguages($pndLanguages)
-    {
-        $this->pndLanguages = $pndLanguages;
-    }
-
-    /**
-     * @param \SJBR\StaticInfoTables\Domain\Model\Language $language
-     */
-    public function attachPndLanguage(Language $language)
-    {
-        $this->pndLanguages->attach($language);
-    }
-
-    /**
-     * @param \SJBR\StaticInfoTables\Domain\Model\Language $language
-     */
-    public function detachPndLanguage(Language $language)
-    {
-        $this->pndLanguages->detach($language);
-    }
-
-    /**
-     * @return bool
-     */
-    public function getPndConsultants()
-    {
-        return $this->pndConsultants;
-    }
-
-    /**
-     * @param bool $pndConsultants
-     */
-    public function setPndConsultants($pndConsultants)
-    {
-        $this->pndConsultants = $pndConsultants;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPndOtherLanguage()
-    {
-        return $this->pndOtherLanguage;
-    }
-
-    /**
-     * @param string $pndOtherLanguage
-     */
-    public function setPndOtherLanguage($pndOtherLanguage)
-    {
-        $this->pndOtherLanguage = $pndOtherLanguage;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPndAllLanguages()
-    {
-        if (null === $this->pndAllLanguages) {
-            if ($this->pndLanguages || $this->pndOtherLanguage) {
-                $allLanguages = array();
-                foreach ($this->pndLanguages as $pndLanguage) {
-                    /* @var $pndLanguage \SJBR\StaticInfoTables\Domain\Model\Language */
-                    $allLanguages[] = $pndLanguage->getNameLocalized();
-                }
-                if ($this->pndOtherLanguage) {
-                    $otherLanguages = GeneralUtility::trimExplode(',', $this->pndOtherLanguage);
-                    foreach ($otherLanguages as $otherLanguage) {
-                        $allLanguages[] = $otherLanguage;
-                    }
-                }
-                sort($allLanguages);
-                $this->pndAllLanguages = implode(', ', $allLanguages);
-            } else {
-                $this->pndAllLanguages = '';
-            }
-        }
-
-        return $this->pndAllLanguages;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getHasPndConsulting()
-    {
-        return $this->pndConsultants && $this->pndConsulting ? true : false;
-    }
-
 
     /**
      * @return string
@@ -357,24 +196,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
         $this->subtitle = $subtitle;
     }
 
-    /**
-     * Returns the link.
-     * @return string $link
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * Sets the link.
-     *
-     * @param string $link
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
-    }
 
     /**
      * Returns the teaser.
@@ -490,25 +311,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
         $this->description = $description;
     }
 
-    /**
-     * Returns the religiousDenomination.
-     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion $religiousDenomination
-     */
-    public function getReligiousDenomination()
-    {
-        return $this->religiousDenomination;
-    }
-
-    /**
-     * Sets the religiousDenomination.
-     *
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion $religiousDenomination
-     */
-    public function setReligiousDenomination(
-        Religion $religiousDenomination
-    ) {
-        $this->religiousDenomination = $religiousDenomination;
-    }
 
     /**
      * @return string
@@ -609,37 +411,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
-    public function getInstitution()
-    {
-        return $this->institution;
-    }
-
-    /**
-     * @param string $institution
-     */
-    public function setInstitution($institution)
-    {
-        $this->institution = $institution;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAssociation()
-    {
-        return $this->association;
-    }
-
-    /**
-     * @param string $association
-     */
-    public function setAssociation($association)
-    {
-        $this->association = $association;
-    }
 
     /**
      * @return string
@@ -673,53 +444,6 @@ class Entry extends AbstractEntity implements GeopositionInterface
         $this->notice = $notice;
     }
 
-    /**
-     * @return bool
-     */
-    public function getMotherAndChild()
-    {
-        return $this->motherAndChild;
-    }
-
-    /**
-     * @param bool $motherAndChild
-     */
-    public function setMotherAndChild($motherAndChild)
-    {
-        $this->motherAndChild = (boolean)$motherAndChild;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMotherAndChildNotice()
-    {
-        return $this->motherAndChildNotice;
-    }
-
-    /**
-     * @param string $motherAndChildNotice
-     */
-    public function setMotherAndChildNotice($motherAndChildNotice)
-    {
-        $this->motherAndChildNotice = $motherAndChildNotice;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getConsultingAgreement()
-    {
-        return (boolean)$this->consultingAgreement;
-    }
-
-    /**
-     * @param bool $consultingAgreement
-     */
-    public function setConsultingAgreement($consultingAgreement)
-    {
-        $this->consultingAgreement = (boolean)$consultingAgreement;
-    }
 
     /**
      * @return string
@@ -768,4 +492,59 @@ class Entry extends AbstractEntity implements GeopositionInterface
     {
         $this->image = $image;
     }
+
+    /**
+     * @return string
+     */
+    public function getInstitution()
+    {
+        return $this->institution;
+    }
+
+    /**
+     * @param string $institution
+     */
+    public function setInstitution($institution)
+    {
+        $this->institution = $institution;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssociation()
+    {
+        return $this->association;
+    }
+
+    /**
+     * @param string $association
+     */
+    public function setAssociation($association)
+    {
+        $this->association = $association;
+    }
+
+
+    /**
+     * @param $parameters
+     * @param $template
+     * @return mixed|void
+     */
+    public function getInfoWindow($parameters, $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>')
+    {
+        $title = isset($parameters['detailLink']) ? sprintf('<a href="%2$s">%1$s</a>', $this->getTitle(),
+            $parameters['detailLink']) : $this->getTitle();
+
+
+        return sprintf(
+            $template,
+            $title,
+            $this->getStreet(),
+            $this->getZip(),
+            $this->getCity()
+        );
+    }
+
+
 }

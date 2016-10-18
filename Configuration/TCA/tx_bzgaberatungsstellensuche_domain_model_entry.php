@@ -30,10 +30,10 @@ return array(
         'searchFields' => 'title,subtitle,city,zip,teaser,description,contact_person,institution,association,keywords',
     ),
     'interface' => array(
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, categories, image, link, website, teaser, zip, city, street, state, longitude, latitude, map, description, religious_denomination, area_of_consulting, contact_person, contact_email, telephone, telefax, email, institution, association, hotline, notice, mother_and_child, mother_and_child_notice, consulting_agreement, keywords, pnd_consultants, pnd_consulting, pnd_languages, pnd_other_language',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, categories, image, website, teaser, zip, city, street, state, longitude, latitude, description, contact_person, contact_email, telephone, telefax, email, hotline, notice, keywords, institution, association',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, categories, image, link, teaser, zip, city, street, state, longitude, latitude, map, description;;;richtext[]:rte_transform[mode=ts], religious_denomination, area_of_consulting, contact_person, contact_email, telephone, telefax, email, website, institution, association, hotline, notice, mother_and_child, mother_and_child_notice, consulting_agreement, pnd_consultants, pnd_consulting, pnd_languages, pnd_other_language, keywords, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, categories, image, teaser, zip, city, street, state, longitude, latitude, description;;;richtext[]:rte_transform[mode=ts], contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, notice, keywords, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
@@ -146,15 +146,6 @@ return array(
                 'eval' => 'trim',
             ),
         ),
-        'hash' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.hash',
-            'config' => array(
-                'type' => 'input',
-                'size' => 32,
-                'eval' => 'trim',
-            ),
-        ),
         'contact_person' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.contact_person',
@@ -200,24 +191,6 @@ return array(
                 'eval' => 'trim',
             ),
         ),
-        'institution' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.institution',
-            'config' => array(
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
-            ),
-        ),
-        'association' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.association',
-            'config' => array(
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
-            ),
-        ),
         'hotline' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.hotline',
@@ -242,38 +215,6 @@ return array(
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.keywords',
             'config' => array(
                 'type' => 'text',
-                'size' => 30,
-                'eval' => 'trim',
-            ),
-        ),
-        'mother_and_child_notice' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.mother_and_child_notice',
-            'config' => array(
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
-            ),
-        ),
-        'mother_and_child' => array(
-            'exclude' => 1,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.mother_and_child',
-            'config' => array(
-                'type' => 'check',
-            ),
-        ),
-        'consulting_agreement' => array(
-            'exclude' => 1,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.consulting_agreement',
-            'config' => array(
-                'type' => 'check',
-            ),
-        ),
-        'link' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.link',
-            'config' => array(
-                'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
             ),
@@ -367,13 +308,6 @@ return array(
                 'eval' => 'trim',
             ),
         ),
-        'map' => array(
-            'exclude' => 1,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.map',
-            'config' => array(
-                'type' => 'check',
-            ),
-        ),
         'description' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.description',
@@ -393,19 +327,6 @@ return array(
                         'script' => 'wizard_rte.php',
                     ),
                 ),
-            ),
-        ),
-        'religious_denomination' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.religious_denomination',
-            'config' => array(
-                'type' => 'select',
-                'items' => array(
-                    array('', 0),
-                ),
-                'foreign_table' => 'tx_bzgaberatungsstellensuche_domain_model_religion',
-                'minitems' => 0,
-                'maxitems' => 1,
             ),
         ),
         'image' => array(
@@ -433,52 +354,29 @@ return array(
                 "size" => 10,
                 "minitems" => 0,
                 "maxitems" => 100,
-                "MM" => "tx_bzgaberatungsstellensuche_domain_model_entry_category_mm",
+                "MM" => "tx_bzgaberatungsstellensuche_entry_category_mm",
                 "wizards" => Array(
                     "_PADDING" => 0,
                     "_VERTICAL" => 1,
                 ),
             ),
         ),
-        'pnd_consultants' => array(
-            'exclude' => 1,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consultants',
-            'config' => array(
-                'type' => 'check',
-            ),
-        ),
-        'pnd_consulting' => array(
-            'exclude' => 1,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.pnd_consulting',
-            'config' => array(
-                'type' => 'check',
-            ),
-        ),
-        'pnd_other_language' => array(
+        'institution' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.pnd_other_language',
+            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.institution',
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
             ),
         ),
-        'pnd_languages' => array(
+        'association' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.pnd_languages',
-            "config" => Array(
-                "type" => "select",
-                "internal_type" => "db",
-                "allowed" => "static_languages",
-                "foreign_table" => "static_languages",
-                "size" => 10,
-                "minitems" => 0,
-                "maxitems" => 100,
-                "MM" => "tx_bzgaberatungsstellensuche_domain_model_entry_language_mm",
-                "wizards" => Array(
-                    "_PADDING" => 0,
-                    "_VERTICAL" => 1,
-                ),
+            'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.association',
+            'config' => array(
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
             ),
         ),
     ),

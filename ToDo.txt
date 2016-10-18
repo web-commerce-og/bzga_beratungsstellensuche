@@ -1,26 +1,20 @@
 Fragen:
 
-- Google Maps Karte darstellen
-- Beispiel-Template? Wie sollte es aussehen?
-
+- Exporter-Erweiterung überarbeiten -> Csv Encoder, Xml-Encoder für Export
 
 Fragen zur Abstimmung:
-- Wo wird die Erweiterung gehostet?
-- Die Essstörungen müssten noch auf die Version 2.1 umgestellt werden. Aktuell ist die Datei nicht ausreichend befüllt.
-Dabei ist zu beachten, dass es eine Reihe weiterer Kriterien gibt, die im Vergleich zu familienplanung.de abgefragt werden.
-- Ich bräuchte einen Timestamp für jeden Eintrag, wann ist dieser das letzte Mal verändert wurden.
-
-
+- Wo wird die Erweiterung oder wo werden die Erweiterungen gehostet?
 
 
 Nice to have
+- Integration MarkerClusterer
+- Recentering marker on window resize
 - Testing
 - Dokumentation + DocBlocks
-- Schema für Validierung
-- Icon und Beschreibung für Content Wizard
 
 
 To Check
 - Sitemap Generator => is working -> ?eID=dd_googlesitemap&sitemap=bzga_beratungsstellensuche&singlePid=10095&pidList=7226
 - RealUrl-Konfiguration => is working
 - Linkvalidator-Konfiguration => is working
+

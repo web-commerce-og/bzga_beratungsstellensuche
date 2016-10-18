@@ -1,0 +1,23 @@
+{namespace bzga=BZgA\BzgaBeratungsstellensuche\ViewHelpers}
+<address>
+    <f:if condition="{entry.street}">{entry.street}<br></f:if>
+    <f:if condition="{entry.zip}">{entry.zip} </f:if><f:if condition="{entry.city}">{entry.city}<br></f:if>
+    <br>
+    <f:if condition="{entry.telephone}"><bzga:translate key="telephone" />: {entry.telephone}<br></f:if>
+    <f:if condition="{entry.telefax}"><bzga:translate key="telefax" />: {entry.telefax}<br></f:if>
+    <f:if condition="{entry.hotline}"><bzga:translate key="hotline" />: {entry.hotline}<br></f:if>
+    <f:if condition="{entry.email}"><f:link.email email="{entry.email}"/><br></f:if>
+    <f:if condition="{entry.website}"><f:link.external uri="{entry.website}">{entry.website}</f:link.external><br></f:if>
+</address>
+
+<f:if condition="{entry.contactPerson}">
+    <address>
+        <strong>{entry.contactPerson}</strong><br>
+        <f:if condition="{entry.contactEmail}"><f:link.email email="{entry.contactEmail}"/></f:if>
+    </address>
+</f:if>
+
+
+
+
+

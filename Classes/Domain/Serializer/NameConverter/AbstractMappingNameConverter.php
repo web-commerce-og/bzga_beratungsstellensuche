@@ -3,6 +3,19 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -10,6 +23,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use BZgA\BzgaBeratungsstellensuche\Events;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
 
@@ -85,7 +103,11 @@ abstract class AbstractMappingNameConverter extends CamelCaseToSnakeCaseNameConv
      */
     protected function emitMapNamesSignal()
     {
-        $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MapNames, array($this, $this->mapNames));
+        $signalArguments = array();
+        $signalArguments['extendedMapNames'] = array();
+
+        $mapNames = $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MapNames, $signalArguments);
+        $this->addAdditionalMapNames($mapNames['extendedMapNames']);
     }
 
 

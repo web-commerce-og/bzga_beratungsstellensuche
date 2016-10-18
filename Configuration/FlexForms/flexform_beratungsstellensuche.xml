@@ -137,25 +137,13 @@
                                     <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.kilometers</numIndex>
                                     <numIndex index="1">kilometers</numIndex>
                                 </numIndex>
-                                <numIndex index="30" type="array">
-                                    <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.religion</numIndex>
-                                    <numIndex index="1">religion</numIndex>
-                                </numIndex>
                                 <numIndex index="40" type="array">
                                     <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.categories</numIndex>
                                     <numIndex index="1">categories</numIndex>
                                 </numIndex>
-                                <numIndex index="50" type="array">
-                                    <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.consultingAgreement</numIndex>
-                                    <numIndex index="1">consultingAgreement</numIndex>
-                                </numIndex>
-                                <numIndex index="60" type="array">
-                                    <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.pndConsultingAgreement</numIndex>
-                                    <numIndex index="1">pndConsultingAgreement</numIndex>
-                                </numIndex>
-                                <numIndex index="70" type="array">
-                                    <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.motherAndChild</numIndex>
-                                    <numIndex index="1">motherAndChild</numIndex>
+                                <numIndex index="40" type="array">
+                                    <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.countryZonesGermany</numIndex>
+                                    <numIndex index="1">countryZonesGermany</numIndex>
                                 </numIndex>
                             </items>
                             <maxitems>99</maxitems>

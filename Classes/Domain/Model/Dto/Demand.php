@@ -1,12 +1,29 @@
 <?php
 
-
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto;
+
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 class Demand extends AbstractValueObject implements GeoPositionDemandInterface
 {
 
@@ -20,17 +37,12 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     /**
      * @var array
      */
-    protected $searchFields = 'title,description,keywords';
+    protected $searchFields = 'title,teaser,subtitle,description,keywords';
 
     /**
      * @var string
      */
     protected $location;
-
-    /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion
-     */
-    protected $religion;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category>
@@ -43,19 +55,9 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     protected $kilometers = 10;
 
     /**
-     * @var boolean
+     * @var \SJBR\StaticInfoTables\Domain\Model\CountryZone
      */
-    protected $motherAndChild = false;
-
-    /**
-     * @var boolean
-     */
-    protected $consultingAgreement = false;
-
-    /**
-     * @var boolean
-     */
-    protected $pndConsulting;
+    protected $countryZone;
 
     /**
      * @var \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
@@ -106,22 +108,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
 
 
     /**
-     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion
-     */
-    public function getReligion()
-    {
-        return $this->religion;
-    }
-
-    /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Religion $religion
-     */
-    public function setReligion($religion)
-    {
-        $this->religion = $religion;
-    }
-
-    /**
      * @return integer
      */
     public function getKilometers()
@@ -135,54 +121,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     public function setKilometers($kilometers)
     {
         $this->kilometers = $kilometers;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isMotherAndChild()
-    {
-        return $this->motherAndChild;
-    }
-
-    /**
-     * @param boolean $motherAndChild
-     */
-    public function setMotherAndChild($motherAndChild)
-    {
-        $this->motherAndChild = $motherAndChild;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isConsultingAgreement()
-    {
-        return $this->consultingAgreement;
-    }
-
-    /**
-     * @param boolean $consultingAgreement
-     */
-    public function setConsultingAgreement($consultingAgreement)
-    {
-        $this->consultingAgreement = $consultingAgreement;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isPndConsulting()
-    {
-        return $this->pndConsulting;
-    }
-
-    /**
-     * @param boolean $pndConsulting
-     */
-    public function setPndConsulting($pndConsulting)
-    {
-        $this->pndConsulting = $pndConsulting;
     }
 
     /**
@@ -217,6 +155,21 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         $this->searchFields = $searchFields;
     }
 
+    /**
+     * @return \SJBR\StaticInfoTables\Domain\Model\CountryZone
+     */
+    public function getCountryZone()
+    {
+        return $this->countryZone;
+    }
+
+    /**
+     * @param \SJBR\StaticInfoTables\Domain\Model\CountryZone $countryZone
+     */
+    public function setCountryZone($countryZone)
+    {
+        $this->countryZone = $countryZone;
+    }
 
     /**
      * Returns the longitude.

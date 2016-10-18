@@ -58,23 +58,14 @@
             <trans-unit id="flexforms_additional.formFields.kilometers" xml:space="preserve">
                 <source>Kilometer</source>
             </trans-unit>
-            <trans-unit id="flexforms_additional.formFields.religion" xml:space="preserve">
-                <source>Konfession</source>
-            </trans-unit>
             <trans-unit id="flexforms_additional.formFields.location" xml:space="preserve">
                 <source>Standort</source>
             </trans-unit>
             <trans-unit id="flexforms_additional.formFields.categories" xml:space="preserve">
                 <source>Kategorien</source>
             </trans-unit>
-            <trans-unit id="flexforms_additional.formFields.consultingAgreement" xml:space="preserve">
-                <source>Beratungsschein</source>
-            </trans-unit>
-            <trans-unit id="flexforms_additional.formFields.pndConsultingAgreement" xml:space="preserve">
-                <source>PND Beratungsschein</source>
-            </trans-unit>
-            <trans-unit id="flexforms_additional.formFields.motherAndChild" xml:space="preserve">
-                <source>Mutter und Kind</source>
+            <trans-unit id="flexforms_additional.formFields.countryZonesGermany" xml:space="preserve">
+                <source>Bundesländer</source>
             </trans-unit>
         </body>
     </file>

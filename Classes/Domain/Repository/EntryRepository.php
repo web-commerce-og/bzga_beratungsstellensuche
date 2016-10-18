@@ -2,6 +2,19 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use TYPO3\CMS\Core\Utility\MathUtility;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -11,6 +24,11 @@ use BZgA\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 class EntryRepository extends AbstractBaseRepository
 {
 
@@ -28,22 +46,6 @@ class EntryRepository extends AbstractBaseRepository
     {
         $query = $this->createQuery();
         $constraints = $this->createCoordsConstraints($demand, $query, $demand->getKilometers());
-        if ($demand->isMotherAndChild()) {
-            $constraints[] = $query->equals('motherAndChild', 1);
-        }
-
-        if ($demand->isConsultingAgreement()) {
-            $constraints[] = $query->equals('consultingAgreement', 1);
-        }
-
-        if ($demand->getReligion()) {
-            $constraints[] = $query->equals('religiousDenomination', $demand->getReligion());
-        }
-
-        if ($demand->isPndConsulting()) {
-            $constraints[] = $query->equals('pndConsulting', 1);
-            $constraints[] = $query->equals('pndConsultants', 1);
-        }
 
         if ($keywords = $demand->getKeywords()) {
             $searchFields = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
@@ -73,6 +75,10 @@ class EntryRepository extends AbstractBaseRepository
             if(!empty($categoryConstraints)) {
                 $constraints[] = $query->logicalOr($categoryConstraints);
             }
+        }
+
+        if($demand->getCountryZone()) {
+            $constraints[] = $query->equals('state', $demand->getCountryZone());
         }
 
         // Call hook functions for additional constraints

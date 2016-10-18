@@ -2,7 +2,7 @@
   "name": "bzga/bzga-beratungsstellensuche",
   "type": "typo3-cms-extension",
   "description": "Beratungsstellensuche der BZgA",
-  "version": "1.0.0",
+  "version": "6.2.0",
   "license": "GPL-2.0+",
   "authors": [
     {

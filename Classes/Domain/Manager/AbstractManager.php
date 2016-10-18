@@ -3,6 +3,18 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -14,6 +26,11 @@ use IteratorAggregate;
 use Countable;
 use TYPO3\CMS\Core\SingletonInterface;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 abstract class AbstractManager implements ManagerInterface, Countable, IteratorAggregate
 {
 
@@ -33,7 +50,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     protected $dataMap = array();
 
     /**
-     * @var ExternalIdObjectStorage
+     * @var \SplObjectStorage
      */
     private $entries;
 
@@ -72,7 +89,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataHandler->admin = true;
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
-        $this->entries = new ExternalIdObjectStorage();
+        $this->entries = new \SplObjectStorage();
     }
 
     /**
@@ -165,7 +182,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
 
     /**
-     * @return ExternalIdObjectStorage
+     * @return \SplObjectStorage
      */
     public function getIterator()
     {

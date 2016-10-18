@@ -30,6 +30,12 @@ plugin.tx_bzgaberatungsstellensuche {
             append = {$plugin.tx_bzgaberatungsstellensuche.settings.list.append}
             maxCharacters = {$plugin.tx_bzgaberatungsstellensuche.settings.list.maxCharacters}
         }
+        additionalCssFile = {$plugin.tx_bzgaberatungsstellensuche.settings.additionalCssFile}
+        additionalJsFile = {$plugin.tx_bzgaberatungsstellensuche.settings.additionalJsFile}
+        map {
+            pathToActiveMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToActiveMarker}
+            pathToDefaultMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToDefaultMarker}
+        }
     }
 
     # Modify the translation

@@ -1,8 +1,11 @@
+{namespace bzga=BZgA\BzgaBeratungsstellensuche\ViewHelpers}
+<div class="form-box">
 <f:form pageUid="{settings.listPid}" method="post" noCacheHash="TRUE" controller="Entry" action="list" name="demand"
         object="{demand}">
     <f:for each="{bzga:explode(subject: settings.formFields)}" as="formField">
         <f:render partial="Entry/FormFields/{formField -> bzga:format.uppercaseFirstLetter()}" arguments="{_all}"/>
     </f:for>
-    <f:form.submit name="search" class="btn btn-default"
-                   value="{f:translate(key:'search-btn')}"/>
+    <f:render partial="Entry/FormFields/Submit" arguments="{_all}"/>
+    <f:render partial="Entry/FormFields/Reset" arguments="{_all}"/>
 </f:form>
+</div>

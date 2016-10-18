@@ -3,14 +3,39 @@
 
 namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
 
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use BZgA\BzgaBeratungsstellensuche\Events;
 
+/**
+ * @package TYPO3
+ * @subpackage bzga_beratungsstellensuche
+ * @author Sebastian Schreiber
+ */
 abstract class AbstractBaseRepository extends Repository
 {
+
+    /**
+     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @inject
+     */
+    protected $signalSlotDispatcher;
 
     /**
      * @var array
@@ -25,27 +50,12 @@ abstract class AbstractBaseRepository extends Repository
     /**
      * @var string
      */
-    const RELIGION_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_religion';
-
-    /**
-     * @var string
-     */
     const CATEGORY_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_category';
 
     /**
      * @var string
      */
-    const LANGUAGE_ENTRY_MM_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_entry_language_mm';
-
-    /**
-     * @var string
-     */
-    const ENTRY_CATEGORY_MM_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_entry_category_mm';
-
-    /**
-     * @var string
-     */
-    const PNDCONSULTING_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_pndconsulting';
+    const ENTRY_CATEGORY_MM_TABLE = 'tx_bzgaberatungsstellensuche_entry_category_mm';
 
     /**
      * @var string
@@ -111,6 +121,20 @@ abstract class AbstractBaseRepository extends Repository
     }
 
     /**
+     * @param $externalId
+     * @return object
+     */
+    public function findOneByExternalId($externalId)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $object = $query->matching($query->equals('externalId', $externalId))->execute()->getFirst();
+
+        return $object;
+    }
+
+    /**
      * @return mixed|\TYPO3\CMS\Extbase\Persistence\QueryInterface
      */
     public function createQuery()
@@ -130,9 +154,8 @@ abstract class AbstractBaseRepository extends Repository
         $databaseConnection->exec_TRUNCATEquery(self::CATEGORY_TABLE);
         $databaseConnection->exec_TRUNCATEquery(self::ENTRY_TABLE);
         $databaseConnection->exec_TRUNCATEquery(self::ENTRY_CATEGORY_MM_TABLE);
-        $databaseConnection->exec_TRUNCATEquery(self::LANGUAGE_ENTRY_MM_TABLE);
-        $databaseConnection->exec_TRUNCATEquery(self::PNDCONSULTING_TABLE);
-        $databaseConnection->exec_TRUNCATEquery(self::RELIGION_TABLE);
+        $this->signalSlotDispatcher->dispatch(static::class, Events::TABLE_TRUNCATE_ALL_SIGNAL,
+            array('databaseConnection' => $databaseConnection));
     }
 
     /**
