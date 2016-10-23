@@ -36,5 +36,10 @@
   "replace": {
     "bzga_beratungsstellensuche": "self.version",
     "bzga/bzga-beratungsstellensuche": "self.version"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }
