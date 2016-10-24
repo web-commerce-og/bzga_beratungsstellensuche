@@ -7,6 +7,5 @@ $baseDir = $vendorDir;
 
 return array(
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
-    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
+    'Geocoder' => array($vendorDir . '/willdurand/geocoder/src'),
 );

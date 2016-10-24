@@ -25,10 +25,10 @@ interface MapWindowInterface
 {
 
     /**
-     * @param $parameters
-     * @param $template
+     * @param array $parameters
+     * @param string $template
      * @return mixed
      */
-    public function getInfoWindow($parameters, $template = '');
+    public function getInfoWindow(array $parameters = array(), $template = '');
 
 }

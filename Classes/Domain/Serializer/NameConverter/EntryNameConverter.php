@@ -20,7 +20,7 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
  * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
-class EntryNameConverter extends AbstractMappingNameConverter
+class EntryNameConverter extends BaseMappingNameConverter
 {
 
     /**

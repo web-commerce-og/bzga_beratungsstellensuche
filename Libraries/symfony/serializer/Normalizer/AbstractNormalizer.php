@@ -17,13 +17,14 @@ use Symfony\Component\Serializer\Exception\RuntimeException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Mapping\AttributeMetadataInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+use Symfony\Component\Serializer\SerializerAwareInterface;
 
 /**
  * Normalizer implementation.
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
-abstract class AbstractNormalizer extends SerializerAwareNormalizer implements NormalizerInterface, DenormalizerInterface
+abstract class AbstractNormalizer extends SerializerAwareNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
 {
     const CIRCULAR_REFERENCE_LIMIT = 'circular_reference_limit';
     const OBJECT_TO_POPULATE = 'object_to_populate';
@@ -209,12 +210,32 @@ abstract class AbstractNormalizer extends SerializerAwareNormalizer implements N
 
         $allowedAttributes = array();
         foreach ($this->classMetadataFactory->getMetadataFor($classOrObject)->getAttributesMetadata() as $attributeMetadata) {
-            if (count(array_intersect($attributeMetadata->getGroups(), $context[static::GROUPS]))) {
-                $allowedAttributes[] = $attributesAsString ? $attributeMetadata->getName() : $attributeMetadata;
+            $name = $attributeMetadata->getName();
+
+            if (
+                count(array_intersect($attributeMetadata->getGroups(), $context[static::GROUPS])) &&
+                $this->isAllowedAttribute($classOrObject, $name, null, $context)
+            ) {
+                $allowedAttributes[] = $attributesAsString ? $name : $attributeMetadata;
             }
         }
 
         return $allowedAttributes;
+    }
+
+    /**
+     * Is this attribute allowed?
+     *
+     * @param object|string $classOrObject
+     * @param string        $attribute
+     * @param string|null   $format
+     * @param array         $context
+     *
+     * @return bool
+     */
+    protected function isAllowedAttribute($classOrObject, $attribute, $format = null, array $context = array())
+    {
+        return !in_array($attribute, $this->ignoredAttributes);
     }
 
     /**
@@ -231,6 +252,23 @@ abstract class AbstractNormalizer extends SerializerAwareNormalizer implements N
     }
 
     /**
+     * Returns the method to use to construct an object. This method must be either
+     * the object constructor or static.
+     *
+     * @param array            $data
+     * @param string           $class
+     * @param array            $context
+     * @param \ReflectionClass $reflectionClass
+     * @param array|bool       $allowedAttributes
+     *
+     * @return \ReflectionMethod|null
+     */
+    protected function getConstructor(array &$data, $class, array &$context, \ReflectionClass $reflectionClass, $allowedAttributes)
+    {
+        return $reflectionClass->getConstructor();
+    }
+
+    /**
      * Instantiates an object using constructor parameters when needed.
      *
      * This method also allows to denormalize data into an existing object if
@@ -243,13 +281,16 @@ abstract class AbstractNormalizer extends SerializerAwareNormalizer implements N
      * @param array            $context
      * @param \ReflectionClass $reflectionClass
      * @param array|bool       $allowedAttributes
+     * @param string|null      $format
      *
      * @return object
      *
      * @throws RuntimeException
      */
-    protected function instantiateObject(array &$data, $class, array &$context, \ReflectionClass $reflectionClass, $allowedAttributes)
+    protected function instantiateObject(array &$data, $class, array &$context, \ReflectionClass $reflectionClass, $allowedAttributes/*, $format = null*/)
     {
+        $format = func_num_args() >= 6 ? func_get_arg(5) : null;
+
         if (
             isset($context[static::OBJECT_TO_POPULATE]) &&
             is_object($context[static::OBJECT_TO_POPULATE]) &&
@@ -261,7 +302,7 @@ abstract class AbstractNormalizer extends SerializerAwareNormalizer implements N
             return $object;
         }
 
-        $constructor = $reflectionClass->getConstructor();
+        $constructor = $this->getConstructor($data, $class, $context, $reflectionClass, $allowedAttributes);
         if ($constructor) {
             $constructorParameters = $constructor->getParameters();
 
@@ -281,8 +322,18 @@ abstract class AbstractNormalizer extends SerializerAwareNormalizer implements N
                         $params = array_merge($params, $data[$paramName]);
                     }
                 } elseif ($allowed && !$ignored && (isset($data[$key]) || array_key_exists($key, $data))) {
-                    $params[] = $data[$key];
-                    // don't run set for a parameter passed to the constructor
+                    $parameterData = $data[$key];
+                    try {
+                        if (null !== $constructorParameter->getClass()) {
+                            $parameterClass = $constructorParameter->getClass()->getName();
+                            $parameterData = $this->serializer->deserialize($parameterData, $parameterClass, $format, $context);
+                        }
+                    } catch (\ReflectionException $e) {
+                        throw new RuntimeException(sprintf('Could not determine the class of the parameter "%s".', $key), 0, $e);
+                    }
+
+                    // Don't run set for a parameter passed to the constructor
+                    $params[] = $parameterData;
                     unset($data[$key]);
                 } elseif ($constructorParameter->isDefaultValueAvailable()) {
                     $params[] = $constructorParameter->getDefaultValue();
@@ -297,7 +348,11 @@ abstract class AbstractNormalizer extends SerializerAwareNormalizer implements N
                 }
             }
 
-            return $reflectionClass->newInstanceArgs($params);
+            if ($constructor->isConstructor()) {
+                return $reflectionClass->newInstanceArgs($params);
+            } else {
+                return $constructor->invokeArgs(null, $params);
+            }
         }
 
         return new $class();

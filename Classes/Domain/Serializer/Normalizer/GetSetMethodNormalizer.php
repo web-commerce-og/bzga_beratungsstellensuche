@@ -18,6 +18,7 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer as BaseGetSetMethodNormalizer;
+use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNameConverter;
 use BZgA\BzgaBeratungsstellensuche\Events;
 
 /**
@@ -50,6 +51,9 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         NameConverterInterface $nameConverter = null
     ) {
         $this->classMetadataFactory = $classMetadataFactory;
+        if (null === $nameConverter) {
+            $nameConverter = new BaseMappingNameConverter();
+        }
         $this->nameConverter = $nameConverter;
     }
 
@@ -135,6 +139,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             $signalArguments);
 
         $callbacks = array_merge($callbacks, $additionalCallbacks['extendedCallbacks']);
+
         return $callbacks;
     }
 

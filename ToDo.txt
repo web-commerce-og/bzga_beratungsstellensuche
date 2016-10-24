@@ -1,16 +1,15 @@
 Fragen:
 
-- Exporter-Erweiterung überarbeiten -> Csv Encoder, Xml-Encoder für Export
+- Exporter-Erweiterung überarbeiten -> Xml-Encoder für Export
 
 Fragen zur Abstimmung:
 - Wo wird die Erweiterung oder wo werden die Erweiterungen gehostet?
 
 
 Nice to have
-- Integration MarkerClusterer
 - Recentering marker on window resize
 - Testing
-- Dokumentation + DocBlocks
+- Dokumentation
 
 
 To Check

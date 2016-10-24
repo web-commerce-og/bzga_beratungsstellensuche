@@ -38,7 +38,6 @@ use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
 use Ivory\GoogleMap\Control\FullscreenControl;
 use Ivory\GoogleMap\Control\ControlPosition;
-use Ivory\GoogleMap\Overlay\MarkerClusterType;
 
 /**
  * @package TYPO3
@@ -106,7 +105,6 @@ class MapController extends AbstractWidgetController
         $map = new Map();
         $fullscreenControl = new FullscreenControl(ControlPosition::TOP_RIGHT);
         $map->getControlManager()->setFullscreenControl($fullscreenControl);
-        $map->getOverlayManager()->getMarkerCluster()->setType(MarkerClusterType::MARKER_CLUSTERER);
         $map->setStylesheetOptions($this->styleSheetOptions);
         $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
         $map->setAutoZoom(true);

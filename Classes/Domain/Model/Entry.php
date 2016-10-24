@@ -527,11 +527,11 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
 
 
     /**
-     * @param $parameters
-     * @param $template
-     * @return mixed|void
+     * @param array $parameters
+     * @param string $template
+     * @return string
      */
-    public function getInfoWindow($parameters, $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>')
+    public function getInfoWindow(array $parameters = array(), $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>')
     {
         $title = isset($parameters['detailLink']) ? sprintf('<a href="%2$s">%1$s</a>', $this->getTitle(),
             $parameters['detailLink']) : $this->getTitle();

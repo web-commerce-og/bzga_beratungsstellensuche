@@ -16,7 +16,7 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer;
  * The TYPO3 project - inspiring people to share!
  */
 
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\CategoryNormalizer;
+use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer as BaseSerializer;
@@ -51,7 +51,7 @@ class Serializer extends BaseSerializer
             /* @var $objectManager ObjectManager */
             $normalizers = array(
                 $objectManager->get(EntryNormalizer::class),
-                $objectManager->get(CategoryNormalizer::class),
+                $objectManager->get(GetSetMethodNormalizer::class),
             );
         }
         if (empty($encoders)) {
