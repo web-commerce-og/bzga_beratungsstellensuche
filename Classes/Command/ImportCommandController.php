@@ -49,6 +49,7 @@ class ImportCommandController extends CommandController
         try {
             $this->xmlImporter->importFromFile($file, $pid);
         } catch (FileDoesNotExistException $e) {
+            throw new $e;
         }
     }
 
@@ -62,6 +63,7 @@ class ImportCommandController extends CommandController
         try {
             $this->xmlImporter->importFromUrl($url, $pid);
         } catch (UnexpectedValueException $e) {
+            throw new $e;
         }
     }
 

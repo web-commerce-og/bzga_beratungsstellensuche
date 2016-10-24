@@ -28,7 +28,20 @@ class ext_update
         $content .= '<p>'.LocalizationUtility::translate('updateLanguageLabels',
                 'StaticInfoTables').' bzga_beratungsstellensuche.</p>';
 
+        $this->createImageUploadFolder();
+
         return $content;
+    }
+
+    /**
+     * @return void
+     */
+    private function createImageUploadFolder()
+    {
+        $imageFolder = GeneralUtility::getFileAbsFileName('fileadmin/user_upload/tx_bzgaberatungsstellensuche');
+        if (false === is_dir($imageFolder)) {
+            GeneralUtility::mkdir($imageFolder);
+        }
     }
 
     /**

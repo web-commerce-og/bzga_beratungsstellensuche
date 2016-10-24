@@ -111,7 +111,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     {
         // First of all we delete the old references
         $entity = $configuration['entity'];
-        /* @var $entity \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry|ExternalIdInterface */
+        /* @var $entity ExternalIdInterface|AbstractEntity */
 
         $fileReferenceData = array(
             'table_local' => 'sys_file',
@@ -155,7 +155,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     private function downloadFile(ImageLink $source, ExternalIdInterface $entity)
     {
-        // @TODO: Make this mockable via vfstream
         $imageContent = GeneralUtility::getUrl($source->getExternalUrl());
 
         $imageInfo = getimagesizefromstring($imageContent);

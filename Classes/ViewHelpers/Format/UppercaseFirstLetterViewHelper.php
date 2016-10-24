@@ -32,15 +32,16 @@ class UppercaseFirstLetterViewHelper extends AbstractViewHelper
      */
     public function render($subject = null)
     {
-        if(null === $subject) {
+        if (null === $subject) {
             $subject = $this->renderChildren();
         }
 
         if (!is_string($subject)) {
             throw new \InvalidArgumentException('This is not a string');
         }
+        $subject = GeneralUtility::underscoredToLowerCamelCase($subject);
 
-        return ucfirst(GeneralUtility::underscoredToLowerCamelCase($subject));
+        return substr_replace($subject, ucfirst(substr($subject, 0, 1)), 0, 1);
     }
 
 }
