@@ -40,11 +40,18 @@ class HttpAdapterFactory
      */
     public static function createInstance($type)
     {
+
         switch ($type) {
             case self::TYPE_CURL:
                 return GeneralUtility::makeInstance(CurlHttpAdapter::class);
                 break;
             default:
+                $curlUse = isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse']) ? (bool)$GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse'] : false;
+
+                if (true === $curlUse) {
+                    return GeneralUtility::makeInstance(CurlHttpAdapter::class);
+                }
+
                 return new FileGetContentsHttpAdapter();
                 break;
         }

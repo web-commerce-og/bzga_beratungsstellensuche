@@ -32,16 +32,26 @@ class GeocoderFactory
     const TYPE_GOOGLE = 'google';
 
     /**
-     * @param $type
+     * @param string $type
      * @param HttpAdapterInterface $adapter
+     * @param string|null $locale
+     * @param string|null $region
+     * @param bool $useSsl
+     * @param string|null $apiKey
      * @return GoogleMaps
      */
-    public static function createInstance($type, HttpAdapterInterface $adapter)
-    {
+    public static function createInstance(
+        $type,
+        HttpAdapterInterface $adapter,
+        $locale = null,
+        $region = null,
+        $useSsl = false,
+        $apiKey = null
+    ) {
         // @TODO: Implement other types for flexibility
         switch ($type) {
             default:
-                return new GoogleMaps($adapter);
+                return new GoogleMaps($adapter, $locale, $region, $useSsl, $apiKey);
                 break;
         }
     }

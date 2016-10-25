@@ -216,6 +216,10 @@ class MapController extends AbstractWidgetController
 
         $apiHelperBuilder = ApiHelperBuilder::create();
         $apiHelperBuilder->setLanguage($this->getLanguage());
+        $googleMapsApiKey = isset($this->settings['map']['apiKey']) ? (string)$this->settings['map']['apiKey'] : null;
+        if (is_string($googleMapsApiKey)) {
+            $apiHelperBuilder->setKey($googleMapsApiKey);
+        }
         $apiHelper = $apiHelperBuilder->build();
 
 

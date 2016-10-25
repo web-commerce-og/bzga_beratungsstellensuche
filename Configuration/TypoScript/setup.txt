@@ -35,14 +35,9 @@ plugin.tx_bzgaberatungsstellensuche {
         map {
             pathToActiveMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToActiveMarker}
             pathToDefaultMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToDefaultMarker}
+            # apiKey = {$plugin.tx_bzgaberatungsstellensuche.settings.map.apiKey}
         }
-    }
-
-    # Modify the translation
-    _LOCAL_LANG {
-        default {
-
-        }
+        #adapter = {$plugin.tx_bzgaberatungsstellensuche.settings.adapter}
     }
 }
 

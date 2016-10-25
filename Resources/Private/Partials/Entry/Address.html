@@ -6,8 +6,8 @@
     <f:if condition="{entry.telephone}"><bzga:translate key="telephone" />: {entry.telephone}<br></f:if>
     <f:if condition="{entry.telefax}"><bzga:translate key="telefax" />: {entry.telefax}<br></f:if>
     <f:if condition="{entry.hotline}"><bzga:translate key="hotline" />: {entry.hotline}<br></f:if>
-    <f:if condition="{entry.email}"><f:link.email email="{entry.email}"/><br></f:if>
-    <f:if condition="{entry.website}"><f:link.external uri="{entry.website}">{entry.website}</f:link.external><br></f:if>
+    <f:if condition="{entry.email}"><bzga:translate key="email" />: <f:link.email email="{entry.email}"/><br></f:if>
+    <f:if condition="{entry.website}"><bzga:translate key="website" />: <f:link.external uri="{entry.website}">{entry.website}</f:link.external><br></f:if>
 </address>
 
 <f:if condition="{entry.contactPerson}">

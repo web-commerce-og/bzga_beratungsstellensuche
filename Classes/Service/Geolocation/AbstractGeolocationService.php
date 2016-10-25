@@ -61,8 +61,9 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     public function __construct(\BZgA\BzgaBeratungsstellensuche\Service\SettingsService $settingsService)
     {
         $this->settingsService = $settingsService;
-        $adapter = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapeter'));
-        $this->geocoder = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'), $adapter);
+        $adapter = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));
+        $this->geocoder = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'), $adapter, null,
+            null, false, $this->settingsService->getByPath('map.apiKey'));
     }
 
 
@@ -74,10 +75,10 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition)
     {
         return self::EARTH_RADIUS * acos(
-            cos(deg2rad($demandPosition->getLatitude())) * cos(deg2rad($locationPosition->getLatitude())) * cos(
-                deg2rad($locationPosition->getLongitude()) - deg2rad($demandPosition->getLongitude())
-            ) + sin(deg2rad($demandPosition->getLatitude())) * sin(deg2rad($locationPosition->getLatitude()))
-        );
+                cos(deg2rad($demandPosition->getLatitude())) * cos(deg2rad($locationPosition->getLatitude())) * cos(
+                    deg2rad($locationPosition->getLongitude()) - deg2rad($demandPosition->getLongitude())
+                ) + sin(deg2rad($demandPosition->getLatitude())) * sin(deg2rad($locationPosition->getLatitude()))
+            );
     }
 
     /**
@@ -88,7 +89,8 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
      */
     public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
     {
-        return sprintf(self::DISTANCE_SQL_FIELD, $demandPosition->getLatitude(), $demandPosition->getLongitude(), $demandPosition->getKilometers()).' AS '.$alias;
+        return sprintf(self::DISTANCE_SQL_FIELD, $demandPosition->getLatitude(), $demandPosition->getLongitude(),
+                $demandPosition->getKilometers()).' AS '.$alias;
     }
 
 }

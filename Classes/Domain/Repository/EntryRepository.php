@@ -67,17 +67,17 @@ class EntryRepository extends AbstractBaseRepository
             }
         }
 
-        if($demand->getCategories()->count() > 0) {
+        if ($demand->getCategories()->count() > 0) {
             $categoryConstraints = array();
-            foreach($demand->getCategories() as $category) {
+            foreach ($demand->getCategories() as $category) {
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
-            if(!empty($categoryConstraints)) {
+            if (!empty($categoryConstraints)) {
                 $constraints[] = $query->logicalOr($categoryConstraints);
             }
         }
 
-        if($demand->getCountryZone()) {
+        if ($demand->getCountryZone()) {
             $constraints[] = $query->equals('state', $demand->getCountryZone());
         }
 
@@ -136,7 +136,7 @@ class EntryRepository extends AbstractBaseRepository
 
 
     /**
-     * Here we delete all relations of an entry, this is not possible with juse the convenient remove method of this repository class
+     * Here we delete all relations of an entry, this is not possible with the convenient remove method of this repository class
      *
      * @param $uid
      */
@@ -161,11 +161,8 @@ class EntryRepository extends AbstractBaseRepository
                 self::ENTRY_CATEGORY_MM_TABLE,
                 'uid_local ='.$uid
             );
-            $databaseConnection->exec_DELETEquery(
-                self::LANGUAGE_ENTRY_MM_TABLE,
-                'uid_local ='.$uid
-            );
 
+            // @TODO: Do we need Signal here?
         }
     }
 }

@@ -49,6 +49,15 @@
 			<trans-unit id="telefax" xml:space="preserve">
 				<source>Telefax</source>
 			</trans-unit>
+			<trans-unit id="email" xml:space="preserve">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="website" xml:space="preserve">
+				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="all" xml:space="preserve">
+				<source>Alle</source>
+			</trans-unit>
 			<trans-unit id="hotline" xml:space="preserve">
 				<source>Beratungstelefon</source>
 			</trans-unit>

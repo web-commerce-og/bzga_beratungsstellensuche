@@ -3,6 +3,9 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-08-14T12:40:43Z" product-name="bzga_beratungsstellensuche">
 		<header/>
 		<body>
+			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.is_dummy_record" xml:space="preserve">
+				<source>Dummy Datensatz</source>
+			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry" xml:space="preserve">
 				<source>Beratungsstelle</source>
 			</trans-unit>
