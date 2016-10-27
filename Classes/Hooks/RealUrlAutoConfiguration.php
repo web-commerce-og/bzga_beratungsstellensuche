@@ -37,16 +37,29 @@ class RealUrlAutoConfiguration
                     '_DEFAULT' => array(
                         'beratungsstelle' => array(
                             array(
+                                'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[action]',
+                            ),
+                            array(
+                                'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[controller]',
+                            ),
+                            array(
                                 'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[entry]',
                                 'lookUpTable' => array(
                                     'table' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
                                     'id_field' => 'uid',
                                     'alias_field' => 'title',
+                                    'addWhereClause' => ' AND NOT deleted',
                                     'useUniqueCache' => 1,
                                     'useUniqueCache_conf' => array(
                                         'strtolower' => 1,
                                         'spaceCharacter' => '-',
                                     ),
+                                    'languageGetVar' => 'L',
+                                    'languageExceptionUids' => '',
+                                    'languageField' => 'sys_language_uid',
+                                    'transOrigPointerField' => 'l10n_parent',
+                                    'autoUpdate' => 1,
+                                    'expireDays' => 180,
                                 ),
                             ),
                         ),

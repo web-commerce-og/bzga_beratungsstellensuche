@@ -106,7 +106,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
         $signalArguments = array();
         $signalArguments['extendedMapNames'] = array();
 
-        $mapNames = $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MapNames, $signalArguments);
+        $mapNames = $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MAP_NAMES, $signalArguments);
         $this->addAdditionalMapNames($mapNames['extendedMapNames']);
     }
 

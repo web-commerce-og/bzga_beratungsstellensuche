@@ -65,9 +65,7 @@ class EntryNormalizer extends GetSetMethodNormalizer
         };
 
         $categoriesCallback = function () {
-            $array = func_get_args();
-
-            return self::convertToObjectStorage($this->categoryRepository, $array);
+            return self::convertToObjectStorage($this->categoryRepository, func_get_args());
         };
 
         $logoCallback = function ($logo) {
@@ -101,7 +99,10 @@ class EntryNormalizer extends GetSetMethodNormalizer
             foreach ($array[0] as $key => $item) {
                 if (is_array($item)) {
                     foreach ($item as $id) {
-                        $objectStorage->attach($repository->{$method}($id));
+                        $object = $repository->{$method}($id);
+                        if ($object !== null) {
+                            $objectStorage->attach($object);
+                        }
                     }
                 }
             }

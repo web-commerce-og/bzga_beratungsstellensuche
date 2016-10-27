@@ -1,6 +1,9 @@
 Fragen:
 
 - Exporter-Erweiterung überarbeiten -> Xml-Encoder für Export
+- Geokodierung aus Backend?
+- TypolinkViewHelper für Website, E-Mail etc.
+
 
 Fragen zur Abstimmung:
 - Wo wird die Erweiterung oder wo werden die Erweiterungen gehostet?
@@ -8,9 +11,7 @@ Fragen zur Abstimmung:
 
 Nice to have
 - Recentering marker on window resize
-- Testing
-- Dokumentation
-
+- Verband und Träger als eigenständige Relation?
 
 To Check
 - Sitemap Generator => is working -> ?eID=dd_googlesitemap&sitemap=bzga_beratungsstellensuche&singlePid=10095&pidList=7226

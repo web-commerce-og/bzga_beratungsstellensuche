@@ -52,11 +52,12 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
 
         $reports[] = GeneralUtility::makeInstance(
             Status::class,
-            'allow_url_fopen on or curl is used',
+            'allow_url_fopen on or curl is enabled',
             $value,
             $message,
             $severity
         );
+
 
         return $reports;
     }

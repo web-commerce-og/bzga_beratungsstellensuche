@@ -48,12 +48,20 @@ class ExtensionManagementUtility
      */
     public static function addAdditionalFormFields(array $fields)
     {
+        foreach ($fields as $field) {
+            self::addAdditionalFormField($field);
+        }
+    }
+
+    /**
+     * @param array $field
+     */
+    public static function addAdditionalFormField(array $field)
+    {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'] = array();
         }
-        foreach ($fields as $field) {
-            $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'][] = $field;
-        }
+        $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'][] = $field;
     }
 
     /**

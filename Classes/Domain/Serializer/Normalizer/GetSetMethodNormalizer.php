@@ -55,6 +55,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             $nameConverter = new BaseMappingNameConverter();
         }
         $this->nameConverter = $nameConverter;
+        parent::__construct($classMetadataFactory, $nameConverter);
     }
 
 
@@ -65,7 +66,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      *
      * @return self
      *
-     * @throws InvalidArgumentException if a non-callable callback is set
+     * @throws \InvalidArgumentException if a non-callable callback is set
      */
     public function setDenormalizeCallbacks(array $callbacks)
     {

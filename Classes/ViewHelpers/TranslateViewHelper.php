@@ -38,15 +38,17 @@ class TranslateViewHelper extends CoreTranslateViewHelper
     {
 
         $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
+        if (!is_array($registeredExtensionKeys) && empty($registeredExtensionKeys)) {
+            return parent::renderTranslation($id);
+        }
+
         foreach ($registeredExtensionKeys as $extensionKey) {
             $this->arguments['extensionName'] = GeneralUtility::underscoredToLowerCamelCase($extensionKey);
             $value = parent::renderTranslation($id);
             if (!empty($value)) {
-                break;
+                return $value;
             }
         }
-
-        return $value;
     }
 
 }

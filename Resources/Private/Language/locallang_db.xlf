@@ -40,7 +40,7 @@
 				<source>Breitengrad</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.description" xml:space="preserve">
-				<source>Description</source>
+				<source>Beschreibung</source>
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.contact_person" xml:space="preserve">
 				<source>Ansprechpartner</source>
@@ -92,6 +92,15 @@
 			</trans-unit>
 			<trans-unit id="tx_bzgaberatungsstellensuche_domain_model_entry.association" xml:space="preserve">
 				<source>Verband</source>
+			</trans-unit>
+			<trans-unit id="tabs.address" xml:space="preserve">
+				<source>Adresse</source>
+			</trans-unit>
+			<trans-unit id="tabs.relations" xml:space="preserve">
+				<source>Relationen</source>
+			</trans-unit>
+			<trans-unit id="tabs.contact" xml:space="preserve">
+				<source>Kontakt</source>
 			</trans-unit>
 		</body>
 	</file>

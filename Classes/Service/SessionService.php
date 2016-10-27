@@ -59,8 +59,16 @@ class SessionService
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);
+            $data = unserialize($sessionData);
+            if (is_array($data) && !empty($data)) {
+                foreach ($data as $key => $value) {
+                    if (empty($value)) {
+                        unset($data[$key]);
+                    }
+                }
+            }
 
-            return unserialize($sessionData);
+            return $data;
         }
 
         return;

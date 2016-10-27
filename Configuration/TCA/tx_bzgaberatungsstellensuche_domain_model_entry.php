@@ -33,7 +33,7 @@ return array(
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, categories, image, website, teaser, zip, city, street, state, longitude, latitude, description, contact_person, contact_email, telephone, telefax, email, hotline, notice, keywords, institution, association',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, categories, image, teaser, zip, city, street, state, longitude, latitude, description;;;richtext[]:rte_transform[mode=ts], contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, notice, keywords, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, image, teaser, notice, description;;;richtext[]:rte_transform[mode=ts], keywords, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.relations, categories, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.address, street, zip, city, state, longitude, latitude, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.contact, contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
@@ -162,6 +162,21 @@ return array(
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'wizards' => array(
+                    '_PADDING' => 2,
+                    'link' => array(
+                        'type' => 'popup',
+                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
+                        'icon' => 'link_popup.gif',
+                        'module' => array(
+                            'name' => 'wizard_element_browser',
+                            'urlParameters' => array(
+                                'mode' => 'wizard'
+                            )
+                        ),
+                        'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
+                    )
+                ),
             ),
         ),
         'telephone' => array(
@@ -189,6 +204,21 @@ return array(
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'wizards' => array(
+                    '_PADDING' => 2,
+                    'link' => array(
+                        'type' => 'popup',
+                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
+                        'icon' => 'link_popup.gif',
+                        'module' => array(
+                            'name' => 'wizard_element_browser',
+                            'urlParameters' => array(
+                                'mode' => 'wizard'
+                            )
+                        ),
+                        'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
+                    )
+                ),
             ),
         ),
         'hotline' => array(
@@ -226,6 +256,21 @@ return array(
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'wizards' => array(
+                    '_PADDING' => 2,
+                    'link' => array(
+                        'type' => 'popup',
+                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
+                        'icon' => 'link_popup.gif',
+                        'module' => array(
+                            'name' => 'wizard_element_browser',
+                            'urlParameters' => array(
+                                'mode' => 'wizard'
+                            )
+                        ),
+                        'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
+                    )
+                ),
             ),
         ),
         'teaser' => array(

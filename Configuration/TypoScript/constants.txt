@@ -10,14 +10,12 @@ plugin.tx_bzgaberatungsstellensuche {
     settings {
         singlePid = 10096
         listPid = 10097
-        formFields = keywords,location,kilometers,religion
+        formFields = location,kilometers
         form {
             kilometers = 10,20,30,40,50,100
         }
         list {
             itemsPerPage = 10
-            append = ...
-            maxCharacters = 100
         }
         additionalCssFile = EXT:bzga_beratungsstellensuche/Resources/Public/Css/main.css
         additionalJsFile = EXT:bzga_beratungsstellensuche/Resources/Public/Js/main.js
@@ -26,6 +24,5 @@ plugin.tx_bzgaberatungsstellensuche {
             pathToActiveMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/active.png
             # apiKey = GOOGLE_MAP_API_KEY
         }
-        # adapter = curl
     }
 }

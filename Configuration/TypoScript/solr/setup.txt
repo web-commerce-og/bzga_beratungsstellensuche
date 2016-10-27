@@ -14,7 +14,6 @@ plugin.tx_solr.index.queue {
                 20.field = longitude
             }
             abstract = teaser
-            description = teaser
             content = SOLR_CONTENT
             content {
                 field = description
@@ -30,11 +29,6 @@ plugin.tx_solr.index.queue {
             address_textS = street
             zip_textS = zip
             city_textS = city
-            religionType_stringM = SOLR_RELATION
-            religionType_stringM {
-                localField = religious_denomination
-                multiValue = 0
-            }
             categoryType_stringM = SOLR_RELATION
             categoryType_stringM {
                 localField = categories
@@ -44,9 +38,6 @@ plugin.tx_solr.index.queue {
             keywords {
                 field = keywords
             }
-            consultingAgreement_boolS = consulting_agreement
-            motherAndChild_boolS = mother_and_child
-            pndConsulting_boolS = pnd_consulting
             sortTitle_stringS  = title
         }
     }
