@@ -64,8 +64,8 @@ class XmlImporterErnaehrungTest extends XmlImporterTest
         /* @var $entry Entry */
         self::assertInstanceOf(Religion::class, $entry->getReligiousDenomination());
         self::assertSame('Name', $entry->getState());
-        self::assertSame('*sowieso* KULTUR BERATUNG BILDUNG Frauen für Frauen e. V.', $entry->getTitle());
-        self::assertSame('01099', $entry->getZip());
-        self::assertSame('http://www.bzga-rat.de/referat/ebs2/minisite/?idx=3063', $entry->getLink());
+        self::assertSame('Eine Beratungsstelle', $entry->getTitle());
+        self::assertSame('33333', $entry->getZip());
+        self::assertSame('http://meine-domain.com', $entry->getLink());
     }
 }
