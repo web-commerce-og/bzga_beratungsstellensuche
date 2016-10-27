@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Signals &amp; Hooks &mdash; Beratungsstellensuche 6.2.0 Dokumentation</title>
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/jquery-ui/jquery-ui.min.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/t3more.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Stichwortverzeichnis"
+              href="../../genindex.html"/>
+        <link rel="search" title="Suche" href="../../search.html"/>
+    <link rel="top" title="Beratungsstellensuche 6.2.0 Dokumentation" href="../../index.html"/>
+        <link rel="up" title="Entwickler" href="../Index.html"/>
+        <link rel="next" title="Erweiterung des Model" href="../ExtendModel/Index.html"/>
+        <link rel="prev" title="Flexforms erweitern" href="../ExtendFlexforms/Index.html"/> 
+  <script src="../../_static/js/modernizr.min.js"></script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        <ul class="sidebartop">
+
+          <li class="docsite">
+            <a href="https://docs.typo3.org"><img src="../../_static/img/typo3-documentation.png" class="logo" /></a>
+          </li>
+
+          <li class="project">
+            <a href="../../Index.html">
+              Beratungsstellensuche<br>6.2.0</a>
+          </li><li class="nolink search">
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search this project" id="searchinput" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div></li>
+
+        </ul>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction/Index.html">Einführung in die Erweiterung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Introduction/About/Index.html">Was macht die Erweiterung?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Introduction/Support/Index.html">Wird Unterstützung benötigt?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../IntegratorManual/Index.html">Integrator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../IntegratorManual/Installation/Index.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../IntegratorManual/Configuration/Index.html">TypoScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../IntegratorManual/Templates/Index.html">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/Templates/Start/Index.html">Templates ändern oder bearbeiten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/Templates/ViewHelpers/Index.html">ViewHelpers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../IntegratorManual/BestPractice/Index.html">Praxisbeispiele</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/BestPractice/IntegrationWithTypoScript/Index.html">Integration mittels TypoScript</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/BestPractice/RealUrl/Index.html">RealURL Konfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/BestPractice/Linkhandler/Index.html">Linkhandler Konfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/BestPractice/Linkvalidator/Index.html">Linkvalidator Konfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/BestPractice/Sitemap/Index.html">Sitemap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IntegratorManual/BestPractice/Solr/Index.html">Solr Konfiguration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../UsersManual/Index.html">Redakteur</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../UsersManual/HowToStart/Index.html">Der Anfang</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../UsersManual/Records/Index.html">Datensätze</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../UsersManual/Records/Entry/Index.html">Beratungsstelle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../UsersManual/Records/Category/Index.html">Beratungsart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../Index.html">Entwickler</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ExtendFlexforms/Index.html">Flexforms erweitern</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Signals &amp; Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ExtendModel/Index.html">Erweiterung des Model</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../Index.html">Beratungsstellensuche</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../Index.html">Docs</a> &raquo;</li>
+          <li><a href="../Index.html">Entwickler</a> &raquo;</li>
+    <li>Signals &amp; Hooks</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/DeveloperManual/HooksSignals/Index.txt" rel="nofollow">
+                <span class="fa fa-binoculars"></span>&#32;View page source
+            </a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody" class="toBeIndexed">
+            
+  <div class="section" id="signals-hooks">
+<span id="hookssignals"></span><h1>Signals &amp; Hooks<a class="headerlink" href="#signals-hooks" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Einige bereitgestellte Hooks und Signals können zur Anpassung der Erweiterung genutzt werden.
+Nach Bedarf können gerne weitere Hooks und Signals bereitgestellt werden. Setzen Sie sich diesbezüglich gerne mit uns in Verbindung: <a class="reference internal" href="../../Introduction/Support/Index.html#support"><span class="std std-ref">Wird Unterstützung benötigt?</span></a>.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#signals" id="id2">Signals</a></li>
+<li><a class="reference internal" href="#hooks" id="id3">Hooks</a></li>
+</ul>
+</div>
+<div class="section" id="signals">
+<span id="hookssignalssignals"></span><h2><a class="toc-backref" href="#id2">Signals</a><a class="headerlink" href="#signals" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Alle bereitgestellten Signals können in der Datei <code class="docutils literal"><span class="pre">Classes/Events.php</span></code> der Erweiterung bzga_beratungsstellensuche eingesehen werden und sind ausreichend kommentiert.</p>
+<div class="section" id="beispiel">
+<h3>Beispiel<a class="headerlink" href="#beispiel" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Als Beispiel möchten wir für die Formularansicht eine weitere Variable der View hinzufügen.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="c1">// Dies ist der Code-Abschnitt in der Datei Classes/Controller/EntryController.php</span>
+<span class="nv">$assignedViewValues</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;demand&#39;</span> <span class="o">=&gt;</span> <span class="nv">$demand</span><span class="p">,</span>
+        <span class="s1">&#39;kilometers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$kilometers</span><span class="p">,</span>
+        <span class="s1">&#39;categories&#39;</span> <span class="o">=&gt;</span> <span class="nv">$categories</span><span class="p">,</span>
+        <span class="s1">&#39;countryZonesGermany&#39;</span> <span class="o">=&gt;</span> <span class="nv">$countryZonesGermany</span>
+<span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">emitActionSignal</span><span class="p">(</span><span class="nx">Events</span><span class="o">::</span><span class="na">FORM_ACTION_SIGNAL</span><span class="p">,</span> <span class="nv">$assignedViewValues</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Um dieses Signal zu nutzen, erstellen Sie einen Slot in Ihrer eigenen Erweiterung. Dafür wird ein Eintrag in Ihrer <code class="docutils literal"><span class="pre">ext_localconf.php</span></code> benötigt:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="sd">/** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */</span>
+<span class="nv">$signalSlotDispatcher</span> <span class="o">=</span> <span class="nx">\TYPO3\CMS\Core\Utility\GeneralUtility</span><span class="o">::</span><span class="na">makeInstance</span><span class="p">(</span><span class="nx">\TYPO3\CMS\Extbase\SignalSlot\Dispatcher</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+
+<span class="c1">// Extend form view</span>
+<span class="nv">$signalSlotDispatcher</span><span class="o">-&gt;</span><span class="na">connect</span><span class="p">(</span>
+        <span class="nx">\BZgA\BzgaBeratungsstellensuche\Controller\EntryController</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\BZgA\BzgaBeratungsstellensuche\Events</span><span class="o">::</span><span class="na">FORM_ACTION_SIGNAL</span><span class="p">,</span>
+        <span class="nx">\YOUR_VENDOR\YOUR_EXTKEY\Slots\EntryController</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">&#39;formAction&#39;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Ihr Slot könnte dann wie folgt aussehen:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">YOUR_VENDOR\YOUR_EXTKEY\Slots</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">EntryController</span>
+<span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">listAction</span><span class="p">(</span><span class="nv">$variables</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="nv">$variables</span> <span class="o">=</span> <span class="nb">array_merge</span><span class="p">(</span><span class="nv">$variables</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;myVariable&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myValue&#39;</span><span class="p">));</span>
+                <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;extendedVariables&#39;</span> <span class="o">=&gt;</span> <span class="nv">$variables</span><span class="p">,</span>
+                <span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hinweis</p>
+<p class="last">Schauen Sie sich bitte die Datei Classes/Events.php in Ruhe an. Sie werden darüber schnell erfahren, welche Teile in der Erweiterung flexibel erweitert werden können.</p>
+</div>
+</div>
+</div>
+<div class="section" id="hooks">
+<h2><a class="toc-backref" href="#id3">Hooks</a><a class="headerlink" href="#hooks" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Es gibt aktuell verschiedenen Stellen an denen statt Signals Hooks zum Einsatz kommen.
+Für die Erweiterung der Flexforms haben wir bereits zwei Hooks im Einsatz gesehen. Siehe hierzu: <a class="reference internal" href="../ExtendFlexforms/Index.html#extendflexforms"><span class="std std-ref">Flexforms erweitern</span></a>.</p>
+<p>Für das Frontend gibt es weitere interessante Hooks.</p>
+<div class="section" id="domain-repository-entryrepository-php-finddemanded">
+<h3>Domain/Repository/EntryRepository.php findDemanded<a class="headerlink" href="#domain-repository-entryrepository-php-finddemanded" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Dieser Hook ermöglicht die Abfrage zur Filterung der Einträge um seine eigene Logik zu erweitern.</p>
+<div class="section" id="id1">
+<h4>Beispiel<a class="headerlink" href="#id1" title="Link zu dieser Überschrift">¶</a></h4>
+<p>Dieses Beispiel ergänzt die Abfrage um eine weitere Bedingung, so dass nur Einträge angezeigt werden, die das Keyword &quot;unabhängig&quot; enthalten.</p>
+<p>Als Erstes muss der Hook in der Datei <code class="docutils literal"><span class="pre">ext_localconf.php</span></code> erstellt werden:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$GLOBALS</span><span class="p">[</span><span class="s1">&#39;TYPO3_CONF_VARS&#39;</span><span class="p">][</span><span class="s1">&#39;EXT&#39;</span><span class="p">][</span><span class="s1">&#39;bzga_beratungsstellensuche&#39;</span><span class="p">][</span><span class="s1">&#39;Domain/Repository/EntryRepository.php&#39;</span><span class="p">][</span><span class="s1">&#39;findDemanded&#39;</span><span class="p">][</span><span class="nv">$_EXTKEY</span><span class="p">]</span>
+        <span class="o">=</span> <span class="s1">&#39;YOUR_VENDOR\\YOUR_EXTKEY\\Hooks\\Repository-&gt;modify&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Jetzt erstellen Sie die Datei <code class="docutils literal"><span class="pre">Classes/Hooks/Repository.php</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">YOUR_VENDOR\YOUR_EXTKEY\Hooks</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">TYPO3\CMS\Extbase\Persistence\QueryInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Repository</span>
+<span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">modify</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">];</span>
+                <span class="cm">/* @var $query QueryInterface */</span>
+                <span class="nv">$constraints</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;constraints&#39;</span><span class="p">];</span>
+                <span class="cm">/* @var $constraints array */</span>
+                <span class="nv">$demand</span> <span class="o">=</span> <span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;demand&#39;</span><span class="p">];</span>
+                <span class="cm">/* @var $demand Demand */</span>
+                <span class="nv">$constraints</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;keywords&#39;</span><span class="p">,</span> <span class="s1">&#39;%unabhängig%&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hinweis</p>
+<p class="last">Um die bereitgestellten Hooks ausfindig zu machen, können Sie bspw. einmal folgenden Befehl ausführen: <strong>grep -n -C 5 &quot;['EXT']['bzga_beratungsstellensuche']&quot; -r bzga_beratungsstellensuche/Classes/</strong></p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hinweis</p>
+<p class="last">Bitte passen Sie den Vendor-Präfix und den Extension-Key an ihre Gegebenheiten an.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div><!-- /.toBeIndexed -->
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../ExtendModel/Index.html" class="btn btn-neutral float-right" title="Accesskey Alt(+Shift)+n" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../ExtendFlexforms/Index.html" class="btn btn-neutral" title="Accesskey Alt(+Shift)+p" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo" class="contentinfo">
+      <p class="show_source">
+        <a href="../../_sources/DeveloperManual/HooksSignals/Index.txt" rel="nofollow">
+          <span class="fa fa-binoculars"></span>&#32;View page source
+        </a>
+      </p>
+      <p class="show_copyright">
+            &copy; Copyright 2016 - Sebastian Schreiber
+      </p>
+      <p class="last_updated">
+        Last rendered on Okt. 27, 2016 13:44
+      </p>
+      <p class="show_sphinx">
+        Built with <a href="http://sphinx-doc.org/" target="_blank">Sphinx</a> and
+        <a href="https://github.com/TYPO3-Documentation/t3SphinxThemeRtd" target="_blank">t3SphinxThemeRtd.</a>
+        Report theme issues <a href="https://github.com/TYPO3-Documentation/t3SphinxThemeRtd/issues" target="_blank">here.</a>
+      </p>
+
+  </div>
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'6.2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../_static/jquery-ui/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="../../_static/js/theme.js"></script>
+      <script type="text/javascript" src="../../_static/js/t3autocomplete.js"></script>
+
+  
+
+  
+   
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
