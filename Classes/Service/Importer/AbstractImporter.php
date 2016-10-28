@@ -56,7 +56,7 @@ abstract class AbstractImporter implements ImporterInterface
     /**
      * @param $file
      * @param int $pid
-     * @return mixed|void
+     * @return void
      * @throws FileDoesNotExistException
      */
     public function importFromFile($file, $pid = 0)
@@ -72,7 +72,7 @@ abstract class AbstractImporter implements ImporterInterface
     /**
      * @param $url
      * @param int $pid
-     * @return mixed|void
+     * @return void
      */
     public function importFromUrl($url, $pid = 0)
     {

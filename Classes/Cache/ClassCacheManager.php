@@ -24,6 +24,8 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use \Exception;
+use \InvalidArgumentException;
 
 /**
  * @package TYPO3
@@ -73,7 +75,9 @@ class ClassCacheManager implements SingletonInterface
     protected function initializeCache()
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        /* @var $objectManager ObjectManager */
         $cacheManager = $objectManager->get(CacheManager::class);
+        /* @var $cacheManager CacheManager */
         if (!$cacheManager->hasCache($this->extensionKey)) {
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->extensionKey])) {
                 ArrayUtility::mergeRecursiveWithOverrule($this->cacheConfiguration[$this->extensionKey],

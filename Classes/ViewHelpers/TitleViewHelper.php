@@ -61,7 +61,7 @@ class TitleViewHelper extends AbstractViewHelper
     public function render()
     {
         if ('BE' === TYPO3_MODE) {
-            return '';
+            throw new \RuntimeException('This method should only be called in the frontend context');
         }
 
         $typoscriptFrontendController = $this->getTyposcriptFrontendController();

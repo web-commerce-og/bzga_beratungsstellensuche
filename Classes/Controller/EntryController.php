@@ -181,12 +181,14 @@ class EntryController extends ActionController
      */
     protected function findCountryZonesForGermany()
     {
-        if (GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany')) {
-            $country = new Country();
-            $country->setIsoCodeNumber(276);
-
-            return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
+        if (false === GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany')) {
+            return array();
         }
+        $country = new Country();
+        $country->setIsoCodeNumber(276);
+
+        return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
+
     }
 
     /**

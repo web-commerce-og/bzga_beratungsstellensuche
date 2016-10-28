@@ -96,6 +96,9 @@ class PropertyMapper implements TypeConverterInterface
             case TypeConverterInterface::CONVERT_AFTER:
                 $className = TypeConverterAfterInterface::class;
                 break;
+            default:
+                $className = TypeConverterBeforeInterface::class;
+                break;
         }
 
         return false !== array_search($className, $interfaces) ? true : false;

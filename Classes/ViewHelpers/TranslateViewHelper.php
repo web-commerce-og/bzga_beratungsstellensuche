@@ -49,6 +49,7 @@ class TranslateViewHelper extends CoreTranslateViewHelper
                 return $value;
             }
         }
+        return '';
     }
 
 }

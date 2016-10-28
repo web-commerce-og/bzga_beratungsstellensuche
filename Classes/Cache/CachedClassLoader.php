@@ -83,9 +83,11 @@ class CachedClassLoader
             $entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][static::$extensionKey]['entities'];
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             $cacheManager = $objectManager->get(CacheManager::class);
-            // ClassCacheManager instantiation creates the class cache if not already available
+            /* @var $cacheManager CacheManager */
             $classCacheManager = $objectManager->get(ClassCacheManager::class);
+            /* @var $classCacheManager ClassCacheManager */
             $classCache = $cacheManager->getCache(static::$extensionKey);
+            /* @var $classCache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
             foreach ($entities as $entity) {
                 $entityClassName = static::$namespace.str_replace('/', '\\', $entity);
                 if ($className === $entityClassName) {

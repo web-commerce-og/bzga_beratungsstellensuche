@@ -19,7 +19,6 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
-use BZgA\BzgaBeratungsstellensuche\Utility\Utility;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;

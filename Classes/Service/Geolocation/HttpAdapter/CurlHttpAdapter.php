@@ -243,6 +243,9 @@ class CurlHttpAdapter extends AbstractCurlHttpAdapter
                 break;
             }
         }
+        if (!isset($context['request'])) {
+            throw new \UnexpectedValueException('No context with request could be found');
+        }
 
         return $context['request'];
     }

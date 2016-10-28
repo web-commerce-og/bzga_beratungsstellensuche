@@ -21,10 +21,8 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use BZgA\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use BZgA\BzgaBeratungsstellensuche\Persistence\ExternalIdObjectStorage;
 use IteratorAggregate;
 use Countable;
-use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * @package TYPO3

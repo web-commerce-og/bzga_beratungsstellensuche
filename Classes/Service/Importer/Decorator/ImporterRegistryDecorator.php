@@ -61,7 +61,7 @@ class ImporterRegistryDecorator extends AbstractImporter
     /**
      * @param $content
      * @param int $pid
-     * @return mixed|void
+     * @return void
      */
     public function import($content, $pid = 0)
     {

@@ -141,9 +141,12 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
 
 
     /**
+     * Entry constructor.
+     * @param string $title
      */
-    public function __construct()
+    public function __construct($title = '')
     {
+        parent::__construct($title);
         $this->categories = new ObjectStorage();
     }
 
@@ -531,8 +534,10 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
      * @param string $template
      * @return string
      */
-    public function getInfoWindow(array $parameters = array(), $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>')
-    {
+    public function getInfoWindow(
+        array $parameters = array(),
+        $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>'
+    ) {
         $title = isset($parameters['detailLink']) ? sprintf('<a href="%2$s">%1$s</a>', $this->getTitle(),
             $parameters['detailLink']) : $this->getTitle();
 

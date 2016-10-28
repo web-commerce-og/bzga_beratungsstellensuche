@@ -28,6 +28,7 @@ class GeolocationService extends AbstractGeolocationService
 
     /**
      * @param Demand $demand
+     * @return null|\Geocoder\Model\Address
      */
     public function findAddressByDemand(Demand $demand)
     {
@@ -37,6 +38,7 @@ class GeolocationService extends AbstractGeolocationService
 
             return $address;
         }
+        return null;
     }
 
 
