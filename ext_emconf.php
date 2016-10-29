@@ -14,6 +14,7 @@ $EM_CONF[$_EXTKEY] = array(
         'depends' => array(
             'typo3' => '6.2.10-6.99.99',
             'static_info_tables' => '6.0.0-',
+            'static_info_tables_de' => '6.0.0-',
             'scheduler' => '6.2',
         ),
         'conflicts' => array(),
