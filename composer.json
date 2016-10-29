@@ -32,6 +32,8 @@
   },
   "suggest": {
     "typo3-ter/static-info-tables": "We need it to map Languages and Country-Zones"
+    "typo3-ter/static-info-tables-de": "We need it to map Languages and Country-Zones"
+    "typo3-ter/scheduler": "We need it to add XML-Importer task"
   },
   "replace": {
     "bzga_beratungsstellensuche": "self.version",
