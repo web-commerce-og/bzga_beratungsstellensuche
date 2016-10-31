@@ -169,6 +169,7 @@ class EntryController extends ActionController
     public function showAction(Entry $entry = null, Demand $demand = null)
     {
         if (!$entry instanceof Entry) {
+            // @TODO: Add possibility to hook into here.
             $this->redirect('list', null, null, array(), $this->settings['listPid'], 0, 404);
         }
         $assignedViewValues = compact('entry', 'demand');
@@ -179,7 +180,7 @@ class EntryController extends ActionController
     /**
      * @return array
      */
-    protected function findCountryZonesForGermany()
+    private function findCountryZonesForGermany()
     {
         if (false === GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany')) {
             return array();
@@ -195,7 +196,7 @@ class EntryController extends ActionController
      * @param $signalArguments
      * @return void
      */
-    protected function emitInitializeActionSignal($signalArguments)
+    private function emitInitializeActionSignal($signalArguments)
     {
         $this->signalSlotDispatcher->dispatch(static::class, Events::INITIALIZE_ACTION_SIGNAL, $signalArguments);
     }
@@ -205,7 +206,7 @@ class EntryController extends ActionController
      * @param array $assignedViewValues
      * @return mixed
      */
-    protected function emitActionSignal($signalName, array $assignedViewValues)
+    private function emitActionSignal($signalName, array $assignedViewValues)
     {
         $signalArguments = array();
         $signalArguments['extendedVariables'] = array();
@@ -259,12 +260,21 @@ class EntryController extends ActionController
                     throw new \InvalidArgumentException(sprintf('The provided type %s is not allowed', $type));
                     break;
             }
+            $typoScriptFrontendController = $this->getTypoScriptFrontendController();
             $key = $this->extensionName.md5($data);
-            if (!isset($GLOBALS['TSFE']->register[$key])) {
-                $GLOBALS['TSFE']->register[$key] = $data;
+            if (!isset($typoScriptFrontendController->register[$key])) {
+                $typoScriptFrontendController->register[$key] = $data;
                 $this->response->addAdditionalHeaderData($data);
             }
         }
+    }
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    private function getTypoScriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 
 }

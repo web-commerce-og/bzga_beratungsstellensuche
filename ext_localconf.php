@@ -15,7 +15,7 @@ require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKE
     'BZgA.bzga_beratungsstellensuche',
     'Pi1',
     array('Entry' => 'list,show,form'),
-    array()
+    array('Entry' => 'list,form')
 );
 
 # Wizard configuration

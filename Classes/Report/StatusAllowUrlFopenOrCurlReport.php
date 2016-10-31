@@ -44,6 +44,7 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
         $value = 'On';
         $message = '';
 
+        // @TODO: Do we need extra proxy configuration check too?
         if (!ini_get('allow_url_fopen') && !$GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse']) {
             $severity = Status::ERROR;
             $value = 'Off';

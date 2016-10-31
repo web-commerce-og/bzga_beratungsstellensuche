@@ -50,6 +50,7 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
      */
     public function convert($source, array $configuration = null)
     {
+        // @TODO: Implement assertions at the beginning with some library
         if (!$source instanceof ObjectStorage) {
             throw new InvalidArgumentException('The type is not allowed');
         }

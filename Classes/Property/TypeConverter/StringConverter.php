@@ -53,6 +53,8 @@ class StringConverter implements TypeConverterBeforeInterface
             return false;
         }
 
+        // We just want to convert only values that has HTML-Tags due to performance reason.
+        // @TODO: What about javascript here? Do we need extra htmlspecialchars?
         if ($source === strip_tags($source)) {
             return false;
         }

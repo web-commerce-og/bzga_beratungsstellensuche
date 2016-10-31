@@ -22,7 +22,7 @@ plugin.tx_bzgaberatungsstellensuche {
         map {
             pathToDefaultMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/default.png
             pathToActiveMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/active.png
-            # apiKey = GOOGLE_MAP_API_KEY
+            apiKey = AIzaSyDQEuoodBkwaXWLnhwwEy2q4rpW03So6f0
         }
     }
 }
