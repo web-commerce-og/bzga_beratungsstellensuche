@@ -33,7 +33,7 @@ plugin.tx_bzgaberatungsstellensuche {
         map {
             pathToActiveMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToActiveMarker}
             pathToDefaultMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToDefaultMarker}
-            # apiKey = {$plugin.tx_bzgaberatungsstellensuche.settings.map.apiKey}
+            apiKey = {$plugin.tx_bzgaberatungsstellensuche.settings.map.apiKey}
         }
     }
 }
