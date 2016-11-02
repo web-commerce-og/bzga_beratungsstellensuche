@@ -62,8 +62,7 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     {
         $this->settingsService = $settingsService;
         $adapter = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));
-        $this->geocoder = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'), $adapter, null,
-            null, false, $this->settingsService->getByPath('map.apiKey'));
+        $this->geocoder = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'), $adapter);
     }
 
 

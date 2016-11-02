@@ -144,8 +144,11 @@ class MapController extends AbstractWidgetController
                 )
             );
 
+
+            $infoWindowParameters = array();
+
+            // Current marker does not need detail link
             if (false === $isCurrentMarker) {
-                $infoWindowParameters = array();
                 $detailsPid = isset($this->settings['singlePid']) ? $this->settings['singlePid'] : $GLOBALS['TSFE']->id;
                 $uriBuilder = $this->controllerContext->getUriBuilder();
                 $infoWindowParameters['detailLink'] = $uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
@@ -155,35 +158,33 @@ class MapController extends AbstractWidgetController
                     null,
                     null
                 );
-
-                // Create Info Window
-                $infoWindow = new InfoWindow($entry->getInfoWindow($infoWindowParameters), InfoWindowType::DEFAULT_,
-                    $coordinate);
-                $infoWindow->setOpenEvent(MouseEvent::MOUSEDOWN);
-                $infoWindow->setAutoClose(true);
-                $infoWindow->setOptions(
-                    array(
-                        'disableAutoPan' => false,
-                        'zIndex' => 10,
-                        'maxWidth' => 300,
-                    )
-                );
-
-                // Call hook functions for modify the info window
-                if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'])) {
-                    $params = array(
-                        'infoWindow' => &$infoWindow,
-                        'isCurrentMarker' => $isCurrentMarker,
-                        'demand' => $this->demand,
-                    );
-                    foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'] as $reference) {
-                        GeneralUtility::callUserFunction($reference, $params, $this);
-                    }
-                }
-
-                $marker->setInfoWindow($infoWindow);
-
             }
+            // Create Info Window
+            $infoWindow = new InfoWindow($entry->getInfoWindow($infoWindowParameters), InfoWindowType::DEFAULT_,
+                $coordinate);
+            $infoWindow->setOpenEvent(MouseEvent::MOUSEDOWN);
+            $infoWindow->setAutoClose(true);
+            $infoWindow->setOptions(
+                array(
+                    'disableAutoPan' => false,
+                    'zIndex' => 10,
+                    'maxWidth' => 300,
+                )
+            );
+
+            // Call hook functions for modify the info window
+            if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'])) {
+                $params = array(
+                    'infoWindow' => &$infoWindow,
+                    'isCurrentMarker' => $isCurrentMarker,
+                    'demand' => $this->demand,
+                );
+                foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'] as $reference) {
+                    GeneralUtility::callUserFunction($reference, $params, $this);
+                }
+            }
+
+            $marker->setInfoWindow($infoWindow);
 
 
             // Call hook functions for modify the marker
