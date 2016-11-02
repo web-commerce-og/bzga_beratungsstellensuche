@@ -26,7 +26,7 @@ return array(
         ),
         'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath(
                 'bzga_beratungsstellensuche'
-            ).'Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_entry.gif',
+            ).'Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_entry.png',
         'searchFields' => 'title,subtitle,city,zip,teaser,description,contact_person,institution,association,keywords',
     ),
     'interface' => array(
