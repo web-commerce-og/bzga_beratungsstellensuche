@@ -245,7 +245,7 @@ BzgaBeratungsstellensuche.txt mit folgendem Inhalt:</p>
 <span class="sd">/**</span>
 <span class="sd"> * Entry</span>
 <span class="sd"> */</span>
-<span class="k">class</span> <span class="nc">Entry</span> <span class="k">extends</span> <span class="nx">\BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">Entry</span> <span class="k">extends</span> <span class="nx">\Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry</span> <span class="p">{</span>
 
         <span class="sd">/**</span>
 <span class="sd">         * @var string</span>
@@ -291,8 +291,8 @@ BzgaBeratungsstellensuche.txt mit folgendem Inhalt:</p>
 
 <span class="c1">// Extend name converter</span>
 <span class="nv">$signalSlotDispatcher</span><span class="o">-&gt;</span><span class="na">connect</span><span class="p">(</span>
-        <span class="nx">\BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="nx">\BZgA\BzgaBeratungsstellensuche\Events</span><span class="o">::</span><span class="na">SIGNAL_MapNames</span><span class="p">,</span>
+        <span class="nx">\Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\Bzga\BzgaBeratungsstellensuche\Events</span><span class="o">::</span><span class="na">SIGNAL_MapNames</span><span class="p">,</span>
         <span class="nx">\YOUR_VENDOR\YOUR_EXTKEY\Slots\EntryNameConverter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="s1">&#39;mapNames&#39;</span>
 <span class="p">);</span>

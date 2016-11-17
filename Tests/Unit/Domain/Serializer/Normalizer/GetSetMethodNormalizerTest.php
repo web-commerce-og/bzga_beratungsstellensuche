@@ -1,19 +1,31 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer;
+namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer;
 
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
-use Doctrine\Common\Annotations\AnnotationReader;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
+/**
+ * @author Sebastian Schreiber
+ */
 class GetSetMethodNormalizerTest extends UnitTestCase
 {
 
@@ -33,9 +45,8 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     protected function setUp()
     {
         $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
-        $this->serializer = $this->getMock(__NAMESPACE__.'\SerializerNormalizer');
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-        $this->subject = new GetSetMethodNormalizer($classMetadataFactory, new EntryNameConverter());
+        $this->serializer = $this->getMock(SerializerNormalizer::class);
+        $this->subject = new GetSetMethodNormalizer(null, new EntryNameConverter());
         $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->subject->setSerializer($this->serializer);
     }
@@ -47,10 +58,10 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     {
         $latitude = (float)81;
 
-        $data = array(
+        $data = [
             'mapy' => $latitude,
-        );
-        $object = $this->subject->denormalize($data, 'BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry');
+        ];
+        $object = $this->subject->denormalize($data, 'Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry');
         /* @var $object Entry */
         self::assertSame($latitude, $object->getLatitude());
     }
@@ -60,24 +71,21 @@ class GetSetMethodNormalizerTest extends UnitTestCase
      */
     public function denormalizeEntryWithEntryNameConverterAndStateCallback()
     {
-
         $countryZoneMock = $this->getMock(CountryZone::class);
 
         $stateCallback = function ($bundesland) use ($countryZoneMock) {
             return $countryZoneMock;
         };
 
-        $this->subject->setDenormalizeCallbacks(array('state' => $stateCallback));
+        $this->subject->setDenormalizeCallbacks(['state' => $stateCallback]);
 
-        $data = array(
+        $data = [
             'bundesland' => 81,
-        );
+        ];
         $object = $this->subject->denormalize($data, Entry::class);
         /* @var $object Entry */
         self::assertSame($countryZoneMock, $object->getState());
-
     }
-
 }
 
 abstract class SerializerNormalizer implements SerializerInterface, NormalizerInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,18 +14,15 @@ namespace BZgA\BzgaBeratungsstellensuche\Hooks;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
+use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
 use TYPO3\CMS\Backend\Template\DocumentTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use BZgA\BzgaBeratungsstellensuche\Utility\TemplateLayout;
-use BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class PageLayoutView
@@ -50,14 +47,14 @@ class PageLayoutView
      *
      * @var array
      */
-    public $tableData = array();
+    public $tableData = [];
 
     /**
      * Flexform information
      *
      * @var array
      */
-    public $flexformData = array();
+    public $flexformData = [];
 
     /**
      * @var \TYPO3\CMS\Core\Database\DatabaseConnection
@@ -65,7 +62,7 @@ class PageLayoutView
     protected $databaseConnection;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Utility\TemplateLayout
+     * @var \Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout
      */
     protected $templateLayoutsUtility;
 
@@ -88,9 +85,9 @@ class PageLayoutView
     {
         $actionTranslationKey = '';
 
-        $result = '<strong>'.$this->sL('pi1_title', true).'</strong><br>';
+        $result = '<strong>' . $this->sL('pi1_title', true) . '</strong><br>';
 
-        if ($params['row']['list_type'] == self::KEY.'_pi1') {
+        if ($params['row']['list_type'] == self::KEY . '_pi1') {
             $this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
 
             // if flexform data is found
@@ -100,16 +97,14 @@ class PageLayoutView
 
                 // translate the first action into its translation
                 $actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
-                $actionTranslation = $this->sL('flexforms_general.mode.'.$actionTranslationKey);
+                $actionTranslation = $this->sL('flexforms_general.mode.' . $actionTranslationKey);
 
                 $result .= $actionTranslation;
-
             } else {
                 $result .= $this->sL('flexforms_general.mode.not_configured');
             }
             $result .= '<hr>';
             if (is_array($this->flexformData)) {
-
                 switch ($actionTranslationKey) {
                     case 'entry_list':
                         $this->getStartingPoint();
@@ -130,11 +125,11 @@ class PageLayoutView
                     default:
                 }
 
-                if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['BZgA\\BzgaBeratungsstellensuche\\Hooks\\PageLayoutView']['extensionSummary'])) {
-                    $params = array(
+                if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Bzga\\BzgaBeratungsstellensuche\\Hooks\\PageLayoutView']['extensionSummary'])) {
+                    $params = [
                         'action' => $actionTranslationKey,
-                    );
-                    foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['BZgA\\BzgaBeratungsstellensuche\\Hooks\\PageLayoutView']['extensionSummary'] as $reference) {
+                    ];
+                    foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Bzga\\BzgaBeratungsstellensuche\\Hooks\\PageLayoutView']['extensionSummary'] as $reference) {
                         GeneralUtility::callUserFunction($reference, $params, $this);
                     }
                 }
@@ -149,7 +144,6 @@ class PageLayoutView
         return $result;
     }
 
-
     /**
      * Render single settings
      *
@@ -162,10 +156,10 @@ class PageLayoutView
         if ($detailPid > 0) {
             $content = $this->getPageRecordData($detailPid);
 
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->sL('flexforms_additional.singlePid'),
                 $content,
-            );
+            ];
         }
     }
 
@@ -174,17 +168,17 @@ class PageLayoutView
      */
     private function getFormFieldsSetting()
     {
-        $formFields = $this->getFieldFromFlexform('settings.formFields', 'additional');;
+        $formFields = $this->getFieldFromFlexform('settings.formFields', 'additional');
         if ($formFields) {
             $formFieldsArray = GeneralUtility::trimExplode(',', $formFields);
-            $formFieldsLabels = array();
+            $formFieldsLabels = [];
             foreach ($formFieldsArray as $formField) {
-                $formFieldsLabels[] = $this->sL('flexforms_additional.formFields.'.$formField);
+                $formFieldsLabels[] = $this->sL('flexforms_additional.formFields.' . $formField);
             }
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->sL('flexforms_additional.formFields'),
                 implode(',', $formFieldsLabels),
-            );
+            ];
         }
     }
 
@@ -200,10 +194,10 @@ class PageLayoutView
         if ($listPid > 0) {
             $content = $this->getPageRecordData($listPid);
 
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->sL('flexforms_additional.listPid'),
                 $content,
-            );
+            ];
         }
     }
 
@@ -217,11 +211,10 @@ class PageLayoutView
         $itemsPerPage = (int)$this->getFieldFromFlexform('settings.list.itemsPerPage', 'additional');
 
         if ($itemsPerPage > 0) {
-
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->sL('flexforms_additional.itemsPerPage'),
                 $itemsPerPage,
-            );
+            ];
         }
     }
 
@@ -237,10 +230,10 @@ class PageLayoutView
         if ($listPid > 0) {
             $content = $this->getPageRecordData($listPid);
 
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->sL('flexforms_additional.backPid'),
                 $content,
-            );
+            ];
         }
     }
 
@@ -256,8 +249,8 @@ class PageLayoutView
 
         if (is_array($pageRecord)) {
             $data = IconUtility::getSpriteIconForRecord('pages', $pageRecord,
-                    array('title' => 'Uid: '.$pageRecord['uid']))
-                .htmlspecialchars(BackendUtilityCore::getRecordTitle('pages', $pageRecord));
+                    ['title' => 'Uid: ' . $pageRecord['uid']])
+                . htmlspecialchars(BackendUtilityCore::getRecordTitle('pages', $pageRecord));
             $content = $this->getDocumentTemplate()->wrapClickMenuOnIcon($data, 'pages', $pageRecord['uid'], true, '',
                 '+info,edit');
         } else {
@@ -285,7 +278,6 @@ class PageLayoutView
 
         // Find correct title by looping over all options
         if (!empty($field)) {
-
             foreach ($this->templateLayoutsUtility->getAvailableTemplateLayouts($pageUid) as $layout) {
                 if ($layout[1] === $field) {
                     $title = $layout[0];
@@ -294,10 +286,10 @@ class PageLayoutView
         }
 
         if (!empty($title)) {
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->sL('flexforms_template.templateLayout'),
                 $this->sL($title),
-            );
+            ];
         }
     }
 
@@ -311,16 +303,16 @@ class PageLayoutView
         $value = $this->getFieldFromFlexform('settings.startingpoint');
 
         if (!empty($value)) {
-            $pagesOut = array();
+            $pagesOut = [];
             $rawPagesRecords = $this->databaseConnection->exec_SELECTgetRows(
                 '*',
                 'pages',
-                'deleted=0 AND uid IN('.implode(',', GeneralUtility::intExplode(',', $value, true)).')'
+                'deleted=0 AND uid IN(' . implode(',', GeneralUtility::intExplode(',', $value, true)) . ')'
             );
 
             foreach ($rawPagesRecords as $page) {
                 $pagesOut[] = htmlspecialchars(BackendUtilityCore::getRecordTitle('pages',
-                        $page)).' ('.$page['uid'].')';
+                        $page)) . ' (' . $page['uid'] . ')';
             }
 
             $recursiveLevel = (int)$this->getFieldFromFlexform('settings.recursive');
@@ -328,19 +320,19 @@ class PageLayoutView
             if ($recursiveLevel === 250) {
                 $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.5');
             } elseif ($recursiveLevel > 0) {
-                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.'.$recursiveLevel);
+                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.' . $recursiveLevel);
             }
 
             if (!empty($recursiveLevelText)) {
-                $recursiveLevelText = '<br />'.
-                    $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive', true).' '.
+                $recursiveLevelText = '<br />' .
+                    $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive', true) . ' ' .
                     $recursiveLevelText;
             }
 
-            $this->tableData[] = array(
+            $this->tableData[] = [
                 $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.php:LGL.startingpoint'),
-                implode(', ', $pagesOut).$recursiveLevelText,
-            );
+                implode(', ', $pagesOut) . $recursiveLevelText,
+            ];
         }
     }
 
@@ -358,10 +350,10 @@ class PageLayoutView
 
         $content = '';
         foreach ($this->tableData as $line) {
-            $content .= '<strong>'.$line[0].'</strong>'.' '.$line[1].'<br />';
+            $content .= '<strong>' . $line[0] . '</strong>' . ' ' . $line[1] . '<br />';
         }
 
-        return '<pre style="white-space:normal">'.$content.'</pre>';
+        return '<pre style="white-space:normal">' . $content . '</pre>';
     }
 
     /**
@@ -395,14 +387,14 @@ class PageLayoutView
      * Refer to 'Inside TYPO3' for more details
      *
      * @param string $input Label key/reference
-     * @param boolean $hsc If set, the return value is htmlspecialchar'ed
+     * @param bool $hsc If set, the return value is htmlspecialchar'ed
      * @return string
      */
     private function sL($label, $hsc = false)
     {
         $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
         foreach ($registeredExtensionKeys as $extensionKey) {
-            $fullPathToLabel = sprintf(self::LLPATH, $extensionKey).$label;
+            $fullPathToLabel = sprintf(self::LLPATH, $extensionKey) . $label;
             $translation = $this->getLanguageService()->sL($fullPathToLabel, $hsc);
             if ('' !== $translation) {
                 return $translation;
@@ -431,5 +423,4 @@ class PageLayoutView
     {
         return $GLOBALS['SOBE']->doc;
     }
-
 }

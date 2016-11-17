@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Beratungsstellensuche',
     'description' => 'Beratungsstellensuche der BZgA',
     'category' => 'plugin',
@@ -10,13 +10,13 @@ $EM_CONF[$_EXTKEY] = array(
     'state' => 'beta',
     'clearCacheOnLoad' => 1,
     'version' => '6.2.0',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'typo3' => '6.2.10-6.99.99',
             'static_info_tables' => '6.0.0-',
             'static_info_tables_de' => '6.0.0-',
-            'scheduler' => '6.2',
-        ),
-        'conflicts' => array(),
-    ),
-);
+            'scheduler' => '6.2-6.99.99',
+        ],
+        'conflicts' => [],
+    ],
+];

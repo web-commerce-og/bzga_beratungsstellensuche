@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Math;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Math;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,9 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Math;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class RoundViewHelper extends AbstractViewHelper
@@ -39,5 +36,4 @@ class RoundViewHelper extends AbstractViewHelper
 
         return round($number, $precision);
     }
-
 }

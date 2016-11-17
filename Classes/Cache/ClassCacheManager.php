@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Cache;
+namespace Bzga\BzgaBeratungsstellensuche\Cache;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,7 +14,8 @@ namespace BZgA\BzgaBeratungsstellensuche\Cache;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Exception;
+use InvalidArgumentException;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
@@ -24,12 +25,8 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use \Exception;
-use \InvalidArgumentException;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ClassCacheManager implements SingletonInterface
@@ -45,14 +42,14 @@ class ClassCacheManager implements SingletonInterface
     /**
      * @var array Cache configurations
      */
-    protected $cacheConfiguration = array(
-        'bzga_beratungsstellensuche' => array(
+    protected $cacheConfiguration = [
+        'bzga_beratungsstellensuche' => [
             'frontend' => PhpFrontend::class,
             'backend' => FileBackend::class,
-            'options' => array(),
-            'groups' => array('all'),
-        ),
-    );
+            'options' => [],
+            'groups' => ['all'],
+        ],
+    ];
 
     /**
      * @var FrontendInterface
@@ -100,18 +97,18 @@ class ClassCacheManager implements SingletonInterface
         $entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extensionKey]['entities'];
 
         foreach ($entities as $entity) {
-            $key = 'Domain/Model/'.$entity;
+            $key = 'Domain/Model/' . $entity;
 
-            $path = ExtensionManagementUtility::extPath($this->extensionKey).'Classes/'.$key.'.php';
+            $path = ExtensionManagementUtility::extPath($this->extensionKey) . 'Classes/' . $key . '.php';
             if (!is_file($path)) {
-                throw new \Exception('given file "'.$path.'" does not exist');
+                throw new \Exception('given file "' . $path . '" does not exist');
             }
             $code = $this->parseSingleFile($path, false);
             // Get the files from all other extensions that are extending this domain model class
             if (isset($extensibleExtensions[$key]) && is_array($extensibleExtensions[$key]) && count($extensibleExtensions[$key]) > 0) {
                 $extensionsWithThisClass = array_keys($extensibleExtensions[$key]);
                 foreach ($extensionsWithThisClass as $extension) {
-                    $path = ExtensionManagementUtility::extPath($extension).'Classes/'.$key.'.php';
+                    $path = ExtensionManagementUtility::extPath($extension) . 'Classes/' . $key . '.php';
                     if (is_file($path)) {
                         $code .= $this->parseSingleFile($path);
                     }
@@ -141,9 +138,9 @@ class ClassCacheManager implements SingletonInterface
         $loadedExtensions = array_unique(ExtensionManagementUtility::getLoadedExtensionListArray());
 
         // Get the extensions which want to extend static_info_tables
-        $extensibleExtensions = array();
+        $extensibleExtensions = [];
         foreach ($loadedExtensions as $extensionKey) {
-            $extensionInfoFile = ExtensionManagementUtility::extPath($extensionKey).'Configuration/DomainModelExtension/BzgaBeratungsstellensuche.txt';
+            $extensionInfoFile = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/DomainModelExtension/BzgaBeratungsstellensuche.txt';
             if (file_exists($extensionInfoFile)) {
                 $info = GeneralUtility::getUrl($extensionInfoFile);
                 $classes = GeneralUtility::trimExplode(LF, $info, true);
@@ -162,7 +159,7 @@ class ClassCacheManager implements SingletonInterface
      * - Remove the class definition (if set)
      *
      * @param string $filePath path of the file
-     * @param boolean $removeClassDefinition If class definition should be removed
+     * @param bool $removeClassDefinition If class definition should be removed
      * @return string path of the saved file
      * @throws Exception
      * @throws InvalidArgumentException
@@ -180,8 +177,8 @@ class ClassCacheManager implements SingletonInterface
     /**
      * @param string $code
      * @param string $filePath
-     * @param boolean $removeClassDefinition
-     * @param boolean $renderPartialInfo
+     * @param bool $removeClassDefinition
+     * @param bool $renderPartialInfo
      * @return string
      * @throws \InvalidArgumentException
      */
@@ -191,7 +188,7 @@ class ClassCacheManager implements SingletonInterface
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
         $code = trim($code);
-        $code = str_replace(array('<?php', '?>'), '', $code);
+        $code = str_replace(['<?php', '?>'], '', $code);
         $code = trim($code);
 
         // Remove everything before 'class ', including namespaces,
@@ -207,7 +204,7 @@ class ClassCacheManager implements SingletonInterface
 
         // Add some information for each partial
         if ($renderPartialInfo) {
-            $code = $this->getPartialInfo($filePath).$code;
+            $code = $this->getPartialInfo($filePath) . $code;
         }
 
         // Remove last }
@@ -215,7 +212,7 @@ class ClassCacheManager implements SingletonInterface
         $code = substr($code, 0, $pos);
         $code = trim($code);
 
-        return $code.LF.LF;
+        return $code . LF . LF;
     }
 
     /**
@@ -224,8 +221,8 @@ class ClassCacheManager implements SingletonInterface
      */
     protected function getPartialInfo($filePath)
     {
-        return '/*'.str_repeat('*', 70).LF.
-        ' * this is partial from: '.$filePath.LF.str_repeat('*', 70).'*/'.LF.TAB;
+        return '/*' . str_repeat('*', 70) . LF .
+        ' * this is partial from: ' . $filePath . LF . str_repeat('*', 70) . '*/' . LF . TAB;
     }
 
     /**
@@ -234,7 +231,7 @@ class ClassCacheManager implements SingletonInterface
      */
     protected function closeClassDefinition($code)
     {
-        return $code.LF.'}';
+        return $code . LF . '}';
     }
 
     /**
@@ -248,14 +245,14 @@ class ClassCacheManager implements SingletonInterface
         if (isset($GLOBALS['BE_USER'])) {
             $GLOBALS['BE_USER']->writelog(3, 1, 0, 0,
                 '[BZgA Beratungsstellensuche]: User %s has cleared the class cache',
-                array($GLOBALS['BE_USER']->user['username']));
+                [$GLOBALS['BE_USER']->user['username']]);
         }
     }
 
     /**
      * @param array $parameters
      */
-    public function reBuild(array $parameters = array())
+    public function reBuild(array $parameters = [])
     {
         $isValidCall = (
             empty($parameters)

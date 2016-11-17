@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Format;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,13 +15,10 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Format;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class UppercaseFirstLetterViewHelper extends AbstractViewHelper
@@ -29,6 +26,7 @@ class UppercaseFirstLetterViewHelper extends AbstractViewHelper
 
     /**
      * @param string $subject
+     * @return string
      */
     public function render($subject = null)
     {
@@ -43,5 +41,4 @@ class UppercaseFirstLetterViewHelper extends AbstractViewHelper
 
         return substr_replace($subject, ucfirst(substr($subject, 0, 1)), 0, 1);
     }
-
 }

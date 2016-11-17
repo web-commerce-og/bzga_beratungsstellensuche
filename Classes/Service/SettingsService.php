@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service;
+namespace Bzga\BzgaBeratungsstellensuche\Service;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Service;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class SettingsService implements SingletonInterface
@@ -71,5 +68,4 @@ class SettingsService implements SingletonInterface
     {
         return ObjectAccess::getPropertyPath($this->getSettings(), $path);
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,20 +14,17 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Ivory\HttpAdapter\AbstractCurlHttpAdapter;
+use Ivory\HttpAdapter\ConfigurationInterface;
 use Ivory\HttpAdapter\Extractor\ProtocolVersionExtractor;
 use Ivory\HttpAdapter\Extractor\StatusCodeExtractor;
+use Ivory\HttpAdapter\HttpAdapterException;
 use Ivory\HttpAdapter\Message\InternalRequestInterface;
 use Ivory\HttpAdapter\Message\RequestInterface;
 use Ivory\HttpAdapter\Normalizer\BodyNormalizer;
 use Ivory\HttpAdapter\Normalizer\HeadersNormalizer;
-use Ivory\HttpAdapter\AbstractCurlHttpAdapter;
-use Ivory\HttpAdapter\HttpAdapterException;
-use Ivory\HttpAdapter\ConfigurationInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class CurlHttpAdapter extends AbstractCurlHttpAdapter
@@ -77,12 +74,12 @@ class CurlHttpAdapter extends AbstractCurlHttpAdapter
     {
         $curlMulti = curl_multi_init();
 
-        $contexts = array();
+        $contexts = [];
         foreach ($internalRequests as $internalRequest) {
-            $contexts[] = array(
+            $contexts[] = [
                 'curl' => $curl = $this->createCurl($internalRequest),
                 'request' => $internalRequest,
-            );
+            ];
 
             curl_multi_add_handle($curlMulti, $curl);
         }
@@ -190,8 +187,8 @@ class CurlHttpAdapter extends AbstractCurlHttpAdapter
      */
     private function configureTimeout($curl, $type)
     {
-        if (defined($type.'_MS')) {
-            curl_setopt($curl, constant($type.'_MS'), $this->getConfiguration()->getTimeout() * 1000);
+        if (defined($type . '_MS')) {
+            curl_setopt($curl, constant($type . '_MS'), $this->getConfiguration()->getTimeout() * 1000);
         } else { // @codeCoverageIgnoreStart
             curl_setopt($curl, constant($type), $this->getConfiguration()->getTimeout());
         } // @codeCoverageIgnoreEnd
@@ -201,7 +198,7 @@ class CurlHttpAdapter extends AbstractCurlHttpAdapter
      * Creates a response.
      *
      * @param resource $curl The curl resource.
-     * @param string|boolean|null $data The data.
+     * @param string|bool|null $data The data.
      * @param \Ivory\HttpAdapter\Message\InternalRequestInterface $internalRequest The internal request.
      *
      * @throws \Ivory\HttpAdapter\HttpAdapterException If an error occurred.

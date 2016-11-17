@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Importer\Decorator;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Importer\Decorator;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Importer\Decorator;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Service\Importer\AbstractImporter;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\AbstractImporter;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
 use TYPO3\CMS\Core\Registry;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ImporterRegistryDecorator extends AbstractImporter
@@ -72,6 +69,4 @@ class ImporterRegistryDecorator extends AbstractImporter
             $this->registry->set(self::REGISTRY_NAMESPACE, self::REGISTRY_KEY, $hash);
         }
     }
-
-
 }

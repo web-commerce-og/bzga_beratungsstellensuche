@@ -18,12 +18,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "BZgA\\BzgaBeratungsstellensuche\\": "Classes"
+      "Bzga\\BzgaBeratungsstellensuche\\": "Classes"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BZgA\\BzgaBeratungsstellensuche\\": "Tests"
+      "Bzga\\BzgaBeratungsstellensuche\\": "Tests"
     }
   },
   "require": {

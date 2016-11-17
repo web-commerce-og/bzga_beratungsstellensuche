@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,19 +15,16 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
+use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer as BaseSerializer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use BZgA\BzgaBeratungsstellensuche\Events;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class Serializer extends BaseSerializer
@@ -43,21 +40,20 @@ class Serializer extends BaseSerializer
      * @param array $normalizers
      * @param array $encoders
      */
-    public function __construct(array $normalizers = array(), array $encoders = array())
+    public function __construct(array $normalizers = [], array $encoders = [])
     {
         if (empty($normalizers)) {
-
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             /* @var $objectManager ObjectManager */
-            $normalizers = array(
+            $normalizers = [
                 $objectManager->get(EntryNormalizer::class),
                 $objectManager->get(GetSetMethodNormalizer::class),
-            );
+            ];
         }
         if (empty($encoders)) {
-            $encoders = array(
+            $encoders = [
                 new XmlEncoder('beratungsstellen'),
-            );
+            ];
         }
 
         // @TODO Working with DI
@@ -66,7 +62,6 @@ class Serializer extends BaseSerializer
         }
 
         $normalizers = $this->emitAdditionalNormalizersSignal($normalizers);
-
 
         parent::__construct($normalizers, $encoders);
     }
@@ -77,14 +72,12 @@ class Serializer extends BaseSerializer
      */
     private function emitAdditionalNormalizersSignal(array $normalizers)
     {
-        $signalArguments = array();
-        $signalArguments['extendedNormalizers'] = array();
+        $signalArguments = [];
+        $signalArguments['extendedNormalizers'] = [];
 
         $additionalNormalizers = $this->signalSlotDispatcher->dispatch(static::class,
             Events::ADDITIONAL_NORMALIZERS_SIGNAL, $signalArguments);
 
-
         return array_merge($normalizers, $additionalNormalizers['extendedNormalizers']);
     }
-
 }

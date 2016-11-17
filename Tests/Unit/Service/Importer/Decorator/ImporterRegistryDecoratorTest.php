@@ -3,12 +3,26 @@
 
 namespace BZga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
 
-
-use BZgA\BzgaBeratungsstellensuche\Service\Importer\Decorator\ImporterRegistryDecorator;
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\Decorator\ImporterRegistryDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
+/**
+ * @author Sebastian Schreiber
+ */
 class ImporterRegistryDecoratorTest extends UnitTestCase
 {
 
@@ -66,15 +80,13 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
         $this->subject->import($content);
     }
 
-
     /**
      * @return array
      */
     public function contentDataProvider()
     {
-        return array(
-            array('some fake content'),
-        );
+        return [
+            ['some fake content'],
+        ];
     }
-
 }

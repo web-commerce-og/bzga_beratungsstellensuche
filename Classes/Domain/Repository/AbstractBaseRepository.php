@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,17 +15,13 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-
-use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use Bzga\BzgaBeratungsstellensuche\Events;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use BZgA\BzgaBeratungsstellensuche\Events;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 abstract class AbstractBaseRepository extends Repository
@@ -40,7 +36,7 @@ abstract class AbstractBaseRepository extends Repository
     /**
      * @var array
      */
-    protected $defaultOrderings = array('title' => QueryInterface::ORDER_ASCENDING);
+    protected $defaultOrderings = ['title' => QueryInterface::ORDER_ASCENDING];
 
     /**
      * @var string
@@ -66,7 +62,7 @@ abstract class AbstractBaseRepository extends Repository
      * Debugs a SQL query from a QueryResult
      *
      * @param QueryResultInterface $queryResult
-     * @param boolean $explainOutput
+     * @param bool $explainOutput
      * @return void
      */
     public function debugQuery(QueryResultInterface $queryResult, $explainOutput = false)
@@ -97,23 +93,23 @@ abstract class AbstractBaseRepository extends Repository
         $importedExternalUids = implode(',', $databaseConnection->cleanIntArray($entries));
         if ($importedExternalUids) {
             $oldEntries = $databaseConnection->exec_SELECTgetRows('uid', $table,
-                'deleted = 0 AND external_id NOT IN('.$importedExternalUids.')');
+                'deleted = 0 AND external_id NOT IN(' . $importedExternalUids . ')');
 
             return $oldEntries;
         }
 
-        return array();
+        return [];
     }
 
     /**
-     * @param integer $externalId
+     * @param int $externalId
      * @param string $hash
-     * @return integer
+     * @return int
      */
     public function countByExternalIdAndHash($externalId, $hash)
     {
         $query = $this->createQuery();
-        $constraints = array();
+        $constraints = [];
         $constraints[] = $query->equals('externalId', $externalId);
         $constraints[] = $query->equals('hash', $hash);
 
@@ -155,7 +151,7 @@ abstract class AbstractBaseRepository extends Repository
         $databaseConnection->exec_TRUNCATEquery(self::ENTRY_TABLE);
         $databaseConnection->exec_TRUNCATEquery(self::ENTRY_CATEGORY_MM_TABLE);
         $this->signalSlotDispatcher->dispatch(static::class, Events::TABLE_TRUNCATE_ALL_SIGNAL,
-            array('databaseConnection' => $databaseConnection));
+            ['databaseConnection' => $databaseConnection]);
     }
 
     /**
@@ -173,6 +169,4 @@ abstract class AbstractBaseRepository extends Repository
     {
         return $GLOBALS['TYPO3_DB'];
     }
-
-
 }

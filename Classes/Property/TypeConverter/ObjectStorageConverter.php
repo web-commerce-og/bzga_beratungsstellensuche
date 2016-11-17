@@ -15,16 +15,13 @@ namespace BZga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use InvalidArgumentException;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ObjectStorageConverter implements TypeConverterBeforeInterface
@@ -55,7 +52,7 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
             throw new InvalidArgumentException('The type is not allowed');
         }
 
-        $arrayOfUids = array();
+        $arrayOfUids = [];
         foreach ($source as $item) {
             if (!$item instanceof AbstractEntity) {
                 throw new InvalidArgumentException('The type is not allowed');
@@ -65,6 +62,4 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
 
         return implode(',', $arrayOfUids);
     }
-
-
 }

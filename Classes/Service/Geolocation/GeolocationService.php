@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,9 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class GeolocationService extends AbstractGeolocationService
@@ -40,6 +37,4 @@ class GeolocationService extends AbstractGeolocationService
         }
         return null;
     }
-
-
 }

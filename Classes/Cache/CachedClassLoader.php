@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Cache;
+namespace Bzga\BzgaBeratungsstellensuche\Cache;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,15 +15,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Cache;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class CachedClassLoader
@@ -34,39 +30,37 @@ class CachedClassLoader
      *
      * @var string
      */
-    static protected $extensionKey = 'bzga_beratungsstellensuche';
+    protected static $extensionKey = 'bzga_beratungsstellensuche';
 
     /**
      * Cached class loader class name
      *
      * @var string
      */
-    static protected $className = __CLASS__;
+    protected static $className = __CLASS__;
 
     /**
      * Namespace of the Domain Model of Beratungsstellensuche
      *
      * @var string
      */
-    static protected $namespace = 'BZgA\\BzgaBeratungsstellensuche\\Domain\\Model\\';
+    protected static $namespace = 'Bzga\\BzgaBeratungsstellensuche\\Domain\\Model\\';
 
     /**
      * The class loader is static, thus we do not allow instances of this class.
      */
     private function __construct()
     {
-
     }
-
 
     /**
      * Registers the cached class loader
      *
-     * @return boolean TRUE in case of success
+     * @return bool TRUE in case of success
      */
-    static public function registerAutoloader()
+    public static function registerAutoloader()
     {
-        return spl_autoload_register(static::$className.'::autoload', true, true);
+        return spl_autoload_register(static::$className . '::autoload', true, true);
     }
 
     /**
@@ -75,7 +69,7 @@ class CachedClassLoader
      * @param string $className Class name
      * @return void
      */
-    static public function autoload($className)
+    public static function autoload($className)
     {
         $className = ltrim($className, '\\');
         if (strpos($className, static::$namespace) !== false) {
@@ -89,9 +83,9 @@ class CachedClassLoader
             $classCache = $cacheManager->getCache(static::$extensionKey);
             /* @var $classCache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
             foreach ($entities as $entity) {
-                $entityClassName = static::$namespace.str_replace('/', '\\', $entity);
+                $entityClassName = static::$namespace . str_replace('/', '\\', $entity);
                 if ($className === $entityClassName) {
-                    $entryIdentifier = 'DomainModel'.str_replace('/', '', $entity);
+                    $entryIdentifier = 'DomainModel' . str_replace('/', '', $entity);
                     if (!$classCache->has($entryIdentifier)) {
                         // The class cache needs to be rebuilt
                         $classCacheManager->reBuild();

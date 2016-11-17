@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,17 +15,14 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface as CacheInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
-use BZgA\BzgaBeratungsstellensuche\Factories\CacheFactory;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
@@ -42,7 +39,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
 
     /**
      * GeolocationServiceCacheDecorator constructor.
-     * @param \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService $geolocationService
+     * @param \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService $geolocationService
      */
     public function __construct(GeolocationServiceInterface $geolocationService)
     {
@@ -66,7 +63,6 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
         return $address;
     }
 
-
     /**
      * @param GeoPositionDemandInterface $demandPosition
      * @param string $table
@@ -87,6 +83,4 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
     {
         return $this->geolocationService->calculateDistance($demandPosition, $locationPosition);
     }
-
-
 }

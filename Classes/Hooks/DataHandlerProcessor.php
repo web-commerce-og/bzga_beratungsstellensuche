@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,16 +15,13 @@ namespace BZgA\BzgaBeratungsstellensuche\Hooks;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class DataHandlerProcessor
@@ -32,9 +29,9 @@ class DataHandlerProcessor
 
     /**
      * @param string $table
-     * @param integer $id
-     * @param integer $recordToDelete
-     * @param boolean $recordWasDeleted
+     * @param int $id
+     * @param int $recordToDelete
+     * @param bool $recordWasDeleted
      * @param DataHandler $tceMain
      */
     public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $tceMain)
@@ -68,14 +65,14 @@ class DataHandlerProcessor
     public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$reference)
     {
         if ($table === 'tt_content' && $status == 'update' && isset($fieldArray['pi_flexform'])) {
-            $checkFields = array(
-                'additional' => array(
+            $checkFields = [
+                'additional' => [
                     'settings.singlePid',
                     'settings.listPid',
                     'settings.backPid',
                     'settings.list.itemsPerPage',
-                ),
-            );
+                ],
+            ];
 
             $flexformData = GeneralUtility::xml2array($fieldArray['pi_flexform']);
 
@@ -89,7 +86,7 @@ class DataHandlerProcessor
                 }
 
                 // If remaining sheet does not contain fields, then remove the sheet
-                if (isset($flexformData['data'][$sheet]['lDEF']) && $flexformData['data'][$sheet]['lDEF'] === array()) {
+                if (isset($flexformData['data'][$sheet]['lDEF']) && $flexformData['data'][$sheet]['lDEF'] === []) {
                     unset($flexformData['data'][$sheet]);
                 }
             }
@@ -97,9 +94,6 @@ class DataHandlerProcessor
             $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
             /** @var $flexFormTools $flexFormTools */
             $fieldArray['pi_flexform'] = $flexFormTools->flexArray2Xml($flexformData, true);
-
         }
     }
-
-
 }

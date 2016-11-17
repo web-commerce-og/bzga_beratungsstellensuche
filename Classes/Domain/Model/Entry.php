@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,13 +14,10 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInterface
@@ -125,7 +122,8 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     protected $image;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
+     * @lazy
      */
     protected $categories;
 
@@ -139,7 +137,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
      */
     protected $association;
 
-
     /**
      * Entry constructor.
      * @param string $title
@@ -151,7 +148,7 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category>
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
      */
     public function getCategories()
     {
@@ -159,7 +156,7 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category> $categories
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category> $categories
      */
     public function setCategories($categories)
     {
@@ -167,7 +164,7 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     }
 
     /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Category $category
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Category $category
      */
     public function attachCategory(Category $category)
     {
@@ -175,13 +172,12 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     }
 
     /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Category $category
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Category $category
      */
     public function detachCategory(Category $category)
     {
         $this->categories->detach($category);
     }
-
 
     /**
      * @return string
@@ -198,7 +194,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     {
         $this->subtitle = $subtitle;
     }
-
 
     /**
      * Returns the teaser.
@@ -314,7 +309,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
         $this->description = $description;
     }
 
-
     /**
      * @return string
      */
@@ -325,10 +319,10 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
             $address .= $this->zip;
         }
         if ($this->city) {
-            $address .= ' '.$this->city;
+            $address .= ' ' . $this->city;
         }
         if ($this->street) {
-            $address .= ', '.$this->street;
+            $address .= ', ' . $this->street;
         }
 
         return $address;
@@ -414,7 +408,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
         $this->email = $email;
     }
 
-
     /**
      * @return string
      */
@@ -446,7 +439,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     {
         $this->notice = $notice;
     }
-
 
     /**
      * @return string
@@ -528,19 +520,17 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
         $this->association = $association;
     }
 
-
     /**
      * @param array $parameters
      * @param string $template
      * @return string
      */
     public function getInfoWindow(
-        array $parameters = array(),
+        array $parameters = [],
         $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>'
     ) {
         $title = isset($parameters['detailLink']) ? sprintf('<a href="%2$s">%1$s</a>', $this->getTitle(),
             $parameters['detailLink']) : $this->getTitle();
-
 
         return sprintf(
             $template,
@@ -550,6 +540,4 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
             $this->getCity()
         );
     }
-
-
 }

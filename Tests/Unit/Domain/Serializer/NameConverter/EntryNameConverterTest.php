@@ -1,8 +1,8 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConverter;
+namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConverter;
 
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 
 class EntryNameConverterTest extends AbstractNameConverterTest
 {
@@ -15,46 +15,37 @@ class EntryNameConverterTest extends AbstractNameConverterTest
         $this->subject = new EntryNameConverter();
     }
 
-
     /**
      * @return array
      */
     public function dataProvider()
     {
-        return array(
-            array('index', 'external_id'),
-            array('titel', 'title'),
-            array('untertitel', 'subtitle'),
-            array('ansprechpartner', 'contact_person'),
-            array('mapy', 'latitude'),
-            array('mapx', 'longitude'),
-            array('bundesland', 'state'),
-            array('kurztext', 'teaser'),
-            array('plz', 'zip'),
-            array('ort', 'city'),
-            array('logo', 'image'),
-            array('konfession', 'religious_denomination'),
-            array('pndberatunglangsons', 'pnd_other_language'),
-            array('strasse', 'street'),
-            array('mapok', 'map'),
-            array('telefon', 'telephone'),
-            array('fax', 'telefax'),
-            array('email', 'email'),
-            array('link', 'link'),
-            array('traeger', 'institution'),
-            array('website', 'website'),
-            array('beratertelefon', 'hotline'),
-            array('hinweistext', 'notice'),
-            array('mutterundkind', 'mother_and_child'),
-            array('mutterundkindtext', 'mother_and_child_notice'),
-            array('beratungsschein', 'consulting_agreement'),
-            array('angebot', 'description'),
-            array('verband', 'association'),
-            array('kontaktemail', 'contact_email'),
-            array('suchcontent', 'keywords'),
-            array('beratungsart', 'categories'),
-            array('pndberatunglang', 'pnd_languages'),
-        );
+        return [
+            ['index', 'external_id'],
+            ['titel', 'title'],
+            ['untertitel', 'subtitle'],
+            ['ansprechpartner', 'contact_person'],
+            ['mapy', 'latitude'],
+            ['mapx', 'longitude'],
+            ['bundesland', 'state'],
+            ['kurztext', 'teaser'],
+            ['plz', 'zip'],
+            ['ort', 'city'],
+            ['logo', 'image'],
+            ['strasse', 'street'],
+            ['telefon', 'telephone'],
+            ['fax', 'telefax'],
+            ['email', 'email'],
+            ['link', 'link'],
+            ['traeger', 'institution'],
+            ['website', 'website'],
+            ['beratertelefon', 'hotline'],
+            ['hinweistext', 'notice'],
+            ['angebot', 'description'],
+            ['verband', 'association'],
+            ['kontaktemail', 'contact_email'],
+            ['suchcontent', 'keywords'],
+            ['beratungsart', 'categories'],
+        ];
     }
-
 }

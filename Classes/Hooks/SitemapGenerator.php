@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Hooks;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use DmitryDulepov\DdGooglesitemap\Generator\AbstractSitemapGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class SitemapGenerator extends AbstractSitemapGenerator
@@ -32,7 +29,7 @@ class SitemapGenerator extends AbstractSitemapGenerator
      *
      * @var array
      */
-    protected $pidList = array();
+    protected $pidList = [];
 
     /**
      * Single view page
@@ -66,14 +63,14 @@ class SitemapGenerator extends AbstractSitemapGenerator
 
             $language = GeneralUtility::_GP('L');
             if (MathUtility::canBeInterpretedAsInteger($language)) {
-                $languageCondition = ' AND sys_language_uid='.$language;
+                $languageCondition = ' AND sys_language_uid=' . $language;
             }
 
             $res = $this->getDatabaseConnection()->exec_SELECTquery('*',
-                'tx_bzgaberatungsstellensuche_domain_model_entry', 'pid IN ('.implode(',', $this->pidList).')'.
-                $languageCondition.
+                'tx_bzgaberatungsstellensuche_domain_model_entry', 'pid IN (' . implode(',', $this->pidList) . ')' .
+                $languageCondition .
                 $this->cObj->enableFields('tx_bzgaberatungsstellensuche_domain_model_entry'), '', 'title ASC',
-                $this->offset.','.$this->limit
+                $this->offset . ',' . $this->limit
             );
             $rowCount = $this->getDatabaseConnection()->sql_num_rows($res);
             while (false !== ($row = $this->getDatabaseConnection()->sql_fetch_assoc($res))) {
@@ -86,11 +83,11 @@ class SitemapGenerator extends AbstractSitemapGenerator
             $this->getDatabaseConnection()->sql_free_result($res);
 
             if ($rowCount === 0) {
-                echo '<!-- It appears that there are no tx_bzgaberatungsstellensuche_domain_model_entry entries. If your '.
-                    'storage sysfolder is outside of the rootline, you may '.
-                    'want to use the dd_googlesitemap.skipRootlineCheck=1 TS '.
-                    'setup option. Beware: it is insecure and may cause certain '.
-                    'undesired effects! Better move your entries sysfolder '.
+                echo '<!-- It appears that there are no tx_bzgaberatungsstellensuche_domain_model_entry entries. If your ' .
+                    'storage sysfolder is outside of the rootline, you may ' .
+                    'want to use the dd_googlesitemap.skipRootlineCheck=1 TS ' .
+                    'setup option. Beware: it is insecure and may cause certain ' .
+                    'undesired effects! Better move your entries sysfolder ' .
                     'inside the rootline! -->';
             }
         }
@@ -111,13 +108,13 @@ class SitemapGenerator extends AbstractSitemapGenerator
             && $GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['tx_bzgaberatungsstellen.']['skipControllerAndAction'] == 1;
 
         if ($link == '') {
-            $conf = array(
-                'additionalParams' => (!$skipControllerAndAction ? '&tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show' : '').'&tx_bzgaberatungsstellensuche_pi1[entry]='.$row['uid'],
+            $conf = [
+                'additionalParams' => (!$skipControllerAndAction ? '&tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show' : '') . '&tx_bzgaberatungsstellensuche_pi1[entry]=' . $row['uid'],
                 'forceAbsoluteUrl' => 1,
                 'parameter' => $forceSinglePid ?: $this->singlePid,
                 'returnLast' => 'url',
                 'useCacheHash' => true,
-            );
+            ];
             $link = htmlspecialchars($this->cObj->typoLink('', $conf));
         }
 
@@ -146,7 +143,7 @@ class SitemapGenerator extends AbstractSitemapGenerator
      * Check if supplied page id and current page are in the same root line
      *
      * @param int $pid Page id to check
-     * @return boolean true if page is in the root line
+     * @return bool true if page is in the root line
      */
     private function isInRootline($pid)
     {
@@ -182,6 +179,4 @@ class SitemapGenerator extends AbstractSitemapGenerator
     {
         return $GLOBALS['TYPO3_DB'];
     }
-
-
 }

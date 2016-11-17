@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,8 +16,6 @@ namespace BZgA\BzgaBeratungsstellensuche\Hooks;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class RealUrlAutoConfiguration
@@ -31,41 +29,40 @@ class RealUrlAutoConfiguration
      */
     public function addConfig($params)
     {
-
-        return array_merge_recursive($params['config'], array(
-                'postVarSets' => array(
-                    '_DEFAULT' => array(
-                        'beratungsstelle' => array(
-                            array(
+        return array_merge_recursive($params['config'], [
+                'postVarSets' => [
+                    '_DEFAULT' => [
+                        'beratungsstelle' => [
+                            [
                                 'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[action]',
-                            ),
-                            array(
+                            ],
+                            [
                                 'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[controller]',
-                            ),
-                            array(
+                            ],
+                            [
                                 'GETvar' => 'tx_bzgaberatungsstellensuche_pi1[entry]',
-                                'lookUpTable' => array(
+                                'lookUpTable' => [
                                     'table' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
                                     'id_field' => 'uid',
                                     'alias_field' => 'title',
                                     'addWhereClause' => ' AND NOT deleted',
                                     'useUniqueCache' => 1,
-                                    'useUniqueCache_conf' => array(
+                                    'useUniqueCache_conf' => [
                                         'strtolower' => 1,
                                         'spaceCharacter' => '-',
-                                    ),
+                                    ],
                                     'languageGetVar' => 'L',
                                     'languageExceptionUids' => '',
                                     'languageField' => 'sys_language_uid',
                                     'transOrigPointerField' => 'l10n_parent',
                                     'autoUpdate' => 1,
                                     'expireDays' => 180,
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            )
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]
         );
     }
 }

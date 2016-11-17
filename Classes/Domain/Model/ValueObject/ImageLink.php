@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,10 +15,7 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ImageLink
@@ -45,6 +42,4 @@ class ImageLink
     {
         return $this->externalUrl;
     }
-
-
 }

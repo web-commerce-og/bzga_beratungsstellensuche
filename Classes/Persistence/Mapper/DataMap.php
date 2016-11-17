@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Persistence\Mapper;
+namespace Bzga\BzgaBeratungsstellensuche\Persistence\Mapper;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -17,8 +17,6 @@ namespace BZgA\BzgaBeratungsstellensuche\Persistence\Mapper;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class DataMap
@@ -27,8 +25,8 @@ class DataMap
     /**
      * @var array
      */
-    private $cachedTableNames = array();
-    
+    private $cachedTableNames = [];
+
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory
      */
@@ -52,5 +50,4 @@ class DataMap
 
         return $this->cachedTableNames[$className];
     }
-
 }

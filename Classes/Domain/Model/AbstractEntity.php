@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,9 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity as CoreAbstractEntity;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterface, ExternalIdInterface
@@ -73,5 +70,4 @@ abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterfa
     {
         return (string)$this->getTitle();
     }
-
 }

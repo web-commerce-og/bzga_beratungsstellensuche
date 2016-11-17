@@ -156,7 +156,7 @@
 <p>Die Erweiterung liefert einige nützliche <strong>ViewHelpers</strong> mit, die entweder bereits in den bestehenden Templates verwendet werden oder von Ihnen
 in Ihren Anpassungen genutzt werden könnten. Es sind hier nicht alle entwickelten ViewHelper aufgeführt, da einige lediglich für &quot;interne Zwecke&quot; genutzt werden.</p>
 <p>Um die ViewHelper zu nutzen müssen Sie zunächst in den jeweiligen fluid-Dateien den namespace über folgende Anweisung importieren:</p>
-<div class="highlight-html"><div class="highlight"><pre><span></span>{namespace bzga=BZgA\BzgaBeratungsstellensuche\ViewHelpers}
+<div class="highlight-html"><div class="highlight"><pre><span></span>{namespace bzga=Bzga\BzgaBeratungsstellensuche\ViewHelpers}
 </pre></div>
 </div>
 <div class="section" id="mapviewhelper">
@@ -209,7 +209,7 @@ in Ihren Anpassungen genutzt werden könnten. Es sind hier nicht alle entwickelt
 Eine Erweiterung kann mittels des folgenden Aufrufs in der Datei <code class="docutils literal"><span class="pre">ext_localconf.php</span></code> registriert werden:</p>
 <div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility</span><span class="o">::</span><span class="na">registerExtensionKey</span><span class="p">(</span><span class="nv">$_EXTKEY</span><span class="p">,</span> <span class="nv">$priority</span><span class="p">);</span>
+<span class="nx">\Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility</span><span class="o">::</span><span class="na">registerExtensionKey</span><span class="p">(</span><span class="nv">$_EXTKEY</span><span class="p">,</span> <span class="nv">$priority</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Klasse: <code class="docutils literal"><span class="pre">Classes/ViewHelpers/TranslateViewHelper.php</span></code></p>

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,20 +15,17 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class DistanceViewHelper extends AbstractViewHelper
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
+     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
      * @inject
      */
     protected $geolocationService;
@@ -42,5 +39,4 @@ class DistanceViewHelper extends AbstractViewHelper
     {
         return $this->geolocationService->calculateDistance($demandPosition, $location);
     }
-
 }

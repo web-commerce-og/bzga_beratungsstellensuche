@@ -15,13 +15,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use BZgA\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 interface ManagerInterface
@@ -37,6 +34,4 @@ interface ManagerInterface
      * @return AbstractBaseRepository
      */
     public function getRepository();
-
-
 }

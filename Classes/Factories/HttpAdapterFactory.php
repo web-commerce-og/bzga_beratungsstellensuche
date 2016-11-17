@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Factories;
+namespace Bzga\BzgaBeratungsstellensuche\Factories;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,15 +15,12 @@ namespace BZgA\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter\CurlHttpAdapter;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter\CurlHttpAdapter;
 use Ivory\HttpAdapter\FileGetContentsHttpAdapter;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Ivory\HttpAdapter\HttpAdapterInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class HttpAdapterFactory
@@ -40,7 +37,6 @@ class HttpAdapterFactory
      */
     public static function createInstance($type)
     {
-
         switch ($type) {
             case self::TYPE_CURL:
                 return GeneralUtility::makeInstance(CurlHttpAdapter::class);
@@ -56,5 +52,4 @@ class HttpAdapterFactory
                 break;
         }
     }
-
 }

@@ -12,7 +12,6 @@
             <ort>Musterstadt</ort>
             <bundesland>1</bundesland>
             <strasse>Musterstraße 1</strasse>
-            <mapok>1</mapok>
             <mapx>8.58175</mapx>
             <mapy>48.77265</mapy>
             <telefon>07051 924870</telefon>
@@ -22,8 +21,6 @@
             <website>www.domain.de</website>
             <beratertelefon>000000000</beratertelefon>
             <hinweistext>Di.15.00h 16.00h</hinweistext>
-            <mutterundkind>1</mutterundkind>
-            <mutterundkindtext></mutterundkindtext>
             <beratungsschein>1</beratungsschein>
             <angebot><![CDATA[<p></p>]]></angebot>
             <logo>http://meine-domain.com.de/logo.jpg</logo>
@@ -32,31 +29,11 @@
                 <index>2</index>
                 <index>1</index>
             </beratungsart>
-            <pndberatung>
-                <index>1</index>
-                <index>3</index>
-            </pndberatung>
-            <pndberatunglang>
-                <index>2</index>
-                <index>3</index>
-            </pndberatunglang>
-            <pndberatunglangsons></pndberatunglangsons>
             <verband>Verband der Beratungsstelle</verband>
             <kontaktform>0</kontaktform>
             <kontaktemail>max.mustermann@domain.com</kontaktemail>
             <suchcontent>Keywords, Schwangerschaft, Familienplanung</suchcontent>
     </entrys>
-    <konfessionen>
-        <konfession>
-            <index>1</index>
-            <sort>1</sort>evangelische Beratungsstellen</konfession>
-        <konfession>
-            <index>2</index>
-            <sort>2</sort>katholische Beratungsstellen</konfession>
-        <konfession>
-            <index>3</index>
-            <sort>3</sort>nicht konfessionelle Beratungsstellen</konfession>
-    </konfessionen>
     <beratungsarten>
         <beratungsart>
             <index>1</index>
@@ -68,41 +45,4 @@
             <index>3</index>
             <sort>1</sort>Online-Beratung</beratungsart>
     </beratungsarten>
-    <pndberatungen>
-        <pndberatung>
-            <index>1</index>
-            <sort>10</sort>Berater/innen verfügen über Zusatzqualifikation in der Beratung zu Fragen der Pränataldiagnostik</pndberatung>
-        <pndberatung>
-            <index>2</index>
-            <sort>20</sort>Die Beratungsstelle versteht sich als Schwerpunktberatungsstelle zu Fragen der Pränaltaldiagnostik</pndberatung>
-        <pndberatung>
-            <index>3</index>
-            <sort>30</sort>Es wird Beratung zu Pränataldiagnostik in folgenden Sprachen angeboten:</pndberatung>
-    </pndberatungen>
-    <pndberatunglangen>
-        <pndberatunglang>
-            <index>1</index>
-            <sort>10</sort>deutsch</pndberatunglang>
-        <pndberatunglang>
-            <index>2</index>
-            <sort>20</sort>englisch</pndberatunglang>
-        <pndberatunglang>
-            <index>3</index>
-            <sort>30</sort>französisch</pndberatunglang>
-        <pndberatunglang>
-            <index>4</index>
-            <sort>40</sort>russisch</pndberatunglang>
-        <pndberatunglang>
-            <index>5</index>
-            <sort>50</sort>türkisch</pndberatunglang>
-        <pndberatunglang>
-            <index>6</index>
-            <sort>60</sort>arabisch</pndberatunglang>
-        <pndberatunglang>
-            <index>7</index>
-            <sort>70</sort>spanisch</pndberatunglang>
-        <pndberatunglang>
-            <index>8</index>
-            <sort>80</sort>polnisch</pndberatunglang>
-    </pndberatunglangen>
 </beratungsstellen>

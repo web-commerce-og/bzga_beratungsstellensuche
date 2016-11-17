@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,26 +14,23 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Core\Utility\MathUtility;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use BZgA\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class EntryRepository extends AbstractBaseRepository
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
+     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
      * @inject
      */
     protected $geolocationService;
@@ -49,7 +46,7 @@ class EntryRepository extends AbstractBaseRepository
 
         if ($keywords = $demand->getKeywords()) {
             $searchFields = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
-            $searchConstraints = array();
+            $searchConstraints = [];
 
             if (count($searchFields) === 0) {
                 throw new \UnexpectedValueException('No search fields defined', 1318497755);
@@ -58,7 +55,7 @@ class EntryRepository extends AbstractBaseRepository
             $keywordsArray = GeneralUtility::trimExplode(' ', $keywords);
             foreach ($keywordsArray as $keyword) {
                 foreach ($searchFields as $field) {
-                    $searchConstraints[] = $query->like($field, '%'.$keyword.'%');
+                    $searchConstraints[] = $query->like($field, '%' . $keyword . '%');
                 }
             }
 
@@ -68,7 +65,7 @@ class EntryRepository extends AbstractBaseRepository
         }
 
         if ($demand->getCategories()->count() > 0) {
-            $categoryConstraints = array();
+            $categoryConstraints = [];
             foreach ($demand->getCategories() as $category) {
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
@@ -83,25 +80,22 @@ class EntryRepository extends AbstractBaseRepository
 
         // Call hook functions for additional constraints
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'])) {
-            $params = array(
+            $params = [
                 'demand' => $demand,
                 'query' => $query,
                 'constraints' => &$constraints,
-            );
+            ];
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'] as $reference) {
                 GeneralUtility::callUserFunction($reference, $params, $this);
             }
         }
-
 
         if (!empty($constraints) && is_array($constraints)) {
             $query->matching($query->logicalAnd($constraints));
         }
 
         return $query->execute();
-
     }
-
 
     /**
      * @param GeopositionInterface $userLocation
@@ -114,9 +108,8 @@ class EntryRepository extends AbstractBaseRepository
         QueryInterface $query,
         $radius = GeolocationService::DEFAULT_RADIUS
     ) {
-
         if (!$userLocation->getLatitude() || !$userLocation->getLatitude()) {
-            return array();
+            return [];
         }
 
         $earthRadius = GeolocationService::EARTH_RADIUS;
@@ -126,14 +119,13 @@ class EntryRepository extends AbstractBaseRepository
         $lowestLng = (double)$userLocation->getLongitude() - rad2deg($radius / $earthRadius);
         $highestLng = (double)$userLocation->getLongitude() + rad2deg($radius / $earthRadius);
 
-        return array(
+        return [
             $query->greaterThanOrEqual('latitude', $lowestLat),
             $query->lessThanOrEqual('latitude', $highestLat),
             $query->greaterThanOrEqual('longitude', $lowestLng),
             $query->lessThanOrEqual('longitude', $highestLng),
-        );
+        ];
     }
-
 
     /**
      * Here we delete all relations of an entry, this is not possible with the convenient remove method of this repository class
@@ -143,23 +135,21 @@ class EntryRepository extends AbstractBaseRepository
     public function deleteByUid($uid)
     {
         if (MathUtility::canBeInterpretedAsInteger($uid)) {
-
-
             $databaseConnection = $this->getDatabaseConnection();
 
             $fileReferences = $databaseConnection->exec_SELECTgetRows('uid, uid_local', self::SYS_FILE_REFERENCE,
-                'table_local = "sys_file" AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = '.$uid);
+                'table_local = "sys_file" AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . $uid);
 
             foreach ($fileReferences as $fileReference) {
                 $falFile = ResourceFactory::getInstance()->getFileObject($fileReference['uid_local']);
                 $falFile->getStorage()->deleteFile($falFile);
-                $databaseConnection->exec_DELETEquery(self::SYS_FILE_REFERENCE, 'uid = '.$fileReference['uid']);
+                $databaseConnection->exec_DELETEquery(self::SYS_FILE_REFERENCE, 'uid = ' . $fileReference['uid']);
             }
 
-            $databaseConnection->exec_DELETEquery(self::ENTRY_TABLE, 'uid = '.$uid);
+            $databaseConnection->exec_DELETEquery(self::ENTRY_TABLE, 'uid = ' . $uid);
             $databaseConnection->exec_DELETEquery(
                 self::ENTRY_CATEGORY_MM_TABLE,
-                'uid_local ='.$uid
+                'uid_local =' . $uid
             );
 
             // @TODO: Do we need Signal here?

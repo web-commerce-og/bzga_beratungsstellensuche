@@ -15,15 +15,12 @@ namespace BZga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use InvalidArgumentException;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class AbstractEntityConverter implements TypeConverterBeforeInterface
@@ -38,7 +35,6 @@ class AbstractEntityConverter implements TypeConverterBeforeInterface
         if (!$source instanceof AbstractEntity) {
             return false;
         }
-
 
         return true;
     }
@@ -56,6 +52,4 @@ class AbstractEntityConverter implements TypeConverterBeforeInterface
 
         return $source->getUid();
     }
-
-
 }

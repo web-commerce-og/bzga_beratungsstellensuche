@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,16 +14,13 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNameConverter;
+use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer as BaseGetSetMethodNormalizer;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNameConverter;
-use BZgA\BzgaBeratungsstellensuche\Events;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
@@ -58,7 +55,6 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         parent::__construct($classMetadataFactory, $nameConverter);
     }
 
-
     /**
      * Set normalization callbacks.
      *
@@ -70,7 +66,6 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      */
     public function setDenormalizeCallbacks(array $callbacks)
     {
-
         $callbacks = $this->emitDenormalizeCallbacksSignal($callbacks);
         foreach ($callbacks as $attribute => $callback) {
             if (!is_callable($callback)) {
@@ -92,7 +87,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      * @param array $context
      * @return object
      */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         $allowedAttributes = $this->getAllowedAttributes($class, $context, true);
         $normalizedData = $this->prepareForDenormalization($data);
@@ -110,7 +105,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             $ignored = in_array($attribute, $this->ignoredAttributes);
 
             if ($allowed && !$ignored) {
-                $setter = 'set'.ucfirst($attribute);
+                $setter = 'set' . ucfirst($attribute);
 
                 if (in_array($setter, $classMethods) && !$reflectionClass->getMethod($setter)->isStatic()) {
                     if (isset($this->denormalizeCallbacks[$attribute])) {
@@ -132,16 +127,17 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      */
     protected function emitDenormalizeCallbacksSignal(array $callbacks)
     {
-        $signalArguments = array();
-        $signalArguments['extendedCallbacks'] = array();
+        $signalArguments = [];
+        $signalArguments['extendedCallbacks'] = [];
 
         $additionalCallbacks = $this->signalSlotDispatcher->dispatch(static::class,
             Events::DENORMALIZE_CALLBACKS_SIGNAL,
             $signalArguments);
 
-        $callbacks = array_merge($callbacks, $additionalCallbacks['extendedCallbacks']);
+        if(isset($additionalCallbacks['extendedCallbacks']) && $additionalCallbacks['extendedCallbacks']) {
+            $callbacks = array_merge($callbacks, $additionalCallbacks['extendedCallbacks']);
+        }
 
         return $callbacks;
     }
-
 }

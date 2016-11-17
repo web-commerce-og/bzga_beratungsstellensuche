@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,21 +15,18 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class PaginateViewHelper extends AbstractWidgetViewHelper
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\PaginateController
+     * @var \Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\PaginateController
      * @inject
      */
     protected $controller;
@@ -37,7 +34,7 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $objects
      * @param string $as
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      * @param array $configuration
      * @return string
      */
@@ -45,14 +42,13 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
         QueryResultInterface $objects,
         $as,
         Demand $demand,
-        array $configuration = array(
+        array $configuration = [
             'itemsPerPage' => 10,
             'insertAbove' => false,
             'insertBelow' => true,
             'maximumNumberOfLinks' => 99,
-        )
+        ]
     ) {
         return $this->initiateSubRequest();
     }
-
 }

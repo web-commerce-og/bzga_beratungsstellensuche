@@ -184,8 +184,8 @@ Nach Bedarf können gerne weitere Hooks und Signals bereitgestellt werden. Setze
 
 <span class="c1">// Extend form view</span>
 <span class="nv">$signalSlotDispatcher</span><span class="o">-&gt;</span><span class="na">connect</span><span class="p">(</span>
-        <span class="nx">\BZgA\BzgaBeratungsstellensuche\Controller\EntryController</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="nx">\BZgA\BzgaBeratungsstellensuche\Events</span><span class="o">::</span><span class="na">FORM_ACTION_SIGNAL</span><span class="p">,</span>
+        <span class="nx">\Bzga\BzgaBeratungsstellensuche\Controller\EntryController</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\Bzga\BzgaBeratungsstellensuche\Events</span><span class="o">::</span><span class="na">FORM_ACTION_SIGNAL</span><span class="p">,</span>
         <span class="nx">\YOUR_VENDOR\YOUR_EXTKEY\Slots\EntryController</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="s1">&#39;formAction&#39;</span>
 <span class="p">);</span>
@@ -236,7 +236,7 @@ Für die Erweiterung der Flexforms haben wir bereits zwei Hooks im Einsatz geseh
 
 <span class="k">namespace</span> <span class="nx">YOUR_VENDOR\YOUR_EXTKEY\Hooks</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">TYPO3\CMS\Extbase\Persistence\QueryInterface</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Repository</span>

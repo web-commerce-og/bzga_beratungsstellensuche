@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,22 +15,17 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-
+use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use BZgA\BzgaBeratungsstellensuche\Events;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
-
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
@@ -41,15 +36,15 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      * Mapping of names, left side incoming names in xml|array, right side name for object
      * @var array
      */
-    protected $mapNames = array(
+    protected $mapNames = [
         '#text' => 'title',
         'index' => 'external_id',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $mapNamesFlipped = array();
+    protected $mapNamesFlipped = [];
 
     /**
      * EntryNameConverter constructor.
@@ -103,12 +98,10 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      */
     protected function emitMapNamesSignal()
     {
-        $signalArguments = array();
-        $signalArguments['extendedMapNames'] = array();
+        $signalArguments = [];
+        $signalArguments['extendedMapNames'] = [];
 
         $mapNames = $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MAP_NAMES, $signalArguments);
         $this->addAdditionalMapNames($mapNames['extendedMapNames']);
     }
-
-
 }

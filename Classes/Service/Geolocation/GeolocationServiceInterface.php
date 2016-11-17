@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 interface GeolocationServiceInterface
@@ -42,13 +39,10 @@ interface GeolocationServiceInterface
      */
     public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance');
 
-
     /**
      * @param GeopositionInterface $demandPosition
      * @param GeopositionInterface $locationPosition
      * @return mixed
      */
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition);
-
-
 }

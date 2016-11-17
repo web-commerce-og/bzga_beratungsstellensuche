@@ -16,27 +16,23 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class EntryManager extends AbstractManager
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
      * @inject
      */
     protected $repository;
 
     /**
-     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
+     * @return \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
      */
     public function getRepository()
     {
         return $this->repository;
     }
-
 }
