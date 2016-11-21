@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,8 +16,6 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 trait GeopositionTrait

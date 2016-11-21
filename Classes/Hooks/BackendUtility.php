@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,13 +14,9 @@ namespace BZgA\BzgaBeratungsstellensuche\Hooks;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class BackendUtility
@@ -31,33 +27,33 @@ class BackendUtility
      *
      * @var array
      */
-    private $removedFieldsInDetailView = array(
+    private $removedFieldsInDetailView = [
         'sDEF' => 'startingpoint,recursive',
         'additional' => 'listPid,list.itemsPerPage,formFields',
         'template' => '',
-    );
+    ];
 
     /**
      * Fields which are removed in list view
      *
      * @var array
      */
-    private $removedFieldsInListView = array(
+    private $removedFieldsInListView = [
         'sDEF' => '',
         'additional' => '',
         'template' => '',
-    );
+    ];
 
     /**
      * Fields which are remove in form view
      *
      * @var array
      */
-    private $removedFieldsInFormView = array(
+    private $removedFieldsInFormView = [
         'sDEF' => 'startingpoint,recursive',
         'additional' => 'singlePid,backPid,list.itemsPerPage',
         'template' => '',
-    );
+    ];
 
     /**
      * Hook function of \TYPO3\CMS\Backend\Utility\BackendUtility
@@ -122,10 +118,10 @@ class BackendUtility
             }
 
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Hooks/BackendUtility.php']['updateFlexforms'])) {
-                $params = array(
+                $params = [
                     'selectedView' => $selectedView,
                     'dataStructure' => &$dataStructure,
-                );
+                ];
                 foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Hooks/BackendUtility.php']['updateFlexforms'] as $reference) {
                     GeneralUtility::callUserFunction($reference, $params, $this);
                 }
@@ -146,7 +142,7 @@ class BackendUtility
             $fieldsInSheet = GeneralUtility::trimExplode(',', $sheetFields, true);
 
             foreach ($fieldsInSheet as $fieldName) {
-                unset($dataStructure['sheets'][$sheetName]['ROOT']['el']['settings.'.$fieldName]);
+                unset($dataStructure['sheets'][$sheetName]['ROOT']['el']['settings.' . $fieldName]);
             }
         }
     }

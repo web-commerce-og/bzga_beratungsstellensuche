@@ -28,7 +28,7 @@ Dafür muss in der ext_localconf.php oder LocalConfiguration.php folgender Aufru
 .. code-block:: php
 
    <?php
-   \BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::addAdditionalFormField(array('LLL:EXT:your_extension_key/path_to_locallang_file:label', 'fieldname'));
+   \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::addAdditionalFormField(array('LLL:EXT:your_extension_key/path_to_locallang_file:label', 'fieldname'));
 
 .. _extendFlexformsLayout:
 

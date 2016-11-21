@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Report;
+namespace Bzga\BzgaBeratungsstellensuche\Report;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,14 +14,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Report;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Reports\StatusProviderInterface;
-use TYPO3\CMS\Reports\Status;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Reports\Status;
+use TYPO3\CMS\Reports\StatusProviderInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
@@ -39,7 +36,7 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
      */
     public function getStatus()
     {
-        $reports = array();
+        $reports = [];
         $severity = Status::OK;
         $value = 'On';
         $message = '';
@@ -58,7 +55,6 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
             $message,
             $severity
         );
-
 
         return $reports;
     }

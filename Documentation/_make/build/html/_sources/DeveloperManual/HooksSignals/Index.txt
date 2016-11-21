@@ -50,8 +50,8 @@ Um dieses Signal zu nutzen, erstellen Sie einen Slot in Ihrer eigenen Erweiterun
 
 	// Extend form view
 	$signalSlotDispatcher->connect(
-		\BZgA\BzgaBeratungsstellensuche\Controller\EntryController::class,
-		\BZgA\BzgaBeratungsstellensuche\Events::FORM_ACTION_SIGNAL,
+		\Bzga\BzgaBeratungsstellensuche\Controller\EntryController::class,
+		\Bzga\BzgaBeratungsstellensuche\Events::FORM_ACTION_SIGNAL,
 		\YOUR_VENDOR\YOUR_EXTKEY\Slots\EntryController::class,
 		'formAction'
 	);
@@ -110,7 +110,7 @@ Jetzt erstellen Sie die Datei ``Classes/Hooks/Repository.php``:
 
 	namespace YOUR_VENDOR\YOUR_EXTKEY\Hooks;
 
-	use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+	use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 	use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 	class Repository

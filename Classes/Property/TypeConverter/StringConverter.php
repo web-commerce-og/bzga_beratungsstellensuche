@@ -15,16 +15,13 @@ namespace BZga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use HTMLPurifier_Config;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use HTMLPurifier;
+use HTMLPurifier_Config;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class StringConverter implements TypeConverterBeforeInterface
@@ -40,7 +37,6 @@ class StringConverter implements TypeConverterBeforeInterface
         $config = HTMLPurifier_Config::createDefault();
         $this->purifier = new HTMLPurifier($config);
     }
-
 
     /**
      * @param mixed $source
@@ -71,6 +67,4 @@ class StringConverter implements TypeConverterBeforeInterface
     {
         return $this->purifier->purify($source);
     }
-
-
 }

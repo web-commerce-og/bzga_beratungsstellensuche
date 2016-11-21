@@ -17,8 +17,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 interface ImporterInterface
@@ -44,5 +42,4 @@ interface ImporterInterface
      * @return mixed
      */
     public function import($content, $pid = 0);
-
 }

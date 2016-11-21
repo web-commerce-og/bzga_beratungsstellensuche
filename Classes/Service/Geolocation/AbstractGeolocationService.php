@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,15 +15,12 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Geolocation;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
-use BZgA\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
-use BZgA\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
+use Bzga\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 abstract class AbstractGeolocationService implements GeolocationServiceInterface
@@ -45,7 +42,7 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     const DEFAULT_RADIUS = 10;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\SettingsService
+     * @var \Bzga\BzgaBeratungsstellensuche\Service\SettingsService
      */
     protected $settingsService;
 
@@ -56,15 +53,14 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
 
     /**
      * AbstractGeolocationService constructor.
-     * @param \BZgA\BzgaBeratungsstellensuche\Service\SettingsService $settingsService
+     * @param \Bzga\BzgaBeratungsstellensuche\Service\SettingsService $settingsService
      */
-    public function __construct(\BZgA\BzgaBeratungsstellensuche\Service\SettingsService $settingsService)
+    public function __construct(\Bzga\BzgaBeratungsstellensuche\Service\SettingsService $settingsService)
     {
         $this->settingsService = $settingsService;
         $adapter = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));
         $this->geocoder = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'), $adapter);
     }
-
 
     /**
      * @param GeopositionInterface $demandPosition
@@ -89,7 +85,6 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
     {
         return sprintf(self::DISTANCE_SQL_FIELD, $demandPosition->getLatitude(), $demandPosition->getLongitude(),
-                $demandPosition->getKilometers()).' AS '.$alias;
+                $demandPosition->getKilometers()) . ' AS ' . $alias;
     }
-
 }

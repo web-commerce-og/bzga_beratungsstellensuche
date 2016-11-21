@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,37 +15,34 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class MapViewHelper extends AbstractWidgetViewHelper
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\MapController
+     * @var \Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\MapController
      * @inject
      */
     protected $controller;
 
     /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      * @param array $styleSheetOptions
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
      * @param array $settings
      * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface
      */
     public function render(
         Demand $demand = null,
-        array $styleSheetOptions = array('width' => '100%', 'height' => '300px'),
+        array $styleSheetOptions = ['width' => '100%', 'height' => '300px'],
         Entry $entry = null,
-        array $settings = array()
+        array $settings = []
     ) {
         return $this->initiateSubRequest();
     }

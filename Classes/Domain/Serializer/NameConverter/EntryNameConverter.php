@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,8 +16,6 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class EntryNameConverter extends BaseMappingNameConverter
@@ -27,7 +25,7 @@ class EntryNameConverter extends BaseMappingNameConverter
      * Mapping of names, left side incoming names in xml|array, right side name for object
      * @var array
      */
-    protected $mapNames = array(
+    protected $mapNames = [
         'index' => 'external_id',
         'titel' => 'title',
         'untertitel' => 'subtitle',
@@ -52,6 +50,5 @@ class EntryNameConverter extends BaseMappingNameConverter
         'beratungsart' => 'categories',
         'verband' => 'association',
         'traeger' => 'institution',
-    );
-
+    ];
 }

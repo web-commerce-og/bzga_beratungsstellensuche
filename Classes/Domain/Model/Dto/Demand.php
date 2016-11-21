@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,14 +14,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class Demand extends AbstractValueObject implements GeoPositionDemandInterface
@@ -45,12 +42,12 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     protected $location;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\BZgA\BzgaBeratungsstellensuche\Domain\Model\Category>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
      */
     protected $categories;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $kilometers = 10;
 
@@ -60,7 +57,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     protected $countryZone;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
+     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
      * @inject
      */
     protected $geolocationService;
@@ -89,7 +86,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         $this->categories = $categories;
     }
 
-
     /**
      * @return string
      */
@@ -106,9 +102,8 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         $this->location = $location;
     }
 
-
     /**
-     * @return integer
+     * @return int
      */
     public function getKilometers()
     {
@@ -116,7 +111,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     }
 
     /**
-     * @param integer $kilometers
+     * @param int $kilometers
      */
     public function setKilometers($kilometers)
     {
@@ -181,7 +176,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
             $this->updateLatitudeLongitude();
         }
 
-
         return $this->longitude;
     }
 
@@ -209,6 +203,4 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
             $this->longitude = $address->getLongitude();
         }
     }
-
-
 }

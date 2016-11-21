@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Utility;
+namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,12 +14,9 @@ namespace BZgA\BzgaBeratungsstellensuche\Utility;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class FormFields implements SingletonInterface
@@ -30,7 +27,7 @@ class FormFields implements SingletonInterface
      */
     public function getAvailableFormFields()
     {
-        $formFields = array();
+        $formFields = [];
 
         // Check if the layouts are extended by ext_tables
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'])
@@ -38,8 +35,6 @@ class FormFields implements SingletonInterface
         ) {
             $formFields = $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'];
         }
-
-
 
         return $formFields;
     }

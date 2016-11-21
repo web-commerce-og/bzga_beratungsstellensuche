@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche;
+namespace Bzga\BzgaBeratungsstellensuche;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,8 +16,6 @@ namespace BZgA\BzgaBeratungsstellensuche;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 final class Events
@@ -87,20 +85,17 @@ final class Events
      * Especially useful if you would like to add more relations for entries or filter something out etc.
      * Have a look at the EntryNormalizer to see the callbacks in action.
      *
-     * @see \BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer::prepareForDenormalization()
+     * @see \Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer::prepareForDenormalization()
      * @var string
      */
     const DENORMALIZE_CALLBACKS_SIGNAL = 'denormalizer.callbacks';
-
 
     /**
      * Signal is emitted in the repository class if truncation is going on.
      * Have a look at AbstractBaseRepository to see what is going on.
      *
-     * @see \BZgA\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository::truncateAll()
+     * @see \Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository::truncateAll()
      * @var string
      */
     const TABLE_TRUNCATE_ALL_SIGNAL = 'repository.truncateall';
-
-
 }

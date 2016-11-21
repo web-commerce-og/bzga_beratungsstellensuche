@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,14 +14,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Hooks;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Utility\FormFields;
+use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use BZgA\BzgaBeratungsstellensuche\Utility\TemplateLayout;
-use BZgA\BzgaBeratungsstellensuche\Utility\FormFields;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ItemsProcFunc
@@ -39,10 +36,10 @@ class ItemsProcFunc
         /** @var TemplateLayout $templateLayoutsUtility */
         $templateLayouts = $templateLayoutsUtility->getAvailableTemplateLayouts($config['row']['pid']);
         foreach ($templateLayouts as $layout) {
-            $additionalLayout = array(
+            $additionalLayout = [
                 $GLOBALS['LANG']->sL($layout[0], true),
                 $layout[1],
-            );
+            ];
             array_push($config['items'], $additionalLayout);
         }
     }
@@ -57,12 +54,11 @@ class ItemsProcFunc
         /** @var FormFields $formFieldsUtility */
         $formFields = $formFieldsUtility->getAvailableFormFields();
         foreach ($formFields as $formField) {
-            $additionalFormField = array(
+            $additionalFormField = [
                 $GLOBALS['LANG']->sL($formField[0], true),
                 $formField[1],
-            );
+            ];
             array_push($config['items'], $additionalFormField);
         }
     }
-
 }

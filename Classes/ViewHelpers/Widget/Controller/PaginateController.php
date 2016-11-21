@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,16 +15,13 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Fluid\ViewHelpers\Widget\Controller\PaginateController as CorePaginateController;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Fluid\ViewHelpers\Widget\Controller\PaginateController as CorePaginateController;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class PaginateController extends CorePaginateController
@@ -36,7 +33,7 @@ class PaginateController extends CorePaginateController
     protected $demand;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
+     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
      * @inject
      */
     protected $geolocationService;
@@ -80,9 +77,9 @@ class PaginateController extends CorePaginateController
             $sql = $this->createSqlFromQuery($query, $this->demand);
             $modifiedObjects = $query->statement($sql)->execute();
         }
-        $this->view->assign('contentArguments', array(
+        $this->view->assign('contentArguments', [
             $this->widgetConfiguration['as'] => $modifiedObjects,
-        ));
+        ]);
         $this->view->assign('configuration', $this->configuration);
         $this->view->assign('pagination', $this->buildPagination());
     }
@@ -113,7 +110,7 @@ class PaginateController extends CorePaginateController
             } elseif ($parameter instanceof DomainObjectInterface) {
                 $parameter = (int)$parameter->getUid();
             } elseif (is_array($parameter)) {
-                $subParameters = array();
+                $subParameters = [];
                 foreach ($parameter as $subParameter) {
                     $subParameters[] = $databaseConnection->fullQuoteStr($subParameter, $tableNameForEscape);
                 }
@@ -121,7 +118,7 @@ class PaginateController extends CorePaginateController
             } elseif ($parameter === null) {
                 $parameter = 'NULL';
             } elseif (is_bool($parameter)) {
-                return ($parameter === true ? 1 : 0);
+                return $parameter === true ? 1 : 0;
             } else {
                 $parameter = $databaseConnection->fullQuoteStr((string)$parameter, $tableNameForEscape);
             }
@@ -129,22 +126,22 @@ class PaginateController extends CorePaginateController
             $statementParts['where'] = str_replace($parameterPlaceholder, $parameter, $statementParts['where']);
         }
 
-        $statementParts = array(
-            'selectFields' => implode(' ', $statementParts['keywords']).' '.implode(',', $statementParts['fields']),
-            'fromTable' => implode(' ', $statementParts['tables']).' '.implode(' ', $statementParts['unions']),
+        $statementParts = [
+            'selectFields' => implode(' ', $statementParts['keywords']) . ' ' . implode(',', $statementParts['fields']),
+            'fromTable' => implode(' ', $statementParts['tables']) . ' ' . implode(' ', $statementParts['unions']),
             'whereClause' => (!empty($statementParts['where']) ? implode('', $statementParts['where']) : '1')
-                .(!empty($statementParts['additionalWhereClause'])
-                    ? ' AND '.implode(' AND ', $statementParts['additionalWhereClause'])
+                . (!empty($statementParts['additionalWhereClause'])
+                    ? ' AND ' . implode(' AND ', $statementParts['additionalWhereClause'])
                     : ''
                 ),
             'orderBy' => (!empty($statementParts['orderings']) ? implode(', ', $statementParts['orderings']) : ''),
-            'limit' => ($statementParts['offset'] ? $statementParts['offset'].', ' : '')
-                .($statementParts['limit'] ? $statementParts['limit'] : ''),
-        );
+            'limit' => ($statementParts['offset'] ? $statementParts['offset'] . ', ' : '')
+                . ($statementParts['limit'] ? $statementParts['limit'] : ''),
+        ];
 
         if ($demand->getLocation()) {
-            $distanceField = $this->geolocationService->getDistanceSqlField($demand,$statementParts['fromTable']);
-            $statementParts['selectFields'] = $distanceField.','.$statementParts['selectFields'];
+            $distanceField = $this->geolocationService->getDistanceSqlField($demand, $statementParts['fromTable']);
+            $statementParts['selectFields'] = $distanceField . ',' . $statementParts['selectFields'];
             $statementParts['orderBy'] = 'distance ASC';
         }
 
@@ -167,5 +164,4 @@ class PaginateController extends CorePaginateController
     {
         return $GLOBALS['TYPO3_DB'];
     }
-
 }

@@ -17,26 +17,22 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class CategoryManager extends AbstractManager
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
      * @inject
      */
     protected $repository;
 
     /**
-     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     * @return \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
      */
     public function getRepository()
     {
         return $this->repository;
     }
-
-
 }

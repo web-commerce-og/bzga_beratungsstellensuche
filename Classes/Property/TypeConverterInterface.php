@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Property;
+namespace Bzga\BzgaBeratungsstellensuche\Property;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,10 +16,7 @@ namespace BZgA\BzgaBeratungsstellensuche\Property;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 interface TypeConverterInterface
@@ -36,15 +33,16 @@ interface TypeConverterInterface
     const CONVERT_AFTER = 'after.converter';
 
     /**
-     * @param $source
+     * @param mixed $source
+     * @param string $type
      * @return mixed
      */
     public function supports($source, $type = self::CONVERT_BEFORE);
 
     /**
-     * @param $source
+     * @param mixed $source
      * @param array $configuration
+     * @return void
      */
     public function convert($source, array $configuration = null);
-
 }

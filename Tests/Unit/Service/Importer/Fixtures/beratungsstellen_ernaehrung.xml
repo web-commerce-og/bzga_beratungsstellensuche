@@ -21,18 +21,4 @@
             </suchcontent>
         </entry>
     </entrys>
-    <konfessionen>
-        <konfession>
-            <index>1</index>
-            <sort>1</sort>evangelische Beratungsstellen
-        </konfession>
-        <konfession>
-            <index>2</index>
-            <sort>2</sort>katholische Beratungsstellen
-        </konfession>
-        <konfession>
-            <index>3</index>
-            <sort>3</sort>nicht konfessionelle Beratungsstellen
-        </konfession>
-    </konfessionen>
 </beratungsstellen>

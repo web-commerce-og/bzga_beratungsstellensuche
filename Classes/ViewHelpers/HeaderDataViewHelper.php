@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,11 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class HeaderDataViewHelper extends AbstractViewHelper
@@ -39,5 +36,4 @@ class HeaderDataViewHelper extends AbstractViewHelper
         /* @var $pageRenderer PageRenderer */
         $pageRenderer->addHeaderData($this->renderChildren());
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Service\Importer;
+namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,21 +15,18 @@ namespace BZgA\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use UnexpectedValueException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use UnexpectedValueException;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 abstract class AbstractImporter implements ImporterInterface
 {
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Serializer
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer
      * @inject
      */
     protected $serializer;
@@ -51,7 +48,6 @@ abstract class AbstractImporter implements ImporterInterface
      * @inject
      */
     protected $signalSlotDispatcher;
-
 
     /**
      * @param $file
@@ -91,5 +87,4 @@ abstract class AbstractImporter implements ImporterInterface
         $this->categoryManager->persist();
         $this->entryManager->persist();
     }
-
 }

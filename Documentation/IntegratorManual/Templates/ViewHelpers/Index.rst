@@ -18,7 +18,7 @@ Um die ViewHelper zu nutzen müssen Sie zunächst in den jeweiligen fluid-Dateie
 
 .. code-block:: html
 
-    {namespace bzga=BZgA\BzgaBeratungsstellensuche\ViewHelpers}
+    {namespace bzga=Bzga\BzgaBeratungsstellensuche\ViewHelpers}
 
 
 MapViewHelper
@@ -84,7 +84,7 @@ Eine Erweiterung kann mittels des folgenden Aufrufs in der Datei ``ext_localconf
 
     <?php
 
-    \BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerExtensionKey($_EXTKEY, $priority);
+    \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerExtensionKey($_EXTKEY, $priority);
 
 Klasse: ``Classes/ViewHelpers/TranslateViewHelper.php``
 

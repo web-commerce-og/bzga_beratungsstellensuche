@@ -15,15 +15,12 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Category;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use BZgA\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Events;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class XmlImporter extends AbstractImporter
@@ -34,7 +31,6 @@ class XmlImporter extends AbstractImporter
      */
     const FORMAT = 'xml';
 
-
     /**
      * @param $content
      * @param int $pid
@@ -44,7 +40,7 @@ class XmlImporter extends AbstractImporter
     {
         $sxe = new \SimpleXMLIterator($content);
 
-        $signalArguments = array($this, $sxe, $pid, $this->serializer);
+        $signalArguments = [$this, $sxe, $pid, $this->serializer];
 
         $this->emitImportSignal($signalArguments, Events::PRE_IMPORT_SIGNAL);
 
@@ -63,7 +59,7 @@ class XmlImporter extends AbstractImporter
      * @param \Traversable $relations
      * @param AbstractManager $manager
      * @param $relationClassName
-     * @param integer $pid
+     * @param int $pid
      */
     public function convertRelations(\Traversable $relations = null, AbstractManager $manager, $relationClassName, $pid)
     {
@@ -73,7 +69,7 @@ class XmlImporter extends AbstractImporter
                 $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
                 $relationObject = $this->serializer->deserialize($relationData->asXml(), $relationClassName,
                     self::FORMAT,
-                    array('object_to_populate' => $objectToPopulate));
+                    ['object_to_populate' => $objectToPopulate]);
                 $relationObject->setPid($pid);
                 $manager->create($relationObject);
             }
@@ -88,5 +84,4 @@ class XmlImporter extends AbstractImporter
     {
         $this->signalSlotDispatcher->dispatch(static::class, $signal, $signalArguments);
     }
-
 }

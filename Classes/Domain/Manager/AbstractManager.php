@@ -15,18 +15,15 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
+use Countable;
+use IteratorAggregate;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use IteratorAggregate;
-use Countable;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 abstract class AbstractManager implements ManagerInterface, Countable, IteratorAggregate
@@ -45,7 +42,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     /**
      * @var array
      */
-    protected $dataMap = array();
+    protected $dataMap = [];
 
     /**
      * @var \SplObjectStorage
@@ -55,31 +52,30 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     /**
      * @var array
      */
-    private $externalUids = array();
+    private $externalUids = [];
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap
+     * @var \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap
      */
     private $dataMapFactory;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Property\PropertyMapper
+     * @var \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper
      */
     private $propertyMapper;
-
 
     /**
      * AbstractManager constructor.
      * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
-     * @param \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory
-     * @param \BZgA\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
+     * @param \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory
+     * @param \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
      */
     public function __construct(
         \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher,
         \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler,
-        \BZgA\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory,
-        \BZgA\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
+        \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory,
+        \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
     ) {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->dataHandler = $dataHandler;
@@ -103,8 +99,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->entries->attach($entity);
         $this->externalUids[] = $entity->getExternalId();
 
-
-        $data = array();
+        $data = [];
         $data['pid'] = $entity->getPid();
         $properties = ObjectAccess::getGettablePropertyNames($entity);
         foreach ($properties as $propertyName) {
@@ -115,17 +110,16 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
                     TypeConverterInterface::CONVERT_BEFORE)
                 ) {
                     $propertyValue = $typeConverter->convert($propertyValue,
-                        array(
+                        [
                             'manager' => $this,
                             'tableUid' => $tableUid,
                             'tableName' => $tableName,
                             'entity' => $entity,
-                        ));
+                        ]);
                 }
                 $data[$propertyNameLowercase] = $propertyValue;
             }
         }
-
 
         // We only update the entry if something has really changed. Speeding up import drastically
         $entryHash = md5(serialize($data));
@@ -141,9 +135,9 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     public function persist()
     {
         if (!empty($this->dataMap)) {
-            $this->dataHandler->start($this->dataMap, array());
+            $this->dataHandler->start($this->dataMap, []);
             $this->dataHandler->process_datamap();
-            $this->dataMap = array();
+            $this->dataMap = [];
         }
         $this->cleanUp();
     }
@@ -160,7 +154,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
     /**
      * @return void
-     * @see \BZgA\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor
+     * @see \Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor
      */
     private function cleanUp()
     {
@@ -169,15 +163,14 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $oldEntries = $repository->findOldEntriesByExternalUidsDiffForTable($table, $this->externalUids);
 
         # Now we delete then entries via the datahandler, the actual deletion is done by a HOOK
-        $cmd = array();
+        $cmd = [];
         foreach ($oldEntries as $oldEntry) {
-            $cmd[$table][$oldEntry['uid']] = array('delete' => '');
+            $cmd[$table][$oldEntry['uid']] = ['delete' => ''];
         }
 
         $this->dataHandler->start(null, $cmd);
         $this->dataHandler->process_cmdmap();
     }
-
 
     /**
      * @return \SplObjectStorage
@@ -195,12 +188,10 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         return count($this->entries);
     }
 
-
     /**
-     * @return \BZgA\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository
+     * @return \Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository
      */
     abstract public function getRepository();
-
 
     /**
      * @param AbstractEntity $entity
@@ -215,6 +206,4 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
         return $entity->getUid();
     }
-
-
 }

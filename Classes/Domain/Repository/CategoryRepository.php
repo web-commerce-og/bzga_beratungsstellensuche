@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,11 +16,8 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
  */
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class CategoryRepository extends AbstractBaseRepository
 {
-
 }

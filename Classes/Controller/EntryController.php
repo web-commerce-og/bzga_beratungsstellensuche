@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Controller;
+namespace Bzga\BzgaBeratungsstellensuche\Controller;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,49 +15,61 @@ namespace BZgA\BzgaBeratungsstellensuche\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use BZgA\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
 use SJBR\StaticInfoTables\Domain\Model\Country;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use BZgA\BzgaBeratungsstellensuche\Utility\Utility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class EntryController extends ActionController
 {
 
+    /**
+     * @var string
+     */
     const STYLESHEET_INCLUDE = '<link rel="stylesheet" type="text/css" media="%1$s" href="%2$s" />';
+
+    /**
+     * @var string
+     */
     const JAVASCRIPT_INCLUDE = '<script type="text/javascript" src="%1$s"></script>';
+
+    /**
+     * @var string
+     */
     const TYPE_JS = 'js';
+
+    /**
+     * @var string
+     */
     const TYPE_CSS = 'css';
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
      * @inject
      */
     protected $entryRepository;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository
      * @inject
      */
     protected $kilometerRepository;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Service\SessionService
+     * @var \Bzga\BzgaBeratungsstellensuche\Service\SessionService
      * @inject
      */
     protected $sessionService;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
      * @inject
      */
     protected $categoryRepository;
@@ -91,10 +103,9 @@ class EntryController extends ActionController
             $propertyMappingConfiguration->forProperty('categories')->allowAllProperties();
             $propertyMappingConfiguration->allowCreationForSubProperty('categories');
             $propertyMappingConfiguration->allowModificationForSubProperty('categories');
-            $this->emitInitializeActionSignal(array('propertyMappingConfiguration' => $propertyMappingConfiguration));
+            $this->emitInitializeActionSignal(['propertyMappingConfiguration' => $propertyMappingConfiguration]);
         }
     }
-
 
     /**
      * @return void
@@ -106,7 +117,7 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      * @return void
      */
     public function formAction(Demand $demand = null)
@@ -136,7 +147,7 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      * @return void
      */
     public function listAction(Demand $demand = null)
@@ -162,15 +173,15 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
-     * @param \BZgA\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
+     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      * @return void
      */
     public function showAction(Entry $entry = null, Demand $demand = null)
     {
         if (!$entry instanceof Entry) {
             // @TODO: Add possibility to hook into here.
-            $this->redirect('list', null, null, array(), $this->settings['listPid'], 0, 404);
+            $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 404);
         }
         $assignedViewValues = compact('entry', 'demand');
         $assignedViewValues = $this->emitActionSignal(Events::SHOW_ACTION_SIGNAL, $assignedViewValues);
@@ -183,13 +194,12 @@ class EntryController extends ActionController
     private function findCountryZonesForGermany()
     {
         if (false === GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany')) {
-            return array();
+            return [];
         }
         $country = new Country();
         $country->setIsoCodeNumber(276);
 
         return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
-
     }
 
     /**
@@ -208,8 +218,8 @@ class EntryController extends ActionController
      */
     private function emitActionSignal($signalName, array $assignedViewValues)
     {
-        $signalArguments = array();
-        $signalArguments['extendedVariables'] = array();
+        $signalArguments = [];
+        $signalArguments['extendedVariables'] = [];
 
         $additionalViewValues = $this->signalSlotDispatcher->dispatch(static::class, $signalName, $signalArguments);
 
@@ -261,7 +271,7 @@ class EntryController extends ActionController
                     break;
             }
             $typoScriptFrontendController = $this->getTypoScriptFrontendController();
-            $key = $this->extensionName.md5($data);
+            $key = $this->extensionName . md5($data);
             if (!isset($typoScriptFrontendController->register[$key])) {
                 $typoScriptFrontendController->register[$key] = $data;
                 $this->response->addAdditionalHeaderData($data);
@@ -276,5 +286,4 @@ class EntryController extends ActionController
     {
         return $GLOBALS['TSFE'];
     }
-
 }

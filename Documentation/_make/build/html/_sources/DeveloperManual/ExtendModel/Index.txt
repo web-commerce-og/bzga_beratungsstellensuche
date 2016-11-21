@@ -113,7 +113,7 @@ Erstellen Sie nun eine Datei ``typo3conf/ext/bzga_beratungsstellensuche_extended
 	/**
 	 * Entry
 	 */
-	class Entry extends \BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry {
+	class Entry extends \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry {
 
 		/**
 		 * @var string
@@ -158,8 +158,8 @@ Zunächst registrieren Sie den Slot für das entsprechende Signal in der  ``ext_
 
 	// Extend name converter
 	$signalSlotDispatcher->connect(
-		\BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter::class,
-		\BZgA\BzgaBeratungsstellensuche\Events::SIGNAL_MapNames,
+		\Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter::class,
+		\Bzga\BzgaBeratungsstellensuche\Events::SIGNAL_MapNames,
 		\YOUR_VENDOR\YOUR_EXTKEY\Slots\EntryNameConverter::class,
 		'mapNames'
 	);

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Factories;
+namespace Bzga\BzgaBeratungsstellensuche\Factories;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,13 +15,10 @@ namespace BZgA\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class CacheFactory
@@ -42,5 +39,4 @@ class CacheFactory
         /* @var $cacheManager CacheManager */
         return $cacheManager->getCache(self::CACHE_KEY);
     }
-
 }

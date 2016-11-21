@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Property;
+namespace Bzga\BzgaBeratungsstellensuche\Property;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,13 +15,10 @@ namespace BZgA\BzgaBeratungsstellensuche\Property;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use BZgA\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class PropertyMapper implements TypeConverterInterface
@@ -114,6 +111,4 @@ class PropertyMapper implements TypeConverterInterface
             $this->typeConverters[] = $this->objectManager->get($typeConverterClassName);
         }
     }
-
-
 }

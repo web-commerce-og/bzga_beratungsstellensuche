@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Utility;
+namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,14 +14,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Utility;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class TemplateLayout implements SingletonInterface
@@ -35,7 +32,7 @@ class TemplateLayout implements SingletonInterface
      */
     public function getAvailableTemplateLayouts($pageUid)
     {
-        $templateLayouts = array();
+        $templateLayouts = [];
 
         // Check if the layouts are extended by ext_tables
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['templateLayouts'])
@@ -51,7 +48,7 @@ class TemplateLayout implements SingletonInterface
                 $title = $optGroupParts[1];
                 $templateKey = $optGroupParts[0];
             }
-            $templateLayouts[] = array($title, $templateKey);
+            $templateLayouts[] = [$title, $templateKey];
         }
 
         return $templateLayouts;
@@ -65,7 +62,7 @@ class TemplateLayout implements SingletonInterface
      */
     protected function getTemplateLayoutsFromTsConfig($pageUid)
     {
-        $templateLayouts = array();
+        $templateLayouts = [];
         $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);
         if (isset($pagesTsConfig['tx_bzgaberatungsstellensuche.']['templateLayouts.']) && is_array($pagesTsConfig['tx_bzgaberatungsstellensuche.']['templateLayouts.'])) {
             $templateLayouts = $pagesTsConfig['tx_bzgaberatungsstellensuche.']['templateLayouts.'];

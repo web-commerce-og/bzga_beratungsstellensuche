@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers;
+namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,9 @@ namespace BZgA\BzgaBeratungsstellensuche\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class TitleViewHelper extends AbstractViewHelper
@@ -36,7 +33,7 @@ class TitleViewHelper extends AbstractViewHelper
     /**
      * With this flag, you can disable the escaping interceptor inside this ViewHelper.
      * THIS MIGHT CHANGE WITHOUT NOTICE, NO PUBLIC API!
-     * @var boolean
+     * @var bool
      */
     protected $escapingInterceptorEnabled = false;
 
@@ -83,7 +80,7 @@ class TitleViewHelper extends AbstractViewHelper
             }
         } else {
             $typoscriptFrontendController->content = preg_replace('#<title>.*<\/title>#',
-                '<title>'.htmlentities($title).'</title>',
+                '<title>' . htmlentities($title) . '</title>',
                 $typoscriptFrontendController->content);
         }
     }
@@ -95,5 +92,4 @@ class TitleViewHelper extends AbstractViewHelper
     {
         return $GLOBALS['TSFE'];
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Utility;
+namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,13 +15,10 @@ namespace BZgA\BzgaBeratungsstellensuche\Utility;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class Utility
@@ -49,5 +46,4 @@ class Utility
     {
         return substr($string, strlen(PATH_site));
     }
-
 }

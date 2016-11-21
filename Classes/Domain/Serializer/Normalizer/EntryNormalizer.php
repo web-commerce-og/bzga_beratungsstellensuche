@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,18 +15,14 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use BZgA\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class EntryNormalizer extends GetSetMethodNormalizer
@@ -38,7 +34,7 @@ class EntryNormalizer extends GetSetMethodNormalizer
     protected $countryZoneRepository;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
      * @inject
      */
     protected $categoryRepository;
@@ -51,7 +47,6 @@ class EntryNormalizer extends GetSetMethodNormalizer
     {
         parent::__construct($classMetadataFactory, new EntryNameConverter());
     }
-
 
     /**
      * @param array|object $data
@@ -72,11 +67,11 @@ class EntryNormalizer extends GetSetMethodNormalizer
         };
 
         $this->setDenormalizeCallbacks(
-            array(
+            [
                 'state' => $stateCallback,
                 'categories' => $categoriesCallback,
                 'image' => $logoCallback,
-            )
+            ]
         );
 
         return parent::prepareForDenormalization($data);
@@ -117,6 +112,4 @@ class EntryNormalizer extends GetSetMethodNormalizer
     {
         return $type === Entry::class;
     }
-
-
 }

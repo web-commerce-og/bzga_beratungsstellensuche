@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
+namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,9 @@ namespace BZgA\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class KilometerRepository
@@ -36,5 +33,4 @@ class KilometerRepository
         $kilometersArray = GeneralUtility::intExplode(',', $kilometers);
         return array_combine($kilometersArray, $kilometersArray);
     }
-
 }

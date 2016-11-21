@@ -15,19 +15,16 @@ namespace BZga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
-use BZgA\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
-use BZgA\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ImageLinkConverter implements TypeConverterBeforeInterface
@@ -58,7 +55,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * @var string
      */
-    private $tempFolder = PATH_site.'typo3temp/tx_bzgaberatungsstellensuche/';
+    private $tempFolder = PATH_site . 'typo3temp/tx_bzgaberatungsstellensuche/';
 
     /**
      * One of 'cancel', 'replace', 'changeName'
@@ -76,7 +73,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * @var array
      */
-    private static $imageMimeTypes = array(
+    private static $imageMimeTypes = [
         'bmp' => 'image/bmp',
         'gif' => 'image/gif',
         'jpeg' => 'image/jpeg',
@@ -85,7 +82,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         'svg' => 'image/svg+xml',
         'tif' => 'image/tiff',
         'tiff' => 'image/tiff',
-    );
+    ];
 
     /**
      * @param mixed|ImageLink $source
@@ -113,13 +110,13 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         $entity = $configuration['entity'];
         /* @var $entity ExternalIdInterface|AbstractEntity */
 
-        $fileReferenceData = array(
+        $fileReferenceData = [
             'table_local' => 'sys_file',
             'tablenames' => $configuration['tableName'],
             'uid_foreign' => $configuration['tableUid'],
             'fieldname' => 'image',
             'pid' => $entity->getPid(),
-        );
+        ];
 
         if ($entity->getUid()) {
             $this->deleteOldFileReferences($fileReferenceData);
@@ -130,10 +127,8 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             return 0;
         }
 
-
         // Download the file
         $pathToUploadFile = $this->downloadFile($source, $entity);
-
 
         $falFile = $this->importResource($pathToUploadFile);
         $fileReferenceUid = uniqid('NEW_');
@@ -144,14 +139,13 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         $manager->addDataMap('sys_file_reference', $fileReferenceUid, $fileReferenceData);
 
         return $fileReferenceUid;
-
     }
 
     /**
      * @param ImageLink $source
      * @param ExternalIdInterface $entity
-     * @return string
      * @throws TypeConverterException
+     * @return string
      */
     private function downloadFile(ImageLink $source, ExternalIdInterface $entity)
     {
@@ -159,7 +153,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
         $imageInfo = getimagesizefromstring($imageContent);
         $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
-        $pathToUploadFile = $this->tempFolder.GeneralUtility::stdAuthCode($entity->getExternalId()).'.'.$extension;
+        $pathToUploadFile = $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
 
         if ($error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent)) {
             throw new TypeConverterException($error, 1399312443);
@@ -170,6 +164,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @param $tempFilePath
+     * @throws TypeConverterException
      * @return FalFile
      */
     private function importResource($tempFilePath)
@@ -181,12 +176,10 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($this->defaultUploadFolder);
 
         return $uploadFolder->addFile($tempFilePath, null, $this->defaultConflictMode);
-
     }
 
-
     /**
-     * @param $mimeType
+     * @param string $mimeType
      * @return mixed
      */
     private function getExtensionFromMimeType($mimeType)
@@ -196,6 +189,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @param array $fileReferenceData
+     * @return void
      */
     private function deleteOldFileReferences(array $fileReferenceData)
     {
@@ -205,9 +199,9 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
         $databaseConnection = $this->getDatabaseConnection();
 
-        $where = array();
+        $where = [];
         foreach ($fileReferenceData as $key => $value) {
-            $where[] = $key.'='.$databaseConnection->fullQuoteStr($value, 'sys_file_reference');
+            $where[] = $key . '=' . $databaseConnection->fullQuoteStr($value, 'sys_file_reference');
         }
         $databaseConnection->exec_DELETEquery('sys_file_reference', implode(' AND ', $where));
     }
@@ -219,6 +213,4 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     {
         return $GLOBALS['TYPO3_DB'];
     }
-
-
 }

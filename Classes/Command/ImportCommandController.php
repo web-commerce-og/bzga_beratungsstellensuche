@@ -1,6 +1,6 @@
 <?php
 
-namespace BZgA\BzgaBeratungsstellensuche\Command;
+namespace Bzga\BzgaBeratungsstellensuche\Command;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,14 +14,11 @@ namespace BZgA\BzgaBeratungsstellensuche\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use UnexpectedValueException;
 
 /**
- * @package TYPO3
- * @subpackage bzga_beratungsstellensuche
  * @author Sebastian Schreiber
  */
 class ImportCommandController extends CommandController
@@ -34,7 +31,7 @@ class ImportCommandController extends CommandController
     protected $xmlImporter;
 
     /**
-     * @var \BZgA\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
+     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
      * @inject
      */
     protected $entryRepository;
@@ -68,5 +65,4 @@ class ImportCommandController extends CommandController
             throw new $e;
         }
     }
-
 }

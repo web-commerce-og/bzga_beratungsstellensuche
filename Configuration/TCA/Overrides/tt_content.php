@@ -10,7 +10,7 @@ $extKey = 'bzga_beratungsstellensuche';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['bzgaberatungsstellensuche_pi1'] = 'recursive,select_key,pages';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bzgaberatungsstellensuche_pi1'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('bzgaberatungsstellensuche_pi1',
-    'FILE:EXT:'.$extKey.'/Configuration/FlexForms/flexform_beratungsstellensuche.xml');
+    'FILE:EXT:' . $extKey . '/Configuration/FlexForms/flexform_beratungsstellensuche.xml');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript',
     'Beratungsstellensuche');
@@ -24,4 +24,3 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('solr')) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript/linkhandler',
         'Beratungsstellensuche - Solr');
 }
-

@@ -18,12 +18,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "BZgA\\BzgaBeratungsstellensuche\\": "Classes"
+      "Bzga\\BzgaBeratungsstellensuche\\": "Classes"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BZgA\\BzgaBeratungsstellensuche\\": "Tests"
+      "Bzga\\BzgaBeratungsstellensuche\\": "Tests"
     }
   },
   "require": {
@@ -38,5 +38,10 @@
   "replace": {
     "bzga_beratungsstellensuche": "self.version",
     "bzga/bzga-beratungsstellensuche": "self.version"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "6.2.x-dev"
+    }
   }
 }

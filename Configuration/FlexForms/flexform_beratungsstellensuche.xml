@@ -123,7 +123,7 @@
                         <label>LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields</label>
                         <config>
                             <type>select</type>
-                            <itemsProcFunc>BZgA\BzgaBeratungsstellensuche\Hooks\ItemsProcFunc->user_formFields</itemsProcFunc>
+                            <itemsProcFunc>Bzga\BzgaBeratungsstellensuche\Hooks\ItemsProcFunc->user_formFields</itemsProcFunc>
                             <items>
                                 <numIndex index="0" type="array">
                                     <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields.keywords</numIndex>
@@ -249,7 +249,7 @@
                             <label>LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_template.templateLayout</label>
                             <config>
                                 <type>select</type>
-                                <itemsProcFunc>BZgA\BzgaBeratungsstellensuche\Hooks\ItemsProcFunc->user_templateLayout</itemsProcFunc>
+                                <itemsProcFunc>Bzga\BzgaBeratungsstellensuche\Hooks\ItemsProcFunc->user_templateLayout</itemsProcFunc>
                                 <items>
                                     <numIndex index="0" type="array">
                                         <numIndex index="0"></numIndex>
