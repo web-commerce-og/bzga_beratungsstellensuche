@@ -102,9 +102,17 @@ class MapController extends AbstractWidgetController
         $fullscreenControl = new FullscreenControl(ControlPosition::TOP_RIGHT);
         $map->getControlManager()->setFullscreenControl($fullscreenControl);
         $map->setStylesheetOptions($this->styleSheetOptions);
-        $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
         $map->setAutoZoom(true);
-        $map->setMapOption('maxZoom', $maxZoom);
+
+        // Set map options configurable via TypoScript, option:value => maxZoom:17
+        $mapOptions = isset($this->settings['map']['options']) ? GeneralUtility::trimExplode(',', $this->settings['map']['options']) : array();
+
+        if(is_array($mapOptions) && !empty($mapOptions)) {
+            foreach($mapOptions as $mapOption) {
+                list($mapOptionKey, $mapOptionValue) = GeneralUtility::trimExplode(':', $mapOption, true, 2);
+                $map->setMapOption($mapOptionKey, $mapOptionValue);
+            }
+        }
 
         $entries = new ObjectStorage();
         if ($this->demand instanceof Demand) {

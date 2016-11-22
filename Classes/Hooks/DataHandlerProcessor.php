@@ -71,6 +71,7 @@ class DataHandlerProcessor
                     'settings.listPid',
                     'settings.backPid',
                     'settings.list.itemsPerPage',
+                    'settings.formFields'
                 ],
             ];
 

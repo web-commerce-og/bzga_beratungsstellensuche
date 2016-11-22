@@ -17,6 +17,10 @@ plugin.tx_bzgaberatungsstellensuche {
         }
     }
 
+    features {
+        skipDefaultArguments = 1
+    }
+
     # settings
     settings {
         singlePid = {$plugin.tx_bzgaberatungsstellensuche.settings.singlePid}
@@ -34,6 +38,7 @@ plugin.tx_bzgaberatungsstellensuche {
             pathToActiveMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToActiveMarker}
             pathToDefaultMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToDefaultMarker}
             apiKey = {$plugin.tx_bzgaberatungsstellensuche.settings.map.apiKey}
+            options = {$plugin.tx_bzgaberatungsstellensuche.settings.map.options}
         }
     }
 }

@@ -73,6 +73,12 @@
 			<trans-unit id="back" xml:space="preserve">
 				<source>zurück zur Übersicht</source>
 			</trans-unit>
+			<trans-unit id="contact-person" xml:space="preserve">
+				<source>AnsprechpartnerIn</source>
+			</trans-unit>
+			<trans-unit id="association" xml:space="preserve">
+				<source>Träger</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>
