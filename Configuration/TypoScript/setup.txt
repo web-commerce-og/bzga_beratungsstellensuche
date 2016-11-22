@@ -38,4 +38,4 @@ plugin.tx_bzgaberatungsstellensuche {
     }
 }
 
-plugin.tx_bzgaberatungsstellensuche.view.widget.TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper.templateRootPath = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
+plugin.tx_bzgaberatungsstellensuche.view.widget.Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\PaginateViewHelper.templateRootPath = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
