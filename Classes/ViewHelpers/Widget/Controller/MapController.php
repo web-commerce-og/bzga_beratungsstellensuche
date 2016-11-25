@@ -27,7 +27,6 @@ use Ivory\GoogleMap\Event\MouseEvent;
 use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
 use Ivory\GoogleMap\Map;
-use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\InfoWindowType;
@@ -96,7 +95,6 @@ class MapController extends AbstractWidgetController
      */
     public function indexAction()
     {
-        $maxZoom = isset($this->settings['map']['maxZoom']) ? $this->settings['map']['maxZoom'] : 17;
         // These are only some defaults and can be overriden via a hook method
         $map = new Map();
         $fullscreenControl = new FullscreenControl(ControlPosition::TOP_RIGHT);
@@ -105,10 +103,10 @@ class MapController extends AbstractWidgetController
         $map->setAutoZoom(true);
 
         // Set map options configurable via TypoScript, option:value => maxZoom:17
-        $mapOptions = isset($this->settings['map']['options']) ? GeneralUtility::trimExplode(',', $this->settings['map']['options']) : array();
+        $mapOptions = isset($this->settings['map']['options']) ? GeneralUtility::trimExplode(',', $this->settings['map']['options']) : [];
 
-        if(is_array($mapOptions) && !empty($mapOptions)) {
-            foreach($mapOptions as $mapOption) {
+        if (is_array($mapOptions) && !empty($mapOptions)) {
+            foreach ($mapOptions as $mapOption) {
                 list($mapOptionKey, $mapOptionValue) = GeneralUtility::trimExplode(':', $mapOption, true, 2);
                 $map->setMapOption($mapOptionKey, $mapOptionValue);
             }

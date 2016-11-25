@@ -134,7 +134,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             Events::DENORMALIZE_CALLBACKS_SIGNAL,
             $signalArguments);
 
-        if(isset($additionalCallbacks['extendedCallbacks']) && $additionalCallbacks['extendedCallbacks']) {
+        if (isset($additionalCallbacks['extendedCallbacks']) && $additionalCallbacks['extendedCallbacks']) {
             $callbacks = array_merge($callbacks, $additionalCallbacks['extendedCallbacks']);
         }
 

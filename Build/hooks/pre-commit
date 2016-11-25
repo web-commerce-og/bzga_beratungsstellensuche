@@ -1,9 +1,15 @@
 #!/usr/bin/php
 <?php
 // Hook configuration
-$project = 'bzga_books';
+$project = 'bzga_beratungsstellensuche';
 
-// Tell the commiter what the hook is doing
+echo PHP_EOL;
+
+echo '>> Starting php-cs-fixer'.PHP_EOL;
+chdir(__DIR__.'/../../');
+exec('php-cs-fixer fix', $output, $returnCode);
+echo PHP_EOL;
+
 echo PHP_EOL;
 echo '>> Starting unit tests'.PHP_EOL;
 
@@ -29,11 +35,5 @@ if ($returnCode !== 0) {
 }
 
 echo '>> All tests for '.$project.' passed.'.PHP_EOL;
-echo PHP_EOL;
-
-echo '>> Starting php-cs-fixer'.PHP_EOL;
-chdir(__DIR__.'/../../');
-exec('php-cs-fixer fix', $output, $returnCode);
-echo PHP_EOL;
 
 exit(0);

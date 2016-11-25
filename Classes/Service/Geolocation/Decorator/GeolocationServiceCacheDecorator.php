@@ -39,7 +39,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
 
     /**
      * GeolocationServiceCacheDecorator constructor.
-     * @param \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService $geolocationService
+     * @param GeolocationServiceInterface $geolocationService
      */
     public function __construct(GeolocationServiceInterface $geolocationService)
     {
@@ -49,6 +49,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
 
     /**
      * @param Demand $demand
+     * @return null|\Geocoder\Model\Address
      */
     public function findAddressByDemand(Demand $demand)
     {

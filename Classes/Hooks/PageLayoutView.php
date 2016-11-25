@@ -386,7 +386,7 @@ class PageLayoutView
      * 'language-splitted' labels can therefore refer to a local-lang file + index.
      * Refer to 'Inside TYPO3' for more details
      *
-     * @param string $input Label key/reference
+     * @param string $label Label key/reference
      * @param bool $hsc If set, the return value is htmlspecialchar'ed
      * @return string
      */

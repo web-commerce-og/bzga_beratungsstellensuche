@@ -161,6 +161,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'softref' => 'email',
                 'wizards' => [
                     '_PADDING' => 2,
                     'link' => [
@@ -203,6 +204,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'softref' => 'email',
                 'wizards' => [
                     '_PADDING' => 2,
                     'link' => [
@@ -255,6 +257,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'softref' => 'typolink,url',
                 'wizards' => [
                     '_PADDING' => 2,
                     'link' => [

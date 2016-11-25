@@ -18,7 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 
@@ -41,9 +41,9 @@ class EntryNormalizer extends GetSetMethodNormalizer
 
     /**
      * EntryNormalizer constructor.
-     * @param null|\Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface $classMetadataFactory
+     * @param null|ClassMetadataFactoryInterface $classMetadataFactory
      */
-    public function __construct(ClassMetadataFactory $classMetadataFactory = null)
+    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null)
     {
         parent::__construct($classMetadataFactory, new EntryNameConverter());
     }
