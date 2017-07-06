@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -25,10 +26,17 @@ class DistanceViewHelper extends AbstractViewHelper
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
-     * @inject
+     * @var GeolocationServiceCacheDecorator
      */
     protected $geolocationService;
+
+    /**
+     * @param GeolocationServiceCacheDecorator $geolocationService
+     */
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
+    {
+        $this->geolocationService = $geolocationService;
+    }
 
     /**
      * @param GeopositionInterface $demandPosition
