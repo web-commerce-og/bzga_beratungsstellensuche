@@ -49,8 +49,8 @@ class EntryRepositoryTest extends FunctionalTestCase
         parent::setUp();
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->entryRepository = $this->objectManager->get(EntryRepository::class);
-        $this->importDataSet(__DIR__ . '/../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/tx_bzgaberatungsstellensuche_domain_model_entry.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_entry.xml');
     }
 
     /**

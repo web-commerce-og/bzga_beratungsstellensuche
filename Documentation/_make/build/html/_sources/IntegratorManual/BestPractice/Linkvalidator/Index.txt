@@ -15,4 +15,4 @@ ein Basis-Setup in der TSConfig inkludiert.
 Die Core-Extension **linkvalidator** ermöglicht die Überprüfung von Verlinkungen innerhalb konfigurierter Tabellen und Felder.
 Nähere Information entnehmen Sie bitte hier: https://docs.typo3.org/typo3cms/extensions/linkvalidator/Introduction/Index.html
 
-Dieses Setup befindet sich in der Datei: ``EXT:bzga_beratungsstellensuche/Configuration/TsConfig/Page/mod.linkvalidator.txt``
+Dieses Setup befindet sich in der Datei: ``EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkvalidator.txt``
