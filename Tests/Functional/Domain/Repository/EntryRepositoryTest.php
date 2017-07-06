@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
-use Bzga\BzgaBeratungsstellensucheEssstoerungen\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
