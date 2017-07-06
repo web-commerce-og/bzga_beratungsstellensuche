@@ -19,6 +19,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensucheEssstoerungen\Domain\Model\Dto\Demand;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
@@ -46,7 +47,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManagerInterface::class);
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->entryRepository = $this->objectManager->get(EntryRepository::class);
         $this->importDataSet(__DIR__ . '/../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.xml');
         $this->importDataSet(__DIR__ . '/../Fixtures/tx_bzgaberatungsstellensuche_domain_model_entry.xml');
