@@ -15,6 +15,9 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use RuntimeException;
+use TYPO3\CMS\Extbase\Service\EnvironmentService;
+use TYPO3\CMS\Extbase\Service\ExtensionService;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -25,10 +28,14 @@ class TitleViewHelper extends AbstractViewHelper
 
     /**
      *
-     * @var \TYPO3\CMS\Extbase\Service\ExtensionService
-     * @inject
+     * @var ExtensionService
      */
     protected $extensionService;
+
+    /**
+     * @var EnvironmentService
+     */
+    protected $environmentService;
 
     /**
      * With this flag, you can disable the escaping interceptor inside this ViewHelper.
@@ -38,6 +45,22 @@ class TitleViewHelper extends AbstractViewHelper
     protected $escapingInterceptorEnabled = false;
 
     /**
+     * @param EnvironmentService $environmentService
+     */
+    public function injectEnvironmentService(EnvironmentService $environmentService)
+    {
+        $this->environmentService = $environmentService;
+    }
+
+    /**
+     * @param ExtensionService $extensionService
+     */
+    public function injectExtensionService(ExtensionService $extensionService)
+    {
+        $this->extensionService = $extensionService;
+    }
+
+    /**
      * Arguments initialization
      *
      * @return void
@@ -45,8 +68,6 @@ class TitleViewHelper extends AbstractViewHelper
     public function initializeArguments()
     {
         $this->registerArgument('title', 'string', 'Title tag content');
-        $this->registerArgument('whitespaceString', 'string',
-            'String used to replace groups of white space characters, one replacement inserted per group', false, ' ');
         $this->registerArgument('setIndexedDocTitle', 'boolean', 'Set indexed doc title to title', false, false);
     }
 
@@ -57,18 +78,14 @@ class TitleViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        if ('BE' === TYPO3_MODE) {
-            throw new \RuntimeException('This method should only be called in the frontend context');
+        if ($this->environmentService->isEnvironmentInBackendMode()) {
+            throw new RuntimeException('This method should only be called in the frontend context');
         }
 
         $typoscriptFrontendController = $this->getTyposcriptFrontendController();
-        if ($this->arguments['title']) {
-            $title = $this->arguments['title'];
-        } else {
-            $title = $this->renderChildren();
-        }
-        $title = trim(preg_replace('/\s+/', $this->arguments['whitespaceString'], $title),
-            $this->arguments['whitespaceString']);
+
+        $title = $this->arguments['title'] ? $this->arguments['title'] : $this->renderChildren();
+
         if ($this->extensionService->isActionCacheable($this->controllerContext->getRequest()->getControllerExtensionName(),
             $this->controllerContext->getRequest()->getPluginName(),
             $this->controllerContext->getRequest()->getControllerName(),
@@ -87,8 +104,9 @@ class TitleViewHelper extends AbstractViewHelper
 
     /**
      * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * @codeCoverageIgnore
      */
-    private function getTyposcriptFrontendController()
+    protected function getTyposcriptFrontendController()
     {
         return $GLOBALS['TSFE'];
     }
