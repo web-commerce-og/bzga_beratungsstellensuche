@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_bzgaberatungsstellensuche_domain_model_entry>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Category</title>
+        <subtitle>1</subtitle>
+        <teaser>Teaser</teaser>
+        <zip>00000</zip>
+        <city>Musterstadt</city>
+        <street>Ottostraße</street>
+        <state>NRW</state>
+        <longitude>70</longitude>
+        <latitude>1</latitude>
+        <external_id>1</external_id>
+    </tx_bzgaberatungsstellensuche_domain_model_entry>
+</dataset>
