@@ -16,7 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -26,14 +25,25 @@ class HeaderDataViewHelper extends AbstractViewHelper
 {
 
     /**
+     * @var PageRenderer
+     */
+    protected $pageRenderer;
+
+    /**
+     * @param PageRenderer $pageRenderer
+     */
+    public function injectPageRenderer(PageRenderer $pageRenderer)
+    {
+        $this->pageRenderer = $pageRenderer;
+    }
+
+    /**
      * Renders HeaderData
      *
      * @return void
      */
     public function render()
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        /* @var $pageRenderer PageRenderer */
-        $pageRenderer->addHeaderData($this->renderChildren());
+        $this->pageRenderer->addHeaderData($this->renderChildren());
     }
 }
