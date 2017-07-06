@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility as CoreExtensionManagement
 
 /**
  * @author Sebastian Schreiber
+ * @codeCoverageIgnore
  */
 class ExtensionManagementUtility
 {

@@ -35,14 +35,14 @@ interface TypeConverterInterface
     /**
      * @param mixed $source
      * @param string $type
-     * @return mixed
+     * @return bool
      */
     public function supports($source, $type = self::CONVERT_BEFORE);
 
     /**
      * @param mixed $source
      * @param array $configuration
-     * @return void
+     * @return mixed
      */
     public function convert($source, array $configuration = null);
 }

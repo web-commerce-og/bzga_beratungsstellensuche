@@ -17,6 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Property;
  */
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * @author Sebastian Schreiber
@@ -30,14 +31,14 @@ class PropertyMapper implements TypeConverterInterface
     private $typeConverters;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     private $objectManager;
 
     /**
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
+     * @param ObjectManagerInterface $objectManager
      */
-    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager)
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
         $this->initializeTypeConverters();
@@ -69,13 +70,22 @@ class PropertyMapper implements TypeConverterInterface
     public function convert($source, array $configuration = null)
     {
         foreach ($this->typeConverters as $typeConverter) {
-            /* @var $typeConverter TypeConverterInterface */
+            /** @var $typeConverter TypeConverterInterface */
             if (true === $typeConverter->supports($source)) {
                 return $typeConverter->convert($source, $configuration);
             }
         }
 
         return $source;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @return array
+     */
+    protected function getRegisteredTypeConverters()
+    {
+        return ExtensionManagementUtility::getRegisteredTypeConverters();
     }
 
     /**
@@ -106,8 +116,7 @@ class PropertyMapper implements TypeConverterInterface
      */
     private function initializeTypeConverters()
     {
-        $registeredTypeConverters = ExtensionManagementUtility::getRegisteredTypeConverters();
-        foreach ($registeredTypeConverters as $typeConverterClassName) {
+        foreach ($this->getRegisteredTypeConverters() as $typeConverterClassName) {
             $this->typeConverters[] = $this->objectManager->get($typeConverterClassName);
         }
     }
