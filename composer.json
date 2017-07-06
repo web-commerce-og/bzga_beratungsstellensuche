@@ -34,7 +34,11 @@
   "require-dev": {
     "phpunit/phpunit": "^4.7 || ^5.0",
     "friendsofphp/php-cs-fixer": "^2.0",
-    "nimut/testing-framework": "^1.0"
+    "nimut/testing-framework": "^1.0",
+    "symfony/serializer": "dev-master",
+    "ezyang/htmlpurifier": "^4.8",
+    "egeloen/google-map": "dev-master",
+    "willdurand/geocoder": "^3.3"
   },
   "suggest": {
     "typo3-ter/static-info-tables": "We need it to map Languages and Country-Zones",
