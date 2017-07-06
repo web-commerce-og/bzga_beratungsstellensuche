@@ -2,7 +2,6 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
 
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -34,7 +33,6 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($this->subject);
     }
 
-
     /**
      * @test
      * @dataProvider validValuesProvider
@@ -64,5 +62,4 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
             ['extension_key_with', 'ExtensionKeyWith']
         ];
     }
-
 }
