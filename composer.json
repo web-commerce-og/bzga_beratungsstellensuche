@@ -35,9 +35,9 @@
     "phpunit/phpunit": "^4.7 || ^5.0",
     "friendsofphp/php-cs-fixer": "^2.0",
     "nimut/testing-framework": "^1.0",
-    "symfony/serializer": "dev-master",
+    "symfony/serializer": "^3.0",
     "ezyang/htmlpurifier": "^4.8",
-    "egeloen/google-map": "dev-master",
+    "egeloen/google-map": "^2.0",
     "willdurand/geocoder": "^3.3"
   },
   "suggest": {
@@ -72,7 +72,5 @@
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "web-dir": ".Build/Web"
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }
