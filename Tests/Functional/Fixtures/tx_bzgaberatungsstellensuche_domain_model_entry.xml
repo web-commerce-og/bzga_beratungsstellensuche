@@ -13,7 +13,9 @@
         <longitude>70</longitude>
         <latitude>1</latitude>
         <external_id>1</external_id>
+        <description>Lange Beschreibung</description>
         <keywords>Keyword, Title</keywords>
+        <notice>Notice</notice>
     </tx_bzgaberatungsstellensuche_domain_model_entry>
     <tx_bzgaberatungsstellensuche_entry_category_mm>
         <uid_local>1</uid_local>
