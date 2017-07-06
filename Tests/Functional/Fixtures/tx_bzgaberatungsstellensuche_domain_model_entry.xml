@@ -13,5 +13,11 @@
         <longitude>70</longitude>
         <latitude>1</latitude>
         <external_id>1</external_id>
+        <keywords>Keyword, Title</keywords>
     </tx_bzgaberatungsstellensuche_domain_model_entry>
+    <tx_bzgaberatungsstellensuche_entry_category_mm>
+        <uid_local>1</uid_local>
+        <uid_foreign>1</uid_foreign>
+        <sorting>1</sorting>
+    </tx_bzgaberatungsstellensuche_entry_category_mm>
 </dataset>
