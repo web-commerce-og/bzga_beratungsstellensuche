@@ -15,6 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use InvalidArgumentException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -35,10 +36,9 @@ class UppercaseFirstLetterViewHelper extends AbstractViewHelper
         }
 
         if (!is_string($subject)) {
-            throw new \InvalidArgumentException('This is not a string');
+            throw new InvalidArgumentException('This is not a string');
         }
         $subject = GeneralUtility::underscoredToLowerCamelCase($subject);
-
         return substr_replace($subject, ucfirst(substr($subject, 0, 1)), 0, 1);
     }
 }
