@@ -17,8 +17,8 @@ namespace BZga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
  */
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Decorator\ImporterRegistryDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Registry;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber

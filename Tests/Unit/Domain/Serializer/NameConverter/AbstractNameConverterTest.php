@@ -15,8 +15,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConver
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

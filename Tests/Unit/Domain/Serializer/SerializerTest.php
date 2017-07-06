@@ -21,9 +21,9 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**

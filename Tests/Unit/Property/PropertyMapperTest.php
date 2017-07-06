@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 class PropertyMapperTest extends UnitTestCase
