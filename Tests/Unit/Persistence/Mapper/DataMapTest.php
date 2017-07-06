@@ -16,13 +16,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Persistence\Mapper;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMap as CoreDataMap;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
 
 /**
  * @author Sebastian Schreiber
  */
-class DataMapTest extends \PHPUnit_Framework_TestCase
+class DataMapTest extends UnitTestCase
 {
 
     /**
