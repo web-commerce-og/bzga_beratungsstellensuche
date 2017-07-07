@@ -38,7 +38,8 @@
     "symfony/serializer": "^3.0",
     "ezyang/htmlpurifier": "^4.8",
     "egeloen/google-map": "^2.0",
-    "willdurand/geocoder": "^3.3"
+    "willdurand/geocoder": "^3.3",
+    "sjbr/static-info-tables": "^6.0"
   },
   "suggest": {
     "typo3-ter/static-info-tables": "We need it to map Languages and Country-Zones",
