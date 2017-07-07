@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -152,7 +153,8 @@ class EntryRepository extends AbstractBaseRepository
                 'uid_local =' . $uid
             );
 
-            // @TODO: Do we need Signal here?
+            $this->signalSlotDispatcher->dispatch(static::class, Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
+                ['databaseConnection' => $databaseConnection]);
         }
     }
 }

@@ -98,4 +98,13 @@ final class Events
      * @var string
      */
     const TABLE_TRUNCATE_ALL_SIGNAL = 'repository.truncateall';
+
+    /**
+     * Signal is emitted in the entry repository class if the method deleteByUid is called
+     * Have a look at EntryRepository to see what is going on.
+     *
+     * @see \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository::deleteByUid()
+     * @var string
+     */
+    const REMOVE_ENTRY_FROM_DATABASE_SIGNAL = 'repository.remove.enty';
 }
