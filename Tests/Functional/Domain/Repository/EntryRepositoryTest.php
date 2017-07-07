@@ -18,6 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
@@ -41,6 +42,8 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche', 'typo3conf/ext/static_info_tables'];
 
+    const ENTRY_DEFAULT_FIXTURE_UID = 1;
+
     /**
      * @return void
      */
@@ -62,7 +65,22 @@ class EntryRepositoryTest extends FunctionalTestCase
         $demand = $this->objectManager->get(Demand::class);
         $demand->setKeywords('Keyword');
         $entries = $this->entryRepository->findDemanded($demand);
-        $this->assertEquals(1, $this->getIdListOfItems($entries));
+        $this->assertEquals(self::ENTRY_DEFAULT_FIXTURE_UID, $this->getIdListOfItems($entries));
+    }
+
+    /**
+     * @test
+     */
+    public function deleteByUid()
+    {
+        $this->importDataSet('ntf://Database/sys_file_storage.xml');
+
+        $this->setUpBackendUserFromFixture(1);
+        $storage = new StorageRepository();
+        $subject = $storage->findByUid(1);
+        $subject->setEvaluatePermissions(false);
+        $this->entryRepository->deleteByUid(self::ENTRY_DEFAULT_FIXTURE_UID);
+        $this->assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
     }
 
     /**

@@ -22,4 +22,27 @@
         <uid_foreign>1</uid_foreign>
         <sorting>1</sorting>
     </tx_bzgaberatungsstellensuche_entry_category_mm>
+    <sys_file>
+        <uid>10014</uid>
+        <pid>0</pid>
+        <size>1958</size>
+        <storage>1</storage>
+        <name>logo.jpg</name>
+        <sha1>da39a3ee5e6b4b0d3255bfef95601890afd80709</sha1>
+        <creation_date>1400176659</creation_date>
+        <modification_date>1400176659</modification_date>
+    </sys_file>
+    <sys_file_reference>
+        <uid>10045</uid>
+        <l10n_diffsource></l10n_diffsource>
+        <description></description>
+        <title>Logo</title>
+        <alternative>Unternehmen</alternative>
+        <downloadname>Logo</downloadname>
+        <tablenames>tx_bzgaberatungsstellensuche_domain_model_entry</tablenames>
+        <uid_local>10014</uid_local>
+        <uid_foreign>1</uid_foreign>
+        <table_local>sys_file</table_local>
+        <fieldname>image</fieldname>
+    </sys_file_reference>
 </dataset>
