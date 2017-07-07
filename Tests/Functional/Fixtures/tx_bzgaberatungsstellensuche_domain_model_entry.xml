@@ -17,6 +17,23 @@
         <keywords>Keyword, Title</keywords>
         <notice>Notice</notice>
     </tx_bzgaberatungsstellensuche_domain_model_entry>
+    <tx_bzgaberatungsstellensuche_domain_model_entry>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>Category</title>
+        <subtitle>1</subtitle>
+        <teaser>Teaser</teaser>
+        <zip>00000</zip>
+        <city>Musterstadt</city>
+        <street>Ottostraße</street>
+        <state>54</state>
+        <longitude>70</longitude>
+        <latitude>1</latitude>
+        <external_id>10</external_id>
+        <description>Lange Beschreibung</description>
+        <keywords>Keyword, Title</keywords>
+        <notice>Notice</notice>
+    </tx_bzgaberatungsstellensuche_domain_model_entry>
     <tx_bzgaberatungsstellensuche_entry_category_mm>
         <uid_local>1</uid_local>
         <uid_foreign>1</uid_foreign>

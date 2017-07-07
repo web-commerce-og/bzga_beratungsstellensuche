@@ -138,6 +138,8 @@ class EntryRepository extends AbstractBaseRepository
         if (MathUtility::canBeInterpretedAsInteger($uid)) {
             $databaseConnection = $this->getDatabaseConnection();
 
+
+            // TODO: Better use the FileRepository and FileIndexRepository API here
             $fileReferences = $databaseConnection->exec_SELECTgetRows('uid, uid_local', self::SYS_FILE_REFERENCE,
                 'table_local = "sys_file" AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . $uid);
 
