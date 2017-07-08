@@ -18,9 +18,9 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
@@ -38,15 +38,16 @@ class EntryRepository extends AbstractBaseRepository
 
     /**
      * @param Demand $demand
+     *
      * @return array|QueryResultInterface
      */
     public function findDemanded(Demand $demand)
     {
-        $query = $this->createQuery();
+        $query       = $this->createQuery();
         $constraints = $this->createCoordsConstraints($demand, $query, $demand->getKilometers());
 
         if ($keywords = $demand->getKeywords()) {
-            $searchFields = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
+            $searchFields      = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
             $searchConstraints = [];
 
             if (count($searchFields) === 0) {
@@ -70,7 +71,7 @@ class EntryRepository extends AbstractBaseRepository
             foreach ($demand->getCategories() as $category) {
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
-            if (!empty($categoryConstraints)) {
+            if (! empty($categoryConstraints)) {
                 $constraints[] = $query->logicalOr($categoryConstraints);
             }
         }
@@ -82,8 +83,8 @@ class EntryRepository extends AbstractBaseRepository
         // Call hook functions for additional constraints
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'])) {
             $params = [
-                'demand' => $demand,
-                'query' => $query,
+                'demand'      => $demand,
+                'query'       => $query,
                 'constraints' => &$constraints,
             ];
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'] as $reference) {
@@ -91,7 +92,7 @@ class EntryRepository extends AbstractBaseRepository
             }
         }
 
-        if (!empty($constraints) && is_array($constraints)) {
+        if (! empty($constraints) && is_array($constraints)) {
             $query->matching($query->logicalAnd($constraints));
         }
 
@@ -102,6 +103,7 @@ class EntryRepository extends AbstractBaseRepository
      * @param GeopositionInterface $userLocation
      * @param QueryInterface $query
      * @param int $radius
+     *
      * @return array
      */
     private function createCoordsConstraints(
@@ -109,15 +111,15 @@ class EntryRepository extends AbstractBaseRepository
         QueryInterface $query,
         $radius = GeolocationService::DEFAULT_RADIUS
     ) {
-        if (!$userLocation->getLatitude() || !$userLocation->getLatitude()) {
+        if (! $userLocation->getLatitude() || ! $userLocation->getLatitude()) {
             return [];
         }
 
         $earthRadius = GeolocationService::EARTH_RADIUS;
 
-        $lowestLat = (double)$userLocation->getLatitude() - rad2deg($radius / $earthRadius);
+        $lowestLat  = (double)$userLocation->getLatitude() - rad2deg($radius / $earthRadius);
         $highestLat = (double)$userLocation->getLatitude() + rad2deg($radius / $earthRadius);
-        $lowestLng = (double)$userLocation->getLongitude() - rad2deg($radius / $earthRadius);
+        $lowestLng  = (double)$userLocation->getLongitude() - rad2deg($radius / $earthRadius);
         $highestLng = (double)$userLocation->getLongitude() + rad2deg($radius / $earthRadius);
 
         return [
@@ -135,28 +137,29 @@ class EntryRepository extends AbstractBaseRepository
      */
     public function deleteByUid($uid)
     {
-        if (MathUtility::canBeInterpretedAsInteger($uid)) {
-            $databaseConnection = $this->getDatabaseConnection();
 
+        /** @var FileRepository $fileRepository */
+        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-            // TODO: Better use the FileRepository and FileIndexRepository API here
-            $fileReferences = $databaseConnection->exec_SELECTgetRows('uid, uid_local', self::SYS_FILE_REFERENCE,
-                'table_local = "sys_file" AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . $uid);
-
-            foreach ($fileReferences as $fileReference) {
-                $falFile = ResourceFactory::getInstance()->getFileObject($fileReference['uid_local']);
-                $falFile->getStorage()->deleteFile($falFile);
-                $databaseConnection->exec_DELETEquery(self::SYS_FILE_REFERENCE, 'uid = ' . $fileReference['uid']);
+        /** @var FileReference[] $fileReferences */
+        $fileReferences = $fileRepository->findByRelation(self::ENTRY_TABLE, 'image', $uid);
+        foreach ($fileReferences as $fileReference) {
+            try {
+                $fileDeleted = $fileReference->getOriginalFile()->delete();
+            } catch (\RuntimeException $e) {
             }
-
-            $databaseConnection->exec_DELETEquery(self::ENTRY_TABLE, 'uid = ' . $uid);
-            $databaseConnection->exec_DELETEquery(
-                self::ENTRY_CATEGORY_MM_TABLE,
-                'uid_local =' . $uid
-            );
-
-            $this->signalSlotDispatcher->dispatch(static::class, Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
-                ['databaseConnection' => $databaseConnection]);
         }
+
+        // @cascade remove not working the expected way
+        $this->getDatabaseConnection()->exec_DELETEquery(
+            self::ENTRY_CATEGORY_MM_TABLE,
+            'uid_local =' . (int)$uid
+        );
+
+        $this->remove($this->findByIdentifier($uid));
+        $this->persistenceManager->persistAll();
+
+        $this->signalSlotDispatcher->dispatch(static::class, Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
+            ['uid' => $uid]);
     }
 }

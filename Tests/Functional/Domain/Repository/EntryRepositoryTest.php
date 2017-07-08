@@ -18,7 +18,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
@@ -42,6 +41,22 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche', 'typo3conf/ext/static_info_tables'];
 
+    /**
+     * @var array
+     */
+    protected $additionalFoldersToCreate = [
+        'fileadmin',
+        'fileadmin/_migrated',
+        'fileadmin/_migrated/pics',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $directoriesToCopy = [
+        'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Files/fileadmin/_migrated/pics/' => 'fileadmin/_migrated/pics/',
+    ];
+
     const ENTRY_DEFAULT_FIXTURE_UID = 1;
 
     /**
@@ -50,7 +65,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
         $this->entryRepository = $this->objectManager->get(EntryRepository::class);
         $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_entry.xml');
@@ -71,31 +86,49 @@ class EntryRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
+    public function countByExternalIdAndHash()
+    {
+        $this->assertEquals(1, $this->entryRepository->countByExternalIdAndHash(1, '32dwwes8'));
+    }
+
+    /**
+     * @test
+     */
     public function deleteByUid()
     {
-        // Stop here and mark this test as incomplete.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-
+        $this->setUpRealFiles();
         $this->importDataSet('ntf://Database/sys_file_storage.xml');
 
         $this->setUpBackendUserFromFixture(1);
-        $storage = new StorageRepository();
-        $subject = $storage->findByUid(1);
-        $subject->setEvaluatePermissions(false);
         $this->entryRepository->deleteByUid(self::ENTRY_DEFAULT_FIXTURE_UID);
         $this->assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
+        $this->assertEquals(0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_entry_category_mm',
+                'uid_local = ' . self::ENTRY_DEFAULT_FIXTURE_UID));
+        $this->assertEquals(0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'sys_file_reference',
+                'deleted = 0 AND fieldname = "image" AND tablename = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID));
+        $this->assertEquals(0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'sys_file_metadata',
+                'file = 10014'));
+        $this->assertEquals(0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'sys_file',
+                'uid = 10014'));
     }
-
 
     /**
      * @test
      */
     public function findOldEntriesByExternalUidsDiffForTable()
     {
-        $oldEntries = $this->entryRepository->findOldEntriesByExternalUidsDiffForTable('tx_bzgaberatungsstellensuche_domain_model_entry', [1]);
-        $this->assertEquals([['uid'] => 2], $oldEntries);
+        $oldEntries      = $this->entryRepository->findOldEntriesByExternalUidsDiffForTable('tx_bzgaberatungsstellensuche_domain_model_entry',
+            [1]);
+        $expectedEntries = [
+            [
+                'uid' => 2,
+            ],
+        ];
+        $this->assertEquals($expectedEntries, $oldEntries);
     }
 
     /**
@@ -109,6 +142,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         foreach ($items as $item) {
             $idList[] = $item->getUid();
         }
+
         return implode(',', $idList);
     }
 
@@ -117,7 +151,17 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function tearDown()
     {
-        unset($this->newsRepository);
+        unset($this->entryRepository);
         unset($this->objectManager);
+    }
+
+    /**
+     * @return void
+     */
+    private function setUpRealFiles()
+    {
+        foreach ($this->directoriesToCopy as $source => $desination) {
+            GeneralUtility::copyDirectory($this->getInstancePath() . $source, $this->getInstancePath() . $desination);
+        }
     }
 }
