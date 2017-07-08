@@ -32,10 +32,10 @@ class HttpAdapterFactory
     const TYPE_CURL = 'curl';
 
     /**
-     * @param $type
+     * @param string $type
      * @return HttpAdapterInterface
      */
-    public static function createInstance($type)
+    public static function createInstance($type = null)
     {
         switch ($type) {
             case self::TYPE_CURL:
