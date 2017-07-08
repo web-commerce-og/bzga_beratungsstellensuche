@@ -3,7 +3,6 @@
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Repository;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -27,7 +26,6 @@ class KilometerRepositoryTest extends UnitTestCase
      */
     protected $subject;
 
-
     /**
      * @return void
      */
@@ -35,7 +33,6 @@ class KilometerRepositoryTest extends UnitTestCase
     {
         $this->subject = new KilometerRepository();
     }
-
 
     /**
      * @test
@@ -71,5 +68,4 @@ class KilometerRepositoryTest extends UnitTestCase
             ],
         ];
     }
-
 }

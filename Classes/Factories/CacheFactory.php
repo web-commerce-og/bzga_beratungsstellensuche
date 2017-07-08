@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 /**
  * @author Sebastian Schreiber
@@ -30,13 +30,23 @@ class CacheFactory
     const CACHE_KEY = 'bzgaberatungsstellensuche_cache_coordinates';
 
     /**
-     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+     * @var CacheManager
      */
-    public static function createInstance()
-    {
-        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+    protected $cacheManager;
 
-        /* @var $cacheManager CacheManager */
-        return $cacheManager->getCache(self::CACHE_KEY);
+    /**
+     * @param CacheManager $cacheManager
+     */
+    public function injectCacheManager(CacheManager $cacheManager)
+    {
+        $this->cacheManager = $cacheManager;
+    }
+
+    /**
+     * @return FrontendInterface
+     */
+    public function createInstance()
+    {
+        return $this->cacheManager->getCache(self::CACHE_KEY);
     }
 }

@@ -39,27 +39,31 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
 
     /**
      * GeolocationServiceCacheDecorator constructor.
+     *
      * @param GeolocationServiceInterface $geolocationService
+     * @param CacheFactory $cacheFactory
      */
-    public function __construct(GeolocationServiceInterface $geolocationService)
+    public function __construct(GeolocationServiceInterface $geolocationService, CacheFactory $cacheFactory)
     {
         $this->geolocationService = $geolocationService;
-        $this->cache = CacheFactory::createInstance();
+        $this->cache              = $cacheFactory->createInstance();
     }
 
     /**
      * @param Demand $demand
+     *
      * @return null|\Geocoder\Model\Address
      */
     public function findAddressByDemand(Demand $demand)
     {
         $cacheIdentifier = sha1($demand->getLocation());
-        if (false === $this->cache->has($cacheIdentifier)) {
-            $address = $this->geolocationService->findAddressByDemand($demand);
-            $this->cache->set($cacheIdentifier, serialize($address));
+
+        if ($this->cache->has($cacheIdentifier)) {
+            return unserialize($this->cache->get($cacheIdentifier));
         }
 
-        $address = unserialize($this->cache->get($cacheIdentifier));
+        $address = $this->geolocationService->findAddressByDemand($demand);
+        $this->cache->set($cacheIdentifier, serialize($address));
 
         return $address;
     }
@@ -68,6 +72,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
      * @param GeoPositionDemandInterface $demandPosition
      * @param string $table
      * @param string $alias
+     *
      * @return mixed
      */
     public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
@@ -78,6 +83,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
     /**
      * @param GeopositionInterface $demandPosition
      * @param GeopositionInterface $locationPosition
+     *
      * @return mixed
      */
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition)
