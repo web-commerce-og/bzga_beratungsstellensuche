@@ -131,7 +131,7 @@ abstract class AbstractBaseRepository extends Repository
     }
 
     /**
-     * @return mixed|\TYPO3\CMS\Extbase\Persistence\QueryInterface
+     * @return mixed|QueryInterface
      */
     public function createQuery()
     {

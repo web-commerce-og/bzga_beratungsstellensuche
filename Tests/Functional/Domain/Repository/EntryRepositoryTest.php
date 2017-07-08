@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -89,6 +90,16 @@ class EntryRepositoryTest extends FunctionalTestCase
     public function countByExternalIdAndHash()
     {
         $this->assertEquals(1, $this->entryRepository->countByExternalIdAndHash(1, '32dwwes8'));
+    }
+
+    /**
+     * @test
+     */
+    public function findOneByExternalId()
+    {
+        /** @var Entry $entry */
+        $entry = $this->entryRepository->findOneByExternalId(1);
+        $this->assertEquals($entry->getUid(), self::ENTRY_DEFAULT_FIXTURE_UID);
     }
 
     /**
