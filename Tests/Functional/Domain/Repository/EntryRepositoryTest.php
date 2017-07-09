@@ -45,17 +45,8 @@ class EntryRepositoryTest extends FunctionalTestCase
     /**
      * @var array
      */
-    protected $additionalFoldersToCreate = [
-        'fileadmin',
-        'fileadmin/_migrated',
-        'fileadmin/_migrated/pics',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $directoriesToCopy = [
-        'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Files/fileadmin/_migrated/pics/' => 'fileadmin/_migrated/pics/',
+    protected $pathsToLinkInTestInstance = [
+        'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Files/fileadmin/_migrated/pics' => 'fileadmin/user_upload',
     ];
 
     const ENTRY_DEFAULT_FIXTURE_UID = 1;
@@ -107,7 +98,6 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function deleteByUid()
     {
-        $this->setUpRealFiles();
         $this->importDataSet('ntf://Database/sys_file_storage.xml');
 
         $this->setUpBackendUserFromFixture(1);
@@ -164,15 +154,5 @@ class EntryRepositoryTest extends FunctionalTestCase
     {
         unset($this->entryRepository);
         unset($this->objectManager);
-    }
-
-    /**
-     * @return void
-     */
-    private function setUpRealFiles()
-    {
-        foreach ($this->directoriesToCopy as $source => $desination) {
-            GeneralUtility::copyDirectory($this->getInstancePath() . $source, $this->getInstancePath() . $desination);
-        }
     }
 }

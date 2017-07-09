@@ -3,7 +3,7 @@
     <referat id='famplan'>Sexualaufklärung und Familienplanung</referat>
     <entrys>
         <entry>
-        <index>2619</index>
+            <index>2619</index>
             <titel>Titel der Beratungsstelle</titel>
             <untertitel></untertitel>
             <ansprechpartner>Max Mustermann</ansprechpartner>
@@ -24,7 +24,7 @@
             <hinweistext>Di.15.00h 16.00h</hinweistext>
             <beratungsschein>1</beratungsschein>
             <angebot><![CDATA[<p></p>]]></angebot>
-            <logo>http://meine-domain.com.de/logo.jpg</logo>
+            <logo></logo>
             <konfession>1</konfession>
             <beratungsart>
                 <index>2</index>

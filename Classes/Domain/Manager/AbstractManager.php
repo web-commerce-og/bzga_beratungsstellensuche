@@ -93,14 +93,16 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     public function create(AbstractEntity $entity)
     {
         $tableName = $this->dataMapFactory->getTableNameByClassName(get_class($entity));
+
         $tableUid = $this->getUid($entity);
 
         # Add external uid to stack of updated, or inserted entries, we need this for the clean up
         $this->entries->attach($entity);
         $this->externalUids[] = $entity->getExternalId();
 
-        $data = [];
-        $data['pid'] = $entity->getPid();
+        $data = [
+            'pid' => $entity->getPid()
+        ];
         $properties = ObjectAccess::getGettablePropertyNames($entity);
         foreach ($properties as $propertyName) {
             $propertyNameLowercase = GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);

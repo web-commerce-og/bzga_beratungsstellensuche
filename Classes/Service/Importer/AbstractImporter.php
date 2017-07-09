@@ -15,6 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
@@ -50,41 +51,54 @@ abstract class AbstractImporter implements ImporterInterface
     protected $signalSlotDispatcher;
 
     /**
-     * @param $file
+     * @param string $file
      * @param int $pid
-     * @return void
+     *
      * @throws FileDoesNotExistException
+     * @throws ContentCouldNotBeFetchedException
+     * @return void
      */
     public function importFromFile($file, $pid = 0)
     {
         $file = GeneralUtility::getFileAbsFileName($file);
-        if (!file_exists($file)) {
-            throw new FileDoesNotExistException();
+
+        if (! file_exists($file)) {
+            throw new FileDoesNotExistException(sprintf('The file %s does not exists', $file));
         }
-        $content = GeneralUtility::getUrl($file);
-        $this->import($content, $pid);
+
+        $this->importFromSource($file, $pid);
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param int $pid
+     *
+     * @throws UnexpectedValueException
+     * @throws ContentCouldNotBeFetchedException
      * @return void
      */
     public function importFromUrl($url, $pid = 0)
     {
-        if (!GeneralUtility::isValidUrl($url)) {
+        if (! GeneralUtility::isValidUrl($url)) {
             throw new UnexpectedValueException(sprintf('This is not a valid url: %s', $url));
         }
-        $content = GeneralUtility::getUrl($url);
-        $this->import($content, $pid);
+
+        $this->importFromSource($url, $pid);
     }
 
     /**
-     * @return void
+     * @param string $source
+     * @param int $pid
+     *
+     * @throws ContentCouldNotBeFetchedException
      */
-    protected function persist()
+    private function importFromSource($source, $pid)
     {
-        $this->categoryManager->persist();
-        $this->entryManager->persist();
+        $content = GeneralUtility::getUrl($source);
+        if (false === $content) {
+            throw new ContentCouldNotBeFetchedException('The content could not be fetched');
+        }
+
+        $this->import($content, $pid);
     }
 }

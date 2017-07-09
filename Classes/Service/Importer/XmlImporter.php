@@ -19,6 +19,8 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Events;
+use SimpleXMLIterator;
+use Traversable;
 
 /**
  * @author Sebastian Schreiber
@@ -32,13 +34,13 @@ class XmlImporter extends AbstractImporter
     const FORMAT = 'xml';
 
     /**
-     * @param $content
+     * @param string $content
      * @param int $pid
      * @return void
      */
     public function import($content, $pid = 0)
     {
-        $sxe = new \SimpleXMLIterator($content);
+        $sxe = new SimpleXMLIterator($content);
 
         $signalArguments = [$this, $sxe, $pid, $this->serializer];
 
@@ -46,13 +48,14 @@ class XmlImporter extends AbstractImporter
 
         # Import beratungsarten
         $this->convertRelations($sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
+        $this->categoryManager->persist();
 
         # Import entries
         $this->convertRelations($sxe->entrys->entry, $this->entryManager, Entry::class, $pid);
 
         # In the end we are calling all the managers to persist, this saves a lot of memory
         $this->emitImportSignal($signalArguments, Events::POST_IMPORT_SIGNAL);
-        $this->persist();
+        $this->entryManager->persist();
     }
 
     /**
@@ -61,9 +64,9 @@ class XmlImporter extends AbstractImporter
      * @param $relationClassName
      * @param int $pid
      */
-    public function convertRelations(\Traversable $relations = null, AbstractManager $manager, $relationClassName, $pid)
+    public function convertRelations(Traversable $relations = null, AbstractManager $manager, $relationClassName, $pid)
     {
-        if ($relations instanceof \Traversable) {
+        if ($relations instanceof Traversable) {
             foreach ($relations as $relationData) {
                 $externalId = (integer)$relationData->index;
                 $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);

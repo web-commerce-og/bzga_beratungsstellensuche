@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <pages>
+        <uid>10001</uid>
+        <pid>1</pid>
+        <title>Beratungsstellen</title>
+        <deleted>0</deleted>
+        <perms_everybody>15</perms_everybody>
+        <doktype>254</doktype>
+    </pages>
+</dataset>

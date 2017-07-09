@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZga\BzgaBeratungsstellensuche\Property\TypeConverter;
+namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
 /**
  * This file is part of the TYPO3 CMS project.
