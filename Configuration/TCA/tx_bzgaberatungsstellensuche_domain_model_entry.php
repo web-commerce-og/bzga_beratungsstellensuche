@@ -43,6 +43,7 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'foreign_table' => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
                 'items' => [
@@ -57,6 +58,7 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['', 0],
                 ],
@@ -354,15 +356,18 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim',
+                'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
                 'wizards' => [
                     '_PADDING' => 2,
                     'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
-                        'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
+                        'title' => 'Full screen Rich Text Editing',
                         'icon' => 'wizard_rte2.gif',
-                        'script' => 'wizard_rte.php',
+                        'module' => [
+                            'name' => 'wizard_rte',
+                        ],
                     ],
                 ],
             ],
@@ -385,6 +390,7 @@ return [
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.categories',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
                 'internal_type' => 'db',
                 'allowed' => 'tx_bzgaberatungsstellensuche_domain_model_category',
                 'foreign_table' => 'tx_bzgaberatungsstellensuche_domain_model_category',

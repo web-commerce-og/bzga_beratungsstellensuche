@@ -43,6 +43,7 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'foreign_table' => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
                 'items' => [
@@ -57,6 +58,7 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['', 0],
                 ],
