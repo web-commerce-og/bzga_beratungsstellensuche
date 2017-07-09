@@ -72,7 +72,6 @@
         <description></description>
         <title>Logo</title>
         <alternative>Unternehmen</alternative>
-        <downloadname>Logo</downloadname>
         <tablenames>tx_bzgaberatungsstellensuche_domain_model_entry</tablenames>
         <uid_local>10014</uid_local>
         <uid_foreign>1</uid_foreign>
