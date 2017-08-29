@@ -108,7 +108,7 @@ Erstellen Sie nun eine Datei ``typo3conf/ext/bzga_beratungsstellensuche_extended
 
 	<?php
 
-	namespace BZgA\BzgaBeratungsstellensucheExtended\Domain\Model;
+	namespace Bzga\BzgaBeratungsstellensucheExtended\Domain\Model;
 
 	/**
 	 * Entry

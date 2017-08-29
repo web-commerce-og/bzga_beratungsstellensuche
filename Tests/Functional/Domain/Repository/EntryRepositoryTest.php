@@ -152,7 +152,6 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function tearDown()
     {
-        unset($this->entryRepository);
-        unset($this->objectManager);
+        unset($this->entryRepository, $this->objectManager);
     }
 }

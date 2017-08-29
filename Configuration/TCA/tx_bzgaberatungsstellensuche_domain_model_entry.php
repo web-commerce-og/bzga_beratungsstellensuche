@@ -320,6 +320,7 @@ return [
             'displayCond' => 'EXT:static_info_tables:LOADED:true',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['', 0],
                 ],
