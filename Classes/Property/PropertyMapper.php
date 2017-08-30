@@ -28,7 +28,7 @@ class PropertyMapper implements TypeConverterInterface
     /**
      * @var TypeConverterInterface[]
      */
-    private $typeConverters;
+    private $typeConverters = [];
 
     /**
      * @var ObjectManagerInterface
@@ -69,8 +69,8 @@ class PropertyMapper implements TypeConverterInterface
      */
     public function convert($source, array $configuration = null)
     {
+        /** @var $typeConverter TypeConverterInterface */
         foreach ($this->typeConverters as $typeConverter) {
-            /** @var $typeConverter TypeConverterInterface */
             if (true === $typeConverter->supports($source)) {
                 return $typeConverter->convert($source, $configuration);
             }
@@ -90,8 +90,8 @@ class PropertyMapper implements TypeConverterInterface
 
     /**
      * @param TypeConverterInterface $typeConverter
-     * @param $type
-     * @return mixed
+     * @param string $type
+     * @return bool
      */
     private function converterSupportsType(TypeConverterInterface $typeConverter, $type)
     {
@@ -107,8 +107,7 @@ class PropertyMapper implements TypeConverterInterface
                 $className = TypeConverterBeforeInterface::class;
                 break;
         }
-
-        return false !== array_search($className, $interfaces) ? true : false;
+        return in_array($className, $interfaces, true) ? true : false;
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 
-if ( ! defined('TYPO3_MODE')) {
+if (! defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
@@ -9,7 +9,7 @@ call_user_func(function ($packageKey) {
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerExtensionKey($packageKey, 100);
 
 # Composer autoloader for vendors
-    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($packageKey).'/Libraries/autoload.php';
+    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($packageKey) . '/Libraries/autoload.php';
 
 # Plugin configuration
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -38,21 +38,21 @@ call_user_func(function ($packageKey) {
     }
 
 # Register cache to extend the models of this extension
-    if ( ! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey])) {
+    if (! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]           = [];
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['groups'] = ['all'];
     }
-    if ( ! isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['frontend'])) {
+    if (! isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['frontend'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class;
     }
-    if ( ! isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['backend'])) {
+    if (! isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['backend'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['backend'] = \TYPO3\CMS\Core\Cache\Backend\FileBackend::class;
     }
     # Configure clear cache post processing for extended domain models
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][$packageKey] = 'Bzga\\BzgaBeratungsstellensuche\\Cache\\ClassCacheManager->reBuild';
 
     # Register cached domain model classes autoloader
-    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($packageKey).'Classes/Cache/CachedClassLoader.php';
+    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($packageKey) . 'Classes/Cache/CachedClassLoader.php';
     \Bzga\BzgaBeratungsstellensuche\Cache\CachedClassLoader::registerAutoloader();
 
 # Names of entities which can be overriden
@@ -63,7 +63,7 @@ call_user_func(function ($packageKey) {
     ];
 
 # Caching of user requests
-    if ( ! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][\Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory::CACHE_KEY])
+    if (! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][\Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory::CACHE_KEY])
     ) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][\Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory::CACHE_KEY] = [
             'frontend' => '\TYPO3\CMS\Core\Cache\Frontend\VariableFrontend',
@@ -101,4 +101,3 @@ call_user_func(function ($packageKey) {
     }
 
 }, $_EXTKEY);
-
