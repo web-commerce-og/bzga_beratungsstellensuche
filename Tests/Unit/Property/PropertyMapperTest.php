@@ -72,7 +72,6 @@ class PropertyMapperTest extends UnitTestCase
         $typeConverter->expects($this->once())->method('supports')->willReturn(true);
         $this->subject->expects($this->once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);
 
-
         $this->injectObjectManager($typeConverter);
         return $typeConverter;
     }
