@@ -100,17 +100,17 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
         $this->uriBuilder->expects($this->any())->method('setUseCacheHash')->will($this->returnValue($this->uriBuilder));
         $this->uriBuilder->expects($this->any())->method('setAddQueryStringMethod')->will($this->returnValue($this->uriBuilder));
         $this->request           = $this->getMock(Request::class);
-        $this->controllerContext = $this->getMock(ControllerContext::class, array(), array(), '', false);
+        $this->controllerContext = $this->getMock(ControllerContext::class, [], [], '', false);
         $this->controllerContext->expects($this->any())->method('getUriBuilder')->will($this->returnValue($this->uriBuilder));
         $this->controllerContext->expects($this->any())->method('getRequest')->will($this->returnValue($this->request));
         $this->tagBuilder       = $this->getMock(TagBuilder::class);
-        $this->arguments        = array();
-        $this->renderingContext = $this->getAccessibleMock(RenderingContext::class, array('dummy'));
+        $this->arguments        = [];
+        $this->renderingContext = $this->getAccessibleMock(RenderingContext::class, ['dummy']);
         $this->renderingContext->injectTemplateVariableContainer($this->templateVariableContainer);
         $this->renderingContext->_set('viewHelperVariableContainer', $this->viewHelperVariableContainer);
         $this->renderingContext->setControllerContext($this->controllerContext);
         $this->mvcPropertyMapperConfigurationService = $this->getAccessibleMock(MvcPropertyMappingConfigurationService::class,
-            array('dummy'));
+            ['dummy']);
     }
 
     /**
@@ -126,5 +126,4 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
             $viewHelper->_set('tag', $this->tagBuilder);
         }
     }
-
 }

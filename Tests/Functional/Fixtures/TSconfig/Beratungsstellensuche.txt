@@ -1,0 +1,3 @@
+tx_bzgaberatungsstellensuche.templateLayouts {
+    88 = Form Sidebar
+}

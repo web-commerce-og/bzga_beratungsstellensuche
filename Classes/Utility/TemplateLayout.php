@@ -44,9 +44,7 @@ class TemplateLayout implements SingletonInterface
         // Add TsConfig values
         foreach ($this->getTemplateLayoutsFromTsConfig($pageUid) as $templateKey => $title) {
             if (GeneralUtility::isFirstPartOfStr($title, '--div--')) {
-                $optGroupParts = GeneralUtility::trimExplode(',', $title, true, 2);
-                $title = $optGroupParts[1];
-                $templateKey = $optGroupParts[0];
+                list($templateKey, $title) = GeneralUtility::trimExplode(',', $title, true, 2);
             }
             $templateLayouts[] = [$title, $templateKey];
         }
@@ -60,7 +58,7 @@ class TemplateLayout implements SingletonInterface
      * @param $pageUid
      * @return array
      */
-    protected function getTemplateLayoutsFromTsConfig($pageUid)
+    private function getTemplateLayoutsFromTsConfig($pageUid)
     {
         $templateLayouts = [];
         $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);

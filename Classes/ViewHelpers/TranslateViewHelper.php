@@ -60,21 +60,19 @@ class TranslateViewHelper extends AbstractViewHelper
         }
 
         $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
-        if ( ! is_array($registeredExtensionKeys) && empty($registeredExtensionKeys)) {
+        if (! is_array($registeredExtensionKeys) && empty($registeredExtensionKeys)) {
             return $this->renderTranslation($id);
         }
 
         foreach ($registeredExtensionKeys as $extensionKey) {
             $this->arguments['extensionName'] = GeneralUtility::underscoredToLowerCamelCase($extensionKey);
             $value = $this->renderTranslation($id);
-            if ( ! empty($value)) {
+            if (! empty($value)) {
                 return $value;
             }
         }
 
         return '';
-
-
     }
 
     /**

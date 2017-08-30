@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\TranslateViewHelper;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -65,5 +64,4 @@ class TranslateViewHelperTest extends AbstractViewHelperBaseTestcase
         $this->subject->setArguments(['id' => 'previous-page']);
         $this->assertSame('vorherige Seite', $this->subject->render());
     }
-
 }
