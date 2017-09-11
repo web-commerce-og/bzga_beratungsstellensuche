@@ -15,13 +15,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Bzga\BzgaBeratungsstellensuche\ViewHelpers\TranslateViewHelper;
-use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-class TranslateViewHelperTest extends AbstractViewHelperBaseTestcase
+class TranslateViewHelperTest extends FunctionalTestCase
 {
 
     /**
@@ -35,33 +32,10 @@ class TranslateViewHelperTest extends AbstractViewHelperBaseTestcase
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche', 'typo3conf/ext/static_info_tables'];
 
     /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var TranslateViewHelper
-     */
-    private $subject;
-
-    /**
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        Bootstrap::getInstance()->initializeLanguageObject();
-        $this->objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->subject = $this->objectManager->get(TranslateViewHelper::class);
-        $this->injectDependenciesIntoViewHelper($this->subject);
-    }
-
-    /**
      * @test
      */
     public function translateFromDefaultExtension()
     {
-        $this->subject->setArguments(['id' => 'previous-page']);
-        $this->assertSame('vorherige Seite', $this->subject->render());
+        $this->assertSame('vorherige Seite', LocalizationUtility::translate('previous-page', 'bzga_beratungsstellensuche'));
     }
 }
