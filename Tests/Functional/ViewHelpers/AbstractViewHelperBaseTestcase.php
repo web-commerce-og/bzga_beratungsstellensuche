@@ -16,29 +16,35 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
+use Nimut\TestingFramework\Rendering\RenderingContextFixture;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfigurationService;
 use TYPO3\CMS\Extbase\Mvc\Web\Request;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
+use TYPO3\CMS\Fluid\Core\Variables\CmsVariableProvider;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Fluid\Core\ViewHelper\Arguments;
 use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer;
 use TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
+use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperInterface;
 
+/**
+ * Base test class for testing view helpers
+ */
 abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
 {
-
     /**
-     * @var ViewHelperVariableContainer
+     * @var ViewHelperVariableContainer|ObjectProphecy
      */
     protected $viewHelperVariableContainer;
 
     /**
-     * @var TemplateVariableContainer
+     * @var CmsVariableProvider|TemplateVariableContainer
      */
     protected $templateVariableContainer;
 
@@ -58,7 +64,7 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
     protected $tagBuilder;
 
     /**
-     * @var Arguments|array
+     * @var Arguments
      */
     protected $arguments;
 
@@ -68,7 +74,7 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
     protected $request;
 
     /**
-     * @var RenderingContext
+     * @var RenderingContextFixture
      */
     protected $renderingContext;
 
@@ -80,12 +86,10 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
     /**
      * @return void
      */
-    public function setUp()
+    protected function setUp()
     {
-        parent::setUp();
-        $this->viewHelperVariableContainer = $this->getMock(ViewHelperVariableContainer::class);
-        $this->templateVariableContainer   = $this->getMock(TemplateVariableContainer::class);
-        $this->uriBuilder                  = $this->getMock(UriBuilder::class);
+        $this->viewHelperVariableContainer = $this->prophesize('TYPO3\\CMS\\Fluid\\Core\\ViewHelper\\ViewHelperVariableContainer');
+        $this->uriBuilder = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Web\\Routing\\UriBuilder');
         $this->uriBuilder->expects($this->any())->method('reset')->will($this->returnValue($this->uriBuilder));
         $this->uriBuilder->expects($this->any())->method('setArguments')->will($this->returnValue($this->uriBuilder));
         $this->uriBuilder->expects($this->any())->method('setSection')->will($this->returnValue($this->uriBuilder));
@@ -99,30 +103,53 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
         $this->uriBuilder->expects($this->any())->method('setNoCache')->will($this->returnValue($this->uriBuilder));
         $this->uriBuilder->expects($this->any())->method('setUseCacheHash')->will($this->returnValue($this->uriBuilder));
         $this->uriBuilder->expects($this->any())->method('setAddQueryStringMethod')->will($this->returnValue($this->uriBuilder));
-        $this->request           = $this->getMock(Request::class);
-        $this->controllerContext = $this->getMock(ControllerContext::class, [], [], '', false);
+        $this->request = $this->prophesize('TYPO3\\CMS\\Extbase\\Mvc\\Web\\Request');
+        $this->controllerContext = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\ControllerContext');
         $this->controllerContext->expects($this->any())->method('getUriBuilder')->will($this->returnValue($this->uriBuilder));
-        $this->controllerContext->expects($this->any())->method('getRequest')->will($this->returnValue($this->request));
-        $this->tagBuilder       = $this->getMock(TagBuilder::class);
-        $this->arguments        = [];
-        $this->renderingContext = $this->getAccessibleMock(RenderingContext::class, ['dummy']);
-        $this->renderingContext->injectTemplateVariableContainer($this->templateVariableContainer);
-        $this->renderingContext->_set('viewHelperVariableContainer', $this->viewHelperVariableContainer);
+        $this->controllerContext->expects($this->any())->method('getRequest')->will($this->returnValue($this->request->reveal()));
+        $this->arguments = [];
+
+        if (class_exists('TYPO3\\CMS\\Fluid\\Core\\Variables\\CmsVariableProvider')) {
+            $this->templateVariableContainer = $this->getMock('TYPO3\\CMS\\Fluid\\Core\\Variables\\CmsVariableProvider');
+            $this->tagBuilder = new TagBuilder();
+        } else {
+            $this->templateVariableContainer = $this->getMock('TYPO3\\CMS\\Fluid\\Core\\ViewHelper\\TemplateVariableContainer');
+            $this->tagBuilder = $this->getMock('TYPO3\\CMS\\Fluid\\Core\\ViewHelper\\TagBuilder');
+        }
+
+        $this->renderingContext = $this->getAccessibleMock('Nimut\\TestingFramework\\Rendering\\RenderingContextFixture', ['getControllerContext']);
+        $this->renderingContext->expects($this->any())->method('getControllerContext')->willReturn($this->controllerContext);
+        if (is_callable([$this->renderingContext, 'setVariableProvider'])) {
+            $this->renderingContext->setVariableProvider($this->templateVariableContainer);
+        } else {
+            $this->renderingContext->injectTemplateVariableContainer($this->templateVariableContainer);
+        }
+        $this->renderingContext->_set('viewHelperVariableContainer', $this->viewHelperVariableContainer->reveal());
         $this->renderingContext->setControllerContext($this->controllerContext);
-        $this->mvcPropertyMapperConfigurationService = $this->getAccessibleMock(MvcPropertyMappingConfigurationService::class,
-            ['dummy']);
+        $this->mvcPropertyMapperConfigurationService = $this->getAccessibleMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\MvcPropertyMappingConfigurationService', ['dummy']);
     }
 
     /**
-     * @param AbstractViewHelper $viewHelper
-     *
+     * @param ViewHelperInterface|AbstractViewHelper $viewHelper
      * @return void
      */
-    protected function injectDependenciesIntoViewHelper(AbstractViewHelper $viewHelper)
+    protected function injectDependenciesIntoViewHelper($viewHelper)
     {
+        if (!$viewHelper instanceof ViewHelperInterface && !$viewHelper instanceof AbstractViewHelper) {
+            throw new \RuntimeException(
+                'Invalid viewHelper type "' . get_class($viewHelper) . '" in injectDependenciesIntoViewHelper',
+                1487208085
+            );
+        }
         $viewHelper->setRenderingContext($this->renderingContext);
         $viewHelper->setArguments($this->arguments);
-        if ($viewHelper instanceof AbstractTagBasedViewHelper) {
+        // this condition is needed, because the (Be)/Security\*ViewHelper don't extend the
+        // AbstractViewHelper and contain no method injectReflectionService()
+        if ($viewHelper instanceof AbstractViewHelper) {
+            $reflectionServiceProphecy = $this->prophesize('TYPO3\\CMS\\Extbase\\Reflection\\ReflectionService');
+            $viewHelper->injectReflectionService($reflectionServiceProphecy->reveal());
+        }
+        if ($viewHelper instanceof AbstractTagBasedViewHelper && $viewHelper instanceof AccessibleMockObjectInterface) {
             $viewHelper->_set('tag', $this->tagBuilder);
         }
     }
