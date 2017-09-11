@@ -18,12 +18,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Bzga\\BzgaBeratungsstellensuche\\": "Classes"
+      "Bzga\\BzgaBeratungsstellensuche\\": "Classes/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Bzga\\BzgaBeratungsstellensuche\\Tests\\": "Tests",
+      "Bzga\\BzgaBeratungsstellensuche\\Tests\\": "Tests/",
       "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
       "TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
     }
