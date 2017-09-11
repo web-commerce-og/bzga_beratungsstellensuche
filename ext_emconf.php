@@ -19,4 +19,10 @@ $EM_CONF[$_EXTKEY] = [
         ],
         'conflicts' => [],
     ],
+    'autoload' => [
+        'classmap' => ['Classes']
+    ],
+    'autoload-dev' => [
+        'classmap' => ['Tests']
+    ],
 ];
