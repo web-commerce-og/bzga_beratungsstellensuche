@@ -72,7 +72,7 @@ class PaginateController extends CorePaginateController
             $query = $this->objects->getQuery();
             $query->setLimit($itemsPerPage);
             if ($this->currentPage > 1) {
-                $query->setOffset((int)($itemsPerPage * ($this->currentPage - 1)));
+                $query->setOffset($itemsPerPage * ($this->currentPage - 1));
             }
             $sql = $this->createSqlFromQuery($query, $this->demand);
             $modifiedObjects = $query->statement($sql)->execute();
@@ -134,7 +134,7 @@ class PaginateController extends CorePaginateController
                     ? ' AND ' . implode(' AND ', $statementParts['additionalWhereClause'])
                     : ''
                 ),
-            'orderBy' => (!empty($statementParts['orderings']) ? implode(', ', $statementParts['orderings']) : ''),
+            'orderBy' => !empty($statementParts['orderings']) ? implode(', ', $statementParts['orderings']) : '',
             'limit' => ($statementParts['offset'] ? $statementParts['offset'] . ', ' : '')
                 . ($statementParts['limit'] ? $statementParts['limit'] : ''),
         ];

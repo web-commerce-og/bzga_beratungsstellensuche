@@ -125,11 +125,11 @@ class PageLayoutView
                     default:
                 }
 
-                if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Bzga\\BzgaBeratungsstellensuche\\Hooks\\PageLayoutView']['extensionSummary'])) {
+                if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche'][__CLASS__]['extensionSummary'])) {
                     $params = [
                         'action' => $actionTranslationKey,
                     ];
-                    foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Bzga\\BzgaBeratungsstellensuche\\Hooks\\PageLayoutView']['extensionSummary'] as $reference) {
+                    foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche'][__CLASS__]['extensionSummary'] as $reference) {
                         GeneralUtility::callUserFunction($reference, $params, $this);
                     }
                 }

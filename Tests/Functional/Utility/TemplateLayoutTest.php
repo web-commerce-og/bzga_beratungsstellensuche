@@ -2,7 +2,6 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Utility;
 
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -59,5 +58,4 @@ class TemplateLayoutTest extends FunctionalTestCase
         $templateLayouts = $this->subject->getAvailableTemplateLayouts(0);
         $this->assertSame([['Form Sidebar', 88]], $templateLayouts);
     }
-
 }

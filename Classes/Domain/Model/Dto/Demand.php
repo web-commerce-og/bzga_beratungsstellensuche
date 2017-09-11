@@ -16,7 +16,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
+use Geocoder\Model\Address as GeocoderAddress;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * @author Sebastian Schreiber
@@ -67,11 +69,11 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
      */
     public function __construct()
     {
-        $this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->categories = new ObjectStorage();
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
     public function getCategories()
     {
@@ -79,7 +81,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     * @param ObjectStorage $categories
      */
     public function setCategories($categories)
     {
@@ -198,7 +200,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     private function updateLatitudeLongitude()
     {
         $address = $this->geolocationService->findAddressByDemand($this);
-        if ($address instanceof \Geocoder\Model\Address) {
+        if ($address instanceof GeocoderAddress) {
             $this->latitude = $address->getLatitude();
             $this->longitude = $address->getLongitude();
         }

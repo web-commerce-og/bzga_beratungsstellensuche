@@ -17,6 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\MapController;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
@@ -26,10 +27,12 @@ class MapViewHelper extends AbstractWidgetViewHelper
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\MapController
-     * @inject
+     * @param MapController $controller
      */
-    protected $controller;
+    public function injectController(MapController $controller)
+    {
+        $this->controller = $controller;
+    }
 
     /**
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand

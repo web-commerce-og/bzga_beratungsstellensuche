@@ -84,7 +84,7 @@ class TitleViewHelper extends AbstractViewHelper
 
         $typoscriptFrontendController = $this->getTyposcriptFrontendController();
 
-        $title = $this->arguments['title'] ? $this->arguments['title'] : $this->renderChildren();
+        $title = $this->arguments['title'] ?: $this->renderChildren();
 
         if ($this->extensionService->isActionCacheable($this->controllerContext->getRequest()->getControllerExtensionName(),
             $this->controllerContext->getRequest()->getPluginName(),

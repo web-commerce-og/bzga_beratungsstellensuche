@@ -39,7 +39,7 @@ class Utility
     }
 
     /**
-     * @param $string
+     * @param string $string
      * @return string
      */
     public static function stripPathSite($string)

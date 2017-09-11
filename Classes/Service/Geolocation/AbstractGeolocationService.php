@@ -19,6 +19,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
+use Bzga\BzgaBeratungsstellensuche\Service\SettingsService;
 
 /**
  * @author Sebastian Schreiber
@@ -53,9 +54,9 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
 
     /**
      * AbstractGeolocationService constructor.
-     * @param \Bzga\BzgaBeratungsstellensuche\Service\SettingsService $settingsService
+     * @param SettingsService $settingsService
      */
-    public function __construct(\Bzga\BzgaBeratungsstellensuche\Service\SettingsService $settingsService)
+    public function __construct(SettingsService $settingsService)
     {
         $this->settingsService = $settingsService;
         $adapter = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));

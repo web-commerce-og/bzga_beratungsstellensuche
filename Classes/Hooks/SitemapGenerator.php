@@ -45,7 +45,7 @@ class SitemapGenerator extends AbstractSitemapGenerator
     {
         parent::__construct();
 
-        $singlePid = intval(GeneralUtility::_GP('singlePid'));
+        $singlePid = (int)GeneralUtility::_GP('singlePid');
         $this->singlePid = $singlePid && $this->isInRootline($singlePid) ? $singlePid : $GLOBALS['TSFE']->id;
 
         $this->validateAndCreatePageList();
@@ -75,7 +75,7 @@ class SitemapGenerator extends AbstractSitemapGenerator
             $rowCount = $this->getDatabaseConnection()->sql_num_rows($res);
             while (false !== ($row = $this->getDatabaseConnection()->sql_fetch_assoc($res))) {
                 $forceSinglePid = null;
-                if (($url = $this->getItemUrl($row, $forceSinglePid))) {
+                if ($url = $this->getItemUrl($row, $forceSinglePid)) {
                     echo $this->renderer->renderEntry($url, $row['title'], $row['tstamp'],
                         '', $row['keywords']);
                 }
@@ -156,7 +156,7 @@ class SitemapGenerator extends AbstractSitemapGenerator
             $result = true;
         } else {
             $result = false;
-            $rootPid = intval($GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['forceStartPid']);
+            $rootPid = (int)$GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['forceStartPid'];
             if ($rootPid == 0) {
                 $rootPid = $GLOBALS['TSFE']->id;
             }

@@ -15,6 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Persistence\Mapper;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
 
 /**
  * @author Sebastian Schreiber
@@ -28,11 +29,11 @@ class DataMap
     private $cachedTableNames = [];
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory
+     * @var DataMapFactory
      */
     private $dataMapFactory;
 
-    public function __construct(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory $dataMapFactory)
+    public function __construct(DataMapFactory $dataMapFactory)
     {
         $this->dataMapFactory = $dataMapFactory;
     }

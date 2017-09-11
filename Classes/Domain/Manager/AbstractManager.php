@@ -16,12 +16,16 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
+use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
+use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use Countable;
 use IteratorAggregate;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
@@ -66,16 +70,16 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
     /**
      * AbstractManager constructor.
-     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
-     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
-     * @param \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory
-     * @param \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
+     * @param Dispatcher $signalSlotDispatcher
+     * @param DataHandler $dataHandler
+     * @param DataMap $dataMapFactory
+     * @param PropertyMapper $propertyMapper
      */
     public function __construct(
-        \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher,
-        \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler,
-        \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory,
-        \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper
+        Dispatcher $signalSlotDispatcher,
+        DataHandler $dataHandler,
+        DataMap $dataMapFactory,
+        PropertyMapper $propertyMapper
     ) {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->dataHandler = $dataHandler;
@@ -203,7 +207,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     {
         # @TODO: Is there a better solution to check? Can we bind it directly to the object? At the moment i am getting an error
         if ($entity->_isNew()) {
-            return uniqid('NEW_');
+            return uniqid('NEW_', true);
         }
 
         return $entity->getUid();

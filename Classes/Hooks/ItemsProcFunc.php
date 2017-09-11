@@ -36,11 +36,11 @@ class ItemsProcFunc
         /** @var TemplateLayout $templateLayoutsUtility */
         $templateLayouts = $templateLayoutsUtility->getAvailableTemplateLayouts($config['row']['pid']);
         foreach ($templateLayouts as $layout) {
-            $additionalLayout = [
+            $additionalLayout  = [
                 $GLOBALS['LANG']->sL($layout[0], true),
                 $layout[1],
             ];
-            array_push($config['items'], $additionalLayout);
+            $config['items'][] = $additionalLayout;
         }
     }
 
@@ -58,7 +58,7 @@ class ItemsProcFunc
                 $GLOBALS['LANG']->sL($formField[0], true),
                 $formField[1],
             ];
-            array_push($config['items'], $additionalFormField);
+            $config['items'][]   = $additionalFormField;
         }
     }
 }
