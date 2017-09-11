@@ -88,6 +88,7 @@ abstract class AbstractViewHelperBaseTestcase extends FunctionalTestCase
      */
     protected function setUp()
     {
+        parent::setUp();
         $this->viewHelperVariableContainer = $this->prophesize('TYPO3\\CMS\\Fluid\\Core\\ViewHelper\\ViewHelperVariableContainer');
         $this->uriBuilder = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Web\\Routing\\UriBuilder');
         $this->uriBuilder->expects($this->any())->method('reset')->will($this->returnValue($this->uriBuilder));
