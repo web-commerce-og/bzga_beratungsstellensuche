@@ -33,6 +33,11 @@ class DataMap
      */
     private $dataMapFactory;
 
+    /**
+     * DataMap constructor.
+     *
+     * @param DataMapFactory $dataMapFactory
+     */
     public function __construct(DataMapFactory $dataMapFactory)
     {
         $this->dataMapFactory = $dataMapFactory;
