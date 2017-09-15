@@ -48,13 +48,12 @@ class ImportCommandController extends CommandController
      */
     public function __construct()
     {
-        if(!property_exists($this, 'output')) {
+        if (!property_exists($this, 'output')) {
             $this->outputDecorator = $this->objectManager->get(NullConsoleOutput::class);
         } else {
             $this->outputDecorator = $this->output;
         }
     }
-
 
     /**
      * Import from file

@@ -67,6 +67,9 @@
             <trans-unit id="flexforms_additional.formFields.countryZonesGermany" xml:space="preserve">
                 <source>Bundesländer</source>
             </trans-unit>
+            <trans-unit id="pagemodule.switchToPage" xml:space="preserve">
+                <source>Zur Seite wechseln</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

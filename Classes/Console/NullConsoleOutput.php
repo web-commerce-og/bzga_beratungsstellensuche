@@ -29,5 +29,4 @@ class NullConsoleOutput implements ProgressBarInterface
     public function progressFinish()
     {
     }
-
 }

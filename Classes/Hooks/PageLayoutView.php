@@ -15,10 +15,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
+use Bzga\BzgaBeratungsstellensuche\Utility\IconUtility;
 use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
-use TYPO3\CMS\Backend\Template\DocumentTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
-use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -67,12 +66,18 @@ class PageLayoutView
     protected $templateLayoutsUtility;
 
     /**
+     * @var IconUtility
+     */
+    protected $iconUtility;
+
+    /**
      * PageLayoutView constructor.
      */
     public function __construct()
     {
         $this->databaseConnection = $GLOBALS['TYPO3_DB'];
         $this->templateLayoutsUtility = GeneralUtility::makeInstance(TemplateLayout::class);
+        $this->iconUtility = GeneralUtility::makeInstance(IconUtility::class);
     }
 
     /**
@@ -248,11 +253,7 @@ class PageLayoutView
         $pageRecord = BackendUtilityCore::getRecord('pages', $detailPid);
 
         if (is_array($pageRecord)) {
-            $data = IconUtility::getSpriteIconForRecord('pages', $pageRecord,
-                    ['title' => 'Uid: ' . $pageRecord['uid']])
-                . htmlspecialchars(BackendUtilityCore::getRecordTitle('pages', $pageRecord));
-            $content = $this->getDocumentTemplate()->wrapClickMenuOnIcon($data, 'pages', $pageRecord['uid'], true, '',
-                '+info,edit');
+            $content = $this->iconUtility->getIconForRecord('pages', $pageRecord);
         } else {
             $text = sprintf($this->sL('pagemodule.pageNotAvailable', true),
                 $detailPid);
@@ -412,15 +413,5 @@ class PageLayoutView
     private function getLanguageService()
     {
         return $GLOBALS['LANG'];
-    }
-
-    /**
-     * Get the DocumentTemplate
-     *
-     * @return DocumentTemplate
-     */
-    private function getDocumentTemplate()
-    {
-        return $GLOBALS['SOBE']->doc;
     }
 }

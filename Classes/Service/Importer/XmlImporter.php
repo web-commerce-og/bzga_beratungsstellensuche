@@ -19,10 +19,10 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Events;
-use SimpleXMLIterator;
-use Traversable;
 use Countable;
 use Iterator;
+use SimpleXMLIterator;
+use Traversable;
 
 /**
  * @author Sebastian Schreiber
@@ -36,7 +36,7 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
     const FORMAT = 'xml';
 
     /**
-     * @var integer
+     * @var int
      */
     private $pid;
 
@@ -149,7 +149,7 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
     /**
      * @param AbstractManager $manager
      * @param string $relationClassName
-     * @param integer $pid
+     * @param int $pid
      * @param SimpleXMLIterator $relationData
      */
     private function convertRelation(AbstractManager $manager, $relationClassName, $pid, $relationData)

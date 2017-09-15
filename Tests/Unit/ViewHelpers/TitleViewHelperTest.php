@@ -41,6 +41,11 @@ class TitleViewHelperTest extends ViewHelperBaseTestcase
     protected $extensionService;
 
     /**
+     * @var PageRenderer|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $pageRenderer;
+
+    /**
      * @var TitleViewHelper|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $subject;
@@ -51,11 +56,13 @@ class TitleViewHelperTest extends ViewHelperBaseTestcase
         $this->typoscriptFrontendController = $this->getMockBuilder(TypoScriptFrontendController::class)->disableOriginalConstructor()->getMock();
         $this->extensionService             = $this->getMockBuilder(ExtensionService::class)->getMock();
         $this->environmentService           = $this->getMockBuilder(EnvironmentService::class)->getMock();
+        $this->pageRenderer           = $this->getMockBuilder(PageRenderer::class)->getMock();
 
         $this->subject = $this->getAccessibleMock(TitleViewHelper::class, ['renderChildren', 'getTyposcriptFrontendController']);
         $this->subject->method('getTyposcriptFrontendController')->willReturn($this->typoscriptFrontendController);
         $this->subject->initializeArguments();
         $this->injectDependenciesIntoViewHelper($this->subject);
+        $this->inject($this->subject, 'pageRenderer', $this->pageRenderer);
         $this->inject($this->subject, 'extensionService', $this->extensionService);
         $this->inject($this->subject, 'environmentService', $this->environmentService);
     }
@@ -91,9 +98,7 @@ class TitleViewHelperTest extends ViewHelperBaseTestcase
         $title = 'Detail title';
         $this->extensionService->expects($this->once())->method('isActionCacheable')->willReturn(true);
         /** @var PageRenderer|\PHPUnit_Framework_MockObject_MockObject $pageRenderer */
-        $pageRenderer = $this->getMockBuilder(PageRenderer::class)->disableOriginalConstructor()->getMock();
-        $pageRenderer->expects($this->once())->method('setTitle')->with('Detail title');
-        $this->typoscriptFrontendController->expects($this->once())->method('getPageRenderer')->willReturn($pageRenderer);
+        $this->pageRenderer->expects($this->once())->method('setTitle')->with('Detail title');
         $this->subject->setArguments(['title' => $title, 'setIndexedDocTitle' => true]);
         $this->subject->render();
         $this->assertEquals($title, $this->typoscriptFrontendController->indexedDocTitle);

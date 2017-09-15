@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 use RuntimeException;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Service\EnvironmentService;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -38,6 +39,11 @@ class TitleViewHelper extends AbstractViewHelper
     protected $environmentService;
 
     /**
+     * @var PageRenderer
+     */
+    protected $pageRenderer;
+
+    /**
      * With this flag, you can disable the escaping interceptor inside this ViewHelper.
      * THIS MIGHT CHANGE WITHOUT NOTICE, NO PUBLIC API!
      * @var bool
@@ -58,6 +64,14 @@ class TitleViewHelper extends AbstractViewHelper
     public function injectExtensionService(ExtensionService $extensionService)
     {
         $this->extensionService = $extensionService;
+    }
+
+    /**
+     * @param PageRenderer $pageRenderer
+     */
+    public function injectPageRenderer(PageRenderer $pageRenderer)
+    {
+        $this->pageRenderer = $pageRenderer;
     }
 
     /**
@@ -91,7 +105,7 @@ class TitleViewHelper extends AbstractViewHelper
             $this->controllerContext->getRequest()->getControllerName(),
             $this->controllerContext->getRequest()->getControllerActionName())
         ) {
-            $typoscriptFrontendController->getPageRenderer()->setTitle($title);
+            $this->pageRenderer->setTitle($title);
             if (true === $this->arguments['setIndexedDocTitle']) {
                 $typoscriptFrontendController->indexedDocTitle = $title;
             }

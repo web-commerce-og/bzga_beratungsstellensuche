@@ -20,7 +20,7 @@ interface ProgressBarInterface
 {
 
     /**
-     * @param integer $count
+     * @param int $count
      */
     public function progressStart($count);
 
@@ -33,5 +33,4 @@ interface ProgressBarInterface
      * @return void
      */
     public function progressFinish();
-
 }
