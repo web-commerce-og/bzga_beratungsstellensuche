@@ -317,7 +317,6 @@ return [
         'state' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.state',
-            'displayCond' => 'EXT:static_info_tables:LOADED:true',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
