@@ -13,6 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 use SJBR\StaticInfoTables\Utility\DatabaseUpdateUtility;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -49,7 +50,9 @@ class ext_update
      */
     private function createImageUploadFolder()
     {
-        $imageFolder = GeneralUtility::getFileAbsFileName('fileadmin/user_upload/tx_bzgaberatungsstellensuche');
+        $storageRepository = ResourceFactory::getInstance()->getDefaultStorage();
+        $storageFolder = $storageRepository->getDefaultFolder()->getPublicUrl();
+        $imageFolder = GeneralUtility::getFileAbsFileName(sprintf('%s/tx_bzgaberatungsstellensuche', rtrim($storageFolder, '/')));
         if (false === is_dir($imageFolder)) {
             GeneralUtility::mkdir($imageFolder);
         }
