@@ -93,10 +93,11 @@ class ImportCommandController extends CommandController
     private function import()
     {
         $this->outputDecorator->progressStart($this->xmlImporter->count());
-        for ($i = 0; $i < $this->xmlImporter->count(); $i ++) {
-            $this->xmlImporter->next();
+        foreach ($this->xmlImporter as $value) {
+            $this->xmlImporter->importEntry($value->entry);
             $this->outputDecorator->progressAdvance();
         }
+        $this->xmlImporter->persist();
         $this->outputDecorator->progressFinish();
     }
 }

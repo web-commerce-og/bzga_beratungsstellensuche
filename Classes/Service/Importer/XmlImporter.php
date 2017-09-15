@@ -20,14 +20,14 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Countable;
-use Iterator;
+use IteratorAggregate;
 use SimpleXMLIterator;
 use Traversable;
 
 /**
  * @author Sebastian Schreiber
  */
-class XmlImporter extends AbstractImporter implements Countable, Iterator
+class XmlImporter extends AbstractImporter implements Countable, IteratorAggregate
 {
 
     /**
@@ -46,6 +46,11 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
     private $entries;
 
     /**
+     * @var SimpleXMLIterator
+     */
+    private $sxe;
+
+    /**
      * @param string $content
      * @param int $pid
      * @return void
@@ -54,62 +59,31 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
     {
         $this->pid = $pid;
 
-        $sxe = new SimpleXMLIterator($content);
+        $this->sxe = new SimpleXMLIterator($content);
 
-        $signalArguments = [$this, $sxe, $pid, $this->serializer];
-
-        $this->emitImportSignal($signalArguments, Events::PRE_IMPORT_SIGNAL);
+        $this->emitImportSignal(Events::PRE_IMPORT_SIGNAL);
 
         # Import beratungsarten
-        $this->convertRelations($sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
+        $this->convertRelations($this->sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
         $this->categoryManager->persist();
 
-        $this->entries = $sxe->entries;
-
-        # In the end we are calling all the managers to persist, this saves a lot of memory
-        $this->emitImportSignal($signalArguments, Events::POST_IMPORT_SIGNAL);
-        $this->entryManager->persist();
+        $this->entries = $this->sxe->entrys;
     }
 
     /**
-     * @return mixed
+     * @param SimpleXMLIterator $entry
      */
-    public function current()
+    public function importEntry(SimpleXMLIterator $entry)
     {
-        return $this->entries->current();
+        $this->convertRelation($this->entryManager, Entry::class, $this->pid, $entry);
     }
 
     /**
-     * @return void
+     * @return SimpleXMLIterator
      */
-    public function next()
+    public function getIterator()
     {
-        $this->convertRelation($this->entryManager, Entry::class, $this->pid, $this->entries->current());
-        $this->entries->next();
-    }
-
-    /**
-     * @return bool
-     */
-    public function key()
-    {
-        return $this->entries->valid();
-    }
-
-    /**
-     * @return bool
-     */
-    public function valid()
-    {
-        return $this->entries->valid();
-    }
-
-    /**
-     * @return void
-     */
-    public function rewind()
-    {
-        $this->entries->rewind();
+        return $this->entries;
     }
 
     /**
@@ -118,6 +92,16 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
     public function count()
     {
         return count($this->entries->entry);
+    }
+
+    /**
+     * @return void
+     */
+    public function persist()
+    {
+        # In the end we are calling all the managers to persist, this saves a lot of memory
+        $this->emitImportSignal(Events::POST_IMPORT_SIGNAL);
+        $this->entryManager->persist();
     }
 
     /**
@@ -136,12 +120,11 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
     }
 
     /**
-     * @param array $signalArguments
      * @param string $signal
      */
-    private function emitImportSignal(array $signalArguments, $signal)
+    private function emitImportSignal($signal)
     {
-        $this->signalSlotDispatcher->dispatch(static::class, $signal, $signalArguments);
+        $this->signalSlotDispatcher->dispatch(static::class, $signal, [$this, $this->sxe, $this->pid, $this->serializer]);
     }
 
     /**
@@ -159,13 +142,5 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
             ['object_to_populate' => $objectToPopulate]);
         $relationObject->setPid($pid);
         $manager->create($relationObject);
-    }
-
-    /**
-     * @return SimpleXMLIterator
-     */
-    public function getEntries()
-    {
-        return $this->entries;
     }
 }
