@@ -64,9 +64,7 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
         $this->convertRelations($sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
         $this->categoryManager->persist();
 
-        # Import entries
         $this->entries = $sxe->entries;
-        # $this->convertRelations($sxe->entrys->entry, $this->entryManager, Entry::class, $pid);
 
         # In the end we are calling all the managers to persist, this saves a lot of memory
         $this->emitImportSignal($signalArguments, Events::POST_IMPORT_SIGNAL);
@@ -161,5 +159,13 @@ class XmlImporter extends AbstractImporter implements Countable, Iterator
             ['object_to_populate' => $objectToPopulate]);
         $relationObject->setPid($pid);
         $manager->create($relationObject);
+    }
+
+    /**
+     * @return SimpleXMLIterator
+     */
+    public function getEntries()
+    {
+        return $this->entries;
     }
 }

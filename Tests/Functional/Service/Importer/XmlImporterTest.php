@@ -97,6 +97,10 @@ class XmlImporterTest extends FunctionalTestCase
     public function importFromFile()
     {
         $this->xmlImporter->importFromFile('fileadmin/import/beratungsstellen.xml', self::SYS_FOLDER_FOR_ENTRIES);
+        $this->xmlImporter->rewind();
+        while ($this->xmlImporter->valid()) {
+            $this->xmlImporter->next();
+        }
 
         $this->assertEquals(3, $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_domain_model_category'));
         $this->assertEquals(1, $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
