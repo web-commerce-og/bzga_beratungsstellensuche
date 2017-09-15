@@ -207,7 +207,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     {
         # @TODO: Is there a better solution to check? Can we bind it directly to the object? At the moment i am getting an error
         if ($entity->_isNew()) {
-            return uniqid('NEW_', true);
+            return uniqid('NEW_', false);
         }
 
         return $entity->getUid();

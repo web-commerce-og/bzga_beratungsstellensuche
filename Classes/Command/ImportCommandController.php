@@ -14,6 +14,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Bzga\BzgaBeratungsstellensuche\Console\NullConsoleOutput;
+use Bzga\BzgaBeratungsstellensuche\Console\ProgressBarInterface;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use UnexpectedValueException;
@@ -37,6 +39,24 @@ class ImportCommandController extends CommandController
     protected $entryRepository;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput|ProgressbarInterface
+     */
+    protected $outputDecorator;
+
+    /**
+     * ImportCommandController constructor.
+     */
+    public function __construct()
+    {
+        if(!property_exists($this, 'output')) {
+            $this->outputDecorator = $this->objectManager->get(NullConsoleOutput::class);
+        } else {
+            $this->outputDecorator = $this->output;
+        }
+    }
+
+
+    /**
      * Import from file
      * @param string $file Path to xml file
      * @param int $pid Storage folder uid
@@ -45,6 +65,7 @@ class ImportCommandController extends CommandController
     {
         try {
             $this->xmlImporter->importFromFile($file, $pid);
+            $this->import();
         } catch (FileDoesNotExistException $e) {
             // @TODO: How to handle the exception in practice?
             throw new $e;
@@ -60,9 +81,23 @@ class ImportCommandController extends CommandController
     {
         try {
             $this->xmlImporter->importFromUrl($url, $pid);
+            $this->import();
         } catch (UnexpectedValueException $e) {
             // @TODO: How to handle the exception in practice?
             throw new $e;
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function import()
+    {
+        $this->outputDecorator->progressStart($this->xmlImporter->count());
+        for ($i = 0; $i < $this->xmlImporter->count(); $i ++) {
+            $this->xmlImporter->next();
+            $this->outputDecorator->progressAdvance();
+        }
+        $this->outputDecorator->progressFinish();
     }
 }

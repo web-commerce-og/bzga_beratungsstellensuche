@@ -107,8 +107,8 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     public function convert($source, array $configuration = null)
     {
         // First of all we delete the old references
+        /** @var $entity ExternalIdInterface|AbstractEntity */
         $entity = $configuration['entity'];
-        /* @var $entity ExternalIdInterface|AbstractEntity */
 
         $fileReferenceData = [
             'table_local' => 'sys_file',
@@ -131,11 +131,11 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         $pathToUploadFile = $this->downloadFile($source, $entity);
 
         $falFile = $this->importResource($pathToUploadFile);
-        $fileReferenceUid = uniqid('NEW_', true);
+        $fileReferenceUid = uniqid('NEW_', false);
         $fileReferenceData['uid_local'] = $falFile->getUid();
 
+        /** @var $manager \Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager */
         $manager = $configuration['manager'];
-        /* @var $manager \Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager */
         $manager->addDataMap('sys_file_reference', $fileReferenceUid, $fileReferenceData);
 
         return $fileReferenceUid;

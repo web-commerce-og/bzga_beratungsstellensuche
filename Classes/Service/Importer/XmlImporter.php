@@ -21,11 +21,13 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use SimpleXMLIterator;
 use Traversable;
+use Countable;
+use Iterator;
 
 /**
  * @author Sebastian Schreiber
  */
-class XmlImporter extends AbstractImporter
+class XmlImporter extends AbstractImporter implements Countable, Iterator
 {
 
     /**
@@ -34,12 +36,24 @@ class XmlImporter extends AbstractImporter
     const FORMAT = 'xml';
 
     /**
+     * @var integer
+     */
+    private $pid;
+
+    /**
+     * @var SimpleXMLIterator
+     */
+    private $entries;
+
+    /**
      * @param string $content
      * @param int $pid
      * @return void
      */
     public function import($content, $pid = 0)
     {
+        $this->pid = $pid;
+
         $sxe = new SimpleXMLIterator($content);
 
         $signalArguments = [$this, $sxe, $pid, $this->serializer];
@@ -51,11 +65,61 @@ class XmlImporter extends AbstractImporter
         $this->categoryManager->persist();
 
         # Import entries
-        $this->convertRelations($sxe->entrys->entry, $this->entryManager, Entry::class, $pid);
+        $this->entries = $sxe->entries;
+        # $this->convertRelations($sxe->entrys->entry, $this->entryManager, Entry::class, $pid);
 
         # In the end we are calling all the managers to persist, this saves a lot of memory
         $this->emitImportSignal($signalArguments, Events::POST_IMPORT_SIGNAL);
         $this->entryManager->persist();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function current()
+    {
+        return $this->entries->current();
+    }
+
+    /**
+     * @return void
+     */
+    public function next()
+    {
+        $this->convertRelation($this->entryManager, Entry::class, $this->pid, $this->entries->current());
+        $this->entries->next();
+    }
+
+    /**
+     * @return bool
+     */
+    public function key()
+    {
+        return $this->entries->valid();
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        return $this->entries->valid();
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->entries->rewind();
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->entries->entry);
     }
 
     /**
@@ -68,13 +132,7 @@ class XmlImporter extends AbstractImporter
     {
         if ($relations instanceof Traversable) {
             foreach ($relations as $relationData) {
-                $externalId = (integer)$relationData->index;
-                $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
-                $relationObject = $this->serializer->deserialize($relationData->asXml(), $relationClassName,
-                    self::FORMAT,
-                    ['object_to_populate' => $objectToPopulate]);
-                $relationObject->setPid($pid);
-                $manager->create($relationObject);
+                $this->convertRelation($manager, $relationClassName, $pid, $relationData);
             }
         }
     }
@@ -86,5 +144,22 @@ class XmlImporter extends AbstractImporter
     private function emitImportSignal(array $signalArguments, $signal)
     {
         $this->signalSlotDispatcher->dispatch(static::class, $signal, $signalArguments);
+    }
+
+    /**
+     * @param AbstractManager $manager
+     * @param string $relationClassName
+     * @param integer $pid
+     * @param SimpleXMLIterator $relationData
+     */
+    private function convertRelation(AbstractManager $manager, $relationClassName, $pid, $relationData)
+    {
+        $externalId       = (integer)$relationData->index;
+        $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
+        $relationObject   = $this->serializer->deserialize($relationData->asXml(), $relationClassName,
+            self::FORMAT,
+            ['object_to_populate' => $objectToPopulate]);
+        $relationObject->setPid($pid);
+        $manager->create($relationObject);
     }
 }
