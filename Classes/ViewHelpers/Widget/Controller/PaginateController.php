@@ -18,6 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
+use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Fluid\ViewHelpers\Widget\Controller\PaginateController as CorePaginateController;
 
@@ -91,70 +92,106 @@ class PaginateController extends CorePaginateController
      */
     private function createSqlFromQuery(QueryInterface $query, Demand $demand)
     {
+        $isBelow8 = method_exists(Typo3DbQueryParser::class, 'preparseQuery');
+        $isBelow8_4 = method_exists(Typo3DbQueryParser::class, 'parseQuery');
+        $parameters = [];
+
         $databaseConnection = $this->getDatabaseConnection();
 
-        list($hash, $parameters) = $this->queryParser->preparseQuery($query);
-        $statementParts = $this->queryParser->parseQuery($query);
-
-        $statementParts['limit'] = ((int)$query->getLimit() ?: null);
-        $statementParts['offset'] = ((int)$query->getOffset() ?: null);
-
-        $tableNameForEscape = (reset($statementParts['tables']) ?: 'foo');
-        foreach ($parameters as $parameterPlaceholder => $parameter) {
-            if ($parameter instanceof LazyLoadingProxy) {
-                $parameter = $parameter->_loadRealInstance();
+        if ($isBelow8_4) {
+            if ($isBelow8) {
+                list($hash, $parameters) = $this->queryParser->preparseQuery($query);
             }
+            $statementParts = $this->queryParser->parseQuery($query);
 
-            if ($parameter instanceof \DateTime) {
-                $parameter = $parameter->format('U');
-            } elseif ($parameter instanceof DomainObjectInterface) {
-                $parameter = (int)$parameter->getUid();
-            } elseif (is_array($parameter)) {
-                $subParameters = [];
-                foreach ($parameter as $subParameter) {
-                    $subParameters[] = $databaseConnection->fullQuoteStr($subParameter, $tableNameForEscape);
+            $statementParts['limit']  = ((int)$query->getLimit() ?: null);
+            $statementParts['offset'] = ((int)$query->getOffset() ?: null);
+
+            $tableNameForEscape = (reset($statementParts['tables']) ?: 'foo');
+            foreach ($parameters as $parameterPlaceholder => $parameter) {
+                if ($parameter instanceof LazyLoadingProxy) {
+                    $parameter = $parameter->_loadRealInstance();
                 }
-                $parameter = implode(',', $subParameters);
-            } elseif ($parameter === null) {
-                $parameter = 'NULL';
-            } elseif (is_bool($parameter)) {
-                return $parameter === true ? 1 : 0;
-            } else {
-                $parameter = $databaseConnection->fullQuoteStr((string)$parameter, $tableNameForEscape);
+
+                if ($parameter instanceof \DateTime) {
+                    $parameter = $parameter->format('U');
+                } elseif ($parameter instanceof DomainObjectInterface) {
+                    $parameter = (int)$parameter->getUid();
+                } elseif (is_array($parameter)) {
+                    $subParameters = [];
+                    foreach ($parameter as $subParameter) {
+                        $subParameters[] = $databaseConnection->fullQuoteStr($subParameter, $tableNameForEscape);
+                    }
+                    $parameter = implode(',', $subParameters);
+                } elseif ($parameter === null) {
+                    $parameter = 'NULL';
+                } elseif (is_bool($parameter)) {
+                    return $parameter === true ? 1 : 0;
+                } else {
+                    $parameter = $databaseConnection->fullQuoteStr((string)$parameter, $tableNameForEscape);
+                }
+
+                $statementParts['where'] = str_replace($parameterPlaceholder, $parameter, $statementParts['where']);
             }
 
-            $statementParts['where'] = str_replace($parameterPlaceholder, $parameter, $statementParts['where']);
+            $statementParts = [
+                'selectFields' => implode(' ', $statementParts['keywords']) . ' ' . implode(',', $statementParts['fields']),
+                'fromTable'    => implode(' ', $statementParts['tables']) . ' ' . implode(' ', $statementParts['unions']),
+                'whereClause'  => (! empty($statementParts['where']) ? implode('', $statementParts['where']) : '1')
+                                  . (! empty($statementParts['additionalWhereClause'])
+                        ? ' AND ' . implode(' AND ', $statementParts['additionalWhereClause'])
+                        : ''
+                                  ),
+                'orderBy'      => ! empty($statementParts['orderings']) ? implode(', ',
+                    $statementParts['orderings']) : '',
+                'limit'        => ($statementParts['offset'] ? $statementParts['offset'] . ', ' : '')
+                                  . ($statementParts['limit'] ? $statementParts['limit'] : ''),
+            ];
+
+            if ($demand->getLocation()) {
+                $distanceField                  = $this->geolocationService->getDistanceSqlField($demand,
+                    $statementParts['fromTable']);
+                $statementParts['selectFields'] = $distanceField . ',' . $statementParts['selectFields'];
+                $statementParts['orderBy']      = 'distance ASC';
+            }
+
+            $sql = $databaseConnection->SELECTquery(
+                $statementParts['selectFields'],
+                $statementParts['fromTable'],
+                $statementParts['whereClause'],
+                '',
+                $statementParts['orderBy'],
+                $statementParts['limit']
+            );
+
+            return $sql;
+        } else {
+            $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
+            $fromParts = $queryBuilder->getQueryPart('from');
+
+            $queryParameters = $queryBuilder->getParameters();
+            $params = [];
+            foreach ($queryParameters as $key => $value) {
+                // prefix array keys with ':'
+                $params[':' . $key] = (is_numeric($value)) ? $value : "'" . $value . "'"; //all non numeric values have to be quoted
+                unset($params[$key]);
+            }
+
+            if ($demand->getLocation()) {
+                $distanceField = $this->geolocationService->getDistanceSqlField($demand, $fromParts[0]['table']);
+                $queryBuilder->addSelectLiteral($distanceField);
+                $queryBuilder->orderBy('distance', 'asc');
+            }
+
+            $itemsPerPage = (int)$this->configuration['itemsPerPage'];
+            $queryBuilder->setMaxResults($itemsPerPage);
+            if ($this->currentPage > 1) {
+                $queryBuilder->setFirstResult($itemsPerPage * ($this->currentPage - 1));
+            }
+            // replace placeholders with real values
+            $query = strtr($queryBuilder->getSQL(), $params);
+            return $query;
         }
-
-        $statementParts = [
-            'selectFields' => implode(' ', $statementParts['keywords']) . ' ' . implode(',', $statementParts['fields']),
-            'fromTable' => implode(' ', $statementParts['tables']) . ' ' . implode(' ', $statementParts['unions']),
-            'whereClause' => (!empty($statementParts['where']) ? implode('', $statementParts['where']) : '1')
-                . (!empty($statementParts['additionalWhereClause'])
-                    ? ' AND ' . implode(' AND ', $statementParts['additionalWhereClause'])
-                    : ''
-                ),
-            'orderBy' => !empty($statementParts['orderings']) ? implode(', ', $statementParts['orderings']) : '',
-            'limit' => ($statementParts['offset'] ? $statementParts['offset'] . ', ' : '')
-                . ($statementParts['limit'] ? $statementParts['limit'] : ''),
-        ];
-
-        if ($demand->getLocation()) {
-            $distanceField = $this->geolocationService->getDistanceSqlField($demand, $statementParts['fromTable']);
-            $statementParts['selectFields'] = $distanceField . ',' . $statementParts['selectFields'];
-            $statementParts['orderBy'] = 'distance ASC';
-        }
-
-        $sql = $databaseConnection->SELECTquery(
-            $statementParts['selectFields'],
-            $statementParts['fromTable'],
-            $statementParts['whereClause'],
-            '',
-            $statementParts['orderBy'],
-            $statementParts['limit']
-        );
-
-        return $sql;
     }
 
     /**

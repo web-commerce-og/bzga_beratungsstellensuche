@@ -79,7 +79,7 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
 
     /**
      * @param GeoPositionDemandInterface $demandPosition
-     * @param $table
+     * @param string $table
      * @param string $alias
      * @return mixed
      */
