@@ -38,8 +38,8 @@ class ImportCommandController extends CommandController
 
     /**
      * Import from file
-     * @param string $file
-     * @param int $pid
+     * @param string $file Path to xml file
+     * @param int $pid Storage folder uid
      */
     public function importFromFileCommand($file, $pid = 0)
     {
@@ -53,8 +53,8 @@ class ImportCommandController extends CommandController
 
     /**
      * Import from url
-     * @param string $url
-     * @param int $pid
+     * @param string $url Url to import the data
+     * @param int $pid Storage folder uid
      */
     public function importFromUrlCommand($url, $pid = 0)
     {
