@@ -41,7 +41,7 @@ class ImportCommandController extends CommandController
     /**
      * @var \TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput|ProgressbarInterface
      */
-    protected $outputDecorator;
+    protected $output;
 
     /**
      * ImportCommandController constructor.
@@ -49,9 +49,7 @@ class ImportCommandController extends CommandController
     public function __construct()
     {
         if (!property_exists($this, 'output')) {
-            $this->outputDecorator = $this->objectManager->get(NullConsoleOutput::class);
-        } else {
-            $this->outputDecorator = $this->output;
+            $this->output = $this->objectManager->get(NullConsoleOutput::class);
         }
     }
 
@@ -92,12 +90,12 @@ class ImportCommandController extends CommandController
      */
     private function import()
     {
-        $this->outputDecorator->progressStart($this->xmlImporter->count());
+        $this->output->progressStart($this->xmlImporter->count());
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value->entry);
-            $this->outputDecorator->progressAdvance();
+            $this->output->progressAdvance();
         }
         $this->xmlImporter->persist();
-        $this->outputDecorator->progressFinish();
+        $this->output->progressFinish();
     }
 }

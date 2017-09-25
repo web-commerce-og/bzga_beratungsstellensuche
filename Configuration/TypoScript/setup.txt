@@ -1,3 +1,4 @@
+plugin.tx_bzgaberatungsstellensuche.features.requireCHashArgumentForActionArguments = 0
 plugin.tx_bzgaberatungsstellensuche {
     mvc.callDefaultActionIfActionCantBeResolved = 1
     view {
