@@ -21,6 +21,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -76,15 +77,35 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      * @var array
      */
     private static $imageMimeTypes = [
-        'bmp'  => 'image/bmp',
-        'gif'  => 'image/gif',
+        'bmp' => 'image/bmp',
+        'gif' => 'image/gif',
         'jpeg' => 'image/jpeg',
-        'jpg'  => 'image/jpeg',
-        'png'  => 'image/png',
-        'svg'  => 'image/svg+xml',
-        'tif'  => 'image/tiff',
+        'jpg' => 'image/jpeg',
+        'png' => 'image/png',
+        'svg' => 'image/svg+xml',
+        'tif' => 'image/tiff',
         'tiff' => 'image/tiff',
     ];
+
+    /**
+     * @var null|DataHandler
+     */
+    private $dataHandler;
+
+    /**
+     * ImageLinkConverter constructor.
+     *
+     * @param DataHandler|null $dataHandler
+     */
+    public function __construct(DataHandler $dataHandler = null)
+    {
+        if(null === $dataHandler) {
+            $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        }
+        $this->dataHandler = $dataHandler;
+        $this->dataHandler->bypassAccessCheckForRecords = true;
+        $this->dataHandler->admin = true;
+    }
 
     /**
      * @param mixed|ImageLink $source
@@ -116,13 +137,13 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
         $fileReferenceData = [
             'table_local' => 'sys_file',
-            'tablenames'  => $configuration['tableName'],
+            'tablenames' => $configuration['tableName'],
             'uid_foreign' => $configuration['tableUid'],
-            'fieldname'   => 'image',
-            'pid'         => $entity->getPid(),
+            'fieldname' => 'image',
+            'pid' => $entity->getPid(),
         ];
 
-        if ($entity->getUid()) {
+        if (!$entity->_isNew()) {
             $this->deleteOldFileReferences($fileReferenceData);
         }
 
@@ -133,20 +154,20 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
         try {
             // Download the file
-            $pathToUploadFile = $this->downloadFile($source, $entity);
-
+            $pathToUploadFile               = $this->downloadFile($source, $entity);
             $falFile                        = $this->importResource($pathToUploadFile);
             $fileReferenceUid               = uniqid('NEW_', false);
             $fileReferenceData['uid_local'] = $falFile->getUid();
 
-            /** @var $manager AbstractManager */
-            $manager = $configuration['manager'];
-            $manager->addDataMap('sys_file_reference', $fileReferenceUid, $fileReferenceData);
-
+            if($this->dataHandler instanceof DataHandler) {
+                $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
+                $this->dataHandler->start($dataMap, []);
+                $this->dataHandler->process_datamap();
+                return null;
+            }
             return $fileReferenceUid;
         } catch (TypeConverterException $e) {
-
-        } catch(DownloadException $e) {
+        } catch (DownloadException $e) {
         }
 
         // We fail gracefully here by intention
@@ -181,7 +202,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param $tempFilePath
+     * @param string $tempFilePath
      *
      * @throws TypeConverterException
      * @return FalFile
@@ -204,7 +225,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     private function getExtensionFromMimeType($mimeType)
     {
-        return array_search($mimeType, self::$imageMimeTypes);
+        return array_search($mimeType, self::$imageMimeTypes, false);
     }
 
     /**

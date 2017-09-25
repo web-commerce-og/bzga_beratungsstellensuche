@@ -14,8 +14,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Console\NullConsoleOutput;
 use Bzga\BzgaBeratungsstellensuche\Console\ProgressBarInterface;
+use TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use UnexpectedValueException;
@@ -23,7 +23,7 @@ use UnexpectedValueException;
 /**
  * @author Sebastian Schreiber
  */
-class ImportCommandController extends CommandController
+class ImportCommandController extends CommandController implements ProgressBarInterface
 {
 
     /**
@@ -44,17 +44,8 @@ class ImportCommandController extends CommandController
     protected $output;
 
     /**
-     * ImportCommandController constructor.
-     */
-    public function __construct()
-    {
-        if (!property_exists($this, 'output')) {
-            $this->output = $this->objectManager->get(NullConsoleOutput::class);
-        }
-    }
-
-    /**
      * Import from file
+     *
      * @param string $file Path to xml file
      * @param int $pid Storage folder uid
      */
@@ -71,6 +62,7 @@ class ImportCommandController extends CommandController
 
     /**
      * Import from url
+     *
      * @param string $url Url to import the data
      * @param int $pid Storage folder uid
      */
@@ -90,12 +82,42 @@ class ImportCommandController extends CommandController
      */
     private function import()
     {
-        $this->output->progressStart($this->xmlImporter->count());
+        $this->progressStart($this->xmlImporter->count());
         foreach ($this->xmlImporter as $value) {
-            $this->xmlImporter->importEntry($value->entry);
+            $this->xmlImporter->importEntry($value);
+            $this->xmlImporter->persist();
+            $this->progressAdvance();
+        }
+        $this->progressFinish();
+    }
+
+    /**
+     * @param int $count
+     */
+    public function progressStart($count)
+    {
+        if ($this->output instanceof ConsoleOutput) {
+            $this->output->progressStart($count);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function progressAdvance()
+    {
+        if ($this->output instanceof ConsoleOutput) {
             $this->output->progressAdvance();
         }
-        $this->xmlImporter->persist();
-        $this->output->progressFinish();
+    }
+
+    /**
+     * @return void
+     */
+    public function progressFinish()
+    {
+        if ($this->output instanceof ConsoleOutput) {
+            $this->output->progressFinish();
+        }
     }
 }

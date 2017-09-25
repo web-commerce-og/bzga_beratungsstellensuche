@@ -98,7 +98,7 @@ class XmlImporterTest extends FunctionalTestCase
     {
         $this->xmlImporter->importFromFile('fileadmin/import/beratungsstellen.xml', self::SYS_FOLDER_FOR_ENTRIES);
         foreach ($this->xmlImporter as $value) {
-            $this->xmlImporter->importEntry($value->entry);
+            $this->xmlImporter->importEntry($value);
         }
         $this->xmlImporter->persist();
 

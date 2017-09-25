@@ -67,7 +67,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
         $this->convertRelations($this->sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
         $this->categoryManager->persist();
 
-        $this->entries = $this->sxe->entrys;
+        $this->entries = $this->sxe->entrys->entry;
     }
 
     /**
@@ -91,7 +91,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
      */
     public function count()
     {
-        return count($this->entries->entry);
+        return count($this->entries);
     }
 
     /**

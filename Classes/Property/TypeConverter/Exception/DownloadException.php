@@ -20,5 +20,4 @@ use Exception;
 
 class DownloadException extends Exception
 {
-
 }

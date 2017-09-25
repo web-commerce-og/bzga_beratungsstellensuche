@@ -122,8 +122,12 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
                             'tableName' => $tableName,
                             'entity' => $entity,
                         ]);
+                    if(null !== $propertyValue) {
+                        $data[$propertyNameLowercase] = $propertyValue;
+                    }
+                } else {
+                    $data[$propertyNameLowercase] = $propertyValue;
                 }
-                $data[$propertyNameLowercase] = $propertyValue;
             }
         }
 
