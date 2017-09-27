@@ -41,7 +41,7 @@ class DataHandlerProcessor
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             /** @var $entryRepository EntryRepository */
             $entryRepository = $objectManager->get(EntryRepository::class);
-            $entryRepository->deleteByUid($recordToDelete);
+            $entryRepository->deleteByUid($id);
             $recordWasDeleted = true;
         }
     }

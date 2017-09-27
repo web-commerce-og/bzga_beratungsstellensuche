@@ -157,6 +157,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             $falFile                        = $this->importResource($pathToUploadFile);
             $fileReferenceUid               = uniqid('NEW_', false);
             $fileReferenceData['uid_local'] = $falFile->getUid();
+            $dataMap = [];
 
             if ($this->dataHandler instanceof DataHandler) {
                 $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
