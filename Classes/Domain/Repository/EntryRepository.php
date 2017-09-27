@@ -15,6 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
@@ -133,7 +134,8 @@ class EntryRepository extends AbstractBaseRepository
     /**
      * Here we delete all relations of an entry, this is not possible with the convenient remove method of this repository class
      *
-     * @param $uid
+     * @param int $uid
+     * @return void
      */
     public function deleteByUid($uid)
     {
@@ -156,8 +158,11 @@ class EntryRepository extends AbstractBaseRepository
             'uid_local =' . (int)$uid
         );
 
-        $this->remove($this->findByIdentifier($uid));
-        $this->persistenceManager->persistAll();
+        $entry = $this->findByIdentifier($uid);
+        if ($entry instanceof Entry) {
+            $this->remove($entry);
+            $this->persistenceManager->persistAll();
+        }
 
         $this->signalSlotDispatcher->dispatch(static::class, Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
             ['uid' => $uid]);
