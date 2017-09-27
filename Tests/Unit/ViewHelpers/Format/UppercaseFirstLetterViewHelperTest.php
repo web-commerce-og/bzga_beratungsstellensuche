@@ -59,6 +59,7 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
     {
         return [
             ['string', 'String'],
+            ['motherAndChild', 'MotherAndChild'],
             ['extension_key_with', 'ExtensionKeyWith']
         ];
     }

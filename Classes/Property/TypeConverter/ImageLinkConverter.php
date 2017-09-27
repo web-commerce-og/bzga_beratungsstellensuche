@@ -162,7 +162,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
                 $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
                 $this->dataHandler->start($dataMap, []);
                 $this->dataHandler->process_datamap();
-                return null;
+                return $this->dataHandler->substNEWwithIDs[$fileReferenceUid];
             }
             return $fileReferenceUid;
         } catch (TypeConverterException $e) {

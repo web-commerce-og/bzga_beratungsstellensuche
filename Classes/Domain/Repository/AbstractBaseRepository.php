@@ -117,7 +117,7 @@ abstract class AbstractBaseRepository extends Repository
     }
 
     /**
-     * @param $externalId
+     * @param int $externalId
      * @return object
      */
     public function findOneByExternalId($externalId)
