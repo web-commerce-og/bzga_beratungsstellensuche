@@ -106,5 +106,5 @@ final class Events
      * @see \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository::deleteByUid()
      * @var string
      */
-    const REMOVE_ENTRY_FROM_DATABASE_SIGNAL = 'repository.remove.enty';
+    const REMOVE_ENTRY_FROM_DATABASE_SIGNAL = 'repository.remove.entry';
 }
