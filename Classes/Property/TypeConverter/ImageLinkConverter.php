@@ -186,6 +186,11 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     {
         $imageContent = GeneralUtility::getUrl($source->getExternalUrl());
 
+        // FIXME: This is a dirty hack, to get it working in TYPO3 8. Use the guzzle library instead
+        if (false === $imageContent) {
+            $imageContent = file_get_contents($source->getExternalUrl());
+        }
+
         if (false === $imageContent) {
             throw new DownloadException(sprintf('The file %s could not be downloaded', $source->getExternalUrl()));
         }
