@@ -15,6 +15,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Console\ProgressBarInterface;
+use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
+use Bzga\BzgaBeratungsstellensuche\Slots\Importer;
+use InvalidArgumentException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
@@ -44,16 +49,25 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     protected $output;
 
     /**
+     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @inject
+     */
+    protected $signalSlotDispatcher;
+
+    /**
      * Import from file
      *
      * @param string $file Path to xml file
      * @param int $pid Storage folder uid
+     * @param bool $forceReImport
+     *
+     * @throws InvalidArgumentException
      */
-    public function importFromFileCommand($file, $pid = 0)
+    public function importFromFileCommand($file, $pid = 0, $forceReImport = false)
     {
         try {
             $this->xmlImporter->importFromFile($file, $pid);
-            $this->import();
+            $this->import($forceReImport);
         } catch (FileDoesNotExistException $e) {
             // @TODO: How to handle the exception in practice?
             throw new $e;
@@ -65,12 +79,16 @@ class ImportCommandController extends CommandController implements ProgressBarIn
      *
      * @param string $url Url to import the data
      * @param int $pid Storage folder uid
+     * @param bool $forceReImport
+     *
+     * @throws InvalidArgumentException
+     * @throws ContentCouldNotBeFetchedException
      */
-    public function importFromUrlCommand($url, $pid = 0)
+    public function importFromUrlCommand($url, $pid = 0, $forceReImport = false)
     {
         try {
             $this->xmlImporter->importFromUrl($url, $pid);
-            $this->import();
+            $this->import($forceReImport);
         } catch (UnexpectedValueException $e) {
             // @TODO: How to handle the exception in practice?
             throw new $e;
@@ -78,10 +96,22 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     }
 
     /**
+     * @param bool $forceReImport
+     *
      * @return void
+     * @throws InvalidArgumentException
      */
-    private function import()
+    private function import($forceReImport = false)
     {
+        if ($forceReImport) {
+            $this->signalSlotDispatcher->connect(
+                XmlImporter::class,
+                Events::PRE_IMPORT_SIGNAL,
+                Importer::class,
+                'truncateAll'
+            );
+        }
+
         $this->progressStart($this->xmlImporter->count());
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value);
