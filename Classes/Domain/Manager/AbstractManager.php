@@ -149,7 +149,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
             $this->dataHandler->process_datamap();
             $this->dataMap = [];
         }
-        $this->cleanUp();
     }
 
     /**
@@ -166,7 +165,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      * @return void
      * @see \Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor
      */
-    private function cleanUp()
+    public function cleanUp()
     {
         $repository = $this->getRepository();
         $table = $this->dataMapFactory->getTableNameByClassName($repository->getObjectType());

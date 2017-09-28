@@ -143,4 +143,13 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
         $relationObject->setPid($pid);
         $manager->create($relationObject);
     }
+
+    /**
+     * Clean up entries in the end
+     * @return void
+     */
+    public function cleanUp()
+    {
+        $this->entryManager->cleanUp();
+    }
 }

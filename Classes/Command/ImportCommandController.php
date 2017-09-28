@@ -88,6 +88,7 @@ class ImportCommandController extends CommandController implements ProgressBarIn
             $this->xmlImporter->persist();
             $this->progressAdvance();
         }
+        $this->xmlImporter->cleanUp();
         $this->progressFinish();
     }
 
