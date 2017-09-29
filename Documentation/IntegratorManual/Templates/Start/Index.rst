@@ -28,7 +28,7 @@ Der folgende Teil würde im **setup** Bereich Ihres TypoScripts stehen:
 
 .. code-block:: typoscript
 
-		plugin.tx_news {
+		plugin.tx_bzgaberatungsstellensuche {
 			view {
 				templateRootPaths >
 				templateRootPaths {
@@ -59,7 +59,7 @@ Es gibt auch die Möglichkeit die Pfade über die  **constants** zu setzen.
 
 .. code-block:: typoscript
 
-	plugin.tx_news {
+	plugin.tx_bzgaberatungsstellensuche {
 		view {
 			templateRootPath = fileadmin/templates/ext/news/Templates/
 			partialRootPath = fileadmin/templates/ext/news/Partials/
