@@ -87,7 +87,7 @@ Möchten Sie die Beratungsstelle in Ihrer Breadcrumb mit aufnehmen, benutzen Sie
 			}
 		}
 
-		# Add news title if on single view
+		# Add Beratungsstellen title if on single view
 		20 = RECORDS
 		20 {
 			stdWrap.if.isTrue.data = GP:tx_bzgaberatungsstellensuche_pi1|entry
@@ -124,7 +124,7 @@ Nur mittels TypoScript
 	temp.title {
 		dontCheckPid = 1
 		tables = tx_bzgaberatungsstellensuche_domain_model_entry
-		source.data = GP:tx_bzgaberatungsstellensuche_pi1|news
+		source.data = GP:tx_bzgaberatungsstellensuche_pi1|entry
 		source.intval = 1
 		conf.tx_bzgaberatungsstellensuche_domain_model_entry = TEXT
 		conf.tx_bzgaberatungsstellensuche_domain_model_entry {
@@ -134,7 +134,7 @@ Nur mittels TypoScript
 		wrap = <title>|</title>
 	}
 	page.headerData.1 >
-	page.headerData.1 < temp.newsTitle
+	page.headerData.1 < temp.title
 
 	[global]
 

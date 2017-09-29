@@ -10,7 +10,7 @@
 Linkhandler Konfiguration
 -------------------------
 Sollte die Extension **linkhandler** in Ihrer Installation verwendet werden, wird automatisch von der Erweiterung bzga_beratungsstellensuche
-ein Basis-Setup in der TSConfig inkludiert.
+ein Basis-Setup in der TSconfig inkludiert.
 
 Die Extension **linkhandler** ermöglicht die Verlinkung von beliebigen Datensätzen innerhalb von Textfeldern.
 Nähere Information entnehmen Sie bitte hier: https://github.com/Intera/typo3-extension-linkhandler

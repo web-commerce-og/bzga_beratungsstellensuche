@@ -33,17 +33,17 @@ Der folgende Teil würde im **setup** Bereich Ihres TypoScripts stehen:
 				templateRootPaths >
 				templateRootPaths {
 					0 = EXT:bzga_beratungsstellensuche/Resources/Private/Templates/
-					1 = fileadmin/templates/ext/bzga_beratungsstellensuche/Templates/
+					1 = EXT:your_sitepackage/Resources/Private/Templates/
 				}
 				partialRootPaths >
 				partialRootPaths {
 					0 = EXT:bzga_beratungsstellensuche/Resources/Private/Partials/
-					1 = fileadmin/templates/ext/bzga_beratungsstellensuche/Partials/
+					1 = EXT:your_sitepackage/Resources/Private/Partials/
 				}
 				layoutRootPaths >
 				layoutRootPaths {
 					0 = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
-					1 = fileadmin/templates/ext/bzga_beratungsstellensuche/Layouts/
+					1 = EXT:your_sitepackage/Resources/Private/Layouts/
 				}
 			}
 		}
@@ -61,9 +61,9 @@ Es gibt auch die Möglichkeit die Pfade über die  **constants** zu setzen.
 
 	plugin.tx_bzgaberatungsstellensuche {
 		view {
-			templateRootPath = fileadmin/templates/ext/news/Templates/
-			partialRootPath = fileadmin/templates/ext/news/Partials/
-			layoutRootPath = fileadmin/templates/ext/news/Layouts/
+			templateRootPath = EXT:your_sitepackage/Resources/Private/Templates/
+			partialRootPath = EXT:your_sitepackage/Resources/Private/Partials/
+			layoutRootPath = EXT:your_sitepackage/Resources/Private/Layouts/
 		}
 	}
 
