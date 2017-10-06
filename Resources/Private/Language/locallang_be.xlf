@@ -70,6 +70,9 @@
             <trans-unit id="pagemodule.switchToPage" xml:space="preserve">
                 <source>Zur Seite wechseln</source>
             </trans-unit>
+            <trans-unit id="tabs.access">
+                <source>Zugriff</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
