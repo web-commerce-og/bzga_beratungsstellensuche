@@ -15,10 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Console\ProgressBarInterface;
-use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
-use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
-use Bzga\BzgaBeratungsstellensuche\Slots\Importer;
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput;
@@ -53,6 +50,15 @@ class ImportCommandController extends CommandController implements ProgressBarIn
      * @inject
      */
     protected $signalSlotDispatcher;
+
+    /**
+     * Delete all entries, files and relations from database
+     * @throws \InvalidArgumentException
+     */
+    public function truncateAllCommand()
+    {
+        $this->entryRepository->truncateAll();
+    }
 
     /**
      * Import from file
@@ -104,20 +110,15 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     private function import($forceReImport = false)
     {
         if ($forceReImport) {
-            $this->signalSlotDispatcher->connect(
-                XmlImporter::class,
-                Events::PRE_IMPORT_SIGNAL,
-                Importer::class,
-                'truncateAll'
-            );
+            $this->entryRepository->truncateAll();
         }
 
         $this->progressStart($this->xmlImporter->count());
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value);
-            $this->xmlImporter->persist();
             $this->progressAdvance();
         }
+        $this->xmlImporter->persist();
         $this->xmlImporter->cleanUp();
         $this->progressFinish();
     }
