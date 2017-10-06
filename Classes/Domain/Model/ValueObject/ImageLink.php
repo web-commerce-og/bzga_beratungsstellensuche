@@ -27,7 +27,7 @@ class ImageLink
     private $externalUrl;
 
     /**
-     * @var
+     * @var string
      */
     private $identifier;
 
