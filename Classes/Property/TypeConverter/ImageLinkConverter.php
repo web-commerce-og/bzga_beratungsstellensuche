@@ -76,13 +76,13 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      * @var array
      */
     private static $imageMimeTypes = [
-        'bmp' => 'image/bmp',
-        'gif' => 'image/gif',
+        'bmp'  => 'image/bmp',
+        'gif'  => 'image/gif',
         'jpeg' => 'image/jpeg',
-        'jpg' => 'image/jpeg',
-        'png' => 'image/png',
-        'svg' => 'image/svg+xml',
-        'tif' => 'image/tiff',
+        'jpg'  => 'image/jpeg',
+        'png'  => 'image/png',
+        'svg'  => 'image/svg+xml',
+        'tif'  => 'image/tiff',
         'tiff' => 'image/tiff',
     ];
 
@@ -101,9 +101,9 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         if (null === $dataHandler) {
             $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         }
-        $this->dataHandler = $dataHandler;
+        $this->dataHandler                              = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
-        $this->dataHandler->admin = true;
+        $this->dataHandler->admin                       = true;
     }
 
     /**
@@ -130,41 +130,39 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     public function convert($source, array $configuration = null)
     {
+        // Check if we have no image url, return 0 if not
+        if ('' === $source->getExternalUrl()) {
+            return 0;
+        }
+
         // First of all we delete the old references
         /** @var $entity ExternalIdInterface|AbstractEntity */
         $entity = $configuration['entity'];
 
         $fileReferenceData = [
             'table_local' => 'sys_file',
-            'tablenames' => $configuration['tableName'],
+            'tablenames'  => $configuration['tableName'],
             'uid_foreign' => $configuration['tableUid'],
-            'fieldname' => 'image',
-            'pid' => $entity->getPid(),
+            'fieldname'   => $configuration['tableField'],
+            'pid'         => $entity->getPid(),
         ];
 
-        if (!$entity->_isNew()) {
+        if (! $entity->_isNew()) {
             $this->deleteOldFileReferences($fileReferenceData);
         }
 
-        // Check if we have no image url, return 0 if not
-        if ('' === $source->getExternalUrl()) {
-            return 0;
-        }
-
         try {
-            // Download the file
-            $pathToUploadFile               = $this->downloadFile($source, $entity);
-            $falFile                        = $this->importResource($pathToUploadFile);
-            $fileReferenceUid               = uniqid('NEW_', false);
-            $fileReferenceData['uid_local'] = $falFile->getUid();
-            $dataMap = [];
+            $fileReferenceData['uid_local'] = $this->getFileUid($source, $entity);
 
+            $fileReferenceUid = uniqid('NEW_', false);
+            $dataMap          = [];
             if ($this->dataHandler instanceof DataHandler) {
                 $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
                 $this->dataHandler->start($dataMap, []);
                 $this->dataHandler->process_datamap();
                 return $this->dataHandler->substNEWwithIDs[$fileReferenceUid];
             }
+
             return $fileReferenceUid;
         } catch (TypeConverterException $e) {
         } catch (DownloadException $e) {
@@ -259,5 +257,32 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     private function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
+    }
+
+    /**
+     * @param ImageLink $source
+     * @param ExternalIdInterface|AbstractEntity $entity
+     *
+     * @return int
+     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException
+     * @throws \Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException
+     */
+    private function getFileUid(ImageLink $source, $entity)
+    {
+        // First we check if we already have a file with the identifier in the database
+        $where = 'external_identifier = ' . $this->getDatabaseConnection()->fullQuoteStr($source->getIdentifier(),
+                'sys_file');
+
+        if ($row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('uid', 'sys_file', $where)) {
+            return $row['uid'];
+        }
+
+        $pathToUploadFile = $this->downloadFile($source, $entity);
+        $falFile          = $this->importResource($pathToUploadFile);
+
+        $this->getDatabaseConnection()->exec_UPDATEquery('sys_file', 'uid = ' . $falFile->getUid(),
+            ['external_identifier' => $source->getIdentifier()]);
+
+        return $falFile->getUid();
     }
 }

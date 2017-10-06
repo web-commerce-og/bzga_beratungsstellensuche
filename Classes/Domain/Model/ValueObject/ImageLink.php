@@ -27,12 +27,18 @@ class ImageLink
     private $externalUrl;
 
     /**
+     * @var
+     */
+    private $identifier;
+
+    /**
      * ImageLink constructor.
      * @param string $externalUrl
      */
     public function __construct($externalUrl)
     {
         $this->externalUrl = $externalUrl;
+        $this->setIdentifier($externalUrl);
     }
 
     /**
@@ -41,5 +47,24 @@ class ImageLink
     public function getExternalUrl()
     {
         return $this->externalUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param $externalUrl
+     */
+    private function setIdentifier($externalUrl)
+    {
+        $urlSegments = parse_url($externalUrl);
+        parse_str($urlSegments['query'], $querySegments);
+
+        $this->identifier = $querySegments['id'];
     }
 }

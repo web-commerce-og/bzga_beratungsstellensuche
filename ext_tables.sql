@@ -150,6 +150,18 @@ CREATE TABLE cf_bzgaberatungsstellensuche_cache_coordinates_tags (
 )ENGINE=InnoDB;
 
 
+#
+# Table structure for table 'static_country_zones'
+#
+#
 CREATE TABLE static_country_zones (
   external_id int(11) default NULL
+);
+
+#
+# Table structure for table 'sys_file'
+#
+#
+CREATE TABLE sys_file (
+  external_identifier varchar(250) DEFAULT '' NOT NULL
 );
