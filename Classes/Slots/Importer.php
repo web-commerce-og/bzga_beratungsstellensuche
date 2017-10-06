@@ -32,7 +32,7 @@ class Importer
     /**
      * @param XmlImporter $importer
      * @param \SimpleXMLIterator $sxe
-     * @param $pid
+     * @param int $pid
      * @param BaseSerializer $serializer
      */
     public function truncateAll(XmlImporter $importer, \SimpleXMLIterator $sxe, $pid, BaseSerializer $serializer)

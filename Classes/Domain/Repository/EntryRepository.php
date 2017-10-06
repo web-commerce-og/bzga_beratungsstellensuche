@@ -101,6 +101,25 @@ class EntryRepository extends AbstractBaseRepository
     }
 
     /**
+     * @return void
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     */
+    public function truncateAll()
+    {
+        $databaseConnection = $this->getDatabaseConnection();
+        $databaseConnection->exec_TRUNCATEquery(self::CATEGORY_TABLE);
+
+        $entries = $databaseConnection->exec_SELECTgetRows('uid', self::ENTRY_TABLE, '1=1');
+        foreach ($entries as $entry) {
+            $this->deleteByUid($entry['uid']);
+        }
+
+        $this->signalSlotDispatcher->dispatch(static::class, Events::TABLE_TRUNCATE_ALL_SIGNAL,
+            ['databaseConnection' => $databaseConnection]);
+    }
+
+    /**
      * @param GeopositionInterface $userLocation
      * @param QueryInterface $query
      * @param int $radius
@@ -135,7 +154,12 @@ class EntryRepository extends AbstractBaseRepository
      * Here we delete all relations of an entry, this is not possible with the convenient remove method of this repository class
      *
      * @param int $uid
+     *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \InvalidArgumentException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      */
     public function deleteByUid($uid)
     {

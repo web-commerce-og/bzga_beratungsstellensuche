@@ -18,7 +18,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use Countable;
 use IteratorAggregate;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
@@ -92,7 +91,10 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
     /**
      * @param AbstractEntity|ExternalIdTrait $entity
+     *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Reflection\Exception\PropertyNotAccessibleException
+     * @throws \InvalidArgumentException
      */
     public function create(AbstractEntity $entity)
     {
@@ -112,14 +114,14 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
             $propertyNameLowercase = GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
             if (isset($GLOBALS['TCA'][$tableName]['columns'][$propertyNameLowercase])) {
                 $propertyValue = ObjectAccess::getProperty($entity, $propertyName);
-                if ($typeConverter = $this->propertyMapper->supports($propertyValue,
-                    TypeConverterInterface::CONVERT_BEFORE)
+                if ($typeConverter = $this->propertyMapper->supports($propertyValue)
                 ) {
                     $propertyValue = $typeConverter->convert($propertyValue,
                         [
                             'manager' => $this,
                             'tableUid' => $tableUid,
                             'tableName' => $tableName,
+                            'tableField' => 'image',
                             'entity' => $entity,
                         ]);
                     if (null !== $propertyValue) {

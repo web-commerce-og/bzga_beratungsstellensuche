@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Events;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -139,19 +138,6 @@ abstract class AbstractBaseRepository extends Repository
         $query->getQuerySettings()->setRespectStoragePage(false);
 
         return $query;
-    }
-
-    /**
-     * @return void
-     */
-    public function truncateAll()
-    {
-        $databaseConnection = $this->getDatabaseConnection();
-        $databaseConnection->exec_TRUNCATEquery(self::CATEGORY_TABLE);
-        $databaseConnection->exec_TRUNCATEquery(self::ENTRY_TABLE);
-        $databaseConnection->exec_TRUNCATEquery(self::ENTRY_CATEGORY_MM_TABLE);
-        $this->signalSlotDispatcher->dispatch(static::class, Events::TABLE_TRUNCATE_ALL_SIGNAL,
-            ['databaseConnection' => $databaseConnection]);
     }
 
     /**
