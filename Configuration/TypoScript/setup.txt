@@ -4,17 +4,17 @@ plugin.tx_bzgaberatungsstellensuche {
     view {
         templateRootPaths {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Templates/
-            1 = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
+            100 = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
         }
 
         partialRootPaths {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Partials/
-            1 = {$plugin.tx_bzgaberatungsstellensuche.view.partialRootPath}
+            100 = {$plugin.tx_bzgaberatungsstellensuche.view.partialRootPath}
         }
 
         layoutRootPaths {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
-            1 = {$plugin.tx_bzgaberatungsstellensuche.view.layoutRootPath}
+            100 = {$plugin.tx_bzgaberatungsstellensuche.view.layoutRootPath}
         }
     }
 
