@@ -149,7 +149,10 @@ class EntryController extends ActionController
 
     /**
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     *
      * @return void
+     * @throws \UnexpectedValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function listAction(Demand $demand = null)
     {
@@ -176,7 +179,10 @@ class EntryController extends ActionController
     /**
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
     public function showAction(Entry $entry = null, Demand $demand = null)
     {

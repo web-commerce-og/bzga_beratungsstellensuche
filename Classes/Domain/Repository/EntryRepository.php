@@ -41,6 +41,8 @@ class EntryRepository extends AbstractBaseRepository
      * @param Demand $demand
      *
      * @return array|QueryResultInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \UnexpectedValueException
      */
     public function findDemanded(Demand $demand)
     {
@@ -102,6 +104,8 @@ class EntryRepository extends AbstractBaseRepository
 
     /**
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      */
@@ -125,6 +129,7 @@ class EntryRepository extends AbstractBaseRepository
      * @param int $radius
      *
      * @return array
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     private function createCoordsConstraints(
         GeopositionInterface $userLocation,
