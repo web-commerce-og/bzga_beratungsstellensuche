@@ -105,6 +105,14 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     }
 
     /**
+     * @return string
+     */
+    public function getAddressToGeocode()
+    {
+        return sprintf('Germany, %s', $this->location);
+    }
+
+    /**
      * @return int
      */
     public function getKilometers()

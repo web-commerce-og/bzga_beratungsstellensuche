@@ -56,7 +56,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
      */
     public function findAddressByDemand(Demand $demand)
     {
-        $cacheIdentifier = sha1($demand->getLocation());
+        $cacheIdentifier = sha1($demand->getAddressToGeocode());
 
         if ($this->cache->has($cacheIdentifier)) {
             return unserialize($this->cache->get($cacheIdentifier));

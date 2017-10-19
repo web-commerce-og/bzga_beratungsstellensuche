@@ -23,7 +23,12 @@ interface GeoPositionDemandInterface extends GeopositionInterface
 {
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getKilometers();
+
+    /**
+     * @return string
+     */
+    public function getAddressToGeocode();
 }
