@@ -25,16 +25,15 @@ class GeolocationService extends AbstractGeolocationService
 
     /**
      * @param Demand $demand
+     *
      * @return null|\Geocoder\Model\Address
      */
     public function findAddressByDemand(Demand $demand)
     {
         if ($demand->getLocation()) {
-            $addressCollection = $this->geocoder->geocode($demand->getAddressToGeocode());
-            $address = $addressCollection->first();
-
-            return $address;
+            return $this->geocoder->geocode($demand->getAddressToGeocode())->first();
         }
+
         return null;
     }
 }
