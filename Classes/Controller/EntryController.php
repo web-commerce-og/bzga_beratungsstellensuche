@@ -29,6 +29,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
  */
 class EntryController extends ActionController
 {
+    const GERMANY_ISOCODENUMBER = 276;
 
     /**
      * @var string
@@ -197,7 +198,7 @@ class EntryController extends ActionController
             return [];
         }
         $country = new Country();
-        $country->setIsoCodeNumber(276);
+        $country->setIsoCodeNumber(self::GERMANY_ISOCODENUMBER);
 
         return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
     }
