@@ -1,7 +1,7 @@
 <?php
 
 
-namespace BZga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
+namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
 
 /**
  * This file is part of the TYPO3 CMS project.
