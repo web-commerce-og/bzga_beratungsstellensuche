@@ -1,0 +1,7 @@
+config.tx_extbase {
+    objects {
+        TYPO3\CMS\Extbase\Persistence\QueryResultInterface {
+            className = Bzga\BzgaBeratungsstellensuche\Persistence\QueryResult
+        }
+    }
+}
