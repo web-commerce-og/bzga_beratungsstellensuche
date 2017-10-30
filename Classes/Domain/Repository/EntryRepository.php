@@ -22,6 +22,7 @@ use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
@@ -36,6 +37,12 @@ class EntryRepository extends AbstractBaseRepository
      * @inject
      */
     protected $geolocationService;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser
+     * @inject
+     */
+    protected $queryParser;
 
     /**
      * @param Demand $demand
@@ -97,6 +104,20 @@ class EntryRepository extends AbstractBaseRepository
 
         if (! empty($constraints) && is_array($constraints)) {
             $query->matching($query->logicalAnd($constraints));
+        }
+
+        // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
+        if(!method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
+            $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
+            $queryParameters = $queryBuilder->getParameters();
+            $params = [];
+            foreach ($queryParameters as $key => $value) {
+                // prefix array keys with ':'
+                $params[':' . $key] = (is_numeric($value)) ? $value : "'" . $value . "'"; //all non numeric values have to be quoted
+                unset($params[$key]);
+            }
+            // replace placeholders with real values
+            return $query->statement(strtr($queryBuilder->getSQL(), $params))->execute();
         }
 
         return $query->execute();
