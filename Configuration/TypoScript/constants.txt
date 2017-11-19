@@ -23,6 +23,9 @@ plugin.tx_bzgaberatungsstellensuche {
             pathToDefaultMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/default.png
             pathToActiveMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/active.png
             apiKey =
+            locale = de
+            useSsl = 1
+            region =
             options = mapTypeId:roadmap,maxZoom:17,scrollwheel:1
         }
     }

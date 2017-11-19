@@ -37,6 +37,9 @@ plugin.tx_bzgaberatungsstellensuche {
         additionalCssFile = {$plugin.tx_bzgaberatungsstellensuche.settings.additionalCssFile}
         additionalJsFile = {$plugin.tx_bzgaberatungsstellensuche.settings.additionalJsFile}
         map {
+            locale = {$plugin.tx_bzgaberatungsstellensuche.settings.map.locale}
+            useSsl = {$plugin.tx_bzgaberatungsstellensuche.settings.map.useSsl}
+            region = {$plugin.tx_bzgaberatungsstellensuche.settings.map.region}
             pathToActiveMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToActiveMarker}
             pathToDefaultMarker = {$plugin.tx_bzgaberatungsstellensuche.settings.map.pathToDefaultMarker}
             apiKey = {$plugin.tx_bzgaberatungsstellensuche.settings.map.apiKey}

@@ -54,18 +54,22 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
 
     /**
      * AbstractGeolocationService constructor.
+     *
      * @param SettingsService $settingsService
      */
     public function __construct(SettingsService $settingsService)
     {
         $this->settingsService = $settingsService;
-        $adapter = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));
-        $this->geocoder = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'), $adapter);
+        $adapter               = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));
+        $this->geocoder        = GeocoderFactory::createInstance($this->settingsService->getByPath('geocoder'),
+            $adapter, $this->settingsService->getByPath('map.locale'), $this->settingsService->getByPath('map.region'),
+            $this->settingsService->getByPath('map.useSsl'), $this->settingsService->getByPath('map.apiKey'));
     }
 
     /**
      * @param GeopositionInterface $demandPosition
      * @param GeopositionInterface $locationPosition
+     *
      * @return float
      */
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition)
@@ -81,11 +85,12 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
      * @param GeoPositionDemandInterface $demandPosition
      * @param string $table
      * @param string $alias
+     *
      * @return mixed
      */
     public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
     {
         return sprintf(self::DISTANCE_SQL_FIELD, $demandPosition->getLatitude(), $demandPosition->getLongitude(),
-                $demandPosition->getKilometers()) . ' AS ' . $alias;
+                $demandPosition->getKilometers()).' AS '.$alias;
     }
 }
