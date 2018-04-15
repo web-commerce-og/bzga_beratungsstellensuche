@@ -33,21 +33,19 @@ class HttpAdapterFactory
 
     /**
      * @param string $type
-     * @return HttpAdapterInterface
+     *
+     * @return HttpAdapterInterface|object
+     * @throws \InvalidArgumentException
      */
     public static function createInstance($type = null)
     {
+        $type = (bool)$GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse'] ? self::TYPE_CURL : $type;
+
         switch ($type) {
             case self::TYPE_CURL:
                 return GeneralUtility::makeInstance(CurlHttpAdapter::class);
                 break;
             default:
-                $curlUse = isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse']) ? (bool)$GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse'] : false;
-
-                if (true === $curlUse) {
-                    return GeneralUtility::makeInstance(CurlHttpAdapter::class);
-                }
-
                 return new FileGetContentsHttpAdapter();
                 break;
         }
