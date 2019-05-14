@@ -209,6 +209,7 @@ pdf_toc_depth = 9999
 # pdf_font_path = ['/Users/schreibersebastian/Library/Fonts']
 
 # -- Configure latext output ----------------------------------------------------
+latex_engine = 'pdflatex'
 latex_elements = {
      'papersize': '',
      'fontpkg': '',
