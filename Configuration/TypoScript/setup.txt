@@ -45,6 +45,7 @@ plugin.tx_bzgaberatungsstellensuche {
             apiKey = {$plugin.tx_bzgaberatungsstellensuche.settings.map.apiKey}
             options = {$plugin.tx_bzgaberatungsstellensuche.settings.map.options}
         }
+        geocoder = {$plugin.tx_bzgaberatungsstellensuche.settings.geocoder}
     }
 }
 
