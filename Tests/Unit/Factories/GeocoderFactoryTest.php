@@ -17,8 +17,13 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Factories;
 
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
+use Geocoder\Geocoder;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMaps;
+use Geocoder\Provider\OpenStreetMap;
+use Geocoder\Provider\Provider;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use RuntimeException;
 
 class GeocoderFactoryTest extends UnitTestCase
 {
@@ -32,5 +37,32 @@ class GeocoderFactoryTest extends UnitTestCase
             GoogleMaps::class,
             GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpAdapterFactory::createInstance())
         );
+    }
+
+    /**
+     * @test
+     */
+    public function openStreetMapGeocoderReturned()
+    {
+        $this->assertInstanceOf(OpenStreetMap::class,
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpAdapterFactory::createInstance()));
+    }
+
+    /**
+     * @test
+     * @expectedException RuntimeException
+     */
+    public function providedTypeIsNotAllowed()
+    {
+        GeocoderFactory::createInstance('something', HttpAdapterFactory::createInstance());
+    }
+
+    /**
+     * @test
+     */
+    public function customProviderReturned()
+    {
+        $customProvder = $this->getMockBuilder(Provider::class)->getMock();
+        $this->assertInstanceOf(get_class($customProvder), GeocoderFactory::createInstance(get_class($customProvder), HttpAdapterFactory::createInstance()));
     }
 }
