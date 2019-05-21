@@ -59,8 +59,6 @@ class DataHandlerProcessor
      * @param string $id
      * @param array $fieldArray
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $reference
-     *
-     * @return void
      */
     public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$reference)
     {

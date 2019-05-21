@@ -40,7 +40,6 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     protected $signalSlotDispatcher;
 
     /**
-     * @return void
      */
     protected function setUp()
     {

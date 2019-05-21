@@ -48,7 +48,7 @@ class SessionService
     }
 
     /**
-     * @return null|array
+     * @return array|null
      */
     public function restoreFromSession()
     {
@@ -69,7 +69,6 @@ class SessionService
 
     /**
      * @param object $object
-     * @return void
      */
     public function writeToSession($object)
     {
@@ -80,7 +79,6 @@ class SessionService
     }
 
     /**
-     * @return void
      */
     public function cleanUpSession()
     {

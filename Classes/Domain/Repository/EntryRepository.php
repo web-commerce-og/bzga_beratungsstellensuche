@@ -107,7 +107,7 @@ class EntryRepository extends AbstractBaseRepository
         }
 
         // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
-        if(!method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
+        if (!method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
             $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
             $queryParameters = $queryBuilder->getParameters();
             $params = [];
@@ -124,7 +124,6 @@ class EntryRepository extends AbstractBaseRepository
     }
 
     /**
-     * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
@@ -140,8 +139,11 @@ class EntryRepository extends AbstractBaseRepository
             $this->deleteByUid($entry['uid']);
         }
 
-        $this->signalSlotDispatcher->dispatch(static::class, Events::TABLE_TRUNCATE_ALL_SIGNAL,
-            ['databaseConnection' => $databaseConnection]);
+        $this->signalSlotDispatcher->dispatch(
+            static::class,
+            Events::TABLE_TRUNCATE_ALL_SIGNAL,
+            ['databaseConnection' => $databaseConnection]
+        );
     }
 
     /**
@@ -181,7 +183,6 @@ class EntryRepository extends AbstractBaseRepository
      *
      * @param int $uid
      *
-     * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
@@ -214,7 +215,10 @@ class EntryRepository extends AbstractBaseRepository
             $this->persistenceManager->persistAll();
         }
 
-        $this->signalSlotDispatcher->dispatch(static::class, Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
-            ['uid' => $uid]);
+        $this->signalSlotDispatcher->dispatch(
+            static::class,
+            Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
+            ['uid' => $uid]
+        );
     }
 }

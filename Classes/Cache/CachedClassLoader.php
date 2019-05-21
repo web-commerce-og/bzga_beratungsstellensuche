@@ -67,7 +67,6 @@ class CachedClassLoader
      * Autoload function for cached classes
      *
      * @param string $className Class name
-     * @return void
      */
     public static function autoload($className)
     {

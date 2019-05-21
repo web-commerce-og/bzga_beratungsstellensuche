@@ -31,7 +31,7 @@ class TitleViewHelperTest extends ViewHelperBaseTestcase
     protected $environmentService;
 
     /**
-     * @var TypoScriptFrontendController|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|TypoScriptFrontendController
      */
     protected $typoscriptFrontendController;
 
@@ -46,7 +46,7 @@ class TitleViewHelperTest extends ViewHelperBaseTestcase
     protected $pageRenderer;
 
     /**
-     * @var TitleViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|TitleViewHelper
      */
     protected $subject;
 

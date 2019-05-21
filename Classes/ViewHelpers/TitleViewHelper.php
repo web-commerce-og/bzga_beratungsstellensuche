@@ -28,7 +28,6 @@ class TitleViewHelper extends AbstractViewHelper
 {
 
     /**
-     *
      * @var ExtensionService
      */
     protected $extensionService;
@@ -76,8 +75,6 @@ class TitleViewHelper extends AbstractViewHelper
 
     /**
      * Arguments initialization
-     *
-     * @return void
      */
     public function initializeArguments()
     {
@@ -87,8 +84,6 @@ class TitleViewHelper extends AbstractViewHelper
 
     /**
      * Render method
-     *
-     * @return void
      */
     public function render()
     {
@@ -100,19 +95,23 @@ class TitleViewHelper extends AbstractViewHelper
 
         $title = $this->arguments['title'] ?: $this->renderChildren();
 
-        if ($this->extensionService->isActionCacheable($this->controllerContext->getRequest()->getControllerExtensionName(),
+        if ($this->extensionService->isActionCacheable(
+            $this->controllerContext->getRequest()->getControllerExtensionName(),
             $this->controllerContext->getRequest()->getPluginName(),
             $this->controllerContext->getRequest()->getControllerName(),
-            $this->controllerContext->getRequest()->getControllerActionName())
+            $this->controllerContext->getRequest()->getControllerActionName()
+        )
         ) {
             $this->pageRenderer->setTitle($title);
             if (true === $this->arguments['setIndexedDocTitle']) {
                 $typoscriptFrontendController->indexedDocTitle = $title;
             }
         } else {
-            $typoscriptFrontendController->content = preg_replace('#<title>.*<\/title>#',
+            $typoscriptFrontendController->content = preg_replace(
+                '#<title>.*<\/title>#',
                 '<title>' . htmlentities($title) . '</title>',
-                $typoscriptFrontendController->content);
+                $typoscriptFrontendController->content
+            );
         }
     }
 

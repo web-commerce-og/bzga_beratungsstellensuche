@@ -27,7 +27,6 @@ class KilometerRepositoryTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @return void
      */
     protected function setUp()
     {

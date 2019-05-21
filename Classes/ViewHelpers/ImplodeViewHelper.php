@@ -26,7 +26,7 @@ class ImplodeViewHelper extends AbstractViewHelper
 {
 
     /**
-     * @param null|array|\Traversable $pieces
+     * @param array|\Traversable|null $pieces
      * @param string $glue
      *
      * @return string

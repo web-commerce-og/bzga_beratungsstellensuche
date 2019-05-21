@@ -25,7 +25,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Demand extends AbstractValueObject implements GeoPositionDemandInterface
 {
-
     use GeopositionTrait;
 
     /**
@@ -203,7 +202,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     }
 
     /**
-     * @return void
      */
     private function updateLatitudeLongitude()
     {

@@ -22,7 +22,7 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var UppercaseFirstLetterViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|UppercaseFirstLetterViewHelper
      */
     protected $subject;
 

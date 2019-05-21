@@ -29,7 +29,9 @@ class RealUrlAutoConfiguration
      */
     public function addConfig($params)
     {
-        return array_merge_recursive($params['config'], [
+        return array_merge_recursive(
+            $params['config'],
+            [
                 'postVarSets' => [
                     '_DEFAULT' => [
                         'beratungsstelle' => [

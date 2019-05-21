@@ -54,8 +54,14 @@ class IconUtility
             $data = '<span data-toggle="tooltip" data-placement="top" data-title="id=' . $record['uid'] . '">'
                     . $this->iconFactory->getIconForRecord($table, $record, Icon::SIZE_SMALL)->render()
                     . '</span> ';
-            $content = BackendUtilityCore::wrapClickMenuOnIcon($data, $table, $record['uid'], true, '',
-                '+info,edit,history');
+            $content = BackendUtilityCore::wrapClickMenuOnIcon(
+                $data,
+                $table,
+                $record['uid'],
+                true,
+                '',
+                '+info,edit,history'
+            );
 
             $linkTitle = htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));
 
@@ -71,8 +77,14 @@ class IconUtility
         } else {
             $data = CoreIconUtility::getSpriteIconForRecord($table, $record)
                     . htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));
-            $content = $this->getDocumentTemplate()->wrapClickMenuOnIcon($data, $table, $record['uid'], true, '',
-                '+info,edit');
+            $content = $this->getDocumentTemplate()->wrapClickMenuOnIcon(
+                $data,
+                $table,
+                $record['uid'],
+                true,
+                '',
+                '+info,edit'
+            );
         }
 
         return $content;

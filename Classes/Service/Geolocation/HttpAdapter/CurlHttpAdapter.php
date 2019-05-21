@@ -129,12 +129,18 @@ class CurlHttpAdapter extends AbstractCurlHttpAdapter
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->prepareHeaders($internalRequest, false, false));
 
         if ($GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_host'] && $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_port']) {
-            $curlProxyHost = sprintf('%s:%s', $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_host'],
-                $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_port']);
+            $curlProxyHost = sprintf(
+                '%s:%s',
+                $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_host'],
+                $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_port']
+            );
             curl_setopt($curl, CURLOPT_PROXY, $curlProxyHost);
             if ($GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_password'] && $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_user']) {
-                $curlProxyUserPass = sprintf('%s:%s', $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_password'],
-                    $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_user']);
+                $curlProxyUserPass = sprintf(
+                    '%s:%s',
+                    $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_password'],
+                    $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_user']
+                );
                 curl_setopt($curl, CURLOPT_PROXYUSERPWD, $curlProxyUserPass);
             }
             if ($GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy_auth_scheme']) {
@@ -198,7 +204,7 @@ class CurlHttpAdapter extends AbstractCurlHttpAdapter
      * Creates a response.
      *
      * @param resource $curl The curl resource.
-     * @param string|bool|null $data The data.
+     * @param bool|string|null $data The data.
      * @param \Ivory\HttpAdapter\Message\InternalRequestInterface $internalRequest The internal request.
      *
      * @throws \Ivory\HttpAdapter\HttpAdapterException If an error occurred.

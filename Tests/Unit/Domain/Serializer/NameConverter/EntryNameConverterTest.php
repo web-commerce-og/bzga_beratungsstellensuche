@@ -8,7 +8,6 @@ class EntryNameConverterTest extends AbstractNameConverterTest
 {
 
     /**
-     * @return void
      */
     protected function setUp()
     {

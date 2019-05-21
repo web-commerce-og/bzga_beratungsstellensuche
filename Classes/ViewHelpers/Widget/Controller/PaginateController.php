@@ -46,7 +46,6 @@ class PaginateController extends CorePaginateController
     protected $queryParser;
 
     /**
-     * @return void
      */
     public function initializeAction()
     {
@@ -138,19 +137,24 @@ class PaginateController extends CorePaginateController
                 'selectFields' => implode(' ', $statementParts['keywords']) . ' ' . implode(',', $statementParts['fields']),
                 'fromTable'    => implode(' ', $statementParts['tables']) . ' ' . implode(' ', $statementParts['unions']),
                 'whereClause'  => (! empty($statementParts['where']) ? implode('', $statementParts['where']) : '1')
-                                  . (! empty($statementParts['additionalWhereClause'])
+                                  . (
+                                      ! empty($statementParts['additionalWhereClause'])
                         ? ' AND ' . implode(' AND ', $statementParts['additionalWhereClause'])
                         : ''
                                   ),
-                'orderBy'      => ! empty($statementParts['orderings']) ? implode(', ',
-                    $statementParts['orderings']) : '',
+                'orderBy'      => ! empty($statementParts['orderings']) ? implode(
+                    ', ',
+                    $statementParts['orderings']
+                ) : '',
                 'limit'        => ($statementParts['offset'] ? $statementParts['offset'] . ', ' : '')
                                   . ($statementParts['limit'] ? $statementParts['limit'] : ''),
             ];
 
             if ($demand->getLocation()) {
-                $distanceField                  = $this->geolocationService->getDistanceSqlField($demand,
-                    $statementParts['fromTable']);
+                $distanceField                  = $this->geolocationService->getDistanceSqlField(
+                    $demand,
+                    $statementParts['fromTable']
+                );
                 $statementParts['selectFields'] = $distanceField . ',' . $statementParts['selectFields'];
                 $statementParts['orderBy']      = 'distance ASC';
             }
@@ -165,33 +169,32 @@ class PaginateController extends CorePaginateController
             );
 
             return $sql;
-        } else {
-            $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
-            $fromParts = $queryBuilder->getQueryPart('from');
+        }
+        $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
+        $fromParts = $queryBuilder->getQueryPart('from');
 
-            $queryParameters = $queryBuilder->getParameters();
-            $params = [];
-            foreach ($queryParameters as $key => $value) {
-                // prefix array keys with ':'
+        $queryParameters = $queryBuilder->getParameters();
+        $params = [];
+        foreach ($queryParameters as $key => $value) {
+            // prefix array keys with ':'
                 $params[':' . $key] = (is_numeric($value)) ? $value : "'" . $value . "'"; //all non numeric values have to be quoted
                 unset($params[$key]);
-            }
-
-            if ($demand->getLocation()) {
-                $distanceField = $this->geolocationService->getDistanceSqlField($demand, $fromParts[0]['table']);
-                $queryBuilder->addSelectLiteral($distanceField);
-                $queryBuilder->orderBy('distance', 'asc');
-            }
-
-            $itemsPerPage = (int)$this->configuration['itemsPerPage'];
-            $queryBuilder->setMaxResults($itemsPerPage);
-            if ($this->currentPage > 1) {
-                $queryBuilder->setFirstResult($itemsPerPage * ($this->currentPage - 1));
-            }
-            // replace placeholders with real values
-            $query = strtr($queryBuilder->getSQL(), $params);
-            return $query;
         }
+
+        if ($demand->getLocation()) {
+            $distanceField = $this->geolocationService->getDistanceSqlField($demand, $fromParts[0]['table']);
+            $queryBuilder->addSelectLiteral($distanceField);
+            $queryBuilder->orderBy('distance', 'asc');
+        }
+
+        $itemsPerPage = (int)$this->configuration['itemsPerPage'];
+        $queryBuilder->setMaxResults($itemsPerPage);
+        if ($this->currentPage > 1) {
+            $queryBuilder->setFirstResult($itemsPerPage * ($this->currentPage - 1));
+        }
+        // replace placeholders with real values
+        $query = strtr($queryBuilder->getSQL(), $params);
+        return $query;
     }
 
     /**

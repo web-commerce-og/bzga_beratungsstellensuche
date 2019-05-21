@@ -37,7 +37,6 @@ class DataMapTest extends UnitTestCase
     private $dataMapFactory;
 
     /**
-     * @return void
      */
     protected function setUp()
     {

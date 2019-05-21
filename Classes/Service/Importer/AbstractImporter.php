@@ -56,7 +56,6 @@ abstract class AbstractImporter implements ImporterInterface
      *
      * @throws FileDoesNotExistException
      * @throws ContentCouldNotBeFetchedException
-     * @return void
      */
     public function importFromFile($file, $pid = 0)
     {
@@ -75,7 +74,6 @@ abstract class AbstractImporter implements ImporterInterface
      *
      * @throws UnexpectedValueException
      * @throws ContentCouldNotBeFetchedException
-     * @return void
      */
     public function importFromUrl($url, $pid = 0)
     {

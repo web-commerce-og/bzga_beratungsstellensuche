@@ -25,12 +25,10 @@ interface ProgressBarInterface
     public function progressStart($count);
 
     /**
-     * @return void
      */
     public function progressAdvance();
 
     /**
-     * @return void
      */
     public function progressFinish();
 }

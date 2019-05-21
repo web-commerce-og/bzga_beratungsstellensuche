@@ -75,8 +75,11 @@ class Serializer extends BaseSerializer
         $signalArguments = [];
         $signalArguments['extendedNormalizers'] = [];
 
-        $additionalNormalizers = $this->signalSlotDispatcher->dispatch(static::class,
-            Events::ADDITIONAL_NORMALIZERS_SIGNAL, $signalArguments);
+        $additionalNormalizers = $this->signalSlotDispatcher->dispatch(
+            static::class,
+            Events::ADDITIONAL_NORMALIZERS_SIGNAL,
+            $signalArguments
+        );
 
         return array_merge($normalizers, $additionalNormalizers['extendedNormalizers']);
     }

@@ -37,12 +37,11 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     protected $importer;
 
     /**
-     * @var Registry|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Registry
      */
     protected $registry;
 
     /**
-     * @return void
      */
     protected function setUp()
     {

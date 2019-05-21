@@ -72,7 +72,6 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
     }
 
     /**
-     * @return void
      */
     private function mapNamesFlipped()
     {
@@ -94,7 +93,6 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
     }
 
     /**
-     * @return void
      */
     protected function emitMapNamesSignal()
     {

@@ -52,8 +52,10 @@ class PropertyMapper implements TypeConverterInterface
     public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         foreach ($this->typeConverters as $typeConverter) {
-            if (true === $typeConverter->supports($source, $type) && $this->converterSupportsType($typeConverter,
-                    $type)
+            if (true === $typeConverter->supports($source, $type) && $this->converterSupportsType(
+                $typeConverter,
+                    $type
+            )
             ) {
                 return $typeConverter;
             }
@@ -64,7 +66,7 @@ class PropertyMapper implements TypeConverterInterface
 
     /**
      * @param $source
-     * @param array|null|AbstractEntity $configuration
+     * @param AbstractEntity|array|null $configuration
      * @return mixed
      */
     public function convert($source, array $configuration = null)
@@ -111,7 +113,6 @@ class PropertyMapper implements TypeConverterInterface
     }
 
     /**
-     * @return void
      */
     private function initializeTypeConverters()
     {

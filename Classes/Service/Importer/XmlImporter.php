@@ -53,7 +53,6 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     /**
      * @param string $content
      * @param int $pid
-     * @return void
      */
     public function import($content, $pid = 0)
     {
@@ -63,7 +62,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
 
         $this->emitImportSignal(Events::PRE_IMPORT_SIGNAL);
 
-        # Import beratungsarten
+        // Import beratungsarten
         $this->convertRelations($this->sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
         $this->categoryManager->persist();
 
@@ -95,11 +94,10 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     }
 
     /**
-     * @return void
      */
     public function persist()
     {
-        # In the end we are calling all the managers to persist, this saves a lot of memory
+        // In the end we are calling all the managers to persist, this saves a lot of memory
         $this->emitImportSignal(Events::POST_IMPORT_SIGNAL);
         $this->entryManager->persist();
     }
@@ -137,16 +135,18 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     {
         $externalId       = (integer)$relationData->index;
         $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
-        $relationObject   = $this->serializer->deserialize($relationData->asXml(), $relationClassName,
+        $relationObject   = $this->serializer->deserialize(
+            $relationData->asXml(),
+            $relationClassName,
             self::FORMAT,
-            ['object_to_populate' => $objectToPopulate]);
+            ['object_to_populate' => $objectToPopulate]
+        );
         $relationObject->setPid($pid);
         $manager->create($relationObject);
     }
 
     /**
      * Clean up entries in the end
-     * @return void
      */
     public function cleanUp()
     {

@@ -35,7 +35,6 @@ class TemplateLayoutTest extends FunctionalTestCase
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche'];
 
     /**
-     * @return void
      */
     protected function setUp()
     {

@@ -58,15 +58,24 @@ class EntryNormalizerTest extends UnitTestCase
     protected $signalSlotDispatcher;
 
     /**
-     * @return void
      */
     protected function setUp()
     {
         $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
-        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, ['findOneByExternalId'],
-            [], '', false);
-        $this->categoryRepository = $this->getMock(CategoryRepository::class, ['findOneByExternalId'], [], '',
-            false);
+        $this->countryZoneRepository = $this->getMock(
+            CountryZoneRepository::class,
+            ['findOneByExternalId'],
+            [],
+            '',
+            false
+        );
+        $this->categoryRepository = $this->getMock(
+            CategoryRepository::class,
+            ['findOneByExternalId'],
+            [],
+            '',
+            false
+        );
         $this->serializer = $this->getMock(SerializerNormalizer::class);
         $this->subject = new EntryNormalizer(null, new EntryNameConverter());
         $this->subject->setSerializer($this->serializer);

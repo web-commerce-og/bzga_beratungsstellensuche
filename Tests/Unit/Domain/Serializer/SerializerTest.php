@@ -58,17 +58,26 @@ class SerializerTest extends UnitTestCase
     protected $signalSlotDispatcher;
 
     /**
-     * @return void
      */
     protected function setUp()
     {
         $this->entryNormalizer = new EntryNormalizer(null);
 
         $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
-        $this->countryZoneRepository = $this->getMock(CountryZoneRepository::class, ['findOneByExternalId'],
-            [], '', false);
-        $this->categoryRepository = $this->getMock(CategoryRepository::class, ['findOneByExternalId'], [], '',
-            false);
+        $this->countryZoneRepository = $this->getMock(
+            CountryZoneRepository::class,
+            ['findOneByExternalId'],
+            [],
+            '',
+            false
+        );
+        $this->categoryRepository = $this->getMock(
+            CategoryRepository::class,
+            ['findOneByExternalId'],
+            [],
+            '',
+            false
+        );
         $this->inject($this->entryNormalizer, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
         $this->inject($this->entryNormalizer, 'countryZoneRepository', $this->countryZoneRepository);
@@ -105,8 +114,10 @@ class SerializerTest extends UnitTestCase
 
         $object = $this->subject->deserialize($xml, Entry::class, 'xml');
         /* @var $object Entry */
-        self::assertSame('Gesundheitsamt Uelzen, Lüchow-Dannenberg, Schwangerschaftskonfliktberatungsstelle',
-            $object->getTitle());
+        self::assertSame(
+            'Gesundheitsamt Uelzen, Lüchow-Dannenberg, Schwangerschaftskonfliktberatungsstelle',
+            $object->getTitle()
+        );
         self::assertSame(1858, (integer)$object->getExternalId());
     }
 

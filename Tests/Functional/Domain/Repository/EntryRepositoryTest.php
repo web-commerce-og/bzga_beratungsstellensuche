@@ -52,7 +52,6 @@ class EntryRepositoryTest extends FunctionalTestCase
     const ENTRY_DEFAULT_FIXTURE_UID = 1;
 
     /**
-     * @return void
      */
     public function setUp()
     {
@@ -103,18 +102,38 @@ class EntryRepositoryTest extends FunctionalTestCase
         $this->setUpBackendUserFromFixture(1);
         $this->entryRepository->deleteByUid(self::ENTRY_DEFAULT_FIXTURE_UID);
         $this->assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
-        $this->assertEquals(0,
-            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_entry_category_mm',
-                'uid_local = ' . self::ENTRY_DEFAULT_FIXTURE_UID));
-        $this->assertEquals(0,
-            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'sys_file_reference',
-                'deleted = 0 AND fieldname = "image" AND tablename = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID));
-        $this->assertEquals(0,
-            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'sys_file_metadata',
-                'file = 10014'));
-        $this->assertEquals(0,
-            $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'sys_file',
-                'uid = 10014'));
+        $this->assertEquals(
+            0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows(
+                '*',
+                'tx_bzgaberatungsstellensuche_entry_category_mm',
+                'uid_local = ' . self::ENTRY_DEFAULT_FIXTURE_UID
+            )
+        );
+        $this->assertEquals(
+            0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows(
+                '*',
+                'sys_file_reference',
+                'deleted = 0 AND fieldname = "image" AND tablename = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID
+            )
+        );
+        $this->assertEquals(
+            0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows(
+                '*',
+                'sys_file_metadata',
+                'file = 10014'
+            )
+        );
+        $this->assertEquals(
+            0,
+            $this->getDatabaseConnection()->exec_SELECTcountRows(
+                '*',
+                'sys_file',
+                'uid = 10014'
+            )
+        );
     }
 
     /**
@@ -122,8 +141,10 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function findOldEntriesByExternalUidsDiffForTable()
     {
-        $oldEntries      = $this->entryRepository->findOldEntriesByExternalUidsDiffForTable('tx_bzgaberatungsstellensuche_domain_model_entry',
-            [1]);
+        $oldEntries      = $this->entryRepository->findOldEntriesByExternalUidsDiffForTable(
+            'tx_bzgaberatungsstellensuche_domain_model_entry',
+            [1]
+        );
         $expectedEntries = [
             [
                 'uid' => 2,
@@ -148,7 +169,6 @@ class EntryRepositoryTest extends FunctionalTestCase
     }
 
     /**
-     * @return void
      */
     public function tearDown()
     {

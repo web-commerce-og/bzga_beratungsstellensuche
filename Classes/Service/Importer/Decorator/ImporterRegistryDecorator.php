@@ -58,11 +58,10 @@ class ImporterRegistryDecorator extends AbstractImporter
     /**
      * @param $content
      * @param int $pid
-     * @return void
      */
     public function import($content, $pid = 0)
     {
-        # If nothing has changed in the content, we do nothing
+        // If nothing has changed in the content, we do nothing
         $hash = md5($content);
         if ($hash !== $this->registry->get(self::REGISTRY_NAMESPACE, self::REGISTRY_KEY)) {
             $this->importer->import($content, $pid);

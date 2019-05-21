@@ -62,7 +62,6 @@ abstract class AbstractBaseRepository extends Repository
      *
      * @param QueryResultInterface $queryResult
      * @param bool $explainOutput
-     * @return void
      */
     public function debugQuery(QueryResultInterface $queryResult, $explainOutput = false)
     {
@@ -83,16 +82,19 @@ abstract class AbstractBaseRepository extends Repository
     /**
      * @param string $table
      * @param array $entries
-     * @return array|NULL
+     * @return array|null
      */
     public function findOldEntriesByExternalUidsDiffForTable($table, $entries)
     {
         $databaseConnection = $this->getDatabaseConnection();
-        # We fetch all entries in database which has not been imported
+        // We fetch all entries in database which has not been imported
         $importedExternalUids = implode(',', $databaseConnection->cleanIntArray($entries));
         if ($importedExternalUids) {
-            $oldEntries = $databaseConnection->exec_SELECTgetRows('uid', $table,
-                'deleted = 0 AND external_id NOT IN(' . $importedExternalUids . ')');
+            $oldEntries = $databaseConnection->exec_SELECTgetRows(
+                'uid',
+                $table,
+                'deleted = 0 AND external_id NOT IN(' . $importedExternalUids . ')'
+            );
 
             return $oldEntries;
         }

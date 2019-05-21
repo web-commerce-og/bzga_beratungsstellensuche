@@ -33,7 +33,7 @@ class StringConverter implements TypeConverterBeforeInterface
 
     public function __construct()
     {
-        # TODO: This is currently not really testable. We have to make DI concept here.
+        // TODO: This is currently not really testable. We have to make DI concept here.
         $config = HTMLPurifier_Config::createDefault();
         $this->purifier = new HTMLPurifier($config);
     }
@@ -60,7 +60,7 @@ class StringConverter implements TypeConverterBeforeInterface
 
     /**
      * @param $source
-     * @param array|null|AbstractEntity $configuration
+     * @param AbstractEntity|array|null $configuration
      * @return string
      */
     public function convert($source, array $configuration = null)

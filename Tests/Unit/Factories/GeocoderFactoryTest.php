@@ -28,7 +28,9 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function googleMapsGeocoderReturned()
     {
-        $this->assertInstanceOf(GoogleMaps::class,
-            GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpAdapterFactory::createInstance()));
+        $this->assertInstanceOf(
+            GoogleMaps::class,
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpAdapterFactory::createInstance())
+        );
     }
 }

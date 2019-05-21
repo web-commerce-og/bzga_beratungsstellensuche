@@ -53,8 +53,6 @@ class SitemapGenerator extends AbstractSitemapGenerator
 
     /**
      * Generates site map.
-     *
-     * @return void
      */
     protected function generateSitemapContent()
     {
@@ -66,18 +64,27 @@ class SitemapGenerator extends AbstractSitemapGenerator
                 $languageCondition = ' AND sys_language_uid=' . $language;
             }
 
-            $res = $this->getDatabaseConnection()->exec_SELECTquery('*',
-                'tx_bzgaberatungsstellensuche_domain_model_entry', 'pid IN (' . implode(',', $this->pidList) . ')' .
+            $res = $this->getDatabaseConnection()->exec_SELECTquery(
+                '*',
+                'tx_bzgaberatungsstellensuche_domain_model_entry',
+                'pid IN (' . implode(',', $this->pidList) . ')' .
                 $languageCondition .
-                $this->cObj->enableFields('tx_bzgaberatungsstellensuche_domain_model_entry'), '', 'title ASC',
+                $this->cObj->enableFields('tx_bzgaberatungsstellensuche_domain_model_entry'),
+                '',
+                'title ASC',
                 $this->offset . ',' . $this->limit
             );
             $rowCount = $this->getDatabaseConnection()->sql_num_rows($res);
             while (false !== ($row = $this->getDatabaseConnection()->sql_fetch_assoc($res))) {
                 $forceSinglePid = null;
                 if ($url = $this->getItemUrl($row, $forceSinglePid)) {
-                    echo $this->renderer->renderEntry($url, $row['title'], $row['tstamp'],
-                        '', $row['keywords']);
+                    echo $this->renderer->renderEntry(
+                        $url,
+                        $row['title'],
+                        $row['tstamp'],
+                        '',
+                        $row['keywords']
+                    );
                 }
             }
             $this->getDatabaseConnection()->sql_free_result($res);
@@ -124,8 +131,6 @@ class SitemapGenerator extends AbstractSitemapGenerator
     /**
      * Checks that page list is in the rootline of the current page and excludes
      * pages that are outside of the rootline.
-     *
-     * @return    void
      */
     protected function validateAndCreatePageList()
     {

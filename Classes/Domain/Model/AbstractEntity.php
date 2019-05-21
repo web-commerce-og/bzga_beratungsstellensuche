@@ -22,7 +22,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity as CoreAbstractEntity;
  */
 abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterface, ExternalIdInterface
 {
-
     use DummyTrait, ExternalIdTrait;
 
     /**

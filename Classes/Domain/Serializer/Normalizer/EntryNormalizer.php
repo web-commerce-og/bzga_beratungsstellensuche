@@ -41,7 +41,7 @@ class EntryNormalizer extends GetSetMethodNormalizer
 
     /**
      * EntryNormalizer constructor.
-     * @param null|ClassMetadataFactoryInterface $classMetadataFactory
+     * @param ClassMetadataFactoryInterface|null $classMetadataFactory
      */
     public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null)
     {

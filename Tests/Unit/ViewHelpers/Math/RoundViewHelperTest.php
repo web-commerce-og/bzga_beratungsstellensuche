@@ -22,7 +22,7 @@ class RoundViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var RoundViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|RoundViewHelper
      */
     protected $subject;
 

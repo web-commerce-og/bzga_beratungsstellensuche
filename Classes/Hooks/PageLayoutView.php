@@ -151,8 +151,6 @@ class PageLayoutView
 
     /**
      * Render single settings
-     *
-     * @return void
      */
     private function getDetailPidSetting()
     {
@@ -169,7 +167,6 @@ class PageLayoutView
     }
 
     /**
-     * @return void
      */
     private function getFormFieldsSetting()
     {
@@ -189,8 +186,6 @@ class PageLayoutView
 
     /**
      * Render listPid settings
-     *
-     * @return void
      */
     private function getListPidSetting()
     {
@@ -208,8 +203,6 @@ class PageLayoutView
 
     /**
      * Render listPid settings
-     *
-     * @return void
      */
     private function getListItemsPerPageSetting()
     {
@@ -225,8 +218,6 @@ class PageLayoutView
 
     /**
      * Render listPid settings
-     *
-     * @return void
      */
     private function getBackPidSetting()
     {
@@ -255,10 +246,16 @@ class PageLayoutView
         if (is_array($pageRecord)) {
             $content = $this->iconUtility->getIconForRecord('pages', $pageRecord);
         } else {
-            $text = sprintf($this->sL('pagemodule.pageNotAvailable', true),
-                $detailPid);
-            $message = GeneralUtility::makeInstance(FlashMessage::class, $text, '',
-                FlashMessage::WARNING);
+            $text = sprintf(
+                $this->sL('pagemodule.pageNotAvailable', true),
+                $detailPid
+            );
+            $message = GeneralUtility::makeInstance(
+                FlashMessage::class,
+                $text,
+                '',
+                FlashMessage::WARNING
+            );
             /** @var $message FlashMessage */
             $content = $message->render();
         }
@@ -270,7 +267,6 @@ class PageLayoutView
      * Render template layout configuration
      *
      * @param int $pageUid
-     * @return void
      */
     private function getTemplateLayoutSettings($pageUid)
     {
@@ -296,8 +292,6 @@ class PageLayoutView
 
     /**
      * Get the startingpoint
-     *
-     * @return void
      */
     private function getStartingPoint()
     {
@@ -312,8 +306,10 @@ class PageLayoutView
             );
 
             foreach ($rawPagesRecords as $page) {
-                $pagesOut[] = htmlspecialchars(BackendUtilityCore::getRecordTitle('pages',
-                        $page)) . ' (' . $page['uid'] . ')';
+                $pagesOut[] = htmlspecialchars(BackendUtilityCore::getRecordTitle(
+                    'pages',
+                        $page
+                )) . ' (' . $page['uid'] . ')';
             }
 
             $recursiveLevel = (int)$this->getFieldFromFlexform('settings.recursive');
@@ -363,7 +359,7 @@ class PageLayoutView
      *
      * @param string $key name of the key
      * @param string $sheet name of the sheet
-     * @return string|NULL if nothing found, value if found
+     * @return string|null if nothing found, value if found
      */
     private function getFieldFromFlexform($key, $sheet = 'sDEF')
     {

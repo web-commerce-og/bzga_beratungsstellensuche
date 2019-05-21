@@ -42,7 +42,7 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
 
     /**
      * @param $source
-     * @param array|null|AbstractEntity $configuration
+     * @param AbstractEntity|array|null $configuration
      * @return string
      */
     public function convert($source, array $configuration = null)

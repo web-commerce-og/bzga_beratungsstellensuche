@@ -28,7 +28,6 @@ class ItemsProcFunc
      * Itemsproc function to extend the selection of templateLayouts in the plugin
      *
      * @param array &$config configuration array
-     * @return void
      */
     public function user_templateLayout(array &$config)
     {
@@ -46,7 +45,6 @@ class ItemsProcFunc
 
     /**
      * @param array $config
-     * @return void
      */
     public function user_formFields(array &$config)
     {

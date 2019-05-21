@@ -63,7 +63,6 @@ class BackendUtility
      * @param array $conf some strange configuration
      * @param array $row row of current record
      * @param string $table table name
-     * @return void
      */
     public function getFlexFormDS_postProcessDS(&$dataStructure, $conf, $row, $table)
     {
@@ -77,7 +76,6 @@ class BackendUtility
      *
      * @param array|string &$dataStructure flexform structure
      * @param array $row row of current record
-     * @return void
      */
     private function updateFlexforms(array &$dataStructure, array $row)
     {
@@ -134,7 +132,6 @@ class BackendUtility
      *
      * @param array &$dataStructure flexform structure
      * @param array $fieldsToBeRemoved fields which need to be removed
-     * @return void
      */
     private function deleteFromStructure(array &$dataStructure, array $fieldsToBeRemoved)
     {

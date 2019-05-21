@@ -375,8 +375,10 @@ return [
         'image' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.image',
-            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig('image',
-                ['maxitems' => 1]),
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'image',
+                ['maxitems' => 1]
+            ),
         ],
         'is_dummy_record' => [
             'exclude' => 1,

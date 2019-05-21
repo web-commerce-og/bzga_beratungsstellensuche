@@ -66,8 +66,6 @@ class ClassCacheManager implements SingletonInterface
 
     /**
      * Initialize cache instance to be ready to use
-     *
-     * @return void
      */
     protected function initializeCache()
     {
@@ -77,8 +75,10 @@ class ClassCacheManager implements SingletonInterface
         /* @var $cacheManager CacheManager */
         if (!$cacheManager->hasCache($this->extensionKey)) {
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->extensionKey])) {
-                ArrayUtility::mergeRecursiveWithOverrule($this->cacheConfiguration[$this->extensionKey],
-                    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->extensionKey]);
+                ArrayUtility::mergeRecursiveWithOverrule(
+                    $this->cacheConfiguration[$this->extensionKey],
+                    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->extensionKey]
+                );
             }
             $cacheManager->setCacheConfigurations($this->cacheConfiguration);
         }
@@ -88,7 +88,6 @@ class ClassCacheManager implements SingletonInterface
     /**
      * Builds and caches the proxy files
      *
-     * @return void
      * @throws Exception
      */
     public function build()
@@ -236,16 +235,19 @@ class ClassCacheManager implements SingletonInterface
 
     /**
      * Clear the class cache
-     *
-     * @return void
      */
     public function clear()
     {
         $this->cacheInstance->flush();
         if (isset($GLOBALS['BE_USER'])) {
-            $GLOBALS['BE_USER']->writelog(3, 1, 0, 0,
+            $GLOBALS['BE_USER']->writelog(
+                3,
+                1,
+                0,
+                0,
                 '[BZgA Beratungsstellensuche]: User %s has cleared the class cache',
-                [$GLOBALS['BE_USER']->user['username']]);
+                [$GLOBALS['BE_USER']->user['username']]
+            );
         }
     }
 

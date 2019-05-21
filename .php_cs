@@ -30,12 +30,13 @@
  *     http://cs.sensiolabs.org
  */
 
+
 if (PHP_SAPI !== 'cli') {
     die('This script supports command line usage only. Please check your command.');
 }
 // Define in which folders to search and which folders to exclude
 // Exclude some directories that are excluded by Git anyways to speed up the sniffing
-$finder = Symfony\CS\Finder\DefaultFinder::create()
+$finder = PhpCsFixer\Finder::create()
                                          ->exclude('Libraries')
                                          ->in(__DIR__);
 
@@ -48,34 +49,43 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
 //  - Remove unused use statements in the PHP source code
 //  - Ensure Concatenation to have at least one whitespace around
 //  - Remove trailing whitespace at the end of blank lines.
-return Symfony\CS\Config\Config::create()
-                               ->level(Symfony\CS\FixerInterface::PSR2_LEVEL)
-                               ->fixers([
-                                   // If changes to the fixers are done, please sync them with typo3/sysext/core/Build/Scripts/cglFixMyCommit.sh
-                                   'remove_leading_slash_use',
-                                   'single_array_no_trailing_comma',
-                                   'spaces_before_semicolon',
-                                   'unused_use',
-                                   'concat_with_spaces',
-                                   'whitespacy_lines',
-                                   'ordered_use',
-                                   'single_quote',
-                                   'duplicate_semicolon',
-                                   'extra_empty_lines',
-                                   'phpdoc_no_package',
-                                   'phpdoc_scalar',
-                                   'no_empty_lines_after_phpdocs',
-                                   'short_array_syntax',
-                                   'array_element_white_space_after_comma',
-                                   'function_typehint_space',
-                                   'hash_to_slash_comment',
-                                   'join_function',
-                                   'lowercase_cast',
-                                   'namespace_no_leading_whitespace',
-                                   'native_function_casing',
-                                   'no_empty_statement',
-                                   'self_accessor',
-                                   'short_bool_cast',
-                                   'unneeded_control_parentheses',
-                               ])
-                               ->finder($finder);
+return PhpCsFixer\Config::create()
+    ->setUsingCache(true)
+    ->setRiskyAllowed(true)
+    ->setRules(array(
+        '@PSR2' => true,
+        'no_leading_import_slash' => true,
+        'no_trailing_comma_in_singleline_array' => true,
+        'no_singleline_whitespace_before_semicolons' => true,
+        'no_unused_imports' => true,
+        'concat_space' => ['spacing' => 'one'],
+        'no_whitespace_in_blank_line' => true,
+        'ordered_imports' => true,
+        'single_quote' => true,
+        'no_empty_statement' => true,
+        'no_extra_consecutive_blank_lines' => true,
+        'phpdoc_no_package' => true,
+        'phpdoc_scalar' => true,
+        'no_blank_lines_after_phpdoc' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'whitespace_after_comma_in_array' => true,
+        'function_typehint_space' => true,
+        'hash_to_slash_comment' => true,
+        'no_alias_functions' => true,
+        'lowercase_cast' => true,
+        'no_leading_namespace_whitespace' => true,
+        'native_function_casing' => true,
+        'no_short_bool_cast' => true,
+        'no_unneeded_control_parentheses' => true,
+        'phpdoc_no_empty_return' => true,
+        'phpdoc_trim' => true,
+        'no_superfluous_elseif' => true,
+        'no_useless_else' => true,
+        'phpdoc_types' => true,
+        'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'alpha'],
+        'return_type_declaration' => ['space_before' => 'none'],
+        'cast_spaces' => ['space' => 'none'],
+        'declare_equal_normalize' => ['space' => 'single'],
+        'dir_constant' => true,
+    ))
+    ->setFinder($finder);

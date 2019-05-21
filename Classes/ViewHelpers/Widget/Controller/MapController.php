@@ -79,19 +79,20 @@ class MapController extends AbstractWidgetController
     protected $settings = [];
 
     /**
-     * @return void
      */
     public function initializeAction()
     {
         $this->settings = $this->widgetConfiguration['settings'];
         $this->entry = $this->widgetConfiguration['entry'];
         $this->demand = $this->widgetConfiguration['demand'];
-        ArrayUtility::mergeRecursiveWithOverrule($this->styleSheetOptions,
-            $this->widgetConfiguration['styleSheetOptions'], false);
+        ArrayUtility::mergeRecursiveWithOverrule(
+            $this->styleSheetOptions,
+            $this->widgetConfiguration['styleSheetOptions'],
+            false
+        );
     }
 
     /**
-     * @return void
      */
     public function indexAction()
     {
@@ -161,8 +162,11 @@ class MapController extends AbstractWidgetController
                 );
             }
             // Create Info Window
-            $infoWindow = new InfoWindow($entry->getInfoWindow($infoWindowParameters), InfoWindowType::DEFAULT_,
-                $coordinate);
+            $infoWindow = new InfoWindow(
+                $entry->getInfoWindow($infoWindowParameters),
+                InfoWindowType::DEFAULT_,
+                $coordinate
+            );
             $infoWindow->setOpenEvent(MouseEvent::MOUSEDOWN);
             $infoWindow->setAutoClose(true);
             $infoWindow->setOptions(

@@ -90,7 +90,6 @@ class ExtensionManagementUtility
      * Register a type converter by class name.
      *
      * @param string $typeConverterClassName
-     * @return void
      * @api
      */
     public static function registerTypeConverter($typeConverterClassName)

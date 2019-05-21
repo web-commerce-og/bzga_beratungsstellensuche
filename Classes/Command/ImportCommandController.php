@@ -41,7 +41,7 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     protected $entryRepository;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput|ProgressbarInterface
+     * @var ProgressbarInterface|\TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput
      */
     protected $output;
 
@@ -104,7 +104,6 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     /**
      * @param bool $forceReImport
      *
-     * @return void
      * @throws InvalidArgumentException
      */
     private function import($forceReImport = false)
@@ -134,7 +133,6 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     }
 
     /**
-     * @return void
      */
     public function progressAdvance()
     {
@@ -144,7 +142,6 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     }
 
     /**
-     * @return void
      */
     public function progressFinish()
     {

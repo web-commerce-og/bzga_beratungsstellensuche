@@ -37,8 +37,10 @@ class ext_update
         $databaseUpdateUtility = $objectManager->get(DatabaseUpdateUtility::class);
         $databaseUpdateUtility->doUpdate('bzga_beratungsstellensuche');
 
-        $content .= '<p>' . LocalizationUtility::translate('updateLanguageLabels',
-                'StaticInfoTables') . ' bzga_beratungsstellensuche.</p>';
+        $content .= '<p>' . LocalizationUtility::translate(
+            'updateLanguageLabels',
+                'StaticInfoTables'
+        ) . ' bzga_beratungsstellensuche.</p>';
 
         $this->createImageUploadFolder();
 
@@ -46,7 +48,6 @@ class ext_update
     }
 
     /**
-     * @return void
      */
     private function createImageUploadFolder()
     {

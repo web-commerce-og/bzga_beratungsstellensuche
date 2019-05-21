@@ -39,8 +39,6 @@ class HeaderDataViewHelper extends AbstractViewHelper
 
     /**
      * Renders HeaderData
-     *
-     * @return void
      */
     public function render()
     {

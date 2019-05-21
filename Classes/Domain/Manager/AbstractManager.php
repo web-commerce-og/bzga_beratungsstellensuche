@@ -92,7 +92,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     /**
      * @param AbstractEntity|ExternalIdTrait $entity
      *
-     * @return void
      * @throws \TYPO3\CMS\Extbase\Reflection\Exception\PropertyNotAccessibleException
      * @throws \InvalidArgumentException
      */
@@ -102,7 +101,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
         $tableUid = $this->getUid($entity);
 
-        # Add external uid to stack of updated, or inserted entries, we need this for the clean up
+        // Add external uid to stack of updated, or inserted entries, we need this for the clean up
         $this->entries->attach($entity);
         $this->externalUids[] = $entity->getExternalId();
 
@@ -116,14 +115,16 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
                 $propertyValue = ObjectAccess::getProperty($entity, $propertyName);
                 if ($typeConverter = $this->propertyMapper->supports($propertyValue)
                 ) {
-                    $propertyValue = $typeConverter->convert($propertyValue,
+                    $propertyValue = $typeConverter->convert(
+                        $propertyValue,
                         [
                             'manager' => $this,
                             'tableUid' => $tableUid,
                             'tableName' => $tableName,
                             'tableField' => 'image',
                             'entity' => $entity,
-                        ]);
+                        ]
+                    );
                     if (null !== $propertyValue) {
                         $data[$propertyNameLowercase] = $propertyValue;
                     }
@@ -142,7 +143,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     }
 
     /**
-     * @return void
      */
     public function persist()
     {
@@ -164,7 +164,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     }
 
     /**
-     * @return void
      * @see \Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor
      */
     public function cleanUp()
@@ -173,7 +172,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $table = $this->dataMapFactory->getTableNameByClassName($repository->getObjectType());
         $oldEntries = $repository->findOldEntriesByExternalUidsDiffForTable($table, $this->externalUids);
 
-        # Now we delete then entries via the datahandler, the actual deletion is done by a HOOK
+        // Now we delete then entries via the datahandler, the actual deletion is done by a HOOK
         $cmd = [];
         foreach ($oldEntries as $oldEntry) {
             $cmd[$table][$oldEntry['uid']] = ['delete' => ''];
@@ -210,7 +209,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      */
     private function getUid(AbstractEntity $entity)
     {
-        # @TODO: Is there a better solution to check? Can we bind it directly to the object? At the moment i am getting an error
+        // @TODO: Is there a better solution to check? Can we bind it directly to the object? At the moment i am getting an error
         if ($entity->_isNew()) {
             return uniqid('NEW_', false);
         }

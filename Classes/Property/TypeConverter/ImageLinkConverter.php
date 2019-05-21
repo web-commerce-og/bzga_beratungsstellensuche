@@ -87,7 +87,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     ];
 
     /**
-     * @var null|DataHandler
+     * @var DataHandler|null
      */
     private $dataHandler;
 
@@ -107,7 +107,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param mixed|ImageLink $source
+     * @param ImageLink|mixed $source
      * @param string $type
      *
      * @return bool
@@ -123,7 +123,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @param ImageLink $source
-     * @param array|AbstractEntity $configuration
+     * @param AbstractEntity|array $configuration
      *
      * @return int
      * @throws TypeConverterException
@@ -233,8 +233,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @param array $fileReferenceData
-     *
-     * @return void
      */
     private function deleteOldFileReferences(array $fileReferenceData)
     {
@@ -261,7 +259,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @param ImageLink $source
-     * @param ExternalIdInterface|AbstractEntity $entity
+     * @param AbstractEntity|ExternalIdInterface $entity
      *
      * @return int
      * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException
@@ -270,8 +268,10 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     private function getFileUid(ImageLink $source, $entity)
     {
         // First we check if we already have a file with the identifier in the database
-        $where = 'external_identifier = ' . $this->getDatabaseConnection()->fullQuoteStr($source->getIdentifier(),
-                'sys_file');
+        $where = 'external_identifier = ' . $this->getDatabaseConnection()->fullQuoteStr(
+            $source->getIdentifier(),
+                'sys_file'
+        );
 
         if ($row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('uid', 'sys_file', $where)) {
             return $row['uid'];
@@ -280,8 +280,11 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         $pathToUploadFile = $this->downloadFile($source, $entity);
         $falFile          = $this->importResource($pathToUploadFile);
 
-        $this->getDatabaseConnection()->exec_UPDATEquery('sys_file', 'uid = ' . $falFile->getUid(),
-            ['external_identifier' => $source->getIdentifier()]);
+        $this->getDatabaseConnection()->exec_UPDATEquery(
+            'sys_file',
+            'uid = ' . $falFile->getUid(),
+            ['external_identifier' => $source->getIdentifier()]
+        );
 
         return $falFile->getUid();
     }

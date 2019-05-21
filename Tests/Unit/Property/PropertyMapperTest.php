@@ -30,12 +30,11 @@ class PropertyMapperTest extends UnitTestCase
     protected $objectManager;
 
     /**
-     * @var PropertyMapper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|PropertyMapper
      */
     protected $subject;
 
     /**
-     * @return void
      */
     protected function setUp()
     {
@@ -56,18 +55,18 @@ class PropertyMapperTest extends UnitTestCase
      */
     public function convertSuccessfully()
     {
-        /** @var TypeConverterBeforeInterface|\PHPUnit_Framework_MockObject_MockObject  $typeConverter */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface  $typeConverter */
         $typeConverter = $this->setUpTypeConverter();
         $typeConverter->expects($this->once())->method('convert')->willReturn(true);
         $this->assertTrue($this->subject->convert('array'));
     }
 
     /**
-     * @return TypeConverterBeforeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface
      */
     private function setUpTypeConverter()
     {
-        /** @var TypeConverterBeforeInterface|\PHPUnit_Framework_MockObject_MockObject  $typeConverter */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface  $typeConverter */
         $typeConverter  = $this->getMockBuilder(TypeConverterBeforeInterface::class)->getMock();
         $typeConverter->expects($this->once())->method('supports')->willReturn(true);
         $this->subject->expects($this->once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);
@@ -78,7 +77,6 @@ class PropertyMapperTest extends UnitTestCase
 
     /**
      * @param $typeConverter TypeConverterInterface
-     * @return void
      * @internal param array $typeConverters
      */
     private function injectObjectManager($typeConverter)

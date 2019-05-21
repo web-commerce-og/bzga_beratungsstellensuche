@@ -82,7 +82,6 @@ class EntryController extends ActionController
     protected $countryZoneRepository;
 
     /**
-     * @return void
      */
     public function initializeAction()
     {
@@ -97,10 +96,16 @@ class EntryController extends ActionController
         if ($this->arguments->hasArgument('demand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
             $propertyMappingConfiguration->allowAllProperties();
-            $propertyMappingConfiguration->setTypeConverterOption(PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED, true);
-            $propertyMappingConfiguration->setTypeConverterOption(PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_MODIFICATION_ALLOWED, true);
+            $propertyMappingConfiguration->setTypeConverterOption(
+                PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                true
+            );
+            $propertyMappingConfiguration->setTypeConverterOption(
+                PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_MODIFICATION_ALLOWED,
+                true
+            );
             $propertyMappingConfiguration->forProperty('categories')->allowAllProperties();
             $propertyMappingConfiguration->allowCreationForSubProperty('categories');
             $propertyMappingConfiguration->allowModificationForSubProperty('categories');
@@ -109,7 +114,6 @@ class EntryController extends ActionController
     }
 
     /**
-     * @return void
      */
     public function initializeFormAction()
     {
@@ -119,7 +123,6 @@ class EntryController extends ActionController
 
     /**
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
-     * @return void
      */
     public function formAction(Demand $demand = null)
     {
@@ -135,7 +138,6 @@ class EntryController extends ActionController
     }
 
     /**
-     * @return void
      */
     public function initializeListAction()
     {
@@ -150,7 +152,6 @@ class EntryController extends ActionController
     /**
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      *
-     * @return void
      * @throws \UnexpectedValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
@@ -169,7 +170,6 @@ class EntryController extends ActionController
     }
 
     /**
-     * @return void
      */
     public function initializeShowAction()
     {
@@ -180,7 +180,6 @@ class EntryController extends ActionController
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
      * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
      *
-     * @return void
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
@@ -211,7 +210,6 @@ class EntryController extends ActionController
 
     /**
      * @param $signalArguments
-     * @return void
      */
     private function emitInitializeActionSignal($signalArguments)
     {
@@ -234,7 +232,6 @@ class EntryController extends ActionController
     }
 
     /**
-     * @return void
      */
     private function addDemandRequestArgumentFromSession()
     {
@@ -245,7 +242,6 @@ class EntryController extends ActionController
     }
 
     /**
-     * @return void
      */
     private function resetDemand()
     {
@@ -259,7 +255,6 @@ class EntryController extends ActionController
      * @param string $data
      * @param string("js", "css") $type
      * @param string $media
-     * @return void
      */
     private function addHeaderData($data, $type = self::TYPE_CSS, $media = 'all')
     {
