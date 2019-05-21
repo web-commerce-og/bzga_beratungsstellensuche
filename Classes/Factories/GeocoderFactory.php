@@ -14,8 +14,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Geocoder\Provider\GoogleMaps;
+use Geocoder\Provider\Nominatim;
+use Geocoder\Provider\OpenStreetMap;
+use Geocoder\Provider\Provider;
 use Ivory\HttpAdapter\HttpAdapterInterface;
+use RuntimeException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @author Sebastian Schreiber
@@ -26,7 +32,8 @@ class GeocoderFactory
     /**
      * @var string
      */
-    const TYPE_GOOGLE = 'google';
+    const TYPE_GOOGLE = 'GoogleMaps';
+    const TYPE_OPEN_STREET_MAP = 'OpenStreetMap';
 
     /**
      * @param string $type
@@ -35,7 +42,8 @@ class GeocoderFactory
      * @param string|null $region
      * @param bool $useSsl
      * @param string|null $apiKey
-     * @return GoogleMaps
+     *
+     * @return Provider
      */
     public static function createInstance(
         $type,
@@ -45,10 +53,26 @@ class GeocoderFactory
         $useSsl = false,
         $apiKey = null
     ) {
-        // @TODO: Implement other types for flexibility
         switch ($type) {
-            default:
+            case self::TYPE_OPEN_STREET_MAP:
+                return new OpenStreetMap($adapter, $locale);
+                break;
+            case self::TYPE_GOOGLE:
                 return new GoogleMaps($adapter, $locale, $region, $useSsl, $apiKey);
+                break;
+            default:
+
+                if(!class_exists($type)) {
+                    throw new RuntimeException(sprintf('The %s class does not exist', $type));
+                }
+
+                $customProvider = GeneralUtility::makeInstance($type);
+
+                if (!$customProvider instanceof Provider) {
+                    throw new RuntimeException(sprintf('The %s must implement the %s interface', $type, Provider::class));
+                }
+
+                return $customProvider;
                 break;
         }
     }
