@@ -20,12 +20,15 @@ use InvalidArgumentException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 use UnexpectedValueException;
 
 /**
  * @author Sebastian Schreiber
  */
-class ImportCommandController extends CommandController implements ProgressBarInterface
+class ImportCommandController extends CommandController
 {
 
     /**
@@ -41,11 +44,6 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     protected $entryRepository;
 
     /**
-     * @var ProgressbarInterface|\TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput
-     */
-    protected $output;
-
-    /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      * @inject
      */
@@ -53,7 +51,9 @@ class ImportCommandController extends CommandController implements ProgressBarIn
 
     /**
      * Delete all entries, files and relations from database
-     * @throws \InvalidArgumentException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     public function truncateAllCommand()
     {
@@ -67,7 +67,10 @@ class ImportCommandController extends CommandController implements ProgressBarIn
      * @param int $pid Storage folder uid
      * @param bool $forceReImport
      *
-     * @throws InvalidArgumentException
+     * @throws ContentCouldNotBeFetchedException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     public function importFromFileCommand($file, $pid = 0, $forceReImport = false)
     {
@@ -75,7 +78,6 @@ class ImportCommandController extends CommandController implements ProgressBarIn
             $this->xmlImporter->importFromFile($file, $pid);
             $this->import($forceReImport);
         } catch (FileDoesNotExistException $e) {
-            // @TODO: How to handle the exception in practice?
             throw new $e;
         }
     }
@@ -87,8 +89,10 @@ class ImportCommandController extends CommandController implements ProgressBarIn
      * @param int $pid Storage folder uid
      * @param bool $forceReImport
      *
-     * @throws InvalidArgumentException
      * @throws ContentCouldNotBeFetchedException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     public function importFromUrlCommand($url, $pid = 0, $forceReImport = false)
     {
@@ -96,7 +100,6 @@ class ImportCommandController extends CommandController implements ProgressBarIn
             $this->xmlImporter->importFromUrl($url, $pid);
             $this->import($forceReImport);
         } catch (UnexpectedValueException $e) {
-            // @TODO: How to handle the exception in practice?
             throw new $e;
         }
     }
@@ -104,7 +107,9 @@ class ImportCommandController extends CommandController implements ProgressBarIn
     /**
      * @param bool $forceReImport
      *
-     * @throws InvalidArgumentException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     private function import($forceReImport = false)
     {
@@ -112,41 +117,10 @@ class ImportCommandController extends CommandController implements ProgressBarIn
             $this->entryRepository->truncateAll();
         }
 
-        $this->progressStart($this->xmlImporter->count());
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value);
-            $this->progressAdvance();
         }
         $this->xmlImporter->persist();
         $this->xmlImporter->cleanUp();
-        $this->progressFinish();
-    }
-
-    /**
-     * @param int $count
-     */
-    public function progressStart($count)
-    {
-        if ($this->output instanceof ConsoleOutput) {
-            $this->output->progressStart($count);
-        }
-    }
-
-    /**
-     */
-    public function progressAdvance()
-    {
-        if ($this->output instanceof ConsoleOutput) {
-            $this->output->progressAdvance();
-        }
-    }
-
-    /**
-     */
-    public function progressFinish()
-    {
-        if ($this->output instanceof ConsoleOutput) {
-            $this->output->progressFinish();
-        }
     }
 }
