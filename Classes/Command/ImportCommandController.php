@@ -14,11 +14,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Console\ProgressBarInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
-use InvalidArgumentException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
-use TYPO3\CMS\Extbase\Mvc\Cli\ConsoleOutput;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;

@@ -14,9 +14,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\Nominatim;
 use Geocoder\Provider\OpenStreetMap;
 use Geocoder\Provider\Provider;
 use Ivory\HttpAdapter\HttpAdapterInterface;
@@ -62,7 +60,7 @@ class GeocoderFactory
                 break;
             default:
 
-                if(!class_exists($type)) {
+                if (!class_exists($type)) {
                     throw new RuntimeException(sprintf('The %s class does not exist', $type));
                 }
 

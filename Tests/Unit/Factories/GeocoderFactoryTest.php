@@ -17,8 +17,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Factories;
 
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
-use Geocoder\Geocoder;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMaps;
 use Geocoder\Provider\OpenStreetMap;
 use Geocoder\Provider\Provider;
@@ -44,8 +42,10 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function openStreetMapGeocoderReturned()
     {
-        $this->assertInstanceOf(OpenStreetMap::class,
-            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpAdapterFactory::createInstance()));
+        $this->assertInstanceOf(
+            OpenStreetMap::class,
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpAdapterFactory::createInstance())
+        );
     }
 
     /**
