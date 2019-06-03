@@ -23,9 +23,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath(
-                'bzga_beratungsstellensuche'
-            ) . 'Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_category.png',
+        'iconfile' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_category.png',
         'searchFields' => 'title',
     ],
     'interface' => [
