@@ -2,3 +2,6 @@ functional.sh
 _Documentation
 Documentation/.doctrees
 .php_cs.cache
+phpunit.xml
+.Build
+composer.lock
