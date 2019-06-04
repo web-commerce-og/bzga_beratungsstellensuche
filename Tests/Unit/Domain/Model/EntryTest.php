@@ -72,7 +72,7 @@ class EntryTest extends UnitTestCase
     /**
      * @test
      */
-    public function toString()
+    public function stringCastingEntityReturnsTitle()
     {
         $this->subject->setTitle('Title');
         $this->assertEquals('Title', (string)$this->subject);
