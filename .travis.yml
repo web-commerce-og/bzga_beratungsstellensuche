@@ -1,21 +1,14 @@
 language: php
 
-php:
-  - 7.0
-  - 7.1
-  - 7.2
-
-env:
-  - TYPO3_VERSION="^8.7.13"
-  - TYPO3_VERSION="^9.5.0"
-
 matrix:
   fast_finish: true
-  exclude:
-    - php: 7.0
-      env: TYPO3_VERSION="^9.5.0"
+  include:
     - php: 7.1
-      env: TYPO3_VERSION="^9.5.0"
+      env: TYPO3_VERSION=^8
+    - php: 7.0
+      env: TYPO3_VERSION=^8
+    - php: 7.2
+      env: TYPO3_VERSION=^9
 
 sudo: false
 
@@ -33,12 +26,13 @@ notifications:
     - breakpoint@schreibersebastian.de
 
 before_install:
-  - phpenv config-rm xdebug.ini
   - composer self-update
   - composer --version
 
 before_script:
-  - composer require typo3/cms="$TYPO3_VERSION"
+  - phpenv config-rm xdebug.ini
+  - composer require typo3/minimal=$TYPO3_VERSION
+  - composer require typo3/cms-recordlist=$TYPO3_VERSION
   # Restore composer.json
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
@@ -49,6 +43,10 @@ script:
     echo "Running unit tests";
     .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
 
+  - >
+    echo;
+    echo "Running php lint";
+    find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
   - >
     echo;
     export typo3DatabaseName="typo3";
