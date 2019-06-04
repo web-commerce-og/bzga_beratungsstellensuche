@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format\UppercaseFirstLetterViewHelper;
-use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 
 class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {

@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Math;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Math\RoundViewHelper;
-use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 
 class RoundViewHelperTest extends ViewHelperBaseTestcase
 {

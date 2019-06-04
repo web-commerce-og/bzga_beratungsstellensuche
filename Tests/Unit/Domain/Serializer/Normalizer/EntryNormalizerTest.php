@@ -18,7 +18,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
-use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
@@ -61,23 +60,11 @@ class EntryNormalizerTest extends UnitTestCase
      */
     protected function setUp()
     {
-        $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
-        $this->countryZoneRepository = $this->getMock(
-            CountryZoneRepository::class,
-            ['findOneByExternalId'],
-            [],
-            '',
-            false
-        );
-        $this->categoryRepository = $this->getMock(
-            CategoryRepository::class,
-            ['findOneByExternalId'],
-            [],
-            '',
-            false
-        );
-        $this->serializer = $this->getMock(SerializerNormalizer::class);
-        $this->subject = new EntryNormalizer(null, new EntryNameConverter());
+        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
+        $this->categoryRepository = $this->getMockBuilder(CategoryRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
+        $this->serializer = $this->getMockForAbstractClass(SerializerNormalizer::class);
+        $this->subject = new EntryNormalizer(null);
         $this->subject->setSerializer($this->serializer);
         $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->subject, 'countryZoneRepository', $this->countryZoneRepository);
@@ -117,7 +104,7 @@ class EntryNormalizerTest extends UnitTestCase
             'beratungsart' => [],
         ];
 
-        $countryZoneMock = $this->getMock(CountryZone::class);
+        $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
         $this->countryZoneRepository->expects($this->once())->method('findOneByExternalId')->willReturn($countryZoneMock);
 
         $object = $this->subject->denormalize($data, Entry::class);

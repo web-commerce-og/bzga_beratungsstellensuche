@@ -40,11 +40,16 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     protected $signalSlotDispatcher;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|SerializerNormalizer
+     */
+    private $serializer;
+
+    /**
      */
     protected function setUp()
     {
-        $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
-        $this->serializer = $this->getMock(SerializerNormalizer::class);
+        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->serializer = $this->getMockForAbstractClass(SerializerNormalizer::class);
         $this->subject = new GetSetMethodNormalizer(null, new EntryNameConverter());
         $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->subject->setSerializer($this->serializer);
@@ -70,7 +75,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
      */
     public function denormalizeEntryWithEntryNameConverterAndStateCallback()
     {
-        $countryZoneMock = $this->getMock(CountryZone::class);
+        $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
 
         $stateCallback = function ($bundesland) use ($countryZoneMock) {
             return $countryZoneMock;

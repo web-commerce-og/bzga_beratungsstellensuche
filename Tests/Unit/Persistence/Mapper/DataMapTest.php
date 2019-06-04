@@ -40,7 +40,7 @@ class DataMapTest extends UnitTestCase
      */
     protected function setUp()
     {
-        $this->dataMapFactory = $this->getMock(DataMapFactory::class);
+        $this->dataMapFactory = $this->getMockBuilder(DataMapFactory::class)->getMock();
         $this->subject = new DataMap($this->dataMapFactory);
     }
 
@@ -50,7 +50,7 @@ class DataMapTest extends UnitTestCase
     public function getTableNameByClassNameCalledOnceForSameClassName()
     {
         $expectedTableName = 'tablename';
-        $dataMap = $this->getMock(CoreDataMap::class, [], [], '', false);
+        $dataMap = $this->getMockBuilder(CoreDataMap::class)->disableOriginalConstructor()->getMock();
         $this->dataMapFactory->expects($this->once())->method('buildDataMap')->willReturn($dataMap);
         $dataMap->expects($this->once())->method('getTableName')->willReturn($expectedTableName);
         for ($i = 0; $i <= 5; $i++) {

@@ -63,21 +63,9 @@ class SerializerTest extends UnitTestCase
     {
         $this->entryNormalizer = new EntryNormalizer(null);
 
-        $this->signalSlotDispatcher = $this->getMock(Dispatcher::class);
-        $this->countryZoneRepository = $this->getMock(
-            CountryZoneRepository::class,
-            ['findOneByExternalId'],
-            [],
-            '',
-            false
-        );
-        $this->categoryRepository = $this->getMock(
-            CategoryRepository::class,
-            ['findOneByExternalId'],
-            [],
-            '',
-            false
-        );
+        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
+        $this->categoryRepository = $this->getMockBuilder(CategoryRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->inject($this->entryNormalizer, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
         $this->inject($this->entryNormalizer, 'countryZoneRepository', $this->countryZoneRepository);
@@ -106,10 +94,10 @@ class SerializerTest extends UnitTestCase
      */
     public function deserializeEntryFromXml($xml)
     {
-        $categoryMock = $this->getMock(Category::class);
+        $categoryMock = $this->getMockBuilder(Category::class)->getMock();
         $this->categoryRepository->expects($this->any())->method('findOneByExternalId')->willReturn($categoryMock);
 
-        $countryZoneMock = $this->getMock(CountryZone::class);
+        $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
         $this->countryZoneRepository->expects($this->any())->method('findOneByExternalId')->willReturn($countryZoneMock);
 
         $object = $this->subject->deserialize($xml, Entry::class, 'xml');

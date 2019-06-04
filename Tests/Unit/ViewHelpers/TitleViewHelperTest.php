@@ -16,10 +16,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\TitleViewHelper;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Service\EnvironmentService;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
-use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class TitleViewHelperTest extends ViewHelperBaseTestcase

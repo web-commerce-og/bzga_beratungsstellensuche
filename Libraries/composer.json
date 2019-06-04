@@ -2,14 +2,13 @@
   "name": "bzga/bzga-bzgaberatungsstellensuche",
   "description": "Required Tools",
   "require": {
-    "symfony/serializer": "dev-master",
+    "symfony/serializer": "^3.0",
     "ezyang/htmlpurifier": "^4.8",
-    "egeloen/google-map": "dev-master",
+    "egeloen/google-map": "^2.0",
     "willdurand/geocoder": "^3.3"
   },
   "config": {
     "vendor-dir": ".",
     "bin-dir": "bin"
-  },
-  "minimum-stability": "dev"
+  }
 }

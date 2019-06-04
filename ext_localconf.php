@@ -8,9 +8,6 @@ if (! defined('TYPO3_MODE')) {
 call_user_func(function ($packageKey) {
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerExtensionKey($packageKey, 100);
 
-    // Composer autoloader for vendors
-    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($packageKey) . '/Libraries/autoload.php';
-
     // Plugin configuration
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Bzga.bzga_beratungsstellensuche',

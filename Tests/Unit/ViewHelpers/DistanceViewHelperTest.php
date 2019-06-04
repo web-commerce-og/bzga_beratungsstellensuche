@@ -18,7 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\DistanceViewHelper;
-use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 
 class DistanceViewHelperTest extends ViewHelperBaseTestcase
 {
