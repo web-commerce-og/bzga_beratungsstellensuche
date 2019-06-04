@@ -3,7 +3,6 @@
   "description": "Required Tools",
   "require": {
     "symfony/serializer": "^3.0",
-    "ezyang/htmlpurifier": "^4.8",
     "egeloen/google-map": "^2.0",
     "willdurand/geocoder": "^3.3"
   },

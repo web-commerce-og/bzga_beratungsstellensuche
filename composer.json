@@ -28,7 +28,6 @@
   "require": {
     "typo3/cms-core": "^8.7.13",
     "symfony/serializer": "^3.0",
-    "ezyang/htmlpurifier": "^4.8",
     "egeloen/google-map": "^2.0",
     "willdurand/geocoder": "^3.3",
     "sjbr/static-info-tables": "^6.0",

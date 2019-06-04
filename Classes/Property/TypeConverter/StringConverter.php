@@ -27,18 +27,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class StringConverter implements TypeConverterBeforeInterface
 {
     /**
-     * @var HTMLPurifier
-     */
-    private $purifier;
-
-    public function __construct()
-    {
-        // TODO: This is currently not really testable. We have to make DI concept here.
-        $config = HTMLPurifier_Config::createDefault();
-        $this->purifier = new HTMLPurifier($config);
-    }
-
-    /**
      * @param mixed $source
      * @param string $type
      * @return bool
@@ -50,7 +38,6 @@ class StringConverter implements TypeConverterBeforeInterface
         }
 
         // We just want to convert only values that has HTML-Tags due to performance reason.
-        // @TODO: What about javascript here? Do we need extra htmlspecialchars?
         if ($source === strip_tags($source)) {
             return false;
         }
@@ -65,6 +52,6 @@ class StringConverter implements TypeConverterBeforeInterface
      */
     public function convert($source, array $configuration = null)
     {
-        return $this->purifier->purify($source);
+        return (string)$source;
     }
 }
