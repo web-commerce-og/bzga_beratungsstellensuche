@@ -15,9 +15,12 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Service\Importer;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
+use Nimut\TestingFramework\Exception\Exception;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
@@ -41,16 +44,6 @@ class XmlImporterTest extends FunctionalTestCase
     protected $xmlImporter;
 
     /**
-     * To prevent some false/positive sql failures
-     * @var array
-     */
-    protected $configurationToUseInTestInstance = [
-        'SYS' => [
-            'setDBinit' => 'SET SESSION sql_mode=""'
-        ]
-    ];
-
-    /**
      * @var array
      */
     protected $coreExtensionsToLoad = ['extbase', 'fluid'];
@@ -63,18 +56,12 @@ class XmlImporterTest extends FunctionalTestCase
     /**
      * @var array
      */
-    protected $pathsToLinkInTestInstance = [
-        'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Import/fileadmin/import' => 'fileadmin/import'
-    ];
-
-    /**
-     * @var array
-     */
     protected $additionalFoldersToCreate = [
         'fileadmin/user_upload/tx_bzgaberatungsstellensuche'
     ];
 
     /**
+     * @throws Exception
      */
     public function setUp()
     {
@@ -95,7 +82,14 @@ class XmlImporterTest extends FunctionalTestCase
      */
     public function importFromFile()
     {
-        $this->xmlImporter->importFromFile('fileadmin/import/beratungsstellen.xml', self::SYS_FOLDER_FOR_ENTRIES);
+        try {
+            $this->xmlImporter->importFromFile(
+                'EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/Import/beratungsstellen.xml',
+                self::SYS_FOLDER_FOR_ENTRIES
+            );
+        } catch (ContentCouldNotBeFetchedException $e) {
+        } catch (FileDoesNotExistException $e) {
+        }
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value);
         }
@@ -104,13 +98,5 @@ class XmlImporterTest extends FunctionalTestCase
         $this->assertEquals(3, $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_domain_model_category'));
         $this->assertEquals(1, $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
         $this->assertEquals(2, $this->getDatabaseConnection()->exec_SELECTcountRows('*', 'tx_bzgaberatungsstellensuche_entry_category_mm'));
-    }
-
-    /**
-     */
-    public function tearDown()
-    {
-        unset($this->xmlImporter);
-        unset($this->objectManager);
     }
 }
