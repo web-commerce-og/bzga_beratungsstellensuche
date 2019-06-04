@@ -109,23 +109,18 @@ class SitemapGenerator extends AbstractSitemapGenerator
      */
     private function getItemUrl($row, $forceSinglePid = null)
     {
-        $link = '';
         $skipControllerAndAction = isset($GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['tx_bzgaberatungsstellen.'])
             && is_array($GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['tx_bzgaberatungsstellen.'])
-            && $GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['tx_bzgaberatungsstellen.']['skipControllerAndAction'] == 1;
+            && (int)$GLOBALS['TSFE']->tmpl->setup['tx_ddgooglesitemap.']['tx_bzgaberatungsstellen.']['skipControllerAndAction'] === 1;
 
-        if ($link == '') {
-            $conf = [
+        $conf = [
                 'additionalParams' => (!$skipControllerAndAction ? '&tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show' : '') . '&tx_bzgaberatungsstellensuche_pi1[entry]=' . $row['uid'],
                 'forceAbsoluteUrl' => 1,
                 'parameter' => $forceSinglePid ?: $this->singlePid,
                 'returnLast' => 'url',
                 'useCacheHash' => true,
             ];
-            $link = htmlspecialchars($this->cObj->typoLink('', $conf));
-        }
-
-        return $link;
+        return htmlspecialchars($this->cObj->typoLink('', $conf));
     }
 
     /**

@@ -62,7 +62,7 @@ class DataHandlerProcessor
      */
     public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$reference)
     {
-        if ($table === 'tt_content' && $status == 'update' && isset($fieldArray['pi_flexform'])) {
+        if ($table === 'tt_content' && $status === 'update' && isset($fieldArray['pi_flexform'])) {
             $checkFields = [
                 'additional' => [
                     'settings.singlePid',

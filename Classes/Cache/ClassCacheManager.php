@@ -18,6 +18,7 @@ use Exception;
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -66,6 +67,7 @@ class ClassCacheManager implements SingletonInterface
 
     /**
      * Initialize cache instance to be ready to use
+     * @throws NoSuchCacheException
      */
     protected function initializeCache()
     {
@@ -253,6 +255,8 @@ class ClassCacheManager implements SingletonInterface
 
     /**
      * @param array $parameters
+     *
+     * @throws Exception
      */
     public function reBuild(array $parameters = [])
     {

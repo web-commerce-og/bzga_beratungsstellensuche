@@ -16,6 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Cache;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
@@ -67,6 +69,8 @@ class CachedClassLoader
      * Autoload function for cached classes
      *
      * @param string $className Class name
+     *
+     * @throws NoSuchCacheException
      */
     public static function autoload($className)
     {
@@ -80,7 +84,7 @@ class CachedClassLoader
             $classCacheManager = $objectManager->get(ClassCacheManager::class);
             /* @var $classCacheManager ClassCacheManager */
             $classCache = $cacheManager->getCache(static::$extensionKey);
-            /* @var $classCache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
+            /* @var $classCache PhpFrontend */
             foreach ($entities as $entity) {
                 $entityClassName = static::$namespace . str_replace('/', '\\', $entity);
                 if ($className === $entityClassName) {

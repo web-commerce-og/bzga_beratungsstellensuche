@@ -159,7 +159,7 @@ class EntryRepository extends AbstractBaseRepository
         QueryInterface $query,
         $radius = GeolocationService::DEFAULT_RADIUS
     ) {
-        if (! $userLocation->getLatitude() || ! $userLocation->getLatitude()) {
+        if (! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
             return [];
         }
 

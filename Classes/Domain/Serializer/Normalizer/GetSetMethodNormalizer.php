@@ -107,7 +107,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             if ($allowed && !$ignored) {
                 $setter = 'set' . ucfirst($attribute);
 
-                if (in_array($setter, $classMethods) && !$reflectionClass->getMethod($setter)->isStatic()) {
+                if (in_array($setter, $classMethods, false) && !$reflectionClass->getMethod($setter)->isStatic()) {
                     if (isset($this->denormalizeCallbacks[$attribute])) {
                         $value = call_user_func($this->denormalizeCallbacks[$attribute], $value);
                     }

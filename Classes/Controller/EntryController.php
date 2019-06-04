@@ -22,7 +22,13 @@ use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
 use SJBR\StaticInfoTables\Domain\Model\Country;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * @author Sebastian Schreiber
@@ -82,6 +88,14 @@ class EntryController extends ActionController
     protected $countryZoneRepository;
 
     /**
+     * The response which will be returned by this action controller
+     *
+     * @var \TYPO3\CMS\Extbase\Mvc\Web\Response
+     * @api
+     */
+    protected $response;
+
+    /**
      */
     public function initializeAction()
     {
@@ -122,7 +136,7 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param Demand $demand
      */
     public function formAction(Demand $demand = null)
     {
@@ -150,10 +164,11 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param Demand $demand
      *
-     * @throws \UnexpectedValueException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
+     * @throws InvalidQueryException
      */
     public function listAction(Demand $demand = null)
     {
@@ -177,11 +192,13 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param Entry $entry
+     * @param Demand $demand
      *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
+     * @throws StopActionException
+     * @throws UnsupportedRequestTypeException
      */
     public function showAction(Entry $entry = null, Demand $demand = null)
     {
@@ -209,9 +226,12 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param $signalArguments
+     * @param array $signalArguments
+     *
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    private function emitInitializeActionSignal($signalArguments)
+    private function emitInitializeActionSignal(array $signalArguments)
     {
         $this->signalSlotDispatcher->dispatch(static::class, Events::INITIALIZE_ACTION_SIGNAL, $signalArguments);
     }
@@ -219,7 +239,10 @@ class EntryController extends ActionController
     /**
      * @param $signalName
      * @param array $assignedViewValues
+     *
      * @return mixed
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     private function emitActionSignal($signalName, array $assignedViewValues)
     {
@@ -242,6 +265,7 @@ class EntryController extends ActionController
     }
 
     /**
+     * @throws InvalidArgumentNameException
      */
     private function resetDemand()
     {

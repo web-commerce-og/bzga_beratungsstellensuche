@@ -31,7 +31,7 @@ class Serializer extends BaseSerializer
 {
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @var Dispatcher
      */
     protected $signalSlotDispatcher;
 
@@ -42,8 +42,9 @@ class Serializer extends BaseSerializer
      */
     public function __construct(array $normalizers = [], array $encoders = [])
     {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
         if (empty($normalizers)) {
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             /* @var $objectManager ObjectManager */
             $normalizers = [
                 $objectManager->get(EntryNormalizer::class),
@@ -56,10 +57,7 @@ class Serializer extends BaseSerializer
             ];
         }
 
-        // @TODO Working with DI
-        if (!$this->signalSlotDispatcher instanceof Dispatcher) {
-            $this->signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        }
+        $this->signalSlotDispatcher = $objectManager->get(Dispatcher::class);
 
         $normalizers = $this->emitAdditionalNormalizersSignal($normalizers);
 
