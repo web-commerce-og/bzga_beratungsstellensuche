@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Service\EnvironmentService;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * @author Sebastian Schreiber
@@ -95,11 +96,13 @@ class TitleViewHelper extends AbstractViewHelper
 
         $title = $this->arguments['title'] ?: $this->renderChildren();
 
+        $request = $this->renderingContext->getControllerContext()->getRequest();
+
         if ($this->extensionService->isActionCacheable(
-            $this->controllerContext->getRequest()->getControllerExtensionName(),
-            $this->controllerContext->getRequest()->getPluginName(),
-            $this->controllerContext->getRequest()->getControllerName(),
-            $this->controllerContext->getRequest()->getControllerActionName()
+            $request->getControllerExtensionName(),
+            $request->getPluginName(),
+            $request->getControllerName(),
+            $request->getControllerActionName()
         )
         ) {
             $this->pageRenderer->setTitle($title);
@@ -108,7 +111,7 @@ class TitleViewHelper extends AbstractViewHelper
             }
         } else {
             $typoscriptFrontendController->content = preg_replace(
-                '#<title>.*<\/title>#',
+                '#<title>.*<\/title>#s',
                 '<title>' . htmlentities($title) . '</title>',
                 $typoscriptFrontendController->content
             );
@@ -116,7 +119,7 @@ class TitleViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * @return TypoScriptFrontendController
      * @codeCoverageIgnore
      */
     protected function getTyposcriptFrontendController()
