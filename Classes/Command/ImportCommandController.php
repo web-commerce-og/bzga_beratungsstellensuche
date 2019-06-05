@@ -114,10 +114,23 @@ class ImportCommandController extends CommandController
             $this->entryRepository->truncateAll();
         }
 
+        $persistBatch = 200;
+        $i = 0;
+
+        $this->output->progressStart($this->xmlImporter->count());
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value);
+            $this->output->progressAdvance();
+
+            if($i === $persistBatch) {
+                $this->xmlImporter->persist();
+                $i = 0;
+            } else {
+                $i++;
+            }
         }
         $this->xmlImporter->persist();
+        $this->output->progressFinish();
         $this->xmlImporter->cleanUp();
     }
 }
