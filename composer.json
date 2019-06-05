@@ -31,6 +31,7 @@
     "egeloen/google-map": "^2.0",
     "willdurand/geocoder": "^3.3",
     "sjbr/static-info-tables": "^6.0",
+    "sseidelmann/static-info-tables-de": "^6.0",
     "php": ">=7.0.0"
   },
   "require-dev": {
@@ -38,9 +39,7 @@
     "nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0"
   },
   "suggest": {
-    "typo3-ter/static-info-tables": "We need it to map Languages and Country-Zones",
-    "typo3-ter/static-info-tables-de": "We need it to map Languages and Country-Zones",
-    "typo3-ter/scheduler": "We need it to add XML-Importer task"
+    "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen"
   },
   "replace": {
     "bzga_beratungsstellensuche": "self.version",
