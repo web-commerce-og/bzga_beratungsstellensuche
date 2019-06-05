@@ -28,7 +28,6 @@
   "require": {
     "typo3/cms-core": "^8.7.13",
     "symfony/serializer": "^3.0",
-    "egeloen/google-map": "^2.0",
     "willdurand/geocoder": "^3.3",
     "sjbr/static-info-tables": "^6.0",
     "sseidelmann/static-info-tables-de": "^6.0",
@@ -39,7 +38,8 @@
     "nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0"
   },
   "suggest": {
-    "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen"
+    "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen",
+    "egeloen/google-map": "We need it to show the google map"
   },
   "replace": {
     "bzga_beratungsstellensuche": "self.version",
