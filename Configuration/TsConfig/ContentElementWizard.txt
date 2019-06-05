@@ -1,7 +1,7 @@
 mod.wizards.newContentElement.wizardItems.plugins {
 	elements {
 		bzga_beratungsstellensuche {
-			icon = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/ce_wiz.png
+			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
 			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
 			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
 			tt_content_defValues {

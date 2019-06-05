@@ -16,7 +16,14 @@ call_user_func(function ($packageKey) {
         ['Entry' => 'list,form']
     );
 
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
     // Wizard configuration
+    $iconRegistry->registerIcon(
+        'ext-bzgaberatungsstellensuche-wizard-icon',
+        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+        ['source' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/ce_wiz.png']
+    );
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/ContentElementWizard.txt">');
 
     // Modify flexform values
