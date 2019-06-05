@@ -61,7 +61,7 @@ class GeocoderFactory
             default:
 
                 if (!class_exists($type)) {
-                    throw new RuntimeException(sprintf('The %s class does not exist', $type));
+                    return new GoogleMaps($adapter, $locale, $region, $useSsl, $apiKey);
                 }
 
                 $customProvider = GeneralUtility::makeInstance($type);
