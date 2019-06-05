@@ -37,10 +37,12 @@ class Serializer extends BaseSerializer
 
     /**
      * Serializer constructor.
+     *
      * @param array $normalizers
      * @param array $encoders
+     * @param Dispatcher|null|object $signalSlotDispatcher
      */
-    public function __construct(array $normalizers = [], array $encoders = [])
+    public function __construct(array $normalizers = [], array $encoders = [], Dispatcher $signalSlotDispatcher = null)
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
@@ -57,7 +59,11 @@ class Serializer extends BaseSerializer
             ];
         }
 
-        $this->signalSlotDispatcher = $objectManager->get(Dispatcher::class);
+        if(!$signalSlotDispatcher instanceof Dispatcher) {
+            $signalSlotDispatcher = $objectManager->get(Dispatcher::class);
+        }
+
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
 
         $normalizers = $this->emitAdditionalNormalizersSignal($normalizers);
 

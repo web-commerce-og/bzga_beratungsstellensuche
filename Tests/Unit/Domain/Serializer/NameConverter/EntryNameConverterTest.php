@@ -3,6 +3,7 @@
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConverter;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 class EntryNameConverterTest extends AbstractNameConverterTest
 {
@@ -11,13 +12,15 @@ class EntryNameConverterTest extends AbstractNameConverterTest
      */
     protected function setUp()
     {
-        $this->subject = new EntryNameConverter();
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
+        $this->subject = new EntryNameConverter([], true, $dispatcher);
     }
 
     /**
      * @return array
      */
-    public function dataProvider()
+    public function dataProvider():array
     {
         return [
             ['index', 'external_id'],

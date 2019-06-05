@@ -21,6 +21,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConv
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
@@ -41,11 +42,13 @@ class EntryNormalizer extends GetSetMethodNormalizer
 
     /**
      * EntryNormalizer constructor.
+     *
      * @param ClassMetadataFactoryInterface|null $classMetadataFactory
+     * @param Dispatcher|null $signalSlotDispatcher
      */
-    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null)
+    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null, Dispatcher $signalSlotDispatcher = null)
     {
-        parent::__construct($classMetadataFactory, new EntryNameConverter());
+        parent::__construct($classMetadataFactory, new EntryNameConverter([], true, $signalSlotDispatcher));
     }
 
     /**

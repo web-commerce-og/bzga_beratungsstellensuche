@@ -18,6 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNameConverter;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
@@ -61,19 +62,23 @@ class SerializerTest extends UnitTestCase
      */
     protected function setUp()
     {
-        $this->entryNormalizer = new EntryNormalizer(null);
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
+        $this->entryNormalizer = new EntryNormalizer(null, $dispatcher);
 
-        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
+        $this->signalSlotDispatcher->method('dispatch')->willReturn(['extendedNormalizers' => []]);
         $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->categoryRepository = $this->getMockBuilder(CategoryRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->inject($this->entryNormalizer, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
         $this->inject($this->entryNormalizer, 'countryZoneRepository', $this->countryZoneRepository);
+
         $normalizers = [
             $this->entryNormalizer,
-            new GetSetMethodNormalizer()
+            new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher))
         ];
-        $this->subject = new Serializer($normalizers);
+        $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher);
     }
 
     /**

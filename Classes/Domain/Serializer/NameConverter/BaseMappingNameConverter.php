@@ -49,15 +49,20 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 
     /**
      * EntryNameConverter constructor.
+     *
      * @param array|null $attributes
      * @param bool $lowerCamelCase
+     * @param Dispatcher|null|object $signalSlotDispatcher
      */
-    public function __construct(array $attributes = null, $lowerCamelCase = true)
+    public function __construct(array $attributes = null, $lowerCamelCase = true, Dispatcher $signalSlotDispatcher = null)
     {
         parent::__construct($attributes, $lowerCamelCase);
 
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->signalSlotDispatcher = $objectManager->get(Dispatcher::class);
+        if(null === $signalSlotDispatcher) {
+            $signalSlotDispatcher = GeneralUtility::makeInstance(ObjectManager::class)->get(Dispatcher::class);
+        }
+
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
 
         $this->emitMapNamesSignal();
         $this->mapNamesFlipped();
@@ -80,15 +85,15 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
     }
 
     /**
-     * @param string $propertyName
-     * @return mixed|string
+     * @param string|null|array $propertyName
+     * @return mixed|string|null
      */
     public function denormalize($propertyName)
     {
         if (isset($this->mapNames[$propertyName])) {
-            $propertyName = $this->mapNames[$propertyName];
-            $propertyName = parent::denormalize($propertyName);
+            $propertyName = GeneralUtility::underscoredToLowerCamelCase($this->mapNames[$propertyName]);
         }
+
 
         return $propertyName;
     }

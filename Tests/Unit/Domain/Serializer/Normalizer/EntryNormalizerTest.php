@@ -64,7 +64,10 @@ class EntryNormalizerTest extends UnitTestCase
         $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->categoryRepository = $this->getMockBuilder(CategoryRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->serializer = $this->getMockForAbstractClass(SerializerNormalizer::class);
-        $this->subject = new EntryNormalizer(null);
+
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
+        $this->subject = new EntryNormalizer(null, $dispatcher);
         $this->subject->setSerializer($this->serializer);
         $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
         $this->inject($this->subject, 'countryZoneRepository', $this->countryZoneRepository);
