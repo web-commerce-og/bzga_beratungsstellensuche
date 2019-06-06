@@ -20,6 +20,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
+use Exception;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -278,14 +279,19 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         }
 
         $pathToUploadFile = $this->downloadFile($source, $entity);
-        $falFile          = $this->importResource($pathToUploadFile);
 
-        $this->getDatabaseConnection()->exec_UPDATEquery(
-            'sys_file',
-            'uid = ' . $falFile->getUid(),
-            ['external_identifier' => $source->getIdentifier()]
-        );
+        try {
+            $falFile = $this->importResource($pathToUploadFile);
 
-        return $falFile->getUid();
+            $this->getDatabaseConnection()->exec_UPDATEquery(
+                'sys_file',
+                'uid = '.$falFile->getUid(),
+                ['external_identifier' => $source->getIdentifier()]
+            );
+
+            return $falFile->getUid();
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }
