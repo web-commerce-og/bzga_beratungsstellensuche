@@ -1,4 +1,10 @@
 <f:if condition="{map}">
-    <f:format.raw>{api}</f:format.raw>
-    <f:format.raw>{map}</f:format.raw>
+  <div style="width: 100%; height: 300px; " id="map"></div>
+  <f:format.raw>
+    <script>
+      {map}
+    </script>
+  </f:format.raw>
 </f:if>
+
+

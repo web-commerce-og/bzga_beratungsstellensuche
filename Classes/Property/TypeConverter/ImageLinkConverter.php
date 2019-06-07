@@ -285,7 +285,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
             $this->getDatabaseConnection()->exec_UPDATEquery(
                 'sys_file',
-                'uid = '.$falFile->getUid(),
+                'uid = ' . $falFile->getUid(),
                 ['external_identifier' => $source->getIdentifier()]
             );
 

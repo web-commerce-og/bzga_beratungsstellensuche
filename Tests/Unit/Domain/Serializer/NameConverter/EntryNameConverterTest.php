@@ -20,7 +20,7 @@ class EntryNameConverterTest extends AbstractNameConverterTest
     /**
      * @return array
      */
-    public function dataProvider():array
+    public function dataProvider(): array
     {
         return [
             ['index', 'external_id'],
