@@ -17,6 +17,8 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\MapController;
+use TYPO3\CMS\Extbase\Mvc\ResponseInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
@@ -26,24 +28,25 @@ class MapViewHelper extends AbstractWidgetViewHelper
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\MapController
-     * @inject
+     * @var MapController
      */
     protected $controller;
 
+    public function injectController(MapController $controller)
+    {
+        $this->controller = $controller;
+    }
+
     /**
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param Demand $demand
      * @param array $styleSheetOptions
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry $entry
+     * @param Entry $entry
      * @param array $settings
-     * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface
+     *
+     * @return ResponseInterface
      */
-    public function render(
-        Demand $demand = null,
-        array $styleSheetOptions = ['width' => '100%', 'height' => '300px'],
-        Entry $entry = null,
-        array $settings = []
-    ) {
+    public function render(Demand $demand = null, array $styleSheetOptions = ['width' => '100%', 'height' => '300px'], Entry $entry = null, array $settings = []): ResponseInterface
+    {
         return $this->initiateSubRequest();
     }
 }

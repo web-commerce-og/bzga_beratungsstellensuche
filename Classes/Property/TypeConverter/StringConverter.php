@@ -17,8 +17,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
  */
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use HTMLPurifier;
-use HTMLPurifier_Config;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**

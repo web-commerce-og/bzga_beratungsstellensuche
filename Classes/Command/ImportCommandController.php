@@ -122,7 +122,7 @@ class ImportCommandController extends CommandController
             $this->xmlImporter->importEntry($value);
             $this->output->progressAdvance();
 
-            if($i === $persistBatch) {
+            if ($i === $persistBatch) {
                 $this->xmlImporter->persist();
                 $i = 0;
             } else {

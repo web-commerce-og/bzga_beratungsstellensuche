@@ -40,7 +40,7 @@ class Serializer extends BaseSerializer
      *
      * @param array $normalizers
      * @param array $encoders
-     * @param Dispatcher|null|object $signalSlotDispatcher
+     * @param Dispatcher|object|null $signalSlotDispatcher
      */
     public function __construct(array $normalizers = [], array $encoders = [], Dispatcher $signalSlotDispatcher = null)
     {
@@ -59,7 +59,7 @@ class Serializer extends BaseSerializer
             ];
         }
 
-        if(!$signalSlotDispatcher instanceof Dispatcher) {
+        if (!$signalSlotDispatcher instanceof Dispatcher) {
             $signalSlotDispatcher = $objectManager->get(Dispatcher::class);
         }
 

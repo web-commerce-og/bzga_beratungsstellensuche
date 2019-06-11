@@ -52,13 +52,13 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      *
      * @param array|null $attributes
      * @param bool $lowerCamelCase
-     * @param Dispatcher|null|object $signalSlotDispatcher
+     * @param Dispatcher|object|null $signalSlotDispatcher
      */
     public function __construct(array $attributes = null, $lowerCamelCase = true, Dispatcher $signalSlotDispatcher = null)
     {
         parent::__construct($attributes, $lowerCamelCase);
 
-        if(null === $signalSlotDispatcher) {
+        if (null === $signalSlotDispatcher) {
             $signalSlotDispatcher = GeneralUtility::makeInstance(ObjectManager::class)->get(Dispatcher::class);
         }
 
@@ -85,7 +85,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
     }
 
     /**
-     * @param string|null|array $propertyName
+     * @param array|string|null $propertyName
      * @return mixed|string|null
      */
     public function denormalize($propertyName)
@@ -93,7 +93,6 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
         if (isset($this->mapNames[$propertyName])) {
             $propertyName = GeneralUtility::underscoredToLowerCamelCase($this->mapNames[$propertyName]);
         }
-
 
         return $propertyName;
     }
