@@ -50,11 +50,13 @@ class GeocoderFactoryTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException RuntimeException
      */
-    public function providedTypeIsNotAllowed()
+    public function wrongTypeFallbackToGoogleMaps()
     {
-        GeocoderFactory::createInstance('something', HttpAdapterFactory::createInstance());
+        $this->assertInstanceOf(
+            GoogleMaps::class,
+            GeocoderFactory::createInstance('something', HttpAdapterFactory::createInstance())
+        );
     }
 
     /**
