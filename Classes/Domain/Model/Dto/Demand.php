@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
-use Geocoder\Model\Address as GeocoderAddress;
+use Geocoder\Location as GeocoderAddress;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -207,8 +207,8 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     {
         $address = $this->geolocationService->findAddressByDemand($this);
         if ($address instanceof GeocoderAddress) {
-            $this->latitude = $address->getLatitude();
-            $this->longitude = $address->getLongitude();
+            $this->latitude = $address->getCoordinates()->getLatitude();
+            $this->longitude = $address->getCoordinates()->getLongitude();
         }
     }
 }

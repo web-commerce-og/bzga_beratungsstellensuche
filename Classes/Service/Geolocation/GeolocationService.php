@@ -18,6 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Geocoder\Exception\Exception;
 use Geocoder\Location;
+use Geocoder\Query\GeocodeQuery;
 
 /**
  * @author Sebastian Schreiber
@@ -34,7 +35,7 @@ class GeolocationService extends AbstractGeolocationService
     public function findAddressByDemand(Demand $demand)
     {
         if ($demand->getLocation()) {
-            return $this->geocoder->geocode($demand->getAddressToGeocode())->first();
+            return $this->geocoder->geocodeQuery(GeocodeQuery::create($demand->getAddressToGeocode()))->first();
         }
 
         return null;
