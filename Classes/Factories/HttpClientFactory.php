@@ -16,14 +16,17 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter\CurlHttpAdapter;
+use GuzzleHttp\Client;
+use Http\Client\HttpClient;
 use Ivory\HttpAdapter\FileGetContentsHttpAdapter;
 use Ivory\HttpAdapter\HttpAdapterInterface;
+use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @author Sebastian Schreiber
  */
-class HttpAdapterFactory
+class HttpClientFactory
 {
 
     /**
@@ -32,22 +35,13 @@ class HttpAdapterFactory
     const TYPE_CURL = 'curl';
 
     /**
-     * @param string $type
-     *
-     * @return HttpAdapterInterface|object
-     * @throws \InvalidArgumentException
+     * @return HttpClient
      */
-    public static function createInstance($type = null)
+    public static function createInstance(): HttpClient
     {
-        $type = (bool)$GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse'] ? self::TYPE_CURL : $type;
+        $httpOptions = $GLOBALS['TYPO3_CONF_VARS']['HTTP'];
+        $httpOptions['verify'] = filter_var($httpOptions['verify'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $httpOptions['verify'];
 
-        switch ($type) {
-            case self::TYPE_CURL:
-                return GeneralUtility::makeInstance(CurlHttpAdapter::class);
-                break;
-            default:
-                return new FileGetContentsHttpAdapter();
-                break;
-        }
+        return \Http\Adapter\Guzzle6\Client::createWithConfig($httpOptions);
     }
 }

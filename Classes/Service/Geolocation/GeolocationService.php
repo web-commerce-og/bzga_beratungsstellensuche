@@ -16,6 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Geocoder\Exception\Exception;
+use Geocoder\Location;
 
 /**
  * @author Sebastian Schreiber
@@ -26,7 +28,8 @@ class GeolocationService extends AbstractGeolocationService
     /**
      * @param Demand $demand
      *
-     * @return \Geocoder\Model\Address|null
+     * @return Location|null
+     * @throws Exception
      */
     public function findAddressByDemand(Demand $demand)
     {

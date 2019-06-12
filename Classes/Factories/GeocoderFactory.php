@@ -14,10 +14,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\OpenStreetMap;
+
+use Geocoder\Provider\GoogleMaps\GoogleMaps;
+use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\Provider;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 use RuntimeException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -31,47 +32,40 @@ class GeocoderFactory
      * @var string
      */
     const TYPE_GOOGLE = 'GoogleMaps';
+
+    /**
+     * @var string
+     */
     const TYPE_OPEN_STREET_MAP = 'OpenStreetMap';
 
     /**
      * @param string $type
-     * @param HttpAdapterInterface $adapter
-     * @param string|null $locale
+     * @param HttpClient $client
      * @param string|null $region
-     * @param bool $useSsl
      * @param string|null $apiKey
      *
      * @return Provider
      */
     public static function createInstance(
         $type,
-        HttpAdapterInterface $adapter,
-        $locale = null,
+        HttpClient $client,
         $region = null,
-        $useSsl = false,
         $apiKey = null
-    ) {
-        switch ($type) {
-            case self::TYPE_OPEN_STREET_MAP:
-                return new OpenStreetMap($adapter, $locale);
-                break;
-            case self::TYPE_GOOGLE:
-                return new GoogleMaps($adapter, $locale, $region, $useSsl, $apiKey);
-                break;
-            default:
-
-                if (!class_exists($type)) {
-                    return new GoogleMaps($adapter, $locale, $region, $useSsl, $apiKey);
-                }
-
-                $customProvider = GeneralUtility::makeInstance($type);
-
-                if (!$customProvider instanceof Provider) {
-                    throw new RuntimeException(sprintf('The %s must implement the %s interface', $type, Provider::class));
-                }
-
-                return $customProvider;
-                break;
+    ): Provider {
+        if ($type === self::TYPE_OPEN_STREET_MAP) {
+            return Nominatim::withOpenStreetMapServer($client, 'User-Agent');
         }
+
+        if ( ! class_exists($type)) {
+            return new GoogleMaps($client, $region, $apiKey);
+        }
+
+        $customProvider = GeneralUtility::makeInstance($type);
+
+        if ( ! $customProvider instanceof Provider) {
+            throw new RuntimeException(sprintf('The %s must implement the %s interface', $type, Provider::class));
+        }
+
+        return $customProvider;
     }
 }
