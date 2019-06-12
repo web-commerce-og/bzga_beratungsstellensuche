@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\CoordinateInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\PopUpInterface;
 use Netzmacht\LeafletPHP\Definition\Type\ImageIcon;
@@ -28,7 +29,7 @@ final class Marker implements MarkerInterface
      */
     private $marker;
 
-    public function __construct(string $identifier, Coordinate $coordinate)
+    public function __construct(string $identifier, CoordinateInterface $coordinate)
     {
         $this->marker = new LeafletMarker($identifier, $coordinate->getCoordinate());
     }

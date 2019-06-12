@@ -18,6 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\CoordinateInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerInterface;
 use Netzmacht\LeafletPHP\Definition\Map as LeafletMap;
 
 final class Map implements MapInterface
@@ -60,5 +61,18 @@ final class Map implements MapInterface
     public function setCenter(CoordinateInterface $coordinate)
     {
         $this->map->setCenter($coordinate->getCoordinate());
+    }
+
+    /**
+     * @param MarkerInterface $marker
+     *
+     * @return void
+     */
+    public function addMarker(MarkerInterface $marker)
+    {
+        /** @var \Netzmacht\LeafletPHP\Definition\UI\Marker $leafletMarker */
+        $leafletMarker = $marker->getMarker();
+        $leafletMarker->addTo($this->map);
+        $this->map->addLayer($leafletMarker);
     }
 }

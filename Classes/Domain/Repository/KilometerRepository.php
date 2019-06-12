@@ -27,9 +27,9 @@ class KilometerRepository
      * @param array $settings
      * @return array
      */
-    public function findKilometersBySettings(array $settings)
+    public function findKilometersBySettings(array $settings): array
     {
-        $kilometers = isset($settings['form']['kilometers']) ? $settings['form']['kilometers'] : '10,20,50,100';
+        $kilometers = $settings['form']['kilometers'] ?? '10,20,50,100';
         $kilometersArray = GeneralUtility::intExplode(',', $kilometers);
         return array_combine($kilometersArray, $kilometersArray);
     }

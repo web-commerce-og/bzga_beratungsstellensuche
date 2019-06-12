@@ -179,6 +179,8 @@ class MapController extends AbstractWidgetController
                     GeneralUtility::callUserFunction($reference, $params, $this);
                 }
             }
+
+            $map->addMarker($marker);
         }
 
         // Call hook functions for modify the map

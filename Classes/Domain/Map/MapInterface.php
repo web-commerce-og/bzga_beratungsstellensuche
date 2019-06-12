@@ -33,4 +33,11 @@ interface MapInterface
      * @param CoordinateInterface $coordinate
      */
     public function setCenter(CoordinateInterface $coordinate);
+
+    /**
+     * @param MarkerInterface $marker
+     *
+     * @return void
+     */
+    public function addMarker(MarkerInterface $marker);
 }

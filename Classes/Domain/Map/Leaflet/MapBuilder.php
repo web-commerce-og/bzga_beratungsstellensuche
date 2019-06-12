@@ -99,7 +99,7 @@ final class MapBuilder implements MapBuilderInterface
      */
     public function createMap(string $mapId): MapInterface
     {
-        $map = new LeafletMap('mapId', $mapId);
+        $map = new LeafletMap($mapId, $mapId);
         $map->setZoom(17);
         $map->setOption('fullscreenControl', true);
 
@@ -122,7 +122,7 @@ final class MapBuilder implements MapBuilderInterface
      */
     public function createMarker(string $identifier, CoordinateInterface $coordinate): MarkerInterface
     {
-        return new Marker($identifier, $coordinate->getCoordinate());
+        return new Marker($identifier, $coordinate);
     }
 
     /**
