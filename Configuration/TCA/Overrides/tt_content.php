@@ -16,25 +16,3 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bzgaberatung
     'bzgaberatungsstellensuche_pi1',
     'FILE:EXT:' . $extKey . '/Configuration/FlexForms/flexform_beratungsstellensuche.xml'
 );
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-    $extKey,
-    'Configuration/TypoScript',
-    'Beratungsstellensuche'
-);
-
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler')) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $extKey,
-        'Configuration/TypoScript/linkhandler',
-        'Beratungsstellensuche - Linkhandler'
-    );
-}
-
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('solr')) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $extKey,
-        'Configuration/TypoScript/linkhandler',
-        'Beratungsstellensuche - Solr'
-    );
-}
