@@ -14,8 +14,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Slots;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer as BaseSerializer;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
+use SimpleXMLIterator;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * @author Sebastian Schreiber
@@ -24,19 +30,29 @@ class Importer
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
-     * @inject
+     * @var EntryRepository
      */
     protected $entryRepository;
 
+    public function injectEntryRepository(EntryRepository $entryRepository)
+    {
+        $this->entryRepository = $entryRepository;
+    }
+
     /**
      * @param XmlImporter $importer
-     * @param \SimpleXMLIterator $sxe
+     * @param SimpleXMLIterator $sxe
      * @param int $pid
      * @param BaseSerializer $serializer
+     *
+     * @throws IllegalObjectTypeException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function truncateAll(XmlImporter $importer, \SimpleXMLIterator $sxe, $pid, BaseSerializer $serializer)
+    public function truncateAll(XmlImporter $importer, SimpleXMLIterator $sxe, $pid, BaseSerializer $serializer)
     {
         $this->entryRepository->truncateAll();
     }
+
+
 }

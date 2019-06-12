@@ -15,10 +15,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Core\Utility\DebugUtility;
+
+use Doctrine\DBAL\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
@@ -27,8 +31,8 @@ abstract class AbstractBaseRepository extends Repository
 {
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
+     * @var Dispatcher
+     *
      */
     protected $signalSlotDispatcher;
 
@@ -57,57 +61,37 @@ abstract class AbstractBaseRepository extends Repository
      */
     const SYS_FILE_REFERENCE = 'sys_file_reference';
 
-    /**
-     * Debugs a SQL query from a QueryResult
-     *
-     * @param QueryResultInterface $queryResult
-     * @param bool $explainOutput
-     */
-    public function debugQuery(QueryResultInterface $queryResult, $explainOutput = false)
-    {
-        $databaseConnection = $this->getDatabaseConnection();
-        $databaseConnection->debugOutput = 2;
-        if ($explainOutput) {
-            $databaseConnection->explainOutput = true;
-        }
-        $databaseConnection->store_lastBuiltQuery = true;
-        $queryResult->toArray();
-        DebugUtility::debug($databaseConnection->debug_lastBuiltQuery);
 
-        $databaseConnection->store_lastBuiltQuery = false;
-        $databaseConnection->explainOutput = false;
-        $databaseConnection->debugOutput = false;
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
     /**
      * @param string $table
      * @param array $entries
+     *
      * @return array|null
      */
-    public function findOldEntriesByExternalUidsDiffForTable($table, $entries)
+    public function findOldEntriesByExternalUidsDiffForTable(string $table, array $entries)
     {
-        $databaseConnection = $this->getDatabaseConnection();
-        // We fetch all entries in database which has not been imported
-        $importedExternalUids = implode(',', $databaseConnection->cleanIntArray($entries));
-        if ($importedExternalUids) {
-            $oldEntries = $databaseConnection->exec_SELECTgetRows(
-                'uid',
-                $table,
-                'deleted = 0 AND external_id NOT IN(' . $importedExternalUids . ')'
-            );
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
 
-            return $oldEntries;
-        }
-
-        return [];
+        return $queryBuilder
+            ->select('*')
+            ->from(self::ENTRY_TABLE)
+            ->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))
+            ->execute()
+            ->fetchAll();
     }
 
     /**
      * @param int $externalId
      * @param string $hash
+     *
      * @return int
      */
-    public function countByExternalIdAndHash($externalId, $hash)
+    public function countByExternalIdAndHash($externalId, $hash): int
     {
         $query = $this->createQuery();
         $constraints = [];
@@ -119,6 +103,7 @@ abstract class AbstractBaseRepository extends Repository
 
     /**
      * @param int $externalId
+     *
      * @return object
      */
     public function findOneByExternalId($externalId)
@@ -151,10 +136,13 @@ abstract class AbstractBaseRepository extends Repository
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @param string $table
+     *
+     * @return \TYPO3\CMS\Core\Database\Connection
      */
-    protected function getDatabaseConnection()
+    protected function getDatabaseConnectionForTable(string $table): \TYPO3\CMS\Core\Database\Connection
     {
-        return $GLOBALS['TYPO3_DB'];
+        return GeneralUtility::makeInstance(ConnectionPool::class)
+                      ->getConnectionForTable($table);
     }
 }

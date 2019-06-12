@@ -33,7 +33,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     protected $keywords;
 
     /**
-     * @var array
+     * @var string
      */
     protected $searchFields = 'title,teaser,subtitle,description,keywords';
 
@@ -144,15 +144,15 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getSearchFields()
+    public function getSearchFields(): string
     {
         return $this->searchFields;
     }
 
     /**
-     * @param array $searchFields
+     * @param string $searchFields
      */
     public function setSearchFields($searchFields)
     {

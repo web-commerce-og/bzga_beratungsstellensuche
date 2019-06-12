@@ -33,7 +33,8 @@
     "sseidelmann/static-info-tables-de": "^6.0",
     "php": ">=7.0.0",
     "netzmacht/php-leaflet": "^1.1",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-simplexml": "*"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0",

@@ -18,13 +18,21 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
+use InvalidArgumentException;
+use RuntimeException;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * @author Sebastian Schreiber
@@ -33,22 +41,32 @@ class EntryRepository extends AbstractBaseRepository
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
-     * @inject
+     * @var GeolocationServiceCacheDecorator
+     *
      */
     protected $geolocationService;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser
-     * @inject
+     * @var Typo3DbQueryParser
+     *
      */
     protected $queryParser;
+
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
+    {
+        $this->geolocationService = $geolocationService;
+    }
+
+    public function injectQueryParser(Typo3DbQueryParser $queryParser)
+    {
+        $this->queryParser = $queryParser;
+    }
 
     /**
      * @param Demand $demand
      *
      * @return array|QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws InvalidQueryException
      * @throws \UnexpectedValueException
      */
     public function findDemanded(Demand $demand)
@@ -113,7 +131,7 @@ class EntryRepository extends AbstractBaseRepository
             $params = [];
             foreach ($queryParameters as $key => $value) {
                 // prefix array keys with ':'
-                $params[':' . $key] = (is_numeric($value)) ? $value : "'" . $value . "'"; //all non numeric values have to be quoted
+                $params[':' . $key] = is_numeric($value) ? $value : "'".$value."'"; //all non numeric values have to be quoted
                 unset($params[$key]);
             }
             // replace placeholders with real values
@@ -124,17 +142,17 @@ class EntryRepository extends AbstractBaseRepository
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidArgumentException
+     * @throws InvalidSlotReturnException
+     * @throws InvalidSlotException
      */
     public function truncateAll()
     {
-        $databaseConnection = $this->getDatabaseConnection();
-        $databaseConnection->exec_TRUNCATEquery(self::CATEGORY_TABLE);
+        $this->getDatabaseConnectionForTable(self::CATEGORY_TABLE)->truncate(self::CATEGORY_TABLE);
 
-        $entries = $databaseConnection->exec_SELECTgetRows('uid', self::ENTRY_TABLE, '1=1');
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::ENTRY_TABLE);
+        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAll();
         foreach ($entries as $entry) {
             $this->deleteByUid($entry['uid']);
         }
@@ -142,7 +160,7 @@ class EntryRepository extends AbstractBaseRepository
         $this->signalSlotDispatcher->dispatch(
             static::class,
             Events::TABLE_TRUNCATE_ALL_SIGNAL,
-            ['databaseConnection' => $databaseConnection]
+            ['databaseConnection' => $GLOBALS['TYPO3_DB']]
         );
     }
 
@@ -152,13 +170,13 @@ class EntryRepository extends AbstractBaseRepository
      * @param int $radius
      *
      * @return array
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws InvalidQueryException
      */
     private function createCoordsConstraints(
         GeopositionInterface $userLocation,
         QueryInterface $query,
         $radius = GeolocationService::DEFAULT_RADIUS
-    ) {
+    ): array {
         if (! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
             return [];
         }
@@ -183,10 +201,10 @@ class EntryRepository extends AbstractBaseRepository
      *
      * @param int $uid
      *
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidArgumentException
+     * @throws InvalidSlotReturnException
+     * @throws InvalidSlotException
      */
     public function deleteByUid($uid)
     {
@@ -199,15 +217,12 @@ class EntryRepository extends AbstractBaseRepository
         foreach ($fileReferences as $fileReference) {
             try {
                 $fileDeleted = $fileReference->getOriginalFile()->delete();
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
             }
         }
 
         // @cascade remove not working the expected way
-        $this->getDatabaseConnection()->exec_DELETEquery(
-            self::ENTRY_CATEGORY_MM_TABLE,
-            'uid_local =' . (int)$uid
-        );
+        $this->getDatabaseConnectionForTable(self::ENTRY_CATEGORY_MM_TABLE)->delete(self::ENTRY_CATEGORY_MM_TABLE, ['uid_local' => (int)$uid]);
 
         $entry = $this->findByIdentifier($uid);
         if ($entry instanceof Entry) {

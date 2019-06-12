@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Countable;
@@ -199,7 +200,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     }
 
     /**
-     * @return \Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository
+     * @return AbstractBaseRepository
      */
     abstract public function getRepository();
 
