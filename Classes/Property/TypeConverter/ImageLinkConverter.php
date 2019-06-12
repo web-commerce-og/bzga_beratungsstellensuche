@@ -15,12 +15,16 @@ namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use Exception;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -58,7 +62,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * @var string
      */
-    private $tempFolder = PATH_site . 'typo3temp/tx_bzgaberatungsstellensuche/';
+    private $tempFolder = PATH_site.'typo3temp/tx_bzgaberatungsstellensuche/';
 
     /**
      * One of 'cancel', 'replace', 'changeName'
@@ -77,13 +81,13 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      * @var array
      */
     private static $imageMimeTypes = [
-        'bmp'  => 'image/bmp',
-        'gif'  => 'image/gif',
+        'bmp' => 'image/bmp',
+        'gif' => 'image/gif',
         'jpeg' => 'image/jpeg',
-        'jpg'  => 'image/jpeg',
-        'png'  => 'image/png',
-        'svg'  => 'image/svg+xml',
-        'tif'  => 'image/tiff',
+        'jpg' => 'image/jpeg',
+        'png' => 'image/png',
+        'svg' => 'image/svg+xml',
+        'tif' => 'image/tiff',
         'tiff' => 'image/tiff',
     ];
 
@@ -95,16 +99,16 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * ImageLinkConverter constructor.
      *
-     * @param DataHandler|null $dataHandler
+     * @param DataHandler|null|object $dataHandler
      */
     public function __construct(DataHandler $dataHandler = null)
     {
         if (null === $dataHandler) {
             $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         }
-        $this->dataHandler                              = $dataHandler;
+        $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
-        $this->dataHandler->admin                       = true;
+        $this->dataHandler->admin = true;
     }
 
     /**
@@ -115,7 +119,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
     {
-        if (! $source instanceof ImageLink) {
+        if ( ! $source instanceof ImageLink) {
             return false;
         }
 
@@ -127,7 +131,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      * @param AbstractEntity|array $configuration
      *
      * @return int
-     * @throws TypeConverterException
      */
     public function convert($source, array $configuration = null)
     {
@@ -142,13 +145,13 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
         $fileReferenceData = [
             'table_local' => 'sys_file',
-            'tablenames'  => $configuration['tableName'],
+            'tablenames' => $configuration['tableName'],
             'uid_foreign' => $configuration['tableUid'],
-            'fieldname'   => $configuration['tableField'],
-            'pid'         => $entity->getPid(),
+            'fieldname' => $configuration['tableField'],
+            'pid' => $entity->getPid(),
         ];
 
-        if (! $entity->_isNew()) {
+        if ( ! $entity->_isNew()) {
             $this->deleteOldFileReferences($fileReferenceData);
         }
 
@@ -156,11 +159,12 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             $fileReferenceData['uid_local'] = $this->getFileUid($source, $entity);
 
             $fileReferenceUid = uniqid('NEW_', false);
-            $dataMap          = [];
+            $dataMap = [];
             if ($this->dataHandler instanceof DataHandler) {
                 $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
                 $this->dataHandler->start($dataMap, []);
                 $this->dataHandler->process_datamap();
+
                 return $this->dataHandler->substNEWwithIDs[$fileReferenceUid];
             }
 
@@ -194,9 +198,9 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             throw new DownloadException(sprintf('The file %s could not be downloaded', $source->getExternalUrl()));
         }
 
-        $imageInfo        = getimagesizefromstring($imageContent);
-        $extension        = $this->getExtensionFromMimeType($imageInfo['mime']);
-        $pathToUploadFile = $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
+        $imageInfo = getimagesizefromstring($imageContent);
+        $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
+        $pathToUploadFile = $this->tempFolder.GeneralUtility::stdAuthCode($entity->getExternalId()).'.'.$extension;
 
         if ($error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent)) {
             throw new TypeConverterException($error, 1399312443);
@@ -208,12 +212,12 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * @param string $tempFilePath
      *
-     * @throws TypeConverterException
      * @return FalFile
+     * @throws TypeConverterException
      */
     private function importResource($tempFilePath)
     {
-        if (! GeneralUtility::verifyFilenameAgainstDenyPattern($tempFilePath)) {
+        if ( ! GeneralUtility::verifyFilenameAgainstDenyPattern($tempFilePath)) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 
@@ -241,21 +245,23 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             unset($fileReferenceData['uid_local']);
         }
 
-        $databaseConnection = $this->getDatabaseConnection();
+        $databaseConnection = $this->getDatabaseConnectionForTable('sys_file_reference');
 
         $where = [];
         foreach ($fileReferenceData as $key => $value) {
-            $where[] = $key . '=' . $databaseConnection->fullQuoteStr($value, 'sys_file_reference');
+            $where[$key] = $value;
         }
-        $databaseConnection->exec_DELETEquery('sys_file_reference', implode(' AND ', $where));
+        $databaseConnection->delete('sys_file_reference', $where);
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @param string $table
+     *
+     * @return Connection
      */
-    private function getDatabaseConnection()
+    private function getDatabaseConnectionForTable(string $table): Connection
     {
-        return $GLOBALS['TYPO3_DB'];
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
     }
 
     /**
@@ -263,18 +269,18 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      * @param AbstractEntity|ExternalIdInterface $entity
      *
      * @return int
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException
-     * @throws \Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException
+     * @throws TypeConverterException
+     * @throws DownloadException
      */
     private function getFileUid(ImageLink $source, $entity)
     {
         // First we check if we already have a file with the identifier in the database
-        $where = 'external_identifier = ' . $this->getDatabaseConnection()->fullQuoteStr(
-            $source->getIdentifier(),
-                'sys_file'
-        );
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
+        $row = $queryBuilder->select('uid')
+                     ->from('sys_file')
+                     ->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->execute()->fetch();
 
-        if ($row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('uid', 'sys_file', $where)) {
+        if ($row) {
             return $row['uid'];
         }
 
@@ -283,10 +289,10 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         try {
             $falFile = $this->importResource($pathToUploadFile);
 
-            $this->getDatabaseConnection()->exec_UPDATEquery(
+            $this->getDatabaseConnectionForTable('sys_file')->update(
                 'sys_file',
-                'uid = ' . $falFile->getUid(),
-                ['external_identifier' => $source->getIdentifier()]
+                ['external_identifier' => $source->getIdentifier()],
+                ['uid' => $falFile->getUid()]
             );
 
             return $falFile->getUid();
