@@ -14,12 +14,16 @@ namespace Bzga\BzgaBeratungsstellensuche\Hooks;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 use Bzga\BzgaBeratungsstellensuche\Utility\IconUtility;
 use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * @author Sebastian Schreiber
@@ -56,12 +60,7 @@ class PageLayoutView
     public $flexformData = [];
 
     /**
-     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected $databaseConnection;
-
-    /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout
+     * @var TemplateLayout
      */
     protected $templateLayoutsUtility;
 
@@ -75,7 +74,6 @@ class PageLayoutView
      */
     public function __construct()
     {
-        $this->databaseConnection = $GLOBALS['TYPO3_DB'];
         $this->templateLayoutsUtility = GeneralUtility::makeInstance(TemplateLayout::class);
         $this->iconUtility = GeneralUtility::makeInstance(IconUtility::class);
     }
@@ -84,25 +82,26 @@ class PageLayoutView
      * Returns information about this extension's pi1 plugin
      *
      * @param array $params Parameters to the hook
+     *
      * @return string Information about pi1 plugin
      */
     public function getExtensionSummary(array $params)
     {
         $actionTranslationKey = '';
 
-        $result = '<strong>' . $this->sL('pi1_title', true) . '</strong><br>';
+        $result = '<strong>'.$this->sL('pi1_title', true).'</strong><br>';
 
-        if ($params['row']['list_type'] == self::KEY . '_pi1') {
+        if ($params['row']['list_type'] == self::KEY.'_pi1') {
             $this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
 
             // if flexform data is found
             $actions = $this->getFieldFromFlexform('switchableControllerActions');
-            if (!empty($actions)) {
+            if ( ! empty($actions)) {
                 $actionList = GeneralUtility::trimExplode(';', $actions);
 
                 // translate the first action into its translation
                 $actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
-                $actionTranslation = $this->sL('flexforms_general.mode.' . $actionTranslationKey);
+                $actionTranslation = $this->sL('flexforms_general.mode.'.$actionTranslationKey);
 
                 $result .= $actionTranslation;
             } else {
@@ -175,7 +174,7 @@ class PageLayoutView
             $formFieldsArray = GeneralUtility::trimExplode(',', $formFields);
             $formFieldsLabels = [];
             foreach ($formFieldsArray as $formField) {
-                $formFieldsLabels[] = $this->sL('flexforms_additional.formFields.' . $formField);
+                $formFieldsLabels[] = $this->sL('flexforms_additional.formFields.'.$formField);
             }
             $this->tableData[] = [
                 $this->sL('flexforms_additional.formFields'),
@@ -237,6 +236,7 @@ class PageLayoutView
      * Get the rendered page title including onclick menu
      *
      * @param $detailPid
+     *
      * @return string
      */
     private function getPageRecordData($detailPid)
@@ -274,7 +274,7 @@ class PageLayoutView
         $field = $this->getFieldFromFlexform('settings.templateLayout', 'template');
 
         // Find correct title by looping over all options
-        if (!empty($field)) {
+        if ( ! empty($field)) {
             foreach ($this->templateLayoutsUtility->getAvailableTemplateLayouts($pageUid) as $layout) {
                 if ($layout[1] === $field) {
                     $title = $layout[0];
@@ -282,7 +282,7 @@ class PageLayoutView
             }
         }
 
-        if (!empty($title)) {
+        if ( ! empty($title)) {
             $this->tableData[] = [
                 $this->sL('flexforms_template.templateLayout'),
                 $this->sL($title),
@@ -297,19 +297,21 @@ class PageLayoutView
     {
         $value = $this->getFieldFromFlexform('settings.startingpoint');
 
-        if (!empty($value)) {
+        if ( ! empty($value)) {
             $pagesOut = [];
-            $rawPagesRecords = $this->databaseConnection->exec_SELECTgetRows(
-                '*',
-                'pages',
-                'deleted=0 AND uid IN(' . implode(',', GeneralUtility::intExplode(',', $value, true)) . ')'
-            );
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+            $rawPagesRecords = $queryBuilder
+                ->select('*')
+                ->from('pages')
+                ->where($queryBuilder->expr()->in('uid', GeneralUtility::intExplode(',', $value, true)))
+                ->execute()
+                ->fetchAll();
 
             foreach ($rawPagesRecords as $page) {
                 $pagesOut[] = htmlspecialchars(BackendUtilityCore::getRecordTitle(
-                    'pages',
+                        'pages',
                         $page
-                )) . ' (' . $page['uid'] . ')';
+                    )).' ('.$page['uid'].')';
             }
 
             $recursiveLevel = (int)$this->getFieldFromFlexform('settings.recursive');
@@ -317,18 +319,18 @@ class PageLayoutView
             if ($recursiveLevel === 250) {
                 $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.5');
             } elseif ($recursiveLevel > 0) {
-                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.' . $recursiveLevel);
+                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.'.$recursiveLevel);
             }
 
-            if (!empty($recursiveLevelText)) {
-                $recursiveLevelText = '<br />' .
-                    $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive', true) . ' ' .
-                    $recursiveLevelText;
+            if ( ! empty($recursiveLevelText)) {
+                $recursiveLevelText = '<br />'.
+                                      $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive', true).' '.
+                                      $recursiveLevelText;
             }
 
             $this->tableData[] = [
                 $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.startingpoint'),
-                implode(', ', $pagesOut) . $recursiveLevelText,
+                implode(', ', $pagesOut).$recursiveLevelText,
             ];
         }
     }
@@ -339,18 +341,18 @@ class PageLayoutView
      *
      * @return string
      */
-    private function renderSettingsAsTable()
+    private function renderSettingsAsTable(): string
     {
-        if (count($this->tableData) == 0) {
+        if (count($this->tableData) === 0) {
             return '';
         }
 
         $content = '';
         foreach ($this->tableData as $line) {
-            $content .= '<strong>' . $line[0] . '</strong>' . ' ' . $line[1] . '<br />';
+            $content .= '<strong>'.$line[0].'</strong>'.' '.$line[1].'<br />';
         }
 
-        return '<pre style="white-space:normal">' . $content . '</pre>';
+        return '<pre style="white-space:normal">'.$content.'</pre>';
     }
 
     /**
@@ -359,6 +361,7 @@ class PageLayoutView
      *
      * @param string $key name of the key
      * @param string $sheet name of the sheet
+     *
      * @return string|null if nothing found, value if found
      */
     private function getFieldFromFlexform($key, $sheet = 'sDEF')
@@ -385,13 +388,14 @@ class PageLayoutView
      *
      * @param string $label Label key/reference
      * @param bool $hsc If set, the return value is htmlspecialchar'ed
+     *
      * @return string
      */
-    private function sL($label, $hsc = false)
+    private function sL($label, $hsc = false): string
     {
         $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
         foreach ($registeredExtensionKeys as $extensionKey) {
-            $fullPathToLabel = sprintf(self::LLPATH, $extensionKey) . $label;
+            $fullPathToLabel = sprintf(self::LLPATH, $extensionKey).$label;
             $translation = $this->getLanguageService()->sL($fullPathToLabel, $hsc);
             if ('' !== $translation) {
                 return $translation;
@@ -404,9 +408,9 @@ class PageLayoutView
     /**
      * Return language service instance
      *
-     * @return \TYPO3\CMS\Lang\LanguageService
+     * @return LanguageService
      */
-    private function getLanguageService()
+    private function getLanguageService(): LanguageService
     {
         return $GLOBALS['LANG'];
     }
