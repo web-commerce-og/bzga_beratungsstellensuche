@@ -16,12 +16,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Factories;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
-use Bzga\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
-use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\OpenStreetMap;
+use Bzga\BzgaBeratungsstellensuche\Factories\HttpClientFactory;
+use Geocoder\Provider\GoogleMaps\GoogleMaps;
+use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\Provider;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use RuntimeException;
 
 class GeocoderFactoryTest extends UnitTestCase
 {
@@ -33,7 +32,7 @@ class GeocoderFactoryTest extends UnitTestCase
     {
         $this->assertInstanceOf(
             GoogleMaps::class,
-            GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpAdapterFactory::createInstance())
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpClientFactory::createInstance())
         );
     }
 
@@ -43,8 +42,8 @@ class GeocoderFactoryTest extends UnitTestCase
     public function openStreetMapGeocoderReturned()
     {
         $this->assertInstanceOf(
-            OpenStreetMap::class,
-            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpAdapterFactory::createInstance())
+            Nominatim::class,
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpClientFactory::createInstance())
         );
     }
 
@@ -55,7 +54,7 @@ class GeocoderFactoryTest extends UnitTestCase
     {
         $this->assertInstanceOf(
             GoogleMaps::class,
-            GeocoderFactory::createInstance('something', HttpAdapterFactory::createInstance())
+            GeocoderFactory::createInstance('something', HttpClientFactory::createInstance())
         );
     }
 
@@ -64,7 +63,7 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function customProviderReturned()
     {
-        $customProvder = $this->getMockBuilder(Provider::class)->getMock();
-        $this->assertInstanceOf(get_class($customProvder), GeocoderFactory::createInstance(get_class($customProvder), HttpAdapterFactory::createInstance()));
+        $customProvider = $this->getMockBuilder(Provider::class)->getMock();
+        $this->assertInstanceOf(get_class($customProvider), GeocoderFactory::createInstance(get_class($customProvider), HttpClientFactory::createInstance()));
     }
 }

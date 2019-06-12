@@ -18,8 +18,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
-use Bzga\BzgaBeratungsstellensuche\Factories\HttpAdapterFactory;
+use Bzga\BzgaBeratungsstellensuche\Factories\HttpClientFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\SettingsService;
+use Geocoder\Geocoder;
 
 /**
  * @author Sebastian Schreiber
@@ -43,12 +44,12 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     const DEFAULT_RADIUS = 10;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\SettingsService
+     * @var SettingsService
      */
     protected $settingsService;
 
     /**
-     * @var \Geocoder\Geocoder
+     * @var Geocoder
      */
     protected $geocoder;
 
@@ -60,14 +61,9 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     public function __construct(SettingsService $settingsService)
     {
         $this->settingsService = $settingsService;
-        $adapter               = HttpAdapterFactory::createInstance($this->settingsService->getByPath('adapter'));
+        $adapter               = HttpClientFactory::createInstance();
         $this->geocoder        = GeocoderFactory::createInstance(
-            $this->settingsService->getByPath('geocoder'),
-            $adapter,
-            $this->settingsService->getByPath('map.locale'),
-            $this->settingsService->getByPath('map.region'),
-            $this->settingsService->getByPath('map.useSsl'),
-            $this->settingsService->getByPath('map.apiKey')
+            $this->settingsService->getByPath('geocoder'), $adapter, $this->settingsService->getByPath('map.region'), $this->settingsService->getByPath('map.apiKey')
         );
     }
 
