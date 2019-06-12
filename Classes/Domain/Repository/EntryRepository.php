@@ -149,8 +149,6 @@ class EntryRepository extends AbstractBaseRepository
      */
     public function truncateAll()
     {
-        $this->getDatabaseConnectionForTable(self::CATEGORY_TABLE)->truncate(self::CATEGORY_TABLE);
-
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::ENTRY_TABLE);
         $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAll();
         foreach ($entries as $entry) {
@@ -159,8 +157,7 @@ class EntryRepository extends AbstractBaseRepository
 
         $this->signalSlotDispatcher->dispatch(
             static::class,
-            Events::TABLE_TRUNCATE_ALL_SIGNAL,
-            ['databaseConnection' => $GLOBALS['TYPO3_DB']]
+            Events::TABLE_TRUNCATE_ALL_SIGNAL
         );
     }
 

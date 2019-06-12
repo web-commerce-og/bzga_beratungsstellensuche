@@ -18,7 +18,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 use Doctrine\DBAL\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
