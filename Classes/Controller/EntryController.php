@@ -17,14 +17,21 @@ namespace Bzga\BzgaBeratungsstellensuche\Controller;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
 use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Service\SessionService;
 use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
 use SJBR\StaticInfoTables\Domain\Model\Country;
+use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
+use TYPO3\CMS\Extbase\Mvc\Web\Response;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
@@ -58,42 +65,77 @@ class EntryController extends ActionController
     const TYPE_CSS = 'css';
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
-     * @inject
+     * @var EntryRepository
      */
     protected $entryRepository;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository
-     * @inject
+     * @var KilometerRepository
      */
     protected $kilometerRepository;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\SessionService
-     * @inject
+     * @var SessionService
      */
     protected $sessionService;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
-     * @inject
+     * @var CategoryRepository
      */
     protected $categoryRepository;
 
     /**
-     * @var \SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository
-     * @inject
+     * @var CountryZoneRepository
      */
     protected $countryZoneRepository;
 
     /**
      * The response which will be returned by this action controller
      *
-     * @var \TYPO3\CMS\Extbase\Mvc\Web\Response
+     * @var Response
      * @api
      */
     protected $response;
+
+    /**
+     * @param CategoryRepository $categoryRepository
+     */
+    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    /**
+     * @param CountryZoneRepository $countryZoneRepository
+     */
+    public function injectCountryZoneRepository(CountryZoneRepository $countryZoneRepository)
+    {
+        $this->countryZoneRepository = $countryZoneRepository;
+    }
+
+    /**
+     * @param EntryRepository $entryRepository
+     */
+    public function injectEntryRepository(EntryRepository $entryRepository)
+    {
+        $this->entryRepository = $entryRepository;
+    }
+
+    /**
+     * @param KilometerRepository $kilometerRepository
+     */
+    public function injectKilometerRepository(KilometerRepository $kilometerRepository)
+    {
+        $this->kilometerRepository = $kilometerRepository;
+    }
+
+    /**
+     * @param SessionService $sessionService
+     */
+    public function injectSessionService(SessionService $sessionService)
+    {
+        $this->sessionService = $sessionService;
+    }
 
     /**
      */
@@ -136,7 +178,10 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param Demand $demand
+     * @param Demand|object $demand
+     *
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     public function formAction(Demand $demand = null)
     {
@@ -152,6 +197,8 @@ class EntryController extends ActionController
     }
 
     /**
+     * @throws InvalidArgumentNameException
+     * @throws NoSuchArgumentException
      */
     public function initializeListAction()
     {
@@ -164,7 +211,7 @@ class EntryController extends ActionController
     }
 
     /**
-     * @param Demand $demand
+     * @param Demand|object $demand
      *
      * @throws InvalidSlotException
      * @throws InvalidSlotReturnException
@@ -209,6 +256,24 @@ class EntryController extends ActionController
         $assignedViewValues = compact('entry', 'demand');
         $assignedViewValues = $this->emitActionSignal(Events::SHOW_ACTION_SIGNAL, $assignedViewValues);
         $this->view->assignMultiple($assignedViewValues);
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeAutocompleteAction()
+    {
+        $this->request->setFormat('json');
+    }
+
+    /**
+     * @param string $q
+     *
+     * @throws InvalidQueryException
+     */
+    public function autocompleteAction(string $q)
+    {
+        $this->view->assign('entries', $this->entryRepository->findByQuery($q));
     }
 
     /**

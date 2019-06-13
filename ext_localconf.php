@@ -12,8 +12,8 @@ call_user_func(function ($packageKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Bzga.bzga_beratungsstellensuche',
         'Pi1',
-        ['Entry' => 'list,show,form'],
-        ['Entry' => 'list,form']
+        ['Entry' => 'list,show,form,autocomplete'],
+        ['Entry' => 'list,form,autocomplete']
     );
 
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
