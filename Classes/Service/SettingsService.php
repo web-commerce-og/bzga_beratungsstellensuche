@@ -22,26 +22,34 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 /**
  * @author Sebastian Schreiber
  */
-class SettingsService implements SingletonInterface
+class SettingsService implements SingletonInterface, SettingsServiceInterface
 {
 
     /**
      * @var mixed
      */
-    protected $settings = null;
+    protected $settings;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-     * @inject
+     * @var ConfigurationManagerInterface
+     *
      */
     protected $configurationManager;
+
+    /**
+     * @param ConfigurationManagerInterface $configurationManager
+     */
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    {
+        $this->configurationManager = $configurationManager;
+    }
 
     /**
      * Returns all settings.
      *
      * @return array
      */
-    public function getSettings()
+    public function getSettings(): array
     {
         if ($this->settings === null) {
             $this->settings = $this->configurationManager->getConfiguration(
@@ -64,7 +72,7 @@ class SettingsService implements SingletonInterface
      * @param string $path
      * @return mixed
      */
-    public function getByPath($path)
+    public function getByPath(string $path)
     {
         return ObjectAccess::getPropertyPath($this->getSettings(), $path);
     }
