@@ -14,6 +14,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
@@ -52,14 +53,35 @@ class EntryRepository extends AbstractBaseRepository
      */
     protected $queryParser;
 
+    /**
+     * @param GeolocationServiceCacheDecorator $geolocationService
+     */
     public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
     {
         $this->geolocationService = $geolocationService;
     }
 
+    /**
+     * @param Typo3DbQueryParser $queryParser
+     */
     public function injectQueryParser(Typo3DbQueryParser $queryParser)
     {
         $this->queryParser = $queryParser;
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return array|QueryResultInterface
+     * @throws InvalidQueryException
+     */
+    public function findByQuery(string $q)
+    {
+        $query = $this->createQuery();
+        return $query->matching($query->logicalOr([
+            $query->like('zip', $q.'%', false),
+            $query->like('city', $q.'%', false),
+        ]))->execute();
     }
 
     /**
@@ -71,11 +93,11 @@ class EntryRepository extends AbstractBaseRepository
      */
     public function findDemanded(Demand $demand)
     {
-        $query       = $this->createQuery();
+        $query = $this->createQuery();
         $constraints = $this->createCoordsConstraints($demand, $query, $demand->getKilometers());
 
         if ($keywords = $demand->getKeywords()) {
-            $searchFields      = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
+            $searchFields = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
             $searchConstraints = [];
 
             if (count($searchFields) === 0) {
@@ -85,7 +107,7 @@ class EntryRepository extends AbstractBaseRepository
             $keywordsArray = GeneralUtility::trimExplode(' ', $keywords);
             foreach ($keywordsArray as $keyword) {
                 foreach ($searchFields as $field) {
-                    $searchConstraints[] = $query->like($field, '%' . $keyword . '%');
+                    $searchConstraints[] = $query->like($field, '%'.$keyword.'%');
                 }
             }
 
@@ -99,7 +121,7 @@ class EntryRepository extends AbstractBaseRepository
             foreach ($demand->getCategories() as $category) {
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
-            if (! empty($categoryConstraints)) {
+            if ( ! empty($categoryConstraints)) {
                 $constraints[] = $query->logicalOr($categoryConstraints);
             }
         }
@@ -111,8 +133,8 @@ class EntryRepository extends AbstractBaseRepository
         // Call hook functions for additional constraints
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'])) {
             $params = [
-                'demand'      => $demand,
-                'query'       => $query,
+                'demand' => $demand,
+                'query' => $query,
                 'constraints' => &$constraints,
             ];
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'] as $reference) {
@@ -120,20 +142,21 @@ class EntryRepository extends AbstractBaseRepository
             }
         }
 
-        if (! empty($constraints) && is_array($constraints)) {
+        if ( ! empty($constraints) && is_array($constraints)) {
             $query->matching($query->logicalAnd($constraints));
         }
 
         // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
-        if (!method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
+        if ( ! method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
             $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
             $queryParameters = $queryBuilder->getParameters();
             $params = [];
             foreach ($queryParameters as $key => $value) {
                 // prefix array keys with ':'
-                $params[':' . $key] = is_numeric($value) ? $value : "'".$value."'"; //all non numeric values have to be quoted
+                $params[':'.$key] = is_numeric($value) ? $value : "'".$value."'"; //all non numeric values have to be quoted
                 unset($params[$key]);
             }
+
             // replace placeholders with real values
             return $query->statement(strtr($queryBuilder->getSQL(), $params))->execute();
         }
@@ -174,15 +197,15 @@ class EntryRepository extends AbstractBaseRepository
         QueryInterface $query,
         $radius = GeolocationService::DEFAULT_RADIUS
     ): array {
-        if (! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
+        if ( ! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
             return [];
         }
 
         $earthRadius = GeolocationService::EARTH_RADIUS;
 
-        $lowestLat  = (double)$userLocation->getLatitude() - rad2deg($radius / $earthRadius);
+        $lowestLat = (double)$userLocation->getLatitude() - rad2deg($radius / $earthRadius);
         $highestLat = (double)$userLocation->getLatitude() + rad2deg($radius / $earthRadius);
-        $lowestLng  = (double)$userLocation->getLongitude() - rad2deg($radius / $earthRadius);
+        $lowestLng = (double)$userLocation->getLongitude() - rad2deg($radius / $earthRadius);
         $highestLng = (double)$userLocation->getLongitude() + rad2deg($radius / $earthRadius);
 
         return [

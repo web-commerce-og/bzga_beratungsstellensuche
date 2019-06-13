@@ -37,7 +37,8 @@
     "geocoder-php/google-maps-provider": "^4.4",
     "php-http/guzzle6-adapter": "^2.0",
     "php-http/message": "^1.7",
-    "geocoder-php/nominatim-provider": "^5.1"
+    "geocoder-php/nominatim-provider": "^5.1",
+    "helhum/typoscript-rendering": "^2.1"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0",
