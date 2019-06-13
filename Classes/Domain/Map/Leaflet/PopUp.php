@@ -34,6 +34,7 @@ final class PopUp implements PopUpInterface
     public function __construct(string $identifier)
     {
         $this->popUp = new \Netzmacht\LeafletPHP\Definition\UI\Popup($identifier);
+        $this->popUp->setAutoPan(true);
     }
 
     /**
@@ -42,5 +43,13 @@ final class PopUp implements PopUpInterface
     public function getPopUp(): \Netzmacht\LeafletPHP\Definition\UI\Popup
     {
         return $this->popUp;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options): void
+    {
+        $this->popUp->setOptions($options);
     }
 }

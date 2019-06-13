@@ -132,13 +132,6 @@ class MapController extends AbstractWidgetController
                 $marker->addIconFromPath(Utility::stripPathSite(GeneralUtility::getFileAbsFileName($iconFile)));
             }
 
-            $marker->setOptions(
-                [
-                    'clickable' => true,
-                    'flat' => true,
-                ]
-            );
-
             $infoWindowParameters = [];
 
             // Current marker does not need detail link

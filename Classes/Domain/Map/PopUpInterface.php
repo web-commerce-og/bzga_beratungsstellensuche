@@ -22,4 +22,9 @@ interface PopUpInterface
      * @return mixed
      */
     public function getPopUp();
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options);
 }
