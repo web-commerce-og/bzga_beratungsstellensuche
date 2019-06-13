@@ -64,9 +64,20 @@ class MapController extends AbstractWidgetController
      */
     protected $settings = [];
 
+    /**
+     * @var MapBuilderFactory
+     *
+     */
+    protected $mapBuilderFactory;
+
     public function injectEntryRepository(EntryRepository $entryRepository)
     {
         $this->entryRepository = $entryRepository;
+    }
+
+    public function injectMapBuilderFactory(MapBuilderFactory $mapBuilderFactory)
+    {
+        $this->mapBuilderFactory = $mapBuilderFactory;
     }
 
     public function initializeAction()
@@ -83,7 +94,7 @@ class MapController extends AbstractWidgetController
 
     public function indexAction()
     {
-        $mapBuilder = MapBuilderFactory::createMapBuilder();
+        $mapBuilder = $this->mapBuilderFactory->createMapBuilder();
 
         $mapId = sprintf('map_%s', StringUtility::getUniqueId());
 

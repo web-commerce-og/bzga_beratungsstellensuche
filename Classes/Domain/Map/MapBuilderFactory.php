@@ -17,14 +17,31 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet\MapBuilder;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 final class MapBuilderFactory
 {
     /**
+     * @var ObjectManagerInterface
+     */
+    private $objectManager;
+
+    /**
+     * MapBuilderFactory constructor.
+     *
+     * @param ObjectManagerInterface $objectManager
+     */
+    public function __construct(ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
+
+    /**
      * @return MapBuilderInterface
      */
-    public static function createMapBuilder(): MapBuilderInterface
+    public function createMapBuilder(): MapBuilderInterface
     {
-        return new MapBuilder();
+        return $this->objectManager->get(MapBuilder::class);
     }
 }
