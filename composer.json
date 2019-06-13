@@ -30,7 +30,7 @@
     "symfony/serializer": "^3.0",
     "sjbr/static-info-tables": "^6.0",
     "sseidelmann/static-info-tables-de": "^6.0",
-    "php": ">=7.0.0",
+    "php": "^7.1",
     "netzmacht/php-leaflet": "^1.1",
     "ext-json": "*",
     "ext-simplexml": "*",
