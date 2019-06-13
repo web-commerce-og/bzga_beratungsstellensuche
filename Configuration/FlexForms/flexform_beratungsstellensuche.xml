@@ -28,7 +28,7 @@
                                 <items>
                                     <numIndex index="1">
                                         <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.entry_list</numIndex>
-                                        <numIndex index="1">Entry->list;Entry->show</numIndex>
+                                        <numIndex index="1">Entry->list;Entry->show;Entry->autocomplete</numIndex>
                                     </numIndex>
                                     <numIndex index="100">
                                         <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.entry_show</numIndex>
@@ -36,7 +36,7 @@
                                     </numIndex>
                                     <numIndex index="200">
                                         <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.entry_form</numIndex>
-                                        <numIndex index="1">Entry->form</numIndex>
+                                        <numIndex index="1">Entry->form;Entry->autocomplete</numIndex>
                                     </numIndex>
                                 </items>
                             </config>

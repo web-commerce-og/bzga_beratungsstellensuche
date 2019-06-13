@@ -259,14 +259,6 @@ class EntryController extends ActionController
     }
 
     /**
-     * @return void
-     */
-    public function initializeAutocompleteAction()
-    {
-        $this->request->setFormat('json');
-    }
-
-    /**
      * @param string $q
      *
      * @throws InvalidQueryException
@@ -274,6 +266,7 @@ class EntryController extends ActionController
     public function autocompleteAction(string $q)
     {
         $this->view->assign('entries', $this->entryRepository->findByQuery($q));
+        $this->view->assign('q', $q);
     }
 
     /**
