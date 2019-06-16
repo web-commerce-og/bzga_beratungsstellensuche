@@ -15,8 +15,3 @@ UPDATE static_country_zones SET external_id=13 WHERE zn_country_iso_3='DEU' AND 
 UPDATE static_country_zones SET external_id=14 WHERE zn_country_iso_3='DEU' AND zn_code='ST';
 UPDATE static_country_zones SET external_id=15 WHERE zn_country_iso_3='DEU' AND zn_code='SH';
 UPDATE static_country_zones SET external_id=16 WHERE zn_country_iso_3='DEU' AND zn_code='TH';
-
-
-
-
-
