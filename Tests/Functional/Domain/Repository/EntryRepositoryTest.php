@@ -18,6 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
+use Nimut\TestingFramework\Exception\Exception;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -52,6 +53,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     const ENTRY_DEFAULT_FIXTURE_UID = 1;
 
     /**
+     * @throws Exception
      */
     public function setUp()
     {
@@ -94,6 +96,7 @@ class EntryRepositoryTest extends FunctionalTestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function deleteByUid()
     {

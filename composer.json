@@ -1,74 +1,75 @@
 {
-  "name": "bzga/bzga-beratungsstellensuche",
-  "type": "typo3-cms-extension",
-  "description": "Beratungsstellensuche der BZgA",
-  "license": "GPL-2.0+",
-  "authors": [
-    {
-      "name": "Sebastian Schreiber",
-      "email": "ssch@hauptweg-nebenwege.de",
-      "role": "Developer"
+    "name": "bzga/bzga-beratungsstellensuche",
+    "type": "typo3-cms-extension",
+    "description": "Beratungsstellensuche der BZgA",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Sebastian Schreiber",
+            "email": "ssch@hauptweg-nebenwege.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Sebastian Hebler",
+            "email": "sh@hauptweg-nebenwege.de",
+            "role": "Projectmanager"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bzga\\BzgaBeratungsstellensuche\\": "Classes/"
+        }
     },
-    {
-      "name": "Sebastian Hebler",
-      "email": "sh@hauptweg-nebenwege.de",
-      "role": "Projectmanager"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Bzga\\BzgaBeratungsstellensuche\\": "Classes/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Bzga\\BzgaBeratungsstellensuche\\Tests\\": "Tests/"
-    }
-  },
-  "require": {
-    "typo3/cms-core": "^8.7.13",
-    "symfony/serializer": "^3.0",
-    "sjbr/static-info-tables": "^6.0",
-    "sseidelmann/static-info-tables-de": "^6.0",
-    "php": "^7.1",
-    "netzmacht/php-leaflet": "^1.1",
-    "ext-json": "*",
-    "ext-simplexml": "*",
-    "geocoder-php/google-maps-provider": "^4.4",
-    "php-http/guzzle6-adapter": "^2.0",
-    "php-http/message": "^1.7",
-    "geocoder-php/nominatim-provider": "^5.1"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.0",
-    "nimut/testing-framework": "^4.0"
-  },
-  "suggest": {
-    "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen",
-    "egeloen/google-map": "We need it to show the google map"
-  },
-  "replace": {
-    "bzga_beratungsstellensuche": "self.version",
-    "typo3-ter/bzga-beratungsstellensuche": "self.version"
-  },
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
-  },
-  "scripts": {
-    "post-autoload-dump": [
-      "mkdir -p .Build/Web/typo3conf/ext/",
-      "[ -L .Build/Web/typo3conf/ext/bzga_beratungsstellensuche ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/bzga_beratungsstellensuche"
-    ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "8.7.x-dev"
+    "autoload-dev": {
+        "psr-4": {
+            "Bzga\\BzgaBeratungsstellensuche\\Tests\\": "Tests/"
+        }
     },
-    "typo3/cms": {
-      "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "app-dir": ".Build",
-      "web-dir": ".Build/Web"
+    "require": {
+        "typo3/cms-core": "^8.7.13",
+        "symfony/serializer": "^3.0",
+        "sjbr/static-info-tables": "^6.0",
+        "sseidelmann/static-info-tables-de": "^6.0",
+        "php": "^7.1",
+        "netzmacht/php-leaflet": "^1.1",
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "geocoder-php/google-maps-provider": "^4.4",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/message": "^1.7",
+        "geocoder-php/nominatim-provider": "^5.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "nimut/testing-framework": "^4.0"
+    },
+    "suggest": {
+        "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen",
+        "egeloen/google-map": "We need it to show the google map"
+    },
+    "replace": {
+        "bzga_beratungsstellensuche": "self.version",
+        "typo3-ter/bzga-beratungsstellensuche": "self.version"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor"
+    },
+    "scripts": {
+        "link-extension": [
+            "@php -r 'is_dir($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
+            "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/bzga_beratungsstellensuche\") || symlink(__DIR__,$extFolder);'"
+        ],
+        "post-autoload-dump": [
+            "@link-extension"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "8.7.x-dev"
+        },
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": ".Build/public"
+        }
     }
-  }
 }
