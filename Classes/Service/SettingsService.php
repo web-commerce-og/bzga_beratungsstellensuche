@@ -59,7 +59,7 @@ class SettingsService implements SingletonInterface, SettingsServiceInterface
             );
         }
 
-        return $this->settings;
+        return $this->settings ?? [];
     }
 
     /**
