@@ -41,7 +41,7 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0",
-    "nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0"
+    "nimut/testing-framework": "^4.0"
   },
   "suggest": {
     "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen",
@@ -67,6 +67,7 @@
     },
     "typo3/cms": {
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "app-dir": ".Build",
       "web-dir": ".Build/Web"
     }
   }
