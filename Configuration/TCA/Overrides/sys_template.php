@@ -2,6 +2,8 @@
 
 defined('TYPO3_MODE') or die();
 
+$extKey = 'bzga_beratungsstellensuche';
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     $extKey,
     'Configuration/TypoScript',
