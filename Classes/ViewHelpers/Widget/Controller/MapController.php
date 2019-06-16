@@ -171,7 +171,7 @@ class MapController extends AbstractWidgetController
                 }
             }
 
-            $marker->addPopUp($popUp, $entry->getInfoWindow($infoWindowParameters));
+            $marker->addPopUp($popUp, $entry->getInfoWindow($infoWindowParameters), $isCurrentMarker);
 
             // Call hook functions for modify the marker
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyMarker'])) {

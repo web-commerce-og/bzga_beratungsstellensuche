@@ -19,6 +19,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\CoordinateInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\PopUpInterface;
+use Netzmacht\JavascriptBuilder\Type\Expression;
 use Netzmacht\LeafletPHP\Definition\Type\ImageIcon;
 use Netzmacht\LeafletPHP\Definition\UI\Marker as LeafletMarker;
 
@@ -61,10 +62,20 @@ final class Marker implements MarkerInterface
     /**
      * @param PopUpInterface $popUp
      * @param string $content
+     * @param bool $open
      */
-    public function addPopUp(PopUpInterface $popUp, string $content)
+    public function addPopUp(PopUpInterface $popUp, string $content, bool $open = false)
     {
         $this->marker->bindPopup($popUp->getPopUp());
         $this->marker->setPopupContent($content);
+
+        if($open) {
+        $handler = <<<'JS'
+function (event) {
+  event.target.openPopup();
+}
+JS;
+        $this->marker->on('add', new Expression($handler));
+        }
     }
 }

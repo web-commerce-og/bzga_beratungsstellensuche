@@ -36,6 +36,7 @@ interface MarkerInterface
     /**
      * @param PopUpInterface $popUp
      * @param string $content
+     * @param bool $open
      */
-    public function addPopUp(PopUpInterface $popUp, string $content);
+    public function addPopUp(PopUpInterface $popUp, string $content, bool $open = false);
 }
