@@ -19,6 +19,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\CoordinateInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapBuilderInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerClusterInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\PopUpInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\SettingsServiceInterface;
@@ -145,5 +146,20 @@ final class MapBuilder implements MapBuilderInterface
     public function createPopUp(string $identifier): PopUpInterface
     {
         return new PopUp($identifier);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @param MapInterface $map
+     *
+     * @return MarkerClusterInterface
+     */
+    public function createMarkerCluster(string $identifier, MapInterface $map): MarkerClusterInterface
+    {
+        $markerCluster = new MarkerCluster($identifier);
+        $markerCluster->getMarkerCluster()->addTo($map->getMap());
+        $map->getMap()->addLayer($markerCluster->getMarkerCluster());
+        return $markerCluster;
     }
 }

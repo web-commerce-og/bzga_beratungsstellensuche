@@ -126,6 +126,8 @@ class MapController extends AbstractWidgetController
             $entries->attach($this->entry);
         }
 
+        $markerCluster = $mapBuilder->createMarkerCluster('markercluster', $map);
+
         foreach ($entries as $entry) {
             /* @var $entry GeopositionInterface|MapWindowInterface */
             $coordinate = $mapBuilder->createCoordinate($entry->getLatitude(), $entry->getLongitude());
@@ -183,8 +185,7 @@ class MapController extends AbstractWidgetController
                     GeneralUtility::callUserFunction($reference, $params, $this);
                 }
             }
-
-            $map->addMarker($marker);
+            $markerCluster->addMarker($marker);
         }
 
         // Call hook functions for modify the map

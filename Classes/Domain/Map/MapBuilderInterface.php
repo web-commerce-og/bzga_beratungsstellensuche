@@ -54,4 +54,13 @@ interface MapBuilderInterface
      * @return PopUpInterface
      */
     public function createPopUp(string $identifier): PopUpInterface;
+
+    /**
+     * @param string $identifier
+     *
+     * @param MapInterface $map
+     *
+     * @return MarkerClusterInterface
+     */
+    public function createMarkerCluster(string $identifier, MapInterface $map): MarkerClusterInterface;
 }
