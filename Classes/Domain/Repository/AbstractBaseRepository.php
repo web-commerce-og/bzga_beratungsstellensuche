@@ -77,7 +77,7 @@ abstract class AbstractBaseRepository extends Repository
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
 
         return $queryBuilder
-            ->select('*')
+            ->select('uid')
             ->from(self::ENTRY_TABLE)
             ->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))
             ->execute()

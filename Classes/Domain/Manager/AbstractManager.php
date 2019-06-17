@@ -19,9 +19,13 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
+use function count;
 use Countable;
+use InvalidArgumentException;
 use IteratorAggregate;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -34,12 +38,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 {
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     */
-    private $signalSlotDispatcher;
-
-    /**
-     * @var \TYPO3\CMS\Core\DataHandling\DataHandler
+     * @var DataHandler
      */
     protected $dataHandler;
 
@@ -59,42 +58,46 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     private $externalUids = [];
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap
+     * @var DataMap
      */
     private $dataMapFactory;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper
+     * @var PropertyMapper
      */
     private $propertyMapper;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * AbstractManager constructor.
-     * @param Dispatcher $signalSlotDispatcher
+     *
      * @param DataHandler $dataHandler
      * @param DataMap $dataMapFactory
      * @param PropertyMapper $propertyMapper
      */
     public function __construct(
-        Dispatcher $signalSlotDispatcher,
         DataHandler $dataHandler,
         DataMap $dataMapFactory,
-        PropertyMapper $propertyMapper
+        PropertyMapper $propertyMapper,
+        LogManagerInterface $logManager
     ) {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
         $this->dataHandler->admin = true;
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
         $this->entries = new \SplObjectStorage();
+        $this->logger = $logManager->getLogger(__CLASS__);
     }
 
     /**
      * @param AbstractEntity|ExternalIdTrait $entity
      *
-     * @throws \TYPO3\CMS\Extbase\Reflection\Exception\PropertyNotAccessibleException
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function create(AbstractEntity $entity)
     {
@@ -150,7 +153,12 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         if (!empty($this->dataMap)) {
             $this->dataHandler->start($this->dataMap, []);
             $this->dataHandler->process_datamap();
+            if (count($this->dataHandler->errorLog) !== 0) {
+                // TODO: Log this
+                $this->logger->error('Error in importing', $this->dataHandler->errorLog);
+            }
             $this->dataMap = [];
+
         }
     }
 

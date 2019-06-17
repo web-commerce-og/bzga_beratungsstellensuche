@@ -42,7 +42,6 @@ class ImporterRegistryDecorator extends AbstractImporter
 
     /**
      * @var Registry
-     * @inject
      */
     protected $registry;
 
@@ -50,9 +49,10 @@ class ImporterRegistryDecorator extends AbstractImporter
      * ImporterRegistryDecorator constructor.
      * @param ImporterInterface $importer
      */
-    public function __construct(ImporterInterface $importer)
+    public function __construct(ImporterInterface $importer, Registry $registry)
     {
         $this->importer = $importer;
+        $this->registry = $registry;
     }
 
     /**

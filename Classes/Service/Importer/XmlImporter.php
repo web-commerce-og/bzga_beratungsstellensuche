@@ -15,14 +15,20 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\AbstractEntity;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Countable;
 use IteratorAggregate;
 use SimpleXMLIterator;
 use Traversable;
+use TYPO3\CMS\Extbase\Reflection\Exception\PropertyNotAccessibleException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * @author Sebastian Schreiber
@@ -53,6 +59,10 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     /**
      * @param string $content
      * @param int $pid
+     *
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
+     * @throws PropertyNotAccessibleException
      */
     public function import($content, $pid = 0)
     {
@@ -71,6 +81,8 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
 
     /**
      * @param SimpleXMLIterator $entry
+     *
+     * @throws PropertyNotAccessibleException
      */
     public function importEntry(SimpleXMLIterator $entry)
     {
@@ -94,6 +106,8 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     }
 
     /**
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     public function persist()
     {
@@ -107,6 +121,8 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
      * @param AbstractManager $manager
      * @param $relationClassName
      * @param int $pid
+     *
+     * @throws PropertyNotAccessibleException
      */
     public function convertRelations(Traversable $relations = null, AbstractManager $manager, $relationClassName, $pid)
     {
@@ -119,6 +135,9 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
 
     /**
      * @param string $signal
+     *
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
     private function emitImportSignal($signal)
     {
@@ -130,12 +149,15 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
      * @param string $relationClassName
      * @param int $pid
      * @param SimpleXMLIterator $relationData
+     *
+     * @throws PropertyNotAccessibleException
      */
     private function convertRelation(AbstractManager $manager, $relationClassName, $pid, $relationData)
     {
-        $externalId       = (integer)$relationData->index;
+        $externalId = (integer)$relationData->index;
         $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
-        $relationObject   = $this->serializer->deserialize(
+        /** @var ExternalIdTrait|AbstractEntity $relationObject */
+        $relationObject = $this->serializer->deserialize(
             $relationData->asXml(),
             $relationClassName,
             self::FORMAT,
@@ -151,5 +173,10 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     public function cleanUp()
     {
         $this->entryManager->cleanUp();
+    }
+
+    public function __toString()
+    {
+        return __CLASS__;
     }
 }

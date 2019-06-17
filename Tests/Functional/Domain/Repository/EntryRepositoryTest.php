@@ -47,7 +47,7 @@ class EntryRepositoryTest extends FunctionalTestCase
      * @var array
      */
     protected $pathsToLinkInTestInstance = [
-        'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Files/fileadmin/_migrated/pics' => 'fileadmin/user_upload',
+        'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Files/fileadmin/user_upload' => 'fileadmin/user_upload',
     ];
 
     const ENTRY_DEFAULT_FIXTURE_UID = 1;
@@ -58,8 +58,10 @@ class EntryRepositoryTest extends FunctionalTestCase
     public function setUp()
     {
         parent::setUp();
+        GeneralUtility::writeFile(__DIR__ .'/../../Fixtures/Files/fileadmin/user_upload/claim.png', '');
         $this->objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
         $this->entryRepository = $this->objectManager->get(EntryRepository::class);
+
         $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_entry.xml');
     }
@@ -118,7 +120,7 @@ class EntryRepositoryTest extends FunctionalTestCase
             $this->getDatabaseConnection()->selectCount(
                 '*',
                 'sys_file_reference',
-                'deleted = 0 AND fieldname = "image" AND tablename = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID
+                'deleted = 0 AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID
             )
         );
         $this->assertEquals(

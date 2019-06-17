@@ -46,9 +46,8 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     protected function setUp()
     {
         $this->importer = $this->getMockBuilder(ImporterInterface::class)->getMock();
-        $this->subject = new ImporterRegistryDecorator($this->importer);
         $this->registry = $this->getMockBuilder(Registry::class)->getMock();
-        $this->inject($this->subject, 'registry', $this->registry);
+        $this->subject = new ImporterRegistryDecorator($this->importer, $this->registry);
     }
 
     /**

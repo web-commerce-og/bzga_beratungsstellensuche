@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Utility;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
+use Nimut\TestingFramework\Exception\Exception;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -35,6 +36,7 @@ class TemplateLayoutTest extends FunctionalTestCase
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche'];
 
     /**
+     * @throws Exception
      */
     protected function setUp()
     {
