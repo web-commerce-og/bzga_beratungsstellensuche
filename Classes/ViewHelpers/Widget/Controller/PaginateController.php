@@ -16,6 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
+use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Fluid\ViewHelpers\Widget\Controller\PaginateController as CorePaginateController;
 
@@ -31,14 +33,14 @@ class PaginateController extends CorePaginateController
     protected $demand;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
-     * @inject
+     * @var GeolocationServiceCacheDecorator
+     *
      */
     protected $geolocationService;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser
-     * @inject
+     * @var Typo3DbQueryParser
+     *
      */
     protected $queryParser;
 
@@ -48,6 +50,16 @@ class PaginateController extends CorePaginateController
     {
         parent::initializeAction();
         $this->demand = $this->widgetConfiguration['demand'];
+    }
+
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
+    {
+        $this->geolocationService = $geolocationService;
+    }
+
+    public function injectQueryParser(Typo3DbQueryParser $queryParser)
+    {
+        $this->queryParser = $queryParser;
     }
 
     /**

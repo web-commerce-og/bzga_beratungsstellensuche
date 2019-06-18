@@ -17,7 +17,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
+use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
@@ -29,14 +31,14 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 class EntryNormalizer extends GetSetMethodNormalizer
 {
     /**
-     * @var \SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository
-     * @inject
+     * @var CountryZoneRepository
+     *
      */
     protected $countryZoneRepository;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
-     * @inject
+     * @var CategoryRepository
+     *
      */
     protected $categoryRepository;
 
@@ -106,6 +108,16 @@ class EntryNormalizer extends GetSetMethodNormalizer
         }
 
         return $objectStorage;
+    }
+
+    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function injectCountryZoneRepository(CountryZoneRepository $countryZoneRepository)
+    {
+        $this->countryZoneRepository = $countryZoneRepository;
     }
 
     /**

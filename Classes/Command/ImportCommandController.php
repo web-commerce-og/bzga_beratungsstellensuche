@@ -14,10 +14,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
 use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 use UnexpectedValueException;
@@ -29,20 +33,20 @@ class ImportCommandController extends CommandController
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter
-     * @inject
+     * @var XmlImporter
+     *
      */
     protected $xmlImporter;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
-     * @inject
+     * @var EntryRepository
+     *
      */
     protected $entryRepository;
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
+     * @var Dispatcher
+     *
      */
     protected $signalSlotDispatcher;
 
@@ -99,6 +103,21 @@ class ImportCommandController extends CommandController
         } catch (UnexpectedValueException $e) {
             throw new $e;
         }
+    }
+
+    public function injectEntryRepository(EntryRepository $entryRepository)
+    {
+        $this->entryRepository = $entryRepository;
+    }
+
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
+
+    public function injectXmlImporter(XmlImporter $xmlImporter)
+    {
+        $this->xmlImporter = $xmlImporter;
     }
 
     /**

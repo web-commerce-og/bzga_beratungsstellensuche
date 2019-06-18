@@ -15,9 +15,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use Bzga\BzgaBeratungsstellensuche\Domain\Manager\CategoryManager;
+use Bzga\BzgaBeratungsstellensuche\Domain\Manager\EntryManager;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use UnexpectedValueException;
 
 /**
@@ -27,26 +32,26 @@ abstract class AbstractImporter implements ImporterInterface
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer
-     * @inject
+     * @var Serializer
+     *
      */
     protected $serializer;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Manager\EntryManager
-     * @inject
+     * @var EntryManager
+     *
      */
     protected $entryManager;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Manager\CategoryManager
-     * @inject
+     * @var CategoryManager
+     *
      */
     protected $categoryManager;
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
+     * @var Dispatcher
+     *
      */
     protected $signalSlotDispatcher;
 
@@ -82,6 +87,26 @@ abstract class AbstractImporter implements ImporterInterface
         }
 
         $this->importFromSource($url, $pid);
+    }
+
+    public function injectCategoryManager(CategoryManager $categoryManager)
+    {
+        $this->categoryManager = $categoryManager;
+    }
+
+    public function injectEntryManager(EntryManager $entryManager)
+    {
+        $this->entryManager = $entryManager;
+    }
+
+    public function injectSerializer(Serializer $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
     /**

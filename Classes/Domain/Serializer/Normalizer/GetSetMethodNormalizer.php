@@ -19,6 +19,7 @@ use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer as BaseGetSetMethodNormalizer;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
@@ -27,8 +28,8 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 {
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
+     * @var Dispatcher
+     *
      */
     protected $signalSlotDispatcher;
 
@@ -141,5 +142,10 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         }
 
         return $callbacks;
+    }
+
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 }

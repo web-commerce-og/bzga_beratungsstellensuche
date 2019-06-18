@@ -3,6 +3,8 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -23,16 +25,21 @@ class EntryManager extends AbstractManager
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
-     * @inject
+     * @var EntryRepository
+     *
      */
     protected $repository;
 
     /**
-     * @return \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository
+     * @return EntryRepository
      */
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    public function injectRepository(EntryRepository $repository)
+    {
+        $this->repository = $repository;
     }
 }

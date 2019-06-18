@@ -3,6 +3,8 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -23,16 +25,21 @@ class CategoryManager extends AbstractManager
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
-     * @inject
+     * @var CategoryRepository
+     *
      */
     protected $repository;
 
     /**
-     * @return \Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository
+     * @return CategoryRepository
      */
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    public function injectRepository(CategoryRepository $repository)
+    {
+        $this->repository = $repository;
     }
 }

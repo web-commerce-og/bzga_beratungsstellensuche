@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
@@ -26,15 +27,15 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
 {
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller\PaginateController
-     * @inject
+     * @var PaginateController
+     *
      */
     protected $controller;
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $objects
+     * @param QueryResultInterface $objects
      * @param string $as
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand $demand
+     * @param Demand $demand
      * @param array $configuration
      * @return string
      */
@@ -50,5 +51,10 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
         ]
     ) {
         return $this->initiateSubRequest();
+    }
+
+    public function injectController(PaginateController $controller)
+    {
+        $this->controller = $controller;
     }
 }
