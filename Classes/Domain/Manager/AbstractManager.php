@@ -153,7 +153,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
             $this->dataHandler->start($this->dataMap, []);
             $this->dataHandler->process_datamap();
             if (count($this->dataHandler->errorLog) !== 0) {
-                // TODO: Log this
                 $this->logger->error('Error in importing', $this->dataHandler->errorLog);
             }
             $this->dataMap = [];
