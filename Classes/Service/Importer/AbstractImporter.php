@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\CategoryManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\EntryManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
@@ -33,25 +32,21 @@ abstract class AbstractImporter implements ImporterInterface
 
     /**
      * @var Serializer
-     *
      */
     protected $serializer;
 
     /**
      * @var EntryManager
-     *
      */
     protected $entryManager;
 
     /**
      * @var CategoryManager
-     *
      */
     protected $categoryManager;
 
     /**
      * @var Dispatcher
-     *
      */
     protected $signalSlotDispatcher;
 

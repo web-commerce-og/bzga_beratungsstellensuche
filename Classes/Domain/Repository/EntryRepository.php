@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
@@ -43,13 +42,11 @@ class EntryRepository extends AbstractBaseRepository
 
     /**
      * @var GeolocationServiceCacheDecorator
-     *
      */
     protected $geolocationService;
 
     /**
      * @var Typo3DbQueryParser
-     *
      */
     protected $queryParser;
 
@@ -79,8 +76,8 @@ class EntryRepository extends AbstractBaseRepository
     {
         $query = $this->createQuery();
         return $query->matching($query->logicalOr([
-            $query->like('zip', $q.'%', false),
-            $query->like('city', $q.'%', false),
+            $query->like('zip', $q . '%', false),
+            $query->like('city', $q . '%', false),
         ]))->execute();
     }
 
@@ -107,7 +104,7 @@ class EntryRepository extends AbstractBaseRepository
             $keywordsArray = GeneralUtility::trimExplode(' ', $keywords);
             foreach ($keywordsArray as $keyword) {
                 foreach ($searchFields as $field) {
-                    $searchConstraints[] = $query->like($field, '%'.$keyword.'%');
+                    $searchConstraints[] = $query->like($field, '%' . $keyword . '%');
                 }
             }
 
@@ -121,7 +118,7 @@ class EntryRepository extends AbstractBaseRepository
             foreach ($demand->getCategories() as $category) {
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
-            if ( ! empty($categoryConstraints)) {
+            if (! empty($categoryConstraints)) {
                 $constraints[] = $query->logicalOr($categoryConstraints);
             }
         }
@@ -142,18 +139,18 @@ class EntryRepository extends AbstractBaseRepository
             }
         }
 
-        if ( ! empty($constraints) && is_array($constraints)) {
+        if (! empty($constraints) && is_array($constraints)) {
             $query->matching($query->logicalAnd($constraints));
         }
 
         // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
-        if ( ! method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
+        if (! method_exists(Typo3DbQueryParser::class, 'preparseQuery')) {
             $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
             $queryParameters = $queryBuilder->getParameters();
             $params = [];
             foreach ($queryParameters as $key => $value) {
                 // prefix array keys with ':'
-                $params[':'.$key] = is_numeric($value) ? $value : "'".$value."'"; //all non numeric values have to be quoted
+                $params[':' . $key] = is_numeric($value) ? $value : "'" . $value . "'"; //all non numeric values have to be quoted
                 unset($params[$key]);
             }
 
@@ -197,7 +194,7 @@ class EntryRepository extends AbstractBaseRepository
         QueryInterface $query,
         $radius = GeolocationService::DEFAULT_RADIUS
     ): array {
-        if ( ! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
+        if (! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
             return [];
         }
 

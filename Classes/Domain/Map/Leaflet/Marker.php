@@ -69,13 +69,13 @@ final class Marker implements MarkerInterface
         $this->marker->bindPopup($popUp->getPopUp());
         $this->marker->setPopupContent($content);
 
-        if($open) {
-        $handler = <<<'JS'
+        if ($open) {
+            $handler = <<<'JS'
 function (event) {
   event.target.openPopup();
 }
 JS;
-        $this->marker->on('add', new Expression($handler));
+            $this->marker->on('add', new Expression($handler));
         }
     }
 }

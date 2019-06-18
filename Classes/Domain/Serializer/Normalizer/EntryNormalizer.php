@@ -32,13 +32,11 @@ class EntryNormalizer extends GetSetMethodNormalizer
 {
     /**
      * @var CountryZoneRepository
-     *
      */
     protected $countryZoneRepository;
 
     /**
      * @var CategoryRepository
-     *
      */
     protected $categoryRepository;
 

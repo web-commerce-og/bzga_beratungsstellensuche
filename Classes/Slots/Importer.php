@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Slots;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer as BaseSerializer;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
@@ -53,6 +52,4 @@ class Importer
     {
         $this->entryRepository->truncateAll();
     }
-
-
 }

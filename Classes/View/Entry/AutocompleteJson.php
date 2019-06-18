@@ -1,6 +1,5 @@
 <?php
-declare(strict_types=1);
-
+declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\View\Entry;
 
@@ -39,12 +38,11 @@ final class AutocompleteJson extends AbstractView
         $suggestions = [];
 
         foreach ($entries as $entry) {
-
-            if(StringUtility::beginsWith($entry->getCity(), $q)) {
+            if (StringUtility::beginsWith($entry->getCity(), $q)) {
                 $suggestions[] = $entry->getCity();
             }
 
-            if(StringUtility::beginsWith($entry->getZip(), $q)) {
+            if (StringUtility::beginsWith($entry->getZip(), $q)) {
                 $suggestions[] = $entry->getZip();
             }
         }

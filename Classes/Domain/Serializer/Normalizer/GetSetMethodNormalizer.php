@@ -29,7 +29,6 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 
     /**
      * @var Dispatcher
-     *
      */
     protected $signalSlotDispatcher;
 

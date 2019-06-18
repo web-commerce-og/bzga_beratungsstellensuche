@@ -36,8 +36,6 @@ interface MapInterface
 
     /**
      * @param MarkerInterface $marker
-     *
-     * @return void
      */
     public function addMarker(MarkerInterface $marker);
 }

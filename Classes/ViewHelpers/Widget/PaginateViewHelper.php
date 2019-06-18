@@ -28,7 +28,6 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
 
     /**
      * @var PaginateController
-     *
      */
     protected $controller;
 

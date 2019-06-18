@@ -66,7 +66,6 @@ class MapController extends AbstractWidgetController
 
     /**
      * @var MapBuilderFactory
-     *
      */
     protected $mapBuilderFactory;
 

@@ -34,13 +34,11 @@ class PaginateController extends CorePaginateController
 
     /**
      * @var GeolocationServiceCacheDecorator
-     *
      */
     protected $geolocationService;
 
     /**
      * @var Typo3DbQueryParser
-     *
      */
     protected $queryParser;
 

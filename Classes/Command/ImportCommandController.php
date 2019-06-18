@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
@@ -34,19 +33,16 @@ class ImportCommandController extends CommandController
 
     /**
      * @var XmlImporter
-     *
      */
     protected $xmlImporter;
 
     /**
      * @var EntryRepository
-     *
      */
     protected $entryRepository;
 
     /**
      * @var Dispatcher
-     *
      */
     protected $signalSlotDispatcher;
 

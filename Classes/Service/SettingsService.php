@@ -32,7 +32,6 @@ class SettingsService implements SingletonInterface, SettingsServiceInterface
 
     /**
      * @var ConfigurationManagerInterface
-     *
      */
     protected $configurationManager;
 

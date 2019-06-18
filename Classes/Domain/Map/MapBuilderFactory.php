@@ -36,7 +36,6 @@ final class MapBuilderFactory
         $this->objectManager = $objectManager;
     }
 
-
     /**
      * @return MapBuilderInterface
      */

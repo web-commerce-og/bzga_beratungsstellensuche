@@ -17,9 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Hooks;
  */
 use DmitryDulepov\DdGooglesitemap\Generator\AbstractSitemapGenerator;
 use Exception;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -61,13 +59,12 @@ class SitemapGenerator extends AbstractSitemapGenerator
     protected function generateSitemapContent()
     {
         if (count($this->pidList) > 0) {
-
             $typoScriptFrontendController = $this->getTypoScriptFrontendController();
             $typoScriptFrontendController->sys_language_content = (int)$GLOBALS['TSFE']->config['config']['sys_language_uid'];
 
             $rows = $this->cObj->getRecords('tx_bzgaberatungsstellensuche_domain_model_entry', [
                 'selectFields' => '*',
-                'pidInList' => implode(',',$this->pidList),
+                'pidInList' => implode(',', $this->pidList),
                 'orderBy' => 'title ASC',
                 'begin' => $this->offset,
                 'max' => $this->limit
@@ -84,7 +81,6 @@ class SitemapGenerator extends AbstractSitemapGenerator
                     );
                 }
             }
-
 
             if (empty($rows)) {
                 echo '<!-- It appears that there are no tx_bzgaberatungsstellensuche_domain_model_entry entries. If your ' .

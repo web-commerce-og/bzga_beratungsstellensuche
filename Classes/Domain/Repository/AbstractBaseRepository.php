@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Doctrine\DBAL\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -31,7 +30,6 @@ abstract class AbstractBaseRepository extends Repository
 
     /**
      * @var Dispatcher
-     *
      */
     protected $signalSlotDispatcher;
 
@@ -59,7 +57,6 @@ abstract class AbstractBaseRepository extends Repository
      * @var string
      */
     const SYS_FILE_REFERENCE = 'sys_file_reference';
-
 
     public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
     {

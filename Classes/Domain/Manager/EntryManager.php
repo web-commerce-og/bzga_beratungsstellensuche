@@ -26,7 +26,6 @@ class EntryManager extends AbstractManager
 
     /**
      * @var EntryRepository
-     *
      */
     protected $repository;
 

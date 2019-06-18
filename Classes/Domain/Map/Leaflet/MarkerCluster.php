@@ -1,6 +1,5 @@
 <?php
-declare(strict_types=1);
-
+declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
 
@@ -23,14 +22,12 @@ use Netzmacht\LeafletPHP\Plugins\MarkerCluster\MarkerClusterGroup;
 
 final class MarkerCluster implements MarkerClusterInterface
 {
-
     private $markerCluster;
 
     public function __construct(string $identifier)
     {
         $this->markerCluster = new MarkerClusterGroup($identifier);
     }
-
 
     /**
      * @return mixed

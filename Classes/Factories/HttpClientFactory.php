@@ -15,24 +15,13 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\HttpAdapter\CurlHttpAdapter;
-use GuzzleHttp\Client;
 use Http\Client\HttpClient;
-use Ivory\HttpAdapter\FileGetContentsHttpAdapter;
-use Ivory\HttpAdapter\HttpAdapterInterface;
-use TYPO3\CMS\Core\Http\RequestFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @author Sebastian Schreiber
  */
 class HttpClientFactory
 {
-
-    /**
-     * @var string
-     */
-    const TYPE_CURL = 'curl';
 
     /**
      * @return HttpClient

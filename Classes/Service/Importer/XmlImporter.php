@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\AbstractEntity;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
@@ -156,7 +155,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     {
         $externalId = (integer)$relationData->index;
         $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
-        /** @var ExternalIdTrait|AbstractEntity $relationObject */
+        /** @var AbstractEntity|ExternalIdTrait $relationObject */
         $relationObject = $this->serializer->deserialize(
             $relationData->asXml(),
             $relationClassName,

@@ -58,7 +58,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        GeneralUtility::writeFile(__DIR__ .'/../../Fixtures/Files/fileadmin/user_upload/claim.png', '');
+        GeneralUtility::writeFile(__DIR__ . '/../../Fixtures/Files/fileadmin/user_upload/claim.png', '');
         $this->objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
         $this->entryRepository = $this->objectManager->get(EntryRepository::class);
 

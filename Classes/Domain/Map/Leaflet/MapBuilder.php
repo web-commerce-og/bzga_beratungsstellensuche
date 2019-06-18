@@ -22,7 +22,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerClusterInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\PopUpInterface;
-use Bzga\BzgaBeratungsstellensuche\Service\SettingsServiceInterface;
 use Netzmacht\JavascriptBuilder\Builder;
 use Netzmacht\JavascriptBuilder\Encoder\ChainEncoder;
 use Netzmacht\JavascriptBuilder\Encoder\JavascriptEncoder;

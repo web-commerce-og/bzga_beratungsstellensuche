@@ -19,7 +19,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
-use function count;
 use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
@@ -29,7 +28,7 @@ use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use function count;
 
 /**
  * @author Sebastian Schreiber
@@ -158,7 +157,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
                 $this->logger->error('Error in importing', $this->dataHandler->errorLog);
             }
             $this->dataMap = [];
-
         }
     }
 

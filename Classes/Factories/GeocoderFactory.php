@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\Provider;
@@ -56,13 +55,13 @@ class GeocoderFactory
             return Nominatim::withOpenStreetMapServer($client, 'User-Agent');
         }
 
-        if ( ! class_exists($type)) {
+        if (! class_exists($type)) {
             return new GoogleMaps($client, $region, $apiKey);
         }
 
         $customProvider = GeneralUtility::makeInstance($type);
 
-        if ( ! $customProvider instanceof Provider) {
+        if (! $customProvider instanceof Provider) {
             throw new RuntimeException(sprintf('The %s must implement the %s interface', $type, Provider::class));
         }
 
