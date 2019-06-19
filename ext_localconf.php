@@ -79,7 +79,6 @@ call_user_func(function ($packageKey) {
     // Register some type converters so we can prepare everything for the data handler to import the xml
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ImageLinkConverter::class);
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter::class);
-    \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\StringConverter::class);
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter::class);
 
     // Google Sitemap based on dd_googlesitemap
