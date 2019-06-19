@@ -19,6 +19,7 @@ use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use InvalidArgumentException;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -31,7 +32,7 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
      * @param string $type
      * @return bool
      */
-    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
+    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE): bool
     {
         if (!$source instanceof ObjectStorage) {
             return false;
@@ -41,25 +42,26 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param $source
+     * @param DomainObjectInterface[]|ObjectStorage $source
      * @param AbstractEntity|array|null $configuration
      * @return string
      */
-    public function convert($source, array $configuration = null)
+    public function convert($source, array $configuration = null): string
     {
-        // @TODO: Implement assertions at the beginning with some library
         if (!$source instanceof ObjectStorage) {
-            throw new InvalidArgumentException('The type is not allowed');
+            throw new InvalidArgumentException(sprintf('The %s type is not allowed', gettype($source)));
         }
 
-        $arrayOfUids = [];
-        foreach ($source as $item) {
-            if (!$item instanceof AbstractEntity) {
-                throw new InvalidArgumentException('The type is not allowed');
-            }
-            $arrayOfUids[] = $item->getUid();
+        $items = array_filter($source->toArray(), static function ($item) {
+            return $item instanceof DomainObjectInterface;
+        });
+
+        if (count($items) !== $source->count()) {
+            throw new InvalidArgumentException('The storage contains values not of type AbstractEntity');
         }
 
-        return implode(',', $arrayOfUids);
+        return implode(',', array_map(static function (DomainObjectInterface $item) {
+            return $item->getUid();
+        }, $items));
     }
 }
