@@ -13,51 +13,27 @@ TypoScript
 Die Erweiterung enthält einige TypoScript-Eigenschaften (settings), die zur individuellen Konfiguration der Erweiterung dienen.
 Im Folgenden werden die einzelnen Eigenschaften beschrieben.
 
-.. t3-field-list-table::
- :header-rows: 1
-
- - :Setting:
-        Eigenschaft:
-   :Description:
-        Beschreibung:
- - :Setting:
-        listPid
-   :Description:
-         Seiten-Uid für die Darstellung der Liste / Suchergebnisse
- - :Setting:
-        singlePid
-   :Description:
-         Seiten-Uid für die Darstellung der Detailansicht
- - :Setting:
-         formFields
-   :Description:
-         komma-separierte Liste der Felder, die im Formular angezeigt werden sollen
- - :Setting:
-         form.kilometers
-   :Description:
-         komma-separierte Liste der Kilometer-Optionen
- - :Setting:
-         list.itemsPerPage
-   :Description:
-         Anzahl der Einträge pro Seite
- - :Setting:
-         additionalCssFile
-   :Description:
-         Einbindung einer zusätzlichen CSS-Datei im Header. Betrifft allen Seiten auf dem Plugin eingebunden wird.
- - :Setting:
-         additionalJsFile
-   :Description:
-         Einbindung einer zusätzlichen JavaScript-Datei im Header. Betrifft allen Seiten auf dem Plugin eingebunden wird.
- - :Setting:
-         map.pathToActiveMarker
-   :Description:
-         Pfad zum Icon für den aktiven Marker in der Google Maps Karte
- - :Setting:
-         map.pathToDefaultMarker
-   :Description:
-         Pfad zum Icon für die Marker in der Google Maps Karte
- - :Setting:
-         map.apiKey
-   :Description:
-         Api-Key für die Einbindung von Google Maps
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| Eigenschaft             | Beschreibung                                                                                                     |
++=========================+==================================================================================================================+
+| listPid                 | Seiten-Uid für die Darstellung der Liste / Suchergebnisse                                                        |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| singlePid               | Seiten-Uid für die Darstellung der Detailansicht                                                                 |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| formFields              | komma-separierte Liste der Felder, die im Formular angezeigt werden sollen                                       |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| form.kilometers         | komma-separierte Liste der Kilometer-Optionen                                                                    |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| list.itemsPerPage       | Anzahl der Einträge pro Seite                                                                                    |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| additionalCssFile       | Einbindung einer zusätzlichen CSS-Datei im Header. Betrifft allen Seiten auf dem Plugin eingebunden wird.        |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| additionalJsFile        | Einbindung einer zusätzlichen JavaScript-Datei im Header. Betrifft allen Seiten auf dem Plugin eingebunden wird. |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| map.pathToActiveMarker  | Pfad zum Icon für den aktiven Marker in der Google Maps Karte                                                    |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| map.pathToDefaultMarker | Pfad zum Icon für die Marker in der Google Maps Karte                                                            |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
+| map.apiKey              | Api-Key für die Einbindung von Google Maps                                                                       |
++-------------------------+------------------------------------------------------------------------------------------------------------------+
 
