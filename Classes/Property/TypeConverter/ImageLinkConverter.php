@@ -167,8 +167,8 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             }
 
             return $fileReferenceUid;
-        } catch (TypeConverterException $e) {
-        } catch (DownloadException $e) {
+        } catch (Exception $e) {
+            // TODO: Add logging here
         }
 
         // We fail gracefully here by intention
