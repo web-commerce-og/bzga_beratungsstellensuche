@@ -1,0 +1,26 @@
+[globalVar = GP:tx_bzgaberatungsstellensuche_pi1|entry > 0]
+    page.includeCSS {
+        leaflet = https://unpkg.com/leaflet@1.5.1/dist/leaflet.css
+        leaflet.external = 1
+        fullScreen = https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css
+        fullScreen.external = 1
+        markercluster = https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css
+        markercluster.external = 1
+        markerclusterIcons = https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css
+        markerclusterIcons.external = 1
+    }
+
+    page.includeJSLibs {
+        leaflet = https://unpkg.com/leaflet@1.5.1/dist/leaflet.js
+        leaflet {
+            external = 1
+            integrity = sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==
+            crossorigin = ""
+        }
+
+        fullscreen = https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js
+        fullscreen.external = 1
+        markercluster = https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js
+        markercluster.external = 1
+    }
+[global]

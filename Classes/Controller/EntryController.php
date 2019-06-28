@@ -47,16 +47,6 @@ class EntryController extends ActionController
     /**
      * @var string
      */
-    const STYLESHEET_INCLUDE = '<link rel="stylesheet" type="text/css" media="%1$s" href="%2$s" />';
-
-    /**
-     * @var string
-     */
-    const JAVASCRIPT_INCLUDE = '<script type="text/javascript" src="%1$s"></script>';
-
-    /**
-     * @var string
-     */
     const TYPE_JS = 'js';
 
     /**
@@ -141,14 +131,6 @@ class EntryController extends ActionController
      */
     public function initializeAction()
     {
-        // Add some additional files to the header
-        if ($this->settings['additionalCssFile']) {
-            $this->addHeaderData($this->settings['additionalCssFile']);
-        }
-        if ($this->settings['additionalJsFile']) {
-            $this->addHeaderData($this->settings['additionalJsFile'], self::TYPE_JS);
-        }
-
         if ($this->arguments->hasArgument('demand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
             $propertyMappingConfiguration->allowAllProperties();
@@ -331,43 +313,5 @@ class EntryController extends ActionController
             $this->sessionService->cleanUpSession();
             $this->request->setArgument('demand', null);
         }
-    }
-
-    /**
-     * @param string $data
-     * @param string("js", "css") $type
-     * @param string $media
-     */
-    private function addHeaderData($data, $type = self::TYPE_CSS, $media = 'all')
-    {
-        $pathToFile = GeneralUtility::getFileAbsFileName($data);
-        if (file_exists($pathToFile)) {
-            $data = Utility::stripPathSite($pathToFile);
-            switch ($type) {
-                case self::TYPE_CSS:
-                    $data = sprintf(self::STYLESHEET_INCLUDE, $media, $data);
-                    break;
-                case self::TYPE_JS:
-                    $data = sprintf(self::JAVASCRIPT_INCLUDE, $data);
-                    break;
-                default:
-                    throw new \InvalidArgumentException(sprintf('The provided type %s is not allowed', $type));
-                    break;
-            }
-            $typoScriptFrontendController = $this->getTypoScriptFrontendController();
-            $key = $this->extensionName . md5($data);
-            if (!isset($typoScriptFrontendController->register[$key])) {
-                $typoScriptFrontendController->register[$key] = $data;
-                $this->response->addAdditionalHeaderData($data);
-            }
-        }
-    }
-
-    /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
-    private function getTypoScriptFrontendController()
-    {
-        return $GLOBALS['TSFE'];
     }
 }

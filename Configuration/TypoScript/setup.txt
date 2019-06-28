@@ -34,8 +34,7 @@ plugin.tx_bzgaberatungsstellensuche {
         list {
             itemsPerPage = {$plugin.tx_bzgaberatungsstellensuche.settings.list.itemsPerPage}
         }
-        additionalCssFile = {$plugin.tx_bzgaberatungsstellensuche.settings.additionalCssFile}
-        additionalJsFile = {$plugin.tx_bzgaberatungsstellensuche.settings.additionalJsFile}
+
         map {
             locale = {$plugin.tx_bzgaberatungsstellensuche.settings.map.locale}
             useSsl = {$plugin.tx_bzgaberatungsstellensuche.settings.map.useSsl}

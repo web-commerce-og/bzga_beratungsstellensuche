@@ -10,6 +10,12 @@ $extKey = 'bzga_beratungsstellensuche';
     'Beratungsstellensuche'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $extKey,
+    'Configuration/TypoScript/leaflet',
+    'Beratungsstellensuche - Leaflet Resources'
+);
+
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler')) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         $extKey,

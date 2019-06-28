@@ -17,8 +17,6 @@ plugin.tx_bzgaberatungsstellensuche {
         list {
             itemsPerPage = 10
         }
-        additionalCssFile = EXT:bzga_beratungsstellensuche/Resources/Public/Css/main.css
-        additionalJsFile = EXT:bzga_beratungsstellensuche/Resources/Public/Js/main.js
         map {
             pathToDefaultMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/default.png
             pathToActiveMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/active.png
