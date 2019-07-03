@@ -48,7 +48,7 @@ final class PopUp implements PopUpInterface
     /**
      * @param array $options
      */
-    public function setOptions(array $options): void
+    public function setOptions(array $options)
     {
         $this->popUp->setOptions($options);
     }

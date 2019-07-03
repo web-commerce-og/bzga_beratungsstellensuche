@@ -51,7 +51,7 @@ class ObjectStorageConverterTest extends UnitTestCase
      * @test
      * @dataProvider unsupportedSources
      */
-    public function isNotSupported($unsupportedSource): void
+    public function isNotSupported($unsupportedSource)
     {
         $this->assertFalse($this->subject->supports($unsupportedSource));
     }

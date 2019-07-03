@@ -30,12 +30,12 @@
         "symfony/serializer": "^3.0",
         "sjbr/static-info-tables": "^6.0",
         "sseidelmann/static-info-tables-de": "^6.0",
-        "php": "^7.1",
+        "php": ">=7.0.0",
         "netzmacht/php-leaflet": "^1.1",
         "ext-json": "*",
         "ext-simplexml": "*",
         "geocoder-php/google-maps-provider": "^4.4",
-        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/guzzle6-adapter": "^1.0",
         "php-http/message": "^1.7",
         "geocoder-php/nominatim-provider": "^5.1"
     },
@@ -52,7 +52,10 @@
         "typo3-ter/bzga-beratungsstellensuche": "self.version"
     },
     "config": {
-        "vendor-dir": ".Build/vendor"
+        "vendor-dir": ".Build/vendor",
+        "platform": {
+            "php": "7.0.33"
+        }
     },
     "scripts": {
         "link-extension": [

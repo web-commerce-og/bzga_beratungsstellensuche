@@ -15,6 +15,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use Http\Adapter\Guzzle6\Client;
 use Http\Client\HttpClient;
 
 /**
@@ -31,6 +33,6 @@ class HttpClientFactory
         $httpOptions = $GLOBALS['TYPO3_CONF_VARS']['HTTP'];
         $httpOptions['verify'] = filter_var($httpOptions['verify'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $httpOptions['verify'];
 
-        return \Http\Adapter\Guzzle6\Client::createWithConfig($httpOptions);
+        return Client::createWithConfig($httpOptions);
     }
 }
