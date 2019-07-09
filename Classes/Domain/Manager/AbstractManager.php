@@ -87,6 +87,8 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
         $this->dataHandler->admin = true;
+        $this->dataHandler->enableLogging = false;
+        $this->dataHandler->checkStoredRecords = false;
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
         $this->entries = new \SplObjectStorage();
