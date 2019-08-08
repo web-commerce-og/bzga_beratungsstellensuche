@@ -195,15 +195,22 @@ class EntryController extends ActionController
     /**
      * @param Demand|object $demand
      *
+     * @throws InvalidQueryException
      * @throws InvalidSlotException
      * @throws InvalidSlotReturnException
-     * @throws InvalidQueryException
+     * @throws StopActionException
+     * @throws UnsupportedRequestTypeException
      */
     public function listAction(Demand $demand = null)
     {
         if (!$demand instanceof Demand) {
             $demand = $this->objectManager->get(Demand::class);
         }
+
+        if(!$demand->hasValidCoordinates()) {
+            $this->redirect('form', 'Entry', 'bzga_beratungsstellensuche', ['demand' => $demand], $this->settings['backPid']);
+        }
+
         $entries = $this->entryRepository->findDemanded($demand);
         $countryZonesGermany = $this->findCountryZonesForGermany();
         $kilometers = $this->kilometerRepository->findKilometersBySettings($this->settings);

@@ -15,7 +15,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
+use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\Exception;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
@@ -35,7 +37,11 @@ class GeolocationService extends AbstractGeolocationService
     public function findAddressByDemand(Demand $demand)
     {
         if ($demand->getLocation()) {
-            return $this->geocoder->geocodeQuery(GeocodeQuery::create($demand->getAddressToGeocode()))->first();
+            try {
+                return $this->geocoder->geocodeQuery(GeocodeQuery::create($demand->getAddressToGeocode()))->first();
+            } catch (CollectionIsEmpty $e) {
+                return null;
+            }
         }
 
         return null;

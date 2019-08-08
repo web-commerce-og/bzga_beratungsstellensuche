@@ -211,4 +211,13 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
             $this->longitude = $address->getCoordinates()->getLongitude();
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function hasValidCoordinates(): bool
+    {
+        $this->updateLatitudeLongitude();
+        return $this->latitude !== null && $this->longitude !== null;
+    }
 }
