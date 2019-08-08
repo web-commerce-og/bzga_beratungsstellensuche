@@ -164,6 +164,7 @@ class EntryController extends ActionController
      *
      * @throws InvalidSlotException
      * @throws InvalidSlotReturnException
+     * @throws \Exception
      */
     public function formAction(Demand $demand = null)
     {
@@ -173,7 +174,8 @@ class EntryController extends ActionController
         $countryZonesGermany = $this->findCountryZonesForGermany();
         $kilometers = $this->kilometerRepository->findKilometersBySettings($this->settings);
         $categories = $this->categoryRepository->findAll();
-        $assignedViewValues = compact('demand', 'kilometers', 'categories', 'countryZonesGermany');
+        $random = random_int(0, 1000);
+        $assignedViewValues = compact('demand', 'kilometers', 'categories', 'countryZonesGermany', 'random');
         $assignedViewValues = $this->emitActionSignal(Events::FORM_ACTION_SIGNAL, $assignedViewValues);
         $this->view->assignMultiple($assignedViewValues);
     }
