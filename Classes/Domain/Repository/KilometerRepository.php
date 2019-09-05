@@ -25,12 +25,22 @@ class KilometerRepository
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     public function findKilometersBySettings(array $settings): array
     {
-        $kilometers = $settings['form']['kilometers'] ?? '10,20,50,100';
-        $kilometersArray = GeneralUtility::intExplode(',', $kilometers);
-        return array_combine($kilometersArray, $kilometersArray);
+        $kilometersFromSettings = $settings['form']['kilometers'] ?? '10:10,20:20,50:50,100:100';
+        $kilometerPairs = GeneralUtility::trimExplode(',', $kilometersFromSettings, true);
+        $kilometers = [];
+
+        foreach ($kilometerPairs as $kilometerPair) {
+            list($label, $value) = GeneralUtility::trimExplode(':', $kilometerPair, true, 2);
+            // This is for backwards compatibility reasons, if we have something like 10,20,30 and so on
+            $value = $value ?? $label;
+            $kilometers[$value] = $label;
+        }
+
+        return $kilometers;
     }
 }

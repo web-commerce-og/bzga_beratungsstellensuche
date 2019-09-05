@@ -12,7 +12,7 @@ plugin.tx_bzgaberatungsstellensuche {
         listPid = 10097
         formFields = location,kilometers
         form {
-            kilometers = 10,20,30,40,50,100
+            kilometers = 10:10,20:20,30:30,40:40,50:50,100:100
         }
         list {
             itemsPerPage = 10
