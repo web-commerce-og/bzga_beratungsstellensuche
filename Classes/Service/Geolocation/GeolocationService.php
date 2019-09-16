@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\Exception;

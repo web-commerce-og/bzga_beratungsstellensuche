@@ -44,4 +44,5 @@ final class StringConverter implements TypeConverterBeforeInterface
     public function convert($source, array $configuration = null)
     {
         return strip_tags($source, $this->allowedTags);
-}}
+    }
+}

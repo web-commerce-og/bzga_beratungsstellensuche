@@ -15,7 +15,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Factories;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use Http\Adapter\Guzzle6\Client;
 use Http\Client\HttpClient;
 

@@ -53,6 +53,7 @@ class EntryNormalizer extends GetSetMethodNormalizer
 
     /**
      * @param array|object $data
+     *
      * @return array
      */
     protected function prepareForDenormalization($data)
@@ -84,6 +85,7 @@ class EntryNormalizer extends GetSetMethodNormalizer
      * @param RepositoryInterface $repository
      * @param array $array
      * @param string $method
+     *
      * @return ObjectStorage
      */
     public static function convertToObjectStorage(
@@ -94,12 +96,14 @@ class EntryNormalizer extends GetSetMethodNormalizer
         $objectStorage = new ObjectStorage();
         if (is_array($array[0])) {
             foreach ($array[0] as $key => $item) {
-                if (is_array($item)) {
-                    foreach ($item as $id) {
-                        $object = $repository->{$method}($id);
-                        if ($object !== null) {
-                            $objectStorage->attach($object);
-                        }
+                if (! is_array($item)) {
+                    $item = (array)$item;
+                }
+
+                foreach ($item as $id) {
+                    $object = $repository->{$method}($id);
+                    if ($object !== null) {
+                        $objectStorage->attach($object);
                     }
                 }
             }

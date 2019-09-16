@@ -22,7 +22,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\SessionService;
-use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
 use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -209,7 +208,7 @@ class EntryController extends ActionController
             $demand = $this->objectManager->get(Demand::class);
         }
 
-        if(!$demand->hasValidCoordinates()) {
+        if (!$demand->hasValidCoordinates()) {
             $this->redirect('form', 'Entry', 'bzga_beratungsstellensuche', ['demand' => $demand], $this->settings['backPid']);
         }
 
