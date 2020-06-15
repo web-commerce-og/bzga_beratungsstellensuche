@@ -38,7 +38,7 @@ class KilometerRepositoryTest extends UnitTestCase
      */
     public function findKilometersBySettingsDefault()
     {
-        $this->assertSame([10 => 10, 20 => 20, 50 => 50, 100 => 100], $this->subject->findKilometersBySettings([]));
+        $this->assertSame([10 => '10', 20 => '20', 50 => '50', 100 => '100'], $this->subject->findKilometersBySettings([]));
     }
 
     /**
@@ -54,15 +54,15 @@ class KilometerRepositoryTest extends UnitTestCase
     /**
      * @return array
      */
-    public function kilometers()
+    public function kilometers(): array
     {
         return [
             [
-                [10 => 10, 20 => 20],
+                [10 => '10', 20 => '20'],
                 '10,20',
             ],
             [
-                [10 => 10, 20 => 20],
+                [10 => '10', 20 => '20'],
                 '10, 20',
             ],
         ];
