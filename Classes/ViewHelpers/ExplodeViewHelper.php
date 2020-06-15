@@ -17,7 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  */
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @author Sebastian Schreiber
@@ -26,29 +26,34 @@ class ExplodeViewHelper extends AbstractViewHelper
 {
 
     /**
-     * @param string|null $subject
-     * @param string $glue
-     * @param bool $removeEmptyValues
-     * @param bool $valuesAsKeys
      *
      * @return array
      */
-    public function render($subject = null, $glue = ',', $removeEmptyValues = true, $valuesAsKeys = true)
+    public function render()
     {
+        $subject = $this->arguments['subject'];
+        $glue = $this->arguments['glue'];
+        $removeEmptyValues = $this->arguments['removeEmptyValues'];
+        $valuesAsKeys = $this->arguments['valuesAsKeys'];
         if (null === $subject) {
             $subject = $this->renderChildren();
         }
-
         if (!is_scalar($subject)) {
             throw new InvalidArgumentException('The provided value must be of type string');
         }
-
         $array = GeneralUtility::trimExplode($glue, $subject, $removeEmptyValues);
-
         if (true === $valuesAsKeys) {
             $array = array_combine($array, $array);
         }
-
         return $array;
+    }
+
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('subject', 'string|null', '', false, null);
+        $this->registerArgument('glue', 'string', '', false, ',');
+        $this->registerArgument('removeEmptyValues', 'bool', '', false, null);
+        $this->registerArgument('valuesAsKeys', 'bool', '', false, null);
     }
 }

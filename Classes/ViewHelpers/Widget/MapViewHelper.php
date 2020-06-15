@@ -38,15 +38,24 @@ class MapViewHelper extends AbstractWidgetViewHelper
     }
 
     /**
-     * @param Demand $demand
-     * @param array $styleSheetOptions
-     * @param Entry $entry
-     * @param array $settings
      *
      * @return ResponseInterface
      */
-    public function render(Demand $demand = null, array $styleSheetOptions = ['width' => '100%', 'height' => '300px'], Entry $entry = null, array $settings = []): ResponseInterface
+    public function render(): ResponseInterface
     {
+        $demand = $this->arguments['demand'];
+        $styleSheetOptions = $this->arguments['styleSheetOptions'];
+        $entry = $this->arguments['entry'];
+        $settings = $this->arguments['settings'];
         return $this->initiateSubRequest();
+    }
+
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('demand', Demand::class, '', false, null);
+        $this->registerArgument('styleSheetOptions', 'array', '', false, null);
+        $this->registerArgument('entry', Entry::class, '', false, null);
+        $this->registerArgument('settings', 'array', '', false, null);
     }
 }

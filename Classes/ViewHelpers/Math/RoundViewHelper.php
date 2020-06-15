@@ -15,7 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Math;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @author Sebastian Schreiber
@@ -24,16 +24,22 @@ class RoundViewHelper extends AbstractViewHelper
 {
 
     /**
-     * @param float|null $number
-     * @param int $precision
      * @return float
      */
-    public function render($number = null, $precision = 2)
+    public function render()
     {
+        $number = $this->arguments['number'];
+        $precision = $this->arguments['precision'];
         if (null === $number) {
             $number = $this->renderChildren();
         }
-
         return round($number, $precision);
+    }
+
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('number', 'float|null', '', false, null);
+        $this->registerArgument('precision', 'int', '', false, 2);
     }
 }

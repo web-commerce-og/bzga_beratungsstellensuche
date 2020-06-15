@@ -17,7 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  */
 use InvalidArgumentException;
 use Traversable;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @author Sebastian Schreiber
@@ -26,27 +26,24 @@ class ImplodeViewHelper extends AbstractViewHelper
 {
 
     /**
-     * @param array|\Traversable|null $pieces
-     * @param string $glue
      *
      * @return string
      */
-    public function render($pieces = null, $glue = ',')
+    public function render()
     {
+        $pieces = $this->arguments['pieces'];
+        $glue = $this->arguments['glue'];
         if (null === $pieces) {
             $pieces = $this->renderChildren();
         }
-
         if (! is_array($pieces) && ! $pieces instanceof Traversable) {
             throw new InvalidArgumentException('The value is not of type array or not implementing the Traversable interface');
         }
-
         // This is only working with objects implementing __toString method
         if ($pieces instanceof Traversable) {
             $pieces = iterator_to_array($pieces);
             $this->validatePieces($pieces);
         }
-
         return implode($glue, $pieces);
     }
 
@@ -60,5 +57,12 @@ class ImplodeViewHelper extends AbstractViewHelper
                 throw new InvalidArgumentException('The provided value must be of type scalar or implementing the __toString method');
             }
         }
+    }
+
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('pieces', 'mixed', '', false, null);
+        $this->registerArgument('glue', 'string', '', false, ',');
     }
 }

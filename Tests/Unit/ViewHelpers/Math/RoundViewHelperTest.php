@@ -40,7 +40,8 @@ class RoundViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithRenderChildrenValue($input, $expected, $precision)
     {
         $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render(null, $precision));
+        $this->subject->setArguments(['number' => null, 'precision' => $precision]);
+        $this->assertEquals($expected, $this->subject->render());
     }
 
     /**

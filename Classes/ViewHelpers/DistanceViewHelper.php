@@ -17,7 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @author Sebastian Schreiber
@@ -39,12 +39,19 @@ class DistanceViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param GeopositionInterface $demandPosition
-     * @param GeopositionInterface $location
      * @return mixed
      */
-    public function render(GeopositionInterface $demandPosition, GeopositionInterface $location)
+    public function render()
     {
+        $demandPosition = $this->arguments['demandPosition'];
+        $location = $this->arguments['location'];
         return $this->geolocationService->calculateDistance($demandPosition, $location);
+    }
+
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('demandPosition', GeopositionInterface::class, '', true);
+        $this->registerArgument('location', GeopositionInterface::class, '', true);
     }
 }

@@ -1,0 +1,18 @@
+# my_config.yaml
+parameters:
+  # FQN classes are not imported by default. If you don't to do do it manually after every Rector run, enable it by:
+  auto_import_names: true
+  # this will not import root namespace classes, like \DateTime or \Exception
+  import_short_classes: false
+  # this will not import classes used in PHP DocBlocks, like in /** @var \Some\Class */
+  import_doc_blocks: false
+  php_version_features: '7.0'
+imports:
+  - { resource: '.Build/vendor/ssch/typo3-rector/config/services.yaml' }
+  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-90.yaml' }
+  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-93.yaml' }
+  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-94.yaml' }
+  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-95.yaml' }
+services:
+  Ssch\TYPO3Rector\Rector\Fluid\ViewHelpers\MoveRenderArgumentsToInitializeArgumentsMethodRector: ~
+

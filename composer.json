@@ -28,6 +28,7 @@
     "require": {
         "typo3/cms-core": "^8.7.13 || ^9.5.13",
         "typo3/cms-scheduler": "^8.7.13 || ^9.5.13",
+        "typo3/cms-reports": "^8.7.13 || ^9.5.13",
         "symfony/serializer": "^3.0",
         "sjbr/static-info-tables": "^6.0",
         "sseidelmann/static-info-tables-de": "^6.0",
@@ -45,7 +46,8 @@
         "typo3/cms-tstemplate": "^8.0 || ^9.0",
         "typo3/cms-fluid-styled-content": "^8.0 || ^9.0",
         "typo3/cms-extensionmanager": "^8.0 || ^9.0",
-        "helhum/typo3-console": "5.*"
+        "helhum/typo3-console": "5.*",
+        "ssch/typo3-rector": "^0.2.0"
     },
     "suggest": {
         "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen"

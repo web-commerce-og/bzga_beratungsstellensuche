@@ -49,6 +49,10 @@ class DistanceViewHelperTest extends ViewHelperBaseTestcase
         $this->geolocationService->expects($this->once())->method('calculateDistance')->willReturn(1);
         $demandPosition = $this->getMockBuilder(GeopositionInterface::class)->getMock();
         $location = $this->getMockBuilder(GeopositionInterface::class)->getMock();
-        $this->assertEquals(1, $this->subject->render($demandPosition, $location));
+        $this->subject->setArguments([
+            'demandPosition' => $demandPosition,
+            'location' => $location
+        ]);
+        $this->assertEquals(1, $this->subject->render());
     }
 }

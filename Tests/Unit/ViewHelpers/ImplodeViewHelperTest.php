@@ -41,7 +41,9 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
     public function renderPossibleValues($input, $expected)
     {
         $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render(null));
+
+        $this->setArgumentsUnderTest($this->subject);
+        $this->assertEquals($expected, $this->subject->render());
     }
 
     /**
@@ -51,13 +53,14 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderThrowsException($pieces)
     {
-        $this->subject->render($pieces);
+        $this->setArgumentsUnderTest($this->subject, ['pieces' => $pieces]);
+        $this->subject->render();
     }
 
     /**
      * @return array
      */
-    public function possibleInvalidValues()
+    public function possibleInvalidValues(): array
     {
         $objectStorage = new ObjectStorage();
         $objectStorage->attach(new \stdClass());

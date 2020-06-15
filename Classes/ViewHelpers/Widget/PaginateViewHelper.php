@@ -32,28 +32,28 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
     protected $controller;
 
     /**
-     * @param QueryResultInterface $objects
-     * @param string $as
-     * @param Demand $demand
-     * @param array $configuration
      * @return string
      */
-    public function render(
-        QueryResultInterface $objects,
-        $as,
-        Demand $demand,
-        array $configuration = [
-            'itemsPerPage' => 10,
-            'insertAbove' => false,
-            'insertBelow' => true,
-            'maximumNumberOfLinks' => 99,
-        ]
-    ) {
+    public function render()
+    {
+        $objects = $this->arguments['objects'];
+        $as = $this->arguments['as'];
+        $demand = $this->arguments['demand'];
+        $configuration = $this->arguments['configuration'];
         return $this->initiateSubRequest();
     }
 
     public function injectController(PaginateController $controller)
     {
         $this->controller = $controller;
+    }
+
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('objects', QueryResultInterface::class, '', true);
+        $this->registerArgument('as', 'string', '', true);
+        $this->registerArgument('demand', Demand::class, '', true);
+        $this->registerArgument('configuration', 'array', '', false, null);
     }
 }

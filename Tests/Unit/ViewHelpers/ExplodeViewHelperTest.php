@@ -39,7 +39,13 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithoutRemovingEmptyValues()
     {
         $this->setRenderChildrenDefaultExpectation();
-        $this->assertSame(['Title', '', 'Subject'], $this->subject->render(null, ',', false, false));
+        $this->setArgumentsUnderTest($this->subject, [
+            'subject' => null,
+            'glue' => ',',
+            'removeEmptyValues' => false,
+            'valuesAsKeys' => false,
+        ]);
+        $this->assertSame(['Title', '', 'Subject'], $this->subject->render());
     }
 
     /**
@@ -48,7 +54,13 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithRemovingEmptyValues()
     {
         $this->setRenderChildrenDefaultExpectation();
-        $this->assertSame(['Title', 'Subject'], $this->subject->render(null, ',', true, false));
+        $this->setArgumentsUnderTest($this->subject, [
+            'subject' => null,
+            'glue' => ',',
+            'removeEmptyValues' => true,
+            'valuesAsKeys' => false,
+        ]);
+        $this->assertSame(['Title', 'Subject'], $this->subject->render());
     }
 
     /**
@@ -57,7 +69,13 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithRemovingEmptyValuesAndSettingsKeysAsValues()
     {
         $this->setRenderChildrenDefaultExpectation();
-        $this->assertSame(['Title' => 'Title', 'Subject' => 'Subject'], $this->subject->render(null, ',', true, true));
+        $this->setArgumentsUnderTest($this->subject, [
+            'subject' => null,
+            'glue' => ',',
+            'removeEmptyValues' => true,
+            'valuesAsKeys' => true,
+        ]);
+        $this->assertSame(['Title' => 'Title', 'Subject' => 'Subject'], $this->subject->render());
     }
 
     /**
@@ -66,7 +84,9 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithWrongSubjectType()
     {
-        $this->subject->render(new \stdClass());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->setArgumentsUnderTest($this->subject, ['subject' => new \stdClass()]);
+        $this->subject->render();
     }
 
     private function setRenderChildrenDefaultExpectation()

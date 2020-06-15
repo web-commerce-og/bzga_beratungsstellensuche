@@ -75,7 +75,7 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
      *
      * @return mixed
      */
-    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
+    public function getDistanceSqlField(GeoPositionDemandInterface $demandPosition, $table, $alias = 'distance')
     {
         return $this->geolocationService->getDistanceSqlField($demandPosition, $table, $alias);
     }
