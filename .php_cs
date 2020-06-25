@@ -38,6 +38,7 @@ if (PHP_SAPI !== 'cli') {
 // Exclude some directories that are excluded by Git anyways to speed up the sniffing
 $finder = PhpCsFixer\Finder::create()
                                          ->exclude('Libraries')
+                                         ->exclude('var')
                                          ->in(__DIR__);
 
 // Return a Code Sniffing configuration using

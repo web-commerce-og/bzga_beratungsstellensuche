@@ -46,7 +46,7 @@
                     <!-- startingpoint -->
                     <settings.startingpoint>
                         <TCEforms>
-                            <label>LLL:EXT:lang/locallang_general.xlf:LGL.startingpoint</label>
+                            <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.startingpoint</label>
                             <config>
                                 <type>group</type>
                                 <internal_type>db</internal_type>

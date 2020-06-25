@@ -60,7 +60,7 @@ class CachedClassLoader
      *
      * @return bool TRUE in case of success
      */
-    public static function registerAutoloader()
+    public static function registerAutoloader(): bool
     {
         return spl_autoload_register(static::$className . '::autoload', true, true);
     }

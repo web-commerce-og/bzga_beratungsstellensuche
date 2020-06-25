@@ -26,7 +26,6 @@ class ImplodeViewHelper extends AbstractViewHelper
 {
 
     /**
-     *
      * @return string
      */
     public function render()

@@ -22,5 +22,5 @@ use SJBR\StaticInfoTables\Domain\Model\AbstractEntity;
  */
 class CountryZone extends AbstractEntity implements ExternalIdInterface
 {
-    use ExternalIdTrait;
+    use \Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 }

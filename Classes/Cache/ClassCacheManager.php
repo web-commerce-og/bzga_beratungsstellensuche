@@ -134,7 +134,7 @@ class ClassCacheManager implements SingletonInterface
      *
      * @return array
      */
-    protected function getExtensibleExtensions()
+    protected function getExtensibleExtensions(): array
     {
         $loadedExtensions = array_unique(ExtensionManagementUtility::getLoadedExtensionListArray());
 
@@ -165,7 +165,7 @@ class ClassCacheManager implements SingletonInterface
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function parseSingleFile($filePath, $removeClassDefinition = true)
+    public function parseSingleFile($filePath, $removeClassDefinition = true): string
     {
         if (!is_file($filePath)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be found', $filePath));
@@ -183,7 +183,7 @@ class ClassCacheManager implements SingletonInterface
      * @return string
      * @throws \InvalidArgumentException
      */
-    protected function changeCode($code, $filePath, $removeClassDefinition = true, $renderPartialInfo = true)
+    protected function changeCode($code, $filePath, $removeClassDefinition = true, $renderPartialInfo = true): string
     {
         if (empty($code)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
@@ -217,10 +217,10 @@ class ClassCacheManager implements SingletonInterface
     }
 
     /**
-     * @param $filePath
+     * @param string $filePath
      * @return string
      */
-    protected function getPartialInfo($filePath)
+    protected function getPartialInfo(string $filePath): string
     {
         return '/*' . str_repeat('*', 70) . LF .
         ' * this is partial from: ' . $filePath . LF . str_repeat('*', 70) . '*/' . LF . TAB;

@@ -26,7 +26,6 @@ class ExplodeViewHelper extends AbstractViewHelper
 {
 
     /**
-     *
      * @return array
      */
     public function render()

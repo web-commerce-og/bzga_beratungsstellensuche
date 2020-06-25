@@ -87,7 +87,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
         $this->dataHandler->admin = true;
-        $this->dataHandler->enableLogging = false;
+        $this->dataHandler->enableLogging = true;
         $this->dataHandler->checkStoredRecords = false;
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
@@ -162,8 +162,8 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     }
 
     /**
-     * @param $tableName
-     * @param $tableUid
+     * @param string $tableName
+     * @param string $tableUid
      * @param array $data
      */
     public function addDataMap($tableName, $tableUid, array $data)

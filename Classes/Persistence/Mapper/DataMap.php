@@ -34,8 +34,6 @@ class DataMap
     private $dataMapFactory;
 
     /**
-     * DataMap constructor.
-     *
      * @param DataMapFactory $dataMapFactory
      */
     public function __construct(DataMapFactory $dataMapFactory)
@@ -44,10 +42,11 @@ class DataMap
     }
 
     /**
-     * @param $className
+     * @param string $className
+     *
      * @return mixed
      */
-    public function getTableNameByClassName($className)
+    public function getTableNameByClassName(string $className)
     {
         if (!isset($this->cachedTableNames[$className])) {
             $dataMap = $this->dataMapFactory->buildDataMap($className);

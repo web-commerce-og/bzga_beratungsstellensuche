@@ -38,7 +38,6 @@ class MapViewHelper extends AbstractWidgetViewHelper
     }
 
     /**
-     *
      * @return ResponseInterface
      */
     public function render(): ResponseInterface
