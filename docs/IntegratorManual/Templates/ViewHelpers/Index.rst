@@ -75,25 +75,6 @@ Klasse: ``Classes/ViewHelpers/ImplodeViewHelper.php``
 
     <bzga:implode glue=",">{array}</bzga:implode>
 
-TranslateViewHelper
-===================
-Der TranslateViewHelper ist eine Erweiterung des fluid eigenen TranslateViewHelper und dient dazu die Lokalisierungslabels aus allen "registrierten Erweiterungen" automatisch zu ziehen.
-Eine Erweiterung kann mittels des folgenden Aufrufs in der Datei ``ext_localconf.php`` registriert werden:
-
-.. code-block:: php
-
-    <?php
-
-    \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerExtensionKey($_EXTKEY, $priority);
-
-Klasse: ``Classes/ViewHelpers/TranslateViewHelper.php``
-
-Bitte verwenden Sie in allen Dateien im Kontext der Beratungsstellensuche diesen TranslateViewHelper.
-
-.. code-block:: html
-
-    <bzga:translate key="telephone" />
-
 TitleViewHelper
 ===============
 Der TitleViewHelper ermöglicht das Überschreiben des Title-Tag auf der Webseite.

@@ -1,4 +1,6 @@
-{namespace bzga=Bzga\BzgaBeratungsstellensuche\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bzga="http://typo3.org/ns/Bzga/BzgaBeratungsstellensuche/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <f:layout name="Default"/>
 
@@ -30,17 +32,17 @@
     </f:if>
     <hr />
     <f:if condition="{entry.notice}">
-        <h3><bzga:translate key="notice" /></h3>
+        <h3><f:translate key="notice" /></h3>
         <f:format.html>{entry.notice}</f:format.html>
         <hr />
     </f:if>
     <f:if condition="{entry.description}">
-        <h3><bzga:translate key="description" /></h3>
+        <h3><f:translate key="description" /></h3>
         <f:format.html>{entry.description}</f:format.html>
         <hr />
     </f:if>
     <f:if condition="{entry.categories}">
-        <h3><bzga:translate key="categories" /></h3>
+        <h3><f:translate key="categories" /></h3>
         <bzga:implode glue=", ">{entry.categories}</bzga:implode>
         <hr />
     </f:if>
