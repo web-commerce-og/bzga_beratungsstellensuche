@@ -16,7 +16,6 @@ call_user_func(function ($packageKey) {
         ['Entry' => 'list,form,autocomplete']
     );
 
-
     if (TYPO3_MODE === 'BE') {
         $icons = [
             'ext-bzgaberatungsstellensuche-wizard-icon' => 'plugin_wizard.svg',

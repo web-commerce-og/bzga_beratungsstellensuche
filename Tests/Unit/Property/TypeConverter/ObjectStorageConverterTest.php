@@ -17,10 +17,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property\TypeConverter;
 
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter;
 use InvalidArgumentException;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use stdClass;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ObjectStorageConverterTest extends UnitTestCase
 {

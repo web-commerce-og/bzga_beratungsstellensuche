@@ -19,11 +19,11 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber
@@ -90,7 +90,7 @@ class EntryNormalizerTest extends UnitTestCase
             'kurztext' => 'Teaser',
             'plz' => 'Zip',
             'ort' => 'City',
-            'logo' => 'Image',
+            'logo' => 'https://www.domain.com/logo.png',
             'strasse' => 'Street',
             'telefon' => 'Telephone',
             'fax' => 'Telefax',
@@ -106,7 +106,6 @@ class EntryNormalizerTest extends UnitTestCase
             'suchcontent' => 'Keywords',
             'beratungsart' => [],
         ];
-
         $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
         $this->countryZoneRepository->expects($this->once())->method('findOneByExternalId')->willReturn($countryZoneMock);
 

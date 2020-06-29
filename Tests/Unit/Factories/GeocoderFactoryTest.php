@@ -20,7 +20,7 @@ use Bzga\BzgaBeratungsstellensuche\Factories\HttpClientFactory;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\Provider;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class GeocoderFactoryTest extends UnitTestCase
 {

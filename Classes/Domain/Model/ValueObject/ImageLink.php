@@ -29,7 +29,7 @@ class ImageLink
     /**
      * @var string
      */
-    private $identifier;
+    private $identifier = '';
 
     /**
      * ImageLink constructor.
@@ -63,8 +63,10 @@ class ImageLink
     private function setIdentifier($externalUrl)
     {
         $urlSegments = parse_url($externalUrl);
-        parse_str($urlSegments['query'], $querySegments);
 
-        $this->identifier = $querySegments['id'];
+        if (array_key_exists('query', $urlSegments)) {
+            parse_str($urlSegments['query'], $querySegments);
+            $this->identifier = $querySegments['id'];
+        }
     }
 }

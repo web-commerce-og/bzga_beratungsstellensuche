@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\ExplodeViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class ExplodeViewHelperTest extends ViewHelperBaseTestcase
 {

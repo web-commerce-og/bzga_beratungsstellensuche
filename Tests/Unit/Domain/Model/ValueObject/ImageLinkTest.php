@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Model\ValueObject;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ImageLinkTest extends UnitTestCase
 {

@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Model;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class EntryTest extends UnitTestCase
 {

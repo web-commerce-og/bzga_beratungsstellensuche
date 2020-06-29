@@ -16,8 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\HeaderDataViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class HeaderDataViewHelperTest extends ViewHelperBaseTestcase
 {

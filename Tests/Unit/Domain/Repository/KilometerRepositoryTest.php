@@ -3,6 +3,8 @@
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Repository;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,8 +17,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class KilometerRepositoryTest extends UnitTestCase
 {
@@ -59,11 +59,11 @@ class KilometerRepositoryTest extends UnitTestCase
         return [
             [
                 [10 => '10', 20 => '20'],
-                '10,20',
+                '10:10,20:20',
             ],
             [
                 [10 => '10', 20 => '20'],
-                '10, 20',
+                '10:10, 20:20',
             ],
         ];
     }

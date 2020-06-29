@@ -17,11 +17,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber
@@ -42,7 +42,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|SerializerNormalizer
      */
-    private $serializer;
+    protected $serializer;
 
     /**
      */

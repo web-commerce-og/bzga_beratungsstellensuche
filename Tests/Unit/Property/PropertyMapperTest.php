@@ -18,8 +18,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class PropertyMapperTest extends UnitTestCase
 {

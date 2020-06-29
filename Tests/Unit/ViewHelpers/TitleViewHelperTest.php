@@ -16,11 +16,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\TitleViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Service\EnvironmentService;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class TitleViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -53,6 +53,7 @@ class TitleViewHelperTest extends ViewHelperBaseTestcase
     public function setUp()
     {
         parent::setUp();
+        $this->resetSingletonInstances = true;
         $this->typoscriptFrontendController = $this->getMockBuilder(TypoScriptFrontendController::class)->disableOriginalConstructor()->getMock();
         $this->extensionService             = $this->getMockBuilder(ExtensionService::class)->getMock();
         $this->environmentService           = $this->getMockBuilder(EnvironmentService::class)->getMock();

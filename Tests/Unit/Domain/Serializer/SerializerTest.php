@@ -22,10 +22,10 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNa
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber
@@ -65,7 +65,7 @@ class SerializerTest extends UnitTestCase
         $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
         $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
         $this->entryNormalizer = new EntryNormalizer(null, $dispatcher);
-
+        $this->resetSingletonInstances = true;
         $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $this->signalSlotDispatcher->method('dispatch')->willReturn(['extendedNormalizers' => []]);
         $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
