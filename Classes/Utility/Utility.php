@@ -3,6 +3,7 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -44,6 +45,6 @@ class Utility
      */
     public static function stripPathSite($string)
     {
-        return substr($string, strlen(PATH_site));
+        return substr($string, strlen(Environment::getPublicPath()));
     }
 }

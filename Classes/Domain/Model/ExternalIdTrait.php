@@ -22,7 +22,7 @@ trait ExternalIdTrait
 {
     /**
      * @var int
-     * @validate NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate(validator="NotEmpty")
      */
     protected $externalId;
 

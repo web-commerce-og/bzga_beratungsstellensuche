@@ -118,14 +118,14 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
 
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $image;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
-     * @lazy
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $categories;
 

@@ -2,6 +2,7 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -14,8 +15,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Geocoder\Location as GeocoderAddress;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -59,7 +60,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
 
     /**
      * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
-     * @inject
      */
     protected $geolocationService;
 
@@ -219,5 +219,10 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     {
         $this->updateLatitudeLongitude();
         return $this->latitude !== null && $this->longitude !== null;
+    }
+
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService): void
+    {
+        $this->geolocationService = $geolocationService;
     }
 }

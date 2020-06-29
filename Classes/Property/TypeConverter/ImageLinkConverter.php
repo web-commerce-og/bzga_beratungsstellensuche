@@ -3,6 +3,8 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,16 +17,16 @@ namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use Exception;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Resource\File as FalFile;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
@@ -60,7 +62,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * @var string
      */
-    private $tempFolder = PATH_site . 'typo3temp/tx_bzgaberatungsstellensuche/';
+    private $tempFolder = Environment::getPublicPath() . 'typo3temp/tx_bzgaberatungsstellensuche/';
 
     /**
      * One of 'cancel', 'replace', 'changeName'
@@ -71,7 +73,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
      */
     private $resourceFactory;
 
@@ -292,5 +293,10 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    public function injectResourceFactory(ResourceFactory $resourceFactory): void
+    {
+        $this->resourceFactory = $resourceFactory;
     }
 }
