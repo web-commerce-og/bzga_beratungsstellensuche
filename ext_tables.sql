@@ -106,7 +106,6 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_category (
   KEY language (l10n_parent,sys_language_uid)
 );
 
-
 #
 # Table structure for table 'tx_bzgaberatungsstellensuche_entry_category_mm'
 #
@@ -120,35 +119,6 @@ CREATE TABLE tx_bzgaberatungsstellensuche_entry_category_mm (
   KEY uid_local (uid_local),
   KEY uid_foreign (uid_foreign)
 );
-
-
-#
-# Table structure for table 'cf_bzgaberatungsstellensuche_cache_coordinates'
-#
-#
-CREATE TABLE cf_bzgaberatungsstellensuche_cache_coordinates (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  identifier varchar(250) DEFAULT '' NOT NULL,
-  crdate int(11) unsigned DEFAULT '0' NOT NULL,
-  content mediumblob,
-  lifetime int(11) unsigned DEFAULT '0' NOT NULL,
-  PRIMARY KEY (id),
-  KEY cache_id (identifier)
-)ENGINE=InnoDB;
-
-#
-# Table structure for table 'cf_bzgaberatungsstellensuche_cache_coordinates_tags'
-#
-#
-CREATE TABLE cf_bzgaberatungsstellensuche_cache_coordinates_tags (
-  id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  identifier varchar(250) DEFAULT '' NOT NULL,
-  tag varchar(250) DEFAULT '' NOT NULL,
-  PRIMARY KEY (id),
-  KEY cache_id (identifier),
-  KEY cache_tag (tag)
-)ENGINE=InnoDB;
-
 
 #
 # Table structure for table 'static_country_zones'
