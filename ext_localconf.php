@@ -16,14 +16,23 @@ call_user_func(function ($packageKey) {
         ['Entry' => 'list,form,autocomplete']
     );
 
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
-    // Wizard configuration
-    $iconRegistry->registerIcon(
-        'ext-bzgaberatungsstellensuche-wizard-icon',
-        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-        ['source' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/ce_wiz.png']
-    );
+    if (TYPO3_MODE === 'BE') {
+        $icons = [
+            'ext-bzgaberatungsstellensuche-wizard-icon' => 'plugin_wizard.svg',
+        ];
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        foreach ($icons as $identifier => $path) {
+            if (!$iconRegistry->isRegistered($identifier)) {
+                $iconRegistry->registerIcon(
+                    $identifier,
+                    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+                    ['source' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/' . $path]
+                );
+            }
+        }
+    }
+
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/ContentElementWizard.txt">');
 
     // Modify flexform values

@@ -23,7 +23,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'iconfile' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_entry.png',
+        'iconfile' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_category.svg',
         'searchFields' => 'title,subtitle,city,zip,teaser,description,contact_person,institution,association,keywords',
     ],
     'interface' => [
