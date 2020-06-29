@@ -88,12 +88,6 @@ call_user_func(function ($packageKey) {
             = 'Bzga\\BzgaBeratungsstellensuche\\Hooks\\SitemapGenerator->main';
     }
 
-    // Auto RealUrl Configuration
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration']['bzga_beratungsstellensuche'] =
-            'Bzga\\BzgaBeratungsstellensuche\\Hooks\\RealUrlAutoConfiguration->addConfig';
-    }
-
     // Linkvalidator
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkvalidator')) {
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkvalidator.txt">');

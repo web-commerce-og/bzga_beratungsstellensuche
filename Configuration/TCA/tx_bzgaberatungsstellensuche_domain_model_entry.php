@@ -30,7 +30,7 @@ return [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, categories, image, website, teaser, zip, city, street, state, longitude, latitude, description, contact_person, contact_email, telephone, telefax, email, hotline, notice, keywords, institution, association',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, image, teaser, notice, description, keywords, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.relations, categories, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.address, street, zip, city, state, longitude, latitude, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.contact, contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:tabs.access,starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, slug, subtitle, image, teaser, notice, description, keywords, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.relations, categories, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.address, street, zip, city, state, longitude, latitude, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.contact, contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:tabs.access,starttime, endtime'],
     ],
     'palettes' => [
         '1' => ['showitem' => ''],
@@ -344,6 +344,23 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+            ],
+        ],
+        'slug' => [
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:pages.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 50,
+                'generatorOptions' => [
+                    'fields' => ['title', 'uid'],
+                    'fieldSeparator' => '-',
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'uniqueInSite',
+                'default' => '',
             ],
         ],
         'description' => [

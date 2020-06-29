@@ -18,7 +18,6 @@ Praxisbeispiele
 	:titlesonly:
 
 	IntegrationWithTypoScript/Index
-	RealUrl/Index
 	Linkhandler/Index
 	Linkvalidator/Index
 	Sitemap/Index

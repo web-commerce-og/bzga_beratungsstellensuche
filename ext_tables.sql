@@ -30,6 +30,7 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_entry (
   hotline varchar(255) DEFAULT '' NOT NULL,
   notice text NOT NULL,
   keywords text NOT NULL,
+  slug varchar(2048),
 
   categories int(11) unsigned DEFAULT '0' NOT NULL,
 
