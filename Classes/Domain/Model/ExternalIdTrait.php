@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -22,22 +22,21 @@ trait ExternalIdTrait
 {
     /**
      * @var int
-     * @TYPO3\CMS\Extbase\Annotation\Validate(validator="NotEmpty")
      */
     protected $externalId;
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getExternalId(): int
+    public function getExternalId()
     {
         return $this->externalId;
     }
 
     /**
-     * @param int $externalId
+     * @param mixed $externalId
      */
-    public function setExternalId(int $externalId): void
+    public function setExternalId($externalId): void
     {
         $this->externalId = $externalId;
     }

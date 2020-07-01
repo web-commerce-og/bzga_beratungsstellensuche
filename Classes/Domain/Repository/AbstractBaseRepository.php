@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
@@ -85,7 +84,12 @@ abstract class AbstractBaseRepository extends Repository
         return $query->matching($query->logicalAnd($constraints))->execute()->count();
     }
 
-    public function findOneByExternalId(int $externalId): ?object
+    /**
+     * @param mixed $externalId
+     *
+     * @return object|null
+     */
+    public function findOneByExternalId($externalId): ?object
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);

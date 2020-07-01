@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\DataProcessing;
 
@@ -28,11 +29,9 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  *
  * 20 = Bzga\BzgaBeratungsstellensuche\DataProcessing\AddEntryToMenuProcessor
  * 20.menus = breadcrumbMenu,specialMenu
- *
  */
 final class AddEntryToMenuProcessor implements DataProcessorInterface
 {
-
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData): array
     {
         if (!$processorConfiguration['menus']) {

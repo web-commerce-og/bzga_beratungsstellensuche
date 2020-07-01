@@ -87,6 +87,6 @@ return PhpCsFixer\Config::create()
         'return_type_declaration' => ['space_before' => 'none'],
         'cast_spaces' => ['space' => 'none'],
         'declare_equal_normalize' => ['space' => 'single'],
-        'dir_constant' => true,
+        'dir_constant' => true
     ))
     ->setFinder($finder);

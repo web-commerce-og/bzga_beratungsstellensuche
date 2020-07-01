@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
@@ -40,12 +39,6 @@ class EntryNormalizer extends GetSetMethodNormalizer
      */
     protected $categoryRepository;
 
-    /**
-     * EntryNormalizer constructor.
-     *
-     * @param ClassMetadataFactoryInterface|null $classMetadataFactory
-     * @param Dispatcher|null $signalSlotDispatcher
-     */
     public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null, Dispatcher $signalSlotDispatcher = null)
     {
         parent::__construct($classMetadataFactory, new EntryNameConverter([], true, $signalSlotDispatcher));
@@ -79,11 +72,6 @@ class EntryNormalizer extends GetSetMethodNormalizer
         return parent::prepareForDenormalization($data);
     }
 
-    /**
-     * @param RepositoryInterface $repository
-     * @param array $array
-     * @param string $method
-     */
     public static function convertToObjectStorage(
         RepositoryInterface $repository,
         array $array,

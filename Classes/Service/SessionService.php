@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service;
 
@@ -50,7 +50,7 @@ class SessionService
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);
-            $data = unserialize($sessionData);
+            $data = unserialize((string)$sessionData);
             if (is_array($data) && !empty($data)) {
                 foreach ($data as $key => $value) {
                     if (empty($value)) {
