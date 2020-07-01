@@ -106,3 +106,13 @@ call_user_func(function ($packageKey) {
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkhandler.txt">');
     }
 }, 'bzga_beratungsstellensuche');
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(trim('
+    config.pageTitleProviders {
+        beratungsstelle {
+            provider = Bzga\BzgaBeratungsstellensuche\PageTitle\PageTitleProvider
+            before = record
+            after = altPageTitle
+        }
+    }
+'));

@@ -15,23 +15,28 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Closure;
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * @author Sebastian Schreiber
  */
 class ExplodeViewHelper extends AbstractViewHelper
 {
-    public function render(): array
+    use CompileWithRenderStatic;
+
+    public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $subject = $this->arguments['subject'];
-        $glue = $this->arguments['glue'];
-        $removeEmptyValues = $this->arguments['removeEmptyValues'];
-        $valuesAsKeys = $this->arguments['valuesAsKeys'];
+        $subject = $arguments['subject'];
+        $glue = $arguments['glue'];
+        $removeEmptyValues = $arguments['removeEmptyValues'];
+        $valuesAsKeys = $arguments['valuesAsKeys'];
         if (null === $subject) {
-            $subject = $this->renderChildren();
+            $subject = $renderChildrenClosure();
         }
         if (!is_scalar($subject)) {
             throw new InvalidArgumentException('The provided value must be of type string');

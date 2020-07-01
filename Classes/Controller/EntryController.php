@@ -189,6 +189,7 @@ class EntryController extends ActionController
             // @TODO: Add possibility to hook into here.
             $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 404);
         }
+
         $assignedViewValues = compact('entry', 'demand');
         $assignedViewValues = $this->emitActionSignal(Events::SHOW_ACTION_SIGNAL, $assignedViewValues);
         $this->view->assignMultiple($assignedViewValues);

@@ -15,21 +15,26 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Closure;
 use InvalidArgumentException;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * @author Sebastian Schreiber
  */
 class UppercaseFirstLetterViewHelper extends AbstractViewHelper
 {
-    public function render(): string
+    use CompileWithRenderStatic;
+
+    public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $subject = $this->arguments['subject'];
+        $subject = $arguments['subject'];
         if (null === $subject) {
-            $subject = $this->renderChildren();
+            $subject = $renderChildrenClosure();
         }
-        if (!is_string($subject)) {
+        if (! is_string($subject)) {
             throw new InvalidArgumentException('This is not a string');
         }
         $parts = explode('_', $subject);
@@ -37,6 +42,7 @@ class UppercaseFirstLetterViewHelper extends AbstractViewHelper
         foreach ($parts as $part) {
             $subjectParts[] = ucfirst($part[0]) . substr($part, 1);
         }
+
         return implode('', $subjectParts);
     }
 
