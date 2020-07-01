@@ -16,13 +16,11 @@ $extKey = 'bzga_beratungsstellensuche';
     'Beratungsstellensuche - Leaflet Resources'
 );
 
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler')) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $extKey,
-        'Configuration/TypoScript/linkhandler',
-        'Beratungsstellensuche - Linkhandler'
-    );
-}
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $extKey,
+    'Configuration/TypoScript/linkhandler',
+    'Beratungsstellensuche - Linkhandler'
+);
 
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('solr')) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
