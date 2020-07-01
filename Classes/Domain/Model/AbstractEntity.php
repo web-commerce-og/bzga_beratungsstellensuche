@@ -25,48 +25,27 @@ abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterfa
     use DummyTrait, ExternalIdTrait;
 
     /**
-     * The title of the category.
-     *
      * @var string
      */
     protected $title;
 
-    /**
-     * AbstractEntity constructor.
-     * @param string $title
-     */
-    public function __construct($title = '')
+    public function __construct(string $title = '')
     {
         $this->title = $title;
     }
 
-    /**
-     * Returns the category title.
-     *
-     * @return string $title
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Sets the category title.
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = trim($title);
     }
 
-    /**
-     * Is called if object is transformed to string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return (string)$this->getTitle();
+        return $this->getTitle();
     }
 }

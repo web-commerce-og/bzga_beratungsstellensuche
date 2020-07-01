@@ -25,13 +25,9 @@ interface ManagerInterface
 {
 
     /**
-     * @param AbstractEntity $entity
      * @return mixed
      */
     public function create(AbstractEntity $entity);
 
-    /**
-     * @return AbstractBaseRepository
-     */
-    public function getRepository();
+    public function getRepository(): AbstractBaseRepository;
 }

@@ -47,7 +47,7 @@ class PropertyMapperTest extends UnitTestCase
     public function supportsReturnsTypeConverter()
     {
         $typeConverter = $this->setUpTypeConverter();
-        $this->assertSame($typeConverter, $this->subject->supports('array'));
+        $this->assertTrue($this->subject->supports($typeConverter));
     }
 
     /**

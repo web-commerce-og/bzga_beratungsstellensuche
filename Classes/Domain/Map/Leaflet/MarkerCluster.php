@@ -22,6 +22,9 @@ use Netzmacht\LeafletPHP\Plugins\MarkerCluster\MarkerClusterGroup;
 
 final class MarkerCluster implements MarkerClusterInterface
 {
+    /**
+     * @var \Netzmacht\LeafletPHP\Plugins\MarkerCluster\MarkerClusterGroup
+     */
     private $markerCluster;
 
     public function __construct(string $identifier)
@@ -29,28 +32,17 @@ final class MarkerCluster implements MarkerClusterInterface
         $this->markerCluster = new MarkerClusterGroup($identifier);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMarkerCluster()
+    public function getMarkerCluster(): MarkerClusterGroup
     {
         return $this->markerCluster;
     }
 
-    /**
-     * @param MarkerInterface $marker
-     *
-     * @return mixed
-     */
-    public function addMarker(MarkerInterface $marker)
+    public function addMarker(MarkerInterface $marker): void
     {
         $this->markerCluster->addLayer($marker->getMarker());
     }
 
-    /**
-     * @param array $options
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->markerCluster->setOptions($options);
     }

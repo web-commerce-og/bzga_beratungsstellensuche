@@ -69,17 +69,17 @@ class MapController extends AbstractWidgetController
      */
     protected $mapBuilderFactory;
 
-    public function injectEntryRepository(EntryRepository $entryRepository)
+    public function injectEntryRepository(EntryRepository $entryRepository): void
     {
         $this->entryRepository = $entryRepository;
     }
 
-    public function injectMapBuilderFactory(MapBuilderFactory $mapBuilderFactory)
+    public function injectMapBuilderFactory(MapBuilderFactory $mapBuilderFactory): void
     {
         $this->mapBuilderFactory = $mapBuilderFactory;
     }
 
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->settings = $this->widgetConfiguration['settings'];
         $this->entry = $this->widgetConfiguration['entry'];
@@ -91,7 +91,7 @@ class MapController extends AbstractWidgetController
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $mapBuilder = $this->mapBuilderFactory->createMapBuilder();
 
@@ -200,9 +200,6 @@ class MapController extends AbstractWidgetController
         $this->view->assign('map', $mapBuilder->build($map));
     }
 
-    /**
-     * @return TypoScriptFrontendController
-     */
     private function getTyposcriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];

@@ -6,13 +6,16 @@ parameters:
   import_short_classes: false
   # this will not import classes used in PHP DocBlocks, like in /** @var \Some\Class */
   import_doc_blocks: false
-  php_version_features: '7.0'
+  php_version_features: '7.2'
 imports:
-  - { resource: '.Build/vendor/ssch/typo3-rector/config/services.yaml' }
-  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-90.yaml' }
-  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-93.yaml' }
-  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-94.yaml' }
-  - { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-95.yaml' }
+  #- { resource: '.Build/vendor/ssch/typo3-rector/config/services.yaml' }
+  #- { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-90.yaml' }
+  #- { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-93.yaml' }
+  #- { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-94.yaml' }
+  #- { resource: '.Build/vendor/ssch/typo3-rector/config/typo3-95.yaml' }
 services:
-  Ssch\TYPO3Rector\Rector\Fluid\ViewHelpers\MoveRenderArgumentsToInitializeArgumentsMethodRector: ~
+  Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector: ~
+  Rector\TypeDeclaration\Rector\Property\PropertyTypeDeclarationRector: ~
+  Rector\TypeDeclaration\Rector\FunctionLike\ParamTypeDeclarationRector: ~
+  # Ssch\TYPO3Rector\Rector\Fluid\ViewHelpers\MoveRenderArgumentsToInitializeArgumentsMethodRector: ~
 

@@ -26,7 +26,7 @@ class SettingsService implements SingletonInterface, SettingsServiceInterface
 {
 
     /**
-     * @var mixed
+     * @var mixed[]
      */
     protected $settings;
 
@@ -35,19 +35,11 @@ class SettingsService implements SingletonInterface, SettingsServiceInterface
      */
     protected $configurationManager;
 
-    /**
-     * @param ConfigurationManagerInterface $configurationManager
-     */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
     }
 
-    /**
-     * Returns all settings.
-     *
-     * @return array
-     */
     public function getSettings(): array
     {
         if ($this->settings === null) {
@@ -68,7 +60,6 @@ class SettingsService implements SingletonInterface, SettingsServiceInterface
      *
      * If the path is invalid or no entry is found, false is returned.
      *
-     * @param string $path
      * @return mixed
      */
     public function getByPath(string $path)

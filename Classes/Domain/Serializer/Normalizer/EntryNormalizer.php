@@ -53,10 +53,8 @@ class EntryNormalizer extends GetSetMethodNormalizer
 
     /**
      * @param array|object $data
-     *
-     * @return array
      */
-    protected function prepareForDenormalization($data)
+    protected function prepareForDenormalization($data): array
     {
         $stateCallback = function ($externalId) {
             return $this->countryZoneRepository->findOneByExternalId($externalId);
@@ -85,14 +83,12 @@ class EntryNormalizer extends GetSetMethodNormalizer
      * @param RepositoryInterface $repository
      * @param array $array
      * @param string $method
-     *
-     * @return ObjectStorage
      */
     public static function convertToObjectStorage(
         RepositoryInterface $repository,
         array $array,
-        $method = 'findOneByExternalId'
-    ) {
+        string $method = 'findOneByExternalId'
+    ): ObjectStorage {
         $objectStorage = new ObjectStorage();
         if (is_array($array[0])) {
             foreach ($array[0] as $key => $item) {
@@ -112,12 +108,12 @@ class EntryNormalizer extends GetSetMethodNormalizer
         return $objectStorage;
     }
 
-    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function injectCountryZoneRepository(CountryZoneRepository $countryZoneRepository)
+    public function injectCountryZoneRepository(CountryZoneRepository $countryZoneRepository): void
     {
         $this->countryZoneRepository = $countryZoneRepository;
     }
@@ -125,7 +121,7 @@ class EntryNormalizer extends GetSetMethodNormalizer
     /**
      * {@inheritdoc}
      */
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization($data, $type, $format = null): bool
     {
         return $type === Entry::class;
     }

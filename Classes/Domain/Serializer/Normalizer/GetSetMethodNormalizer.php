@@ -60,11 +60,10 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      *
      * @param callable[] $callbacks help normalize the result
      *
-     * @return self
      *
      * @throws \InvalidArgumentException if a non-callable callback is set
      */
-    public function setDenormalizeCallbacks(array $callbacks)
+    public function setDenormalizeCallbacks(array $callbacks): self
     {
         $callbacks = $this->emitDenormalizeCallbacksSignal($callbacks);
         foreach ($callbacks as $attribute => $callback) {
@@ -85,9 +84,8 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      * @param string $class
      * @param null $format
      * @param array $context
-     * @return object
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize($data, $class, $format = null, array $context = []): object
     {
         $allowedAttributes = $this->getAllowedAttributes($class, $context, true);
         $normalizedData = $this->prepareForDenormalization($data);
@@ -123,9 +121,8 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 
     /**
      * @param array $callbacks
-     * @return array
      */
-    protected function emitDenormalizeCallbacksSignal(array $callbacks)
+    protected function emitDenormalizeCallbacksSignal(array $callbacks): array
     {
         $signalArguments = [];
         $signalArguments['extendedCallbacks'] = [];
@@ -143,7 +140,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         return $callbacks;
     }
 
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
     }

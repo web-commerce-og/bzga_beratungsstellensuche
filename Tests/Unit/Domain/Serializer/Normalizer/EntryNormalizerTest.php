@@ -116,8 +116,8 @@ class EntryNormalizerTest extends UnitTestCase
         self::assertSame('Title', $object->getTitle());
         self::assertSame('Subtitle', $object->getSubtitle());
         self::assertSame('Contact Person', $object->getContactPerson());
-        self::assertSame('Latitude', $object->getLatitude());
-        self::assertSame('Longitude', $object->getLongitude());
+        self::assertSame(0.0, $object->getLatitude());
+        self::assertSame(0.0, $object->getLongitude());
         self::assertSame('Teaser', $object->getTeaser());
         self::assertSame('Zip', $object->getZip());
         self::assertSame('City', $object->getCity());

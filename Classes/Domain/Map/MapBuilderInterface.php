@@ -18,49 +18,15 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
 
 interface MapBuilderInterface
 {
-    /**
-     * @param MapInterface $map
-     *
-     * @return string
-     */
     public function build(MapInterface $map): string;
 
-    /**
-     * @param string $mapId
-     *
-     * @return MapInterface
-     */
     public function createMap(string $mapId): MapInterface;
 
-    /**
-     * @param string $identifier
-     * @param CoordinateInterface $coordinate
-     *
-     * @return MarkerInterface
-     */
     public function createMarker(string $identifier, CoordinateInterface $coordinate): MarkerInterface;
 
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return CoordinateInterface
-     */
     public function createCoordinate(float $latitude, float $longitude): CoordinateInterface;
 
-    /**
-     * @param string $identifier
-     *
-     * @return PopUpInterface
-     */
     public function createPopUp(string $identifier): PopUpInterface;
 
-    /**
-     * @param string $identifier
-     *
-     * @param MapInterface $map
-     *
-     * @return MarkerClusterInterface
-     */
     public function createMarkerCluster(string $identifier, MapInterface $map): MarkerClusterInterface;
 }

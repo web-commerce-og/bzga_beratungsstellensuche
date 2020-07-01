@@ -28,45 +28,30 @@ final class Map implements MapInterface
      */
     private $map;
 
-    /**
-     * MapAdapter constructor.
-     *
-     * @param $map
-     */
     public function __construct(LeafletMap $map)
     {
         $this->map = $map;
     }
 
-    /**
-     * @return LeafletMap
-     */
     public function getMap(): LeafletMap
     {
         return $this->map;
     }
 
     /**
-     * @param string $key
      * @param mixed $value
      */
-    public function setOption(string $key, $value)
+    public function setOption(string $key, $value): void
     {
         $this->map->setOption($key, $value);
     }
 
-    /**
-     * @param CoordinateInterface $coordinate
-     */
-    public function setCenter(CoordinateInterface $coordinate)
+    public function setCenter(CoordinateInterface $coordinate): void
     {
         $this->map->setCenter($coordinate->getCoordinate());
     }
 
-    /**
-     * @param MarkerInterface $marker
-     */
-    public function addMarker(MarkerInterface $marker)
+    public function addMarker(MarkerInterface $marker): void
     {
         /** @var \Netzmacht\LeafletPHP\Definition\UI\Marker $leafletMarker */
         $leafletMarker = $marker->getMarker();

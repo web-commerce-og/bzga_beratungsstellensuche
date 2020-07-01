@@ -18,14 +18,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Service;
 
 interface SettingsServiceInterface
 {
-    /**
-     * @return array
-     */
     public function getSettings(): array;
 
     /**
-     * @param string $path
-     *
      * @return mixed
      */
     public function getByPath(string $path);

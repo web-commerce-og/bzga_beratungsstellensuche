@@ -16,7 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Property;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
@@ -35,10 +34,7 @@ class PropertyMapper implements TypeConverterInterface
      */
     private $objectManager;
 
-    /**
-     * @param ObjectManagerInterface $objectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
+    public function injectObjectManager(ObjectManagerInterface $objectManager): void
     {
         $this->objectManager = $objectManager;
         $this->initializeTypeConverters();
@@ -46,10 +42,8 @@ class PropertyMapper implements TypeConverterInterface
 
     /**
      * @param mixed $source
-     * @param string $type
-     * @return bool|TypeConverterInterface
      */
-    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE): bool
     {
         foreach ($this->typeConverters as $typeConverter) {
             if (true === $typeConverter->supports($source, $type) && $this->converterSupportsType(
@@ -57,7 +51,7 @@ class PropertyMapper implements TypeConverterInterface
                     $type
             )
             ) {
-                return $typeConverter;
+                return true;
             }
         }
 
@@ -65,8 +59,8 @@ class PropertyMapper implements TypeConverterInterface
     }
 
     /**
-     * @param $source
-     * @param AbstractEntity|array|null $configuration
+     * @param mixed $source
+     *
      * @return mixed
      */
     public function convert($source, array $configuration = null)
@@ -83,25 +77,16 @@ class PropertyMapper implements TypeConverterInterface
 
     /**
      * @codeCoverageIgnore
-     * @return array
      */
-    protected function getRegisteredTypeConverters()
+    protected function getRegisteredTypeConverters(): array
     {
         return ExtensionManagementUtility::getRegisteredTypeConverters();
     }
 
-    /**
-     * @param TypeConverterInterface $typeConverter
-     * @param string $type
-     * @return bool
-     */
-    private function converterSupportsType(TypeConverterInterface $typeConverter, $type)
+    private function converterSupportsType(TypeConverterInterface $typeConverter, string $type): bool
     {
         $interfaces = class_implements($typeConverter);
         switch ($type) {
-            case TypeConverterInterface::CONVERT_BEFORE:
-                $className = TypeConverterBeforeInterface::class;
-                break;
             case TypeConverterInterface::CONVERT_AFTER:
                 $className = TypeConverterAfterInterface::class;
                 break;
@@ -112,9 +97,7 @@ class PropertyMapper implements TypeConverterInterface
         return in_array($className, $interfaces, true) ? true : false;
     }
 
-    /**
-     */
-    private function initializeTypeConverters()
+    private function initializeTypeConverters(): void
     {
         foreach ($this->getRegisteredTypeConverters() as $typeConverterClassName) {
             $this->typeConverters[] = $this->objectManager->get($typeConverterClassName);

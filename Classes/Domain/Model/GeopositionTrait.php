@@ -21,53 +21,31 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 trait GeopositionTrait
 {
     /**
-     * Längengrad.
-     *
      * @var float
      */
-    protected $longitude = null;
+    protected $longitude = 0.0;
 
     /**
-     * Breitengrad.
-     *
      * @var float
      */
-    protected $latitude = null;
+    protected $latitude = 0.0;
 
-    /**
-     * Returns the longitude.
-     * @return float $longitude
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
-        return $this->longitude;
+        return (float)$this->longitude;
     }
 
-    /**
-     * Sets the longitude.
-     *
-     * @param float $longitude
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
     }
 
-    /**
-     * Returns the latitude.
-     * @return float $latitude
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
-        return $this->latitude;
+        return (float)$this->latitude;
     }
 
-    /**
-     * Sets the latitude.
-     *
-     * @param float $latitude
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
     }

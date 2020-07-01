@@ -30,10 +30,7 @@ class DistanceViewHelper extends AbstractViewHelper
      */
     protected $geolocationService;
 
-    /**
-     * @param GeolocationServiceCacheDecorator $geolocationService
-     */
-    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService): void
     {
         $this->geolocationService = $geolocationService;
     }
@@ -48,7 +45,7 @@ class DistanceViewHelper extends AbstractViewHelper
         return $this->geolocationService->calculateDistance($demandPosition, $location);
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('demandPosition', GeopositionInterface::class, '', true);

@@ -20,19 +20,13 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
-use InvalidArgumentException;
 use RuntimeException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
-use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * @author Sebastian Schreiber
@@ -50,28 +44,16 @@ class EntryRepository extends AbstractBaseRepository
      */
     protected $queryParser;
 
-    /**
-     * @param GeolocationServiceCacheDecorator $geolocationService
-     */
-    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService): void
     {
         $this->geolocationService = $geolocationService;
     }
 
-    /**
-     * @param Typo3DbQueryParser $queryParser
-     */
-    public function injectQueryParser(Typo3DbQueryParser $queryParser)
+    public function injectQueryParser(Typo3DbQueryParser $queryParser): void
     {
         $this->queryParser = $queryParser;
     }
 
-    /**
-     * @param string $q
-     *
-     * @return array|QueryResultInterface
-     * @throws InvalidQueryException
-     */
     public function findByQuery(string $q)
     {
         $query = $this->createQuery();
@@ -81,13 +63,6 @@ class EntryRepository extends AbstractBaseRepository
         ]))->execute();
     }
 
-    /**
-     * @param Demand $demand
-     *
-     * @return array|QueryResultInterface
-     * @throws InvalidQueryException
-     * @throws \UnexpectedValueException
-     */
     public function findDemanded(Demand $demand)
     {
         $query = $this->createQuery();
@@ -161,13 +136,7 @@ class EntryRepository extends AbstractBaseRepository
         return $query->execute();
     }
 
-    /**
-     * @throws IllegalObjectTypeException
-     * @throws InvalidArgumentException
-     * @throws InvalidSlotReturnException
-     * @throws InvalidSlotException
-     */
-    public function truncateAll()
+    public function truncateAll(): void
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::ENTRY_TABLE);
         $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAll();
@@ -181,18 +150,10 @@ class EntryRepository extends AbstractBaseRepository
         );
     }
 
-    /**
-     * @param GeopositionInterface $userLocation
-     * @param QueryInterface $query
-     * @param int $radius
-     *
-     * @return array
-     * @throws InvalidQueryException
-     */
     private function createCoordsConstraints(
         GeopositionInterface $userLocation,
         QueryInterface $query,
-        $radius = GeolocationService::DEFAULT_RADIUS
+        int $radius = GeolocationService::DEFAULT_RADIUS
     ): array {
         if (! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
             return [];
@@ -213,17 +174,7 @@ class EntryRepository extends AbstractBaseRepository
         ];
     }
 
-    /**
-     * Here we delete all relations of an entry, this is not possible with the convenient remove method of this repository class
-     *
-     * @param int $uid
-     *
-     * @throws IllegalObjectTypeException
-     * @throws InvalidArgumentException
-     * @throws InvalidSlotReturnException
-     * @throws InvalidSlotException
-     */
-    public function deleteByUid($uid)
+    public function deleteByUid(int $uid): void
     {
 
         /** @var FileRepository $fileRepository */

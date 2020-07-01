@@ -21,14 +21,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  */
 interface ExternalIdInterface
 {
-
-    /**
-     * @return int
-     */
-    public function getExternalId();
+    public function getExternalId(): int;
 
     /**
      * @param int $externalId
      */
-    public function setExternalId($externalId);
+    public function setExternalId(int $externalId);
 }

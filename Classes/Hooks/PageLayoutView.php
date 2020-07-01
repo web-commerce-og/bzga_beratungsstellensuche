@@ -34,14 +34,14 @@ class PageLayoutView
      *
      * @var string
      */
-    const KEY = 'bzgaberatungsstellensuche';
+    public const KEY = 'bzgaberatungsstellensuche';
 
     /**
      * Path to the locallang file
      *
      * @var string
      */
-    const LLPATH = 'LLL:EXT:%s/Resources/Private/Language/locallang_be.xlf:';
+    public const LLPATH = 'LLL:EXT:%s/Resources/Private/Language/locallang_be.xlf:';
 
     /**
      * Table information
@@ -76,14 +76,7 @@ class PageLayoutView
         $this->iconUtility = GeneralUtility::makeInstance(IconUtility::class);
     }
 
-    /**
-     * Returns information about this extension's pi1 plugin
-     *
-     * @param array $params Parameters to the hook
-     *
-     * @return string Information about pi1 plugin
-     */
-    public function getExtensionSummary(array $params)
+    public function getExtensionSummary(array $params): string
     {
         $actionTranslationKey = '';
 
@@ -146,10 +139,7 @@ class PageLayoutView
         return $result;
     }
 
-    /**
-     * Render single settings
-     */
-    private function getDetailPidSetting()
+    private function getDetailPidSetting(): void
     {
         $detailPid = (int)$this->getFieldFromFlexform('settings.singlePid', 'additional');
 
@@ -163,9 +153,7 @@ class PageLayoutView
         }
     }
 
-    /**
-     */
-    private function getFormFieldsSetting()
+    private function getFormFieldsSetting(): void
     {
         $formFields = $this->getFieldFromFlexform('settings.formFields', 'additional');
         if ($formFields) {
@@ -181,10 +169,7 @@ class PageLayoutView
         }
     }
 
-    /**
-     * Render listPid settings
-     */
-    private function getListPidSetting()
+    private function getListPidSetting(): void
     {
         $listPid = (int)$this->getFieldFromFlexform('settings.listPid', 'additional');
 
@@ -198,10 +183,7 @@ class PageLayoutView
         }
     }
 
-    /**
-     * Render listPid settings
-     */
-    private function getListItemsPerPageSetting()
+    private function getListItemsPerPageSetting(): void
     {
         $itemsPerPage = (int)$this->getFieldFromFlexform('settings.list.itemsPerPage', 'additional');
 
@@ -213,10 +195,7 @@ class PageLayoutView
         }
     }
 
-    /**
-     * Render listPid settings
-     */
-    private function getBackPidSetting()
+    private function getBackPidSetting(): void
     {
         $listPid = (int)$this->getFieldFromFlexform('settings.backPid', 'additional');
 
@@ -230,14 +209,7 @@ class PageLayoutView
         }
     }
 
-    /**
-     * Get the rendered page title including onclick menu
-     *
-     * @param $detailPid
-     *
-     * @return string
-     */
-    private function getPageRecordData($detailPid)
+    private function getPageRecordData(int $detailPid): string
     {
         $pageRecord = BackendUtilityCore::getRecord('pages', $detailPid);
 
@@ -261,12 +233,7 @@ class PageLayoutView
         return $content;
     }
 
-    /**
-     * Render template layout configuration
-     *
-     * @param int $pageUid
-     */
-    private function getTemplateLayoutSettings($pageUid)
+    private function getTemplateLayoutSettings(int $pageUid): void
     {
         $title = '';
         $field = $this->getFieldFromFlexform('settings.templateLayout', 'template');
@@ -288,10 +255,7 @@ class PageLayoutView
         }
     }
 
-    /**
-     * Get the startingpoint
-     */
-    private function getStartingPoint()
+    private function getStartingPoint(): void
     {
         $value = $this->getFieldFromFlexform('settings.startingpoint');
 
@@ -333,12 +297,6 @@ class PageLayoutView
         }
     }
 
-    /**
-     * Render the settings as table for Web>Page module
-     * System settings are displayed in mono font
-     *
-     * @return string
-     */
     private function renderSettingsAsTable(): string
     {
         if (count($this->tableData) === 0) {
@@ -353,16 +311,7 @@ class PageLayoutView
         return '<pre style="white-space:normal">' . $content . '</pre>';
     }
 
-    /**
-     * Get field value from flexform configuration,
-     * including checks if flexform configuration is available
-     *
-     * @param string $key name of the key
-     * @param string $sheet name of the sheet
-     *
-     * @return string|null if nothing found, value if found
-     */
-    private function getFieldFromFlexform($key, $sheet = 'sDEF')
+    private function getFieldFromFlexform(string $key, string $sheet = 'sDEF')
     {
         $flexform = $this->flexformData;
         if (isset($flexform['data'])) {
@@ -377,19 +326,7 @@ class PageLayoutView
         return null;
     }
 
-    /**
-     * splitLabel function
-     *
-     * All translations are based on $LOCAL_LANG variables.
-     * 'language-splitted' labels can therefore refer to a local-lang file + index.
-     * Refer to 'Inside TYPO3' for more details
-     *
-     * @param string $label Label key/reference
-     * @param bool $hsc If set, the return value is htmlspecialchar'ed
-     *
-     * @return string
-     */
-    private function sL($label, $hsc = false): string
+    private function sL(string $label, bool $hsc = false): string
     {
         $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
         foreach ($registeredExtensionKeys as $extensionKey) {
@@ -403,11 +340,6 @@ class PageLayoutView
         return '';
     }
 
-    /**
-     * Return language service instance
-     *
-     * @return LanguageService
-     */
     private function getLanguageService(): LanguageService
     {
         return $GLOBALS['LANG'];

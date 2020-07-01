@@ -21,14 +21,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  */
 interface DummyInterface
 {
-
-    /**
-     * @return bool
-     */
-    public function getIsDummyRecord();
+    public function getIsDummyRecord(): bool;
 
     /**
      * @param bool $isDummyRecord
      */
-    public function setIsDummyRecord($isDummyRecord);
+    public function setIsDummyRecord(bool $isDummyRecord);
 }

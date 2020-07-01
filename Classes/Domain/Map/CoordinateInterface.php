@@ -16,7 +16,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Netzmacht\LeafletPHP\Value\LatLng;
+
 interface CoordinateInterface
 {
-    public function getCoordinate();
+    public function getCoordinate(): LatLng;
 }

@@ -26,22 +26,18 @@ use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
-use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
-use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
 use TYPO3\CMS\Extbase\Mvc\Web\Response;
-use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * @author Sebastian Schreiber
  */
 class EntryController extends ActionController
 {
-    const GERMANY_ISOCODENUMBER = 276;
+    /**
+     * @var int
+     */
+    public const GERMANY_ISOCODENUMBER = 276;
 
     /**
      * @var string
@@ -86,49 +82,32 @@ class EntryController extends ActionController
      */
     protected $response;
 
-    /**
-     * @param CategoryRepository $categoryRepository
-     */
-    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-     * @param CountryZoneRepository $countryZoneRepository
-     */
-    public function injectCountryZoneRepository(CountryZoneRepository $countryZoneRepository)
+    public function injectCountryZoneRepository(CountryZoneRepository $countryZoneRepository): void
     {
         $this->countryZoneRepository = $countryZoneRepository;
     }
 
-    /**
-     * @param EntryRepository $entryRepository
-     */
-    public function injectEntryRepository(EntryRepository $entryRepository)
+    public function injectEntryRepository(EntryRepository $entryRepository): void
     {
         $this->entryRepository = $entryRepository;
     }
 
-    /**
-     * @param KilometerRepository $kilometerRepository
-     */
-    public function injectKilometerRepository(KilometerRepository $kilometerRepository)
+    public function injectKilometerRepository(KilometerRepository $kilometerRepository): void
     {
         $this->kilometerRepository = $kilometerRepository;
     }
 
-    /**
-     * @param SessionService $sessionService
-     */
-    public function injectSessionService(SessionService $sessionService)
+    public function injectSessionService(SessionService $sessionService): void
     {
         $this->sessionService = $sessionService;
     }
 
-    /**
-     */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         if ($this->arguments->hasArgument('demand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
@@ -150,22 +129,13 @@ class EntryController extends ActionController
         }
     }
 
-    /**
-     */
-    public function initializeFormAction()
+    public function initializeFormAction(): void
     {
         $this->resetDemand();
         $this->addDemandRequestArgumentFromSession();
     }
 
-    /**
-     * @param Demand|object $demand
-     *
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     * @throws \Exception
-     */
-    public function formAction(Demand $demand = null)
+    public function formAction(Demand $demand = null): void
     {
         if (!$demand instanceof Demand) {
             $demand = $this->objectManager->get(Demand::class);
@@ -179,11 +149,7 @@ class EntryController extends ActionController
         $this->view->assignMultiple($assignedViewValues);
     }
 
-    /**
-     * @throws InvalidArgumentNameException
-     * @throws NoSuchArgumentException
-     */
-    public function initializeListAction()
+    public function initializeListAction(): void
     {
         $this->resetDemand();
         if (!$this->request->hasArgument('demand')) {
@@ -193,16 +159,7 @@ class EntryController extends ActionController
         }
     }
 
-    /**
-     * @param Demand|object $demand
-     *
-     * @throws InvalidQueryException
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
-     */
-    public function listAction(Demand $demand = null)
+    public function listAction(Demand $demand = null): void
     {
         if (!$demand instanceof Demand) {
             $demand = $this->objectManager->get(Demand::class);
@@ -221,23 +178,12 @@ class EntryController extends ActionController
         $this->view->assignMultiple($assignedViewValues);
     }
 
-    /**
-     */
-    public function initializeShowAction()
+    public function initializeShowAction(): void
     {
         $this->addDemandRequestArgumentFromSession();
     }
 
-    /**
-     * @param Entry $entry
-     * @param Demand $demand
-     *
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
-     */
-    public function showAction(Entry $entry = null, Demand $demand = null)
+    public function showAction(Entry $entry = null, Demand $demand = null): void
     {
         if (!$entry instanceof Entry) {
             // @TODO: Add possibility to hook into here.
@@ -248,21 +194,13 @@ class EntryController extends ActionController
         $this->view->assignMultiple($assignedViewValues);
     }
 
-    /**
-     * @param string $q
-     *
-     * @throws InvalidQueryException
-     */
-    public function autocompleteAction(string $q)
+    public function autocompleteAction(string $q): void
     {
         $this->view->assign('entries', $this->entryRepository->findByQuery($q));
         $this->view->assign('q', $q);
     }
 
-    /**
-     * @return array
-     */
-    private function findCountryZonesForGermany()
+    private function findCountryZonesForGermany(): array
     {
         if (false === GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany')) {
             return [];
@@ -273,26 +211,12 @@ class EntryController extends ActionController
         return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
     }
 
-    /**
-     * @param array $signalArguments
-     *
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    private function emitInitializeActionSignal(array $signalArguments)
+    private function emitInitializeActionSignal(array $signalArguments): void
     {
         $this->signalSlotDispatcher->dispatch(static::class, Events::INITIALIZE_ACTION_SIGNAL, $signalArguments);
     }
 
-    /**
-     * @param $signalName
-     * @param array $assignedViewValues
-     *
-     * @return mixed
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    private function emitActionSignal($signalName, array $assignedViewValues)
+    private function emitActionSignal(string $signalName, array $assignedViewValues): array
     {
         $signalArguments = [];
         $signalArguments['extendedVariables'] = [];
@@ -302,9 +226,7 @@ class EntryController extends ActionController
         return array_merge($assignedViewValues, $additionalViewValues['extendedVariables']);
     }
 
-    /**
-     */
-    private function addDemandRequestArgumentFromSession()
+    private function addDemandRequestArgumentFromSession(): void
     {
         $demand = $this->sessionService->restoreFromSession();
         if ($demand) {
@@ -312,10 +234,7 @@ class EntryController extends ActionController
         }
     }
 
-    /**
-     * @throws InvalidArgumentNameException
-     */
-    private function resetDemand()
+    private function resetDemand(): void
     {
         if ($this->request->hasArgument('reset')) {
             $this->sessionService->cleanUpSession();

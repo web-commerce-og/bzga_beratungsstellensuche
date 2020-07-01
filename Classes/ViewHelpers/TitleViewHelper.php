@@ -50,43 +50,28 @@ class TitleViewHelper extends AbstractViewHelper
      */
     protected $escapingInterceptorEnabled = false;
 
-    /**
-     * @param EnvironmentService $environmentService
-     */
-    public function injectEnvironmentService(EnvironmentService $environmentService)
+    public function injectEnvironmentService(EnvironmentService $environmentService): void
     {
         $this->environmentService = $environmentService;
     }
 
-    /**
-     * @param ExtensionService $extensionService
-     */
-    public function injectExtensionService(ExtensionService $extensionService)
+    public function injectExtensionService(ExtensionService $extensionService): void
     {
         $this->extensionService = $extensionService;
     }
 
-    /**
-     * @param PageRenderer $pageRenderer
-     */
-    public function injectPageRenderer(PageRenderer $pageRenderer)
+    public function injectPageRenderer(PageRenderer $pageRenderer): void
     {
         $this->pageRenderer = $pageRenderer;
     }
 
-    /**
-     * Arguments initialization
-     */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('title', 'string', 'Title tag content');
         $this->registerArgument('setIndexedDocTitle', 'boolean', 'Set indexed doc title to title', false, false);
     }
 
-    /**
-     * Render method
-     */
-    public function render()
+    public function render(): void
     {
         if ($this->environmentService->isEnvironmentInBackendMode()) {
             throw new RuntimeException('This method should only be called in the frontend context');
@@ -119,10 +104,9 @@ class TitleViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @return TypoScriptFrontendController
      * @codeCoverageIgnore
      */
-    protected function getTyposcriptFrontendController()
+    protected function getTyposcriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

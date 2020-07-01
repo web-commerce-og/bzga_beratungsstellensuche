@@ -23,11 +23,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class UppercaseFirstLetterViewHelper extends AbstractViewHelper
 {
-
-    /**
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         $subject = $this->arguments['subject'];
         if (null === $subject) {

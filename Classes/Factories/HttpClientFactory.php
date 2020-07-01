@@ -23,10 +23,6 @@ use Http\Client\HttpClient;
  */
 class HttpClientFactory
 {
-
-    /**
-     * @return HttpClient
-     */
     public static function createInstance(): HttpClient
     {
         $httpOptions = $GLOBALS['TYPO3_CONF_VARS']['HTTP'];

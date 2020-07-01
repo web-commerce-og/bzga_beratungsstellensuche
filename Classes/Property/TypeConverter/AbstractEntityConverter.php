@@ -27,10 +27,8 @@ class AbstractEntityConverter implements TypeConverterBeforeInterface
 {
     /**
      * @param mixed $source
-     * @param string $type
-     * @return bool
      */
-    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE): bool
     {
         if (!$source instanceof AbstractEntity) {
             return false;
@@ -40,11 +38,9 @@ class AbstractEntityConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param $source
-     * @param AbstractEntity|array|null $configuration
-     * @return int
+     * @param mixed $source
      */
-    public function convert($source, array $configuration = null)
+    public function convert($source, array $configuration = null): int
     {
         if (!$source instanceof AbstractEntity) {
             throw new InvalidArgumentException('The type is not allowed');

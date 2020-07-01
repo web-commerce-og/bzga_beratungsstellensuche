@@ -55,29 +55,14 @@ class BackendUtility
         'template' => '',
     ];
 
-    /**
-     * Hook function of \TYPO3\CMS\Backend\Utility\BackendUtility
-     * It is used to change the flexform if it is about news
-     *
-     * @param array &$dataStructure Flexform structure
-     * @param array $conf some strange configuration
-     * @param array $row row of current record
-     * @param string $table table name
-     */
-    public function getFlexFormDS_postProcessDS(&$dataStructure, $conf, $row, $table)
+    public function getFlexFormDS_postProcessDS(array &$dataStructure, array $conf, array $row, string $table): void
     {
         if ($table === 'tt_content' && $row['list_type'] === 'bzgaberatungsstellensuche_pi1' && is_array($dataStructure)) {
             $this->updateFlexforms($dataStructure, $row);
         }
     }
 
-    /**
-     * Update flexform configuration if a action is selected
-     *
-     * @param array|string &$dataStructure flexform structure
-     * @param array $row row of current record
-     */
-    private function updateFlexforms(array &$dataStructure, array $row)
+    private function updateFlexforms(array &$dataStructure, array $row): void
     {
         $selectedView = '';
 
@@ -127,13 +112,7 @@ class BackendUtility
         }
     }
 
-    /**
-     * Remove fields from flexform structure
-     *
-     * @param array &$dataStructure flexform structure
-     * @param array $fieldsToBeRemoved fields which need to be removed
-     */
-    private function deleteFromStructure(array &$dataStructure, array $fieldsToBeRemoved)
+    private function deleteFromStructure(array &$dataStructure, array $fieldsToBeRemoved): void
     {
         foreach ($fieldsToBeRemoved as $sheetName => $sheetFields) {
             $fieldsInSheet = GeneralUtility::trimExplode(',', $sheetFields, true);

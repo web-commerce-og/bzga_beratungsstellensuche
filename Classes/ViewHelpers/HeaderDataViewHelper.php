@@ -29,18 +29,12 @@ class HeaderDataViewHelper extends AbstractViewHelper
      */
     protected $pageRenderer;
 
-    /**
-     * @param PageRenderer $pageRenderer
-     */
-    public function injectPageRenderer(PageRenderer $pageRenderer)
+    public function injectPageRenderer(PageRenderer $pageRenderer): void
     {
         $this->pageRenderer = $pageRenderer;
     }
 
-    /**
-     * Renders HeaderData
-     */
-    public function render()
+    public function render(): void
     {
         $this->pageRenderer->addHeaderData($this->renderChildren());
     }

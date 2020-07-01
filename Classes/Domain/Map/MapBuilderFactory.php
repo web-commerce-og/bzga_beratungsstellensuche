@@ -36,10 +36,7 @@ final class MapBuilderFactory
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * @return MapBuilderInterface
-     */
-    public function createMapBuilder(): MapBuilderInterface
+    public function createMapBuilder(): object
     {
         return $this->objectManager->get(MapBuilder::class);
     }

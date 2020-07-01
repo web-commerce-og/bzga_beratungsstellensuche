@@ -72,9 +72,8 @@ class Serializer extends BaseSerializer
 
     /**
      * @param array $normalizers
-     * @return array
      */
-    private function emitAdditionalNormalizersSignal(array $normalizers)
+    private function emitAdditionalNormalizersSignal(array $normalizers): array
     {
         $signalArguments = [];
         $signalArguments['extendedNormalizers'] = [];

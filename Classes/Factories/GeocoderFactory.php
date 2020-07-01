@@ -30,26 +30,18 @@ class GeocoderFactory
     /**
      * @var string
      */
-    const TYPE_GOOGLE = 'GoogleMaps';
+    public const TYPE_GOOGLE = 'GoogleMaps';
 
     /**
      * @var string
      */
-    const TYPE_OPEN_STREET_MAP = 'OpenStreetMap';
+    public const TYPE_OPEN_STREET_MAP = 'OpenStreetMap';
 
-    /**
-     * @param string $type
-     * @param HttpClient $client
-     * @param string|null $region
-     * @param string|null $apiKey
-     *
-     * @return Provider
-     */
     public static function createInstance(
-        $type,
+        string $type,
         HttpClient $client,
-        $region = null,
-        $apiKey = null
+        ?string $region = null,
+        ?string $apiKey = null
     ): Provider {
         if ($type === self::TYPE_OPEN_STREET_MAP) {
             return Nominatim::withOpenStreetMapServer($client, 'User-Agent');

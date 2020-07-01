@@ -41,35 +41,29 @@ abstract class AbstractBaseRepository extends Repository
     /**
      * @var string
      */
-    const ENTRY_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_entry';
+    public const ENTRY_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_entry';
 
     /**
      * @var string
      */
-    const CATEGORY_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_category';
+    public const CATEGORY_TABLE = 'tx_bzgaberatungsstellensuche_domain_model_category';
 
     /**
      * @var string
      */
-    const ENTRY_CATEGORY_MM_TABLE = 'tx_bzgaberatungsstellensuche_entry_category_mm';
+    public const ENTRY_CATEGORY_MM_TABLE = 'tx_bzgaberatungsstellensuche_entry_category_mm';
 
     /**
      * @var string
      */
-    const SYS_FILE_REFERENCE = 'sys_file_reference';
+    public const SYS_FILE_REFERENCE = 'sys_file_reference';
 
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
-    /**
-     * @param string $table
-     * @param array $entries
-     *
-     * @return array|null
-     */
-    public function findOldEntriesByExternalUidsDiffForTable(string $table, array $entries)
+    public function findOldEntriesByExternalUidsDiffForTable(string $table, array $entries): ?array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
 
@@ -81,13 +75,7 @@ abstract class AbstractBaseRepository extends Repository
             ->fetchAll();
     }
 
-    /**
-     * @param int $externalId
-     * @param string $hash
-     *
-     * @return int
-     */
-    public function countByExternalIdAndHash($externalId, $hash): int
+    public function countByExternalIdAndHash(int $externalId, string $hash): int
     {
         $query = $this->createQuery();
         $constraints = [];
@@ -97,12 +85,7 @@ abstract class AbstractBaseRepository extends Repository
         return $query->matching($query->logicalAnd($constraints))->execute()->count();
     }
 
-    /**
-     * @param int $externalId
-     *
-     * @return object
-     */
-    public function findOneByExternalId($externalId)
+    public function findOneByExternalId(int $externalId): object
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
@@ -112,10 +95,7 @@ abstract class AbstractBaseRepository extends Repository
         return $object;
     }
 
-    /**
-     * @return mixed|QueryInterface
-     */
-    public function createQuery()
+    public function createQuery(): QueryInterface
     {
         $query = parent::createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
@@ -123,19 +103,11 @@ abstract class AbstractBaseRepository extends Repository
         return $query;
     }
 
-    /**
-     * @return mixed|string
-     */
-    public function getObjectType()
+    public function getObjectType(): string
     {
         return $this->objectType;
     }
 
-    /**
-     * @param string $table
-     *
-     * @return \TYPO3\CMS\Core\Database\Connection
-     */
     protected function getDatabaseConnectionForTable(string $table): \TYPO3\CMS\Core\Database\Connection
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)

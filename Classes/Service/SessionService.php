@@ -24,7 +24,7 @@ class SessionService
     /**
      * @var string
      */
-    const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
+    public const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
 
     /**
      * @var FrontendUserAuthentication
@@ -36,21 +36,14 @@ class SessionService
      */
     private $sessionNamespace;
 
-    /**
-     * SessionService constructor.
-     * @param string $sessionNamespace
-     */
     public function __construct(
-        $sessionNamespace = 'beratungsstellendatenbank'
+        string $sessionNamespace = 'beratungsstellendatenbank'
     ) {
         $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         $this->sessionNamespace = $sessionNamespace;
     }
 
-    /**
-     * @return array|null
-     */
-    public function restoreFromSession()
+    public function restoreFromSession(): ?array
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);
@@ -67,10 +60,7 @@ class SessionService
         return null;
     }
 
-    /**
-     * @param object $object
-     */
-    public function writeToSession($object)
+    public function writeToSession($object): void
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = serialize($object);
@@ -78,19 +68,14 @@ class SessionService
         }
     }
 
-    /**
-     */
-    public function cleanUpSession()
+    public function cleanUpSession(): void
     {
         if ($this->hasValidFrontendUser()) {
             $this->frontendUser->setKey('ses', $this->sessionNamespace, null);
         }
     }
 
-    /**
-     * @return bool
-     */
-    protected function hasValidFrontendUser()
+    protected function hasValidFrontendUser(): bool
     {
         if ($this->frontendUser instanceof FrontendUserAuthentication) {
             return true;

@@ -22,11 +22,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class RoundViewHelper extends AbstractViewHelper
 {
-
-    /**
-     * @return float
-     */
-    public function render()
+    public function render(): float
     {
         $number = $this->arguments['number'];
         $precision = $this->arguments['precision'];

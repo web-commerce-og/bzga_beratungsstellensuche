@@ -31,9 +31,6 @@ final class Coordinate implements CoordinateInterface
         $this->coordinate = new LatLng($latitude, $longitude);
     }
 
-    /**
-     * @return LatLng
-     */
     public function getCoordinate(): LatLng
     {
         return $this->coordinate;

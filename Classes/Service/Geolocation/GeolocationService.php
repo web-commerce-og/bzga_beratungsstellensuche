@@ -17,7 +17,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Geocoder\Exception\CollectionIsEmpty;
-use Geocoder\Exception\Exception;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 
@@ -26,14 +25,7 @@ use Geocoder\Query\GeocodeQuery;
  */
 class GeolocationService extends AbstractGeolocationService
 {
-
-    /**
-     * @param Demand $demand
-     *
-     * @return Location|null
-     * @throws Exception
-     */
-    public function findAddressByDemand(Demand $demand)
+    public function findAddressByDemand(Demand $demand): ?Location
     {
         if ($demand->getLocation()) {
             try {

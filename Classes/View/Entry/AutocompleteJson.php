@@ -22,13 +22,6 @@ use TYPO3\CMS\Extbase\Mvc\View\AbstractView;
 
 final class AutocompleteJson extends AbstractView
 {
-
-    /**
-     * Renders the view
-     *
-     * @return string The rendered view
-     * @api
-     */
     public function render(): string
     {
         /** @var Entry[] $entries */

@@ -24,11 +24,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class ExplodeViewHelper extends AbstractViewHelper
 {
-
-    /**
-     * @return array
-     */
-    public function render()
+    public function render(): array
     {
         $subject = $this->arguments['subject'];
         $glue = $this->arguments['glue'];
@@ -47,7 +43,7 @@ class ExplodeViewHelper extends AbstractViewHelper
         return $array;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('subject', 'string|null', '', false, null);

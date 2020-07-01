@@ -24,12 +24,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  */
 class Utility
 {
-
-    /**
-     * @param QueryResultInterface $queryResult
-     * @return ObjectStorage
-     */
-    public static function transformQueryResultToObjectStorage(QueryResultInterface $queryResult)
+    public static function transformQueryResultToObjectStorage(QueryResultInterface $queryResult): ObjectStorage
     {
         $objectStorage = new ObjectStorage();
         foreach ($queryResult as $item) {
@@ -39,11 +34,7 @@ class Utility
         return $objectStorage;
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function stripPathSite($string)
+    public static function stripPathSite(string $string): string
     {
         return substr($string, strlen(Environment::getPublicPath()));
     }

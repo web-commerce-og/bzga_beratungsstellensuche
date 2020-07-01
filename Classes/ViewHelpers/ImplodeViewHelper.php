@@ -24,11 +24,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class ImplodeViewHelper extends AbstractViewHelper
 {
-
-    /**
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         $pieces = $this->arguments['pieces'];
         $glue = $this->arguments['glue'];
@@ -46,10 +42,7 @@ class ImplodeViewHelper extends AbstractViewHelper
         return implode($glue, $pieces);
     }
 
-    /**
-     * @param array $pieces
-     */
-    private function validatePieces(array $pieces)
+    private function validatePieces(array $pieces): void
     {
         foreach ($pieces as $piece) {
             if (! method_exists($piece, '__toString') && ! is_scalar($piece)) {
@@ -58,7 +51,7 @@ class ImplodeViewHelper extends AbstractViewHelper
         }
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('pieces', 'mixed', '', false, null);

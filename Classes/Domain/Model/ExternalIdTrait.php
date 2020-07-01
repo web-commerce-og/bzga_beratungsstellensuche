@@ -29,7 +29,7 @@ trait ExternalIdTrait
     /**
      * @return int
      */
-    public function getExternalId()
+    public function getExternalId(): int
     {
         return $this->externalId;
     }
@@ -37,7 +37,7 @@ trait ExternalIdTrait
     /**
      * @param int $externalId
      */
-    public function setExternalId($externalId)
+    public function setExternalId(int $externalId): void
     {
         $this->externalId = $externalId;
     }

@@ -32,14 +32,11 @@ class MapViewHelper extends AbstractWidgetViewHelper
      */
     protected $controller;
 
-    public function injectController(MapController $controller)
+    public function injectController(MapController $controller): void
     {
         $this->controller = $controller;
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function render(): ResponseInterface
     {
         $demand = $this->arguments['demand'];

@@ -23,14 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TemplateLayout implements SingletonInterface
 {
-
-    /**
-     * Get available template layouts for a certain page
-     *
-     * @param int $pageUid
-     * @return array
-     */
-    public function getAvailableTemplateLayouts($pageUid)
+    public function getAvailableTemplateLayouts(int $pageUid): array
     {
         $templateLayouts = [];
 
@@ -52,13 +45,7 @@ class TemplateLayout implements SingletonInterface
         return $templateLayouts;
     }
 
-    /**
-     * Get template layouts defined in TsConfig
-     *
-     * @param $pageUid
-     * @return array
-     */
-    private function getTemplateLayoutsFromTsConfig($pageUid)
+    private function getTemplateLayoutsFromTsConfig(int $pageUid): array
     {
         $templateLayouts = [];
         $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);

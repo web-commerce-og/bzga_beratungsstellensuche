@@ -2,6 +2,7 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
+use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -14,7 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use SJBR\StaticInfoTables\Domain\Model\CountryZone;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -139,182 +140,103 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
      */
     protected $association;
 
-    /**
-     * Entry constructor.
-     * @param string $title
-     */
-    public function __construct($title = '')
+    public function __construct(string $title = '')
     {
         parent::__construct($title);
         $this->categories = new ObjectStorage();
     }
 
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
-     */
-    public function getCategories()
+    public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category> $categories
-     */
-    public function setCategories($categories)
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }
 
-    /**
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Category $category
-     */
-    public function attachCategory(Category $category)
+    public function attachCategory(Category $category): void
     {
         $this->categories->attach($category);
     }
 
-    /**
-     * @param \Bzga\BzgaBeratungsstellensuche\Domain\Model\Category $category
-     */
-    public function detachCategory(Category $category)
+    public function detachCategory(Category $category): void
     {
         $this->categories->detach($category);
     }
 
-    /**
-     * @return string
-     */
-    public function getSubtitle()
+    public function getSubtitle(): string
     {
         return $this->subtitle;
     }
 
-    /**
-     * @param string $subtitle
-     */
-    public function setSubtitle($subtitle)
+    public function setSubtitle(string $subtitle): void
     {
         $this->subtitle = $subtitle;
     }
 
-    /**
-     * Returns the teaser.
-     * @return string $teaser
-     */
-    public function getTeaser()
+    public function getTeaser(): string
     {
         return $this->teaser;
     }
 
-    /**
-     * Sets the teaser.
-     *
-     * @param string $teaser
-     */
-    public function setTeaser($teaser)
+    public function setTeaser(string $teaser): void
     {
         $this->teaser = $teaser;
     }
 
-    /**
-     * Returns the zip.
-     * @return string $zip
-     */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * Sets the zip.
-     *
-     * @param string $zip
-     */
-    public function setZip($zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
 
-    /**
-     * Returns the city.
-     * @return string $city
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * Sets the city.
-     *
-     * @param string $city
-     */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
-    /**
-     * Returns the street.
-     * @return string $street
-     */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
-    /**
-     * Sets the street.
-     *
-     * @param string $street
-     */
-    public function setStreet($street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
 
-    /**
-     * Returns the state.
-     * @return \SJBR\StaticInfoTables\Domain\Model\CountryZone $state
-     */
-    public function getState()
+    public function getState(): ?CountryZone
     {
         return $this->state;
     }
 
-    /**
-     * Sets the state.
-     *
-     * @param \SJBR\StaticInfoTables\Domain\Model\CountryZone $state
-     */
-    public function setState(CountryZone $state)
+    public function setState(CountryZone $state): void
     {
         $this->state = $state;
     }
 
-    /**
-     * Returns the description.
-     * @return string $description
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Sets the description.
-     *
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): string
     {
         $address = '';
         if ($this->zip) {
@@ -330,207 +252,130 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
         return $address;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactPerson()
+    public function getContactPerson(): string
     {
         return $this->contactPerson;
     }
 
-    /**
-     * @param string $contactPerson
-     */
-    public function setContactPerson($contactPerson)
+    public function setContactPerson(string $contactPerson): void
     {
         $this->contactPerson = $contactPerson;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactEmail()
+    public function getContactEmail(): string
     {
         return $this->contactEmail;
     }
 
-    /**
-     * @param string $contactEmail
-     */
-    public function setContactEmail($contactEmail)
+    public function setContactEmail(string $contactEmail): void
     {
         $this->contactEmail = $contactEmail;
     }
 
-    /**
-     * @return string
-     */
-    public function getTelephone()
+    public function getTelephone(): string
     {
         return $this->telephone;
     }
 
-    /**
-     * @param string $telephone
-     */
-    public function setTelephone($telephone)
+    public function setTelephone(string $telephone): void
     {
         $this->telephone = $telephone;
     }
 
-    /**
-     * @return string
-     */
-    public function getTelefax()
+    public function getTelefax(): string
     {
         return $this->telefax;
     }
 
-    /**
-     * @param string $telefax
-     */
-    public function setTelefax($telefax)
+    public function setTelefax(string $telefax): void
     {
         $this->telefax = $telefax;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
-    public function getHotline()
+    public function getHotline(): string
     {
         return $this->hotline;
     }
 
-    /**
-     * @param string $hotline
-     */
-    public function setHotline($hotline)
+    public function setHotline(string $hotline): void
     {
         $this->hotline = $hotline;
     }
 
-    /**
-     * @return string
-     */
-    public function getNotice()
+    public function getNotice(): string
     {
         return $this->notice;
     }
 
-    /**
-     * @param string $notice
-     */
-    public function setNotice($notice)
+    public function setNotice(string $notice): void
     {
         $this->notice = $notice;
     }
 
-    /**
-     * @return string
-     */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
 
-    /**
-     * @param string $keywords
-     */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords): void
     {
         $this->keywords = $keywords;
     }
 
-    /**
-     * @return string
-     */
-    public function getWebsite()
+    public function getWebsite(): string
     {
         return $this->website;
     }
 
-    /**
-     * @param string $website
-     */
-    public function setWebsite($website)
+    public function setWebsite(string $website): void
     {
         $this->website = $website;
     }
 
-    /**
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     */
-    public function getImage()
+    public function getImage(): ?FileReference
     {
         return $this->image;
     }
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
-     */
-    public function setImage($image)
+    public function setImage(FileReference $image): void
     {
         $this->image = $image;
     }
 
-    /**
-     * @return string
-     */
-    public function getInstitution()
+    public function getInstitution(): string
     {
         return $this->institution;
     }
 
-    /**
-     * @param string $institution
-     */
-    public function setInstitution($institution)
+    public function setInstitution(string $institution): void
     {
         $this->institution = $institution;
     }
 
-    /**
-     * @return string
-     */
-    public function getAssociation()
+    public function getAssociation(): string
     {
         return $this->association;
     }
 
-    /**
-     * @param string $association
-     */
-    public function setAssociation($association)
+    public function setAssociation(string $association): void
     {
         $this->association = $association;
     }
 
-    /**
-     * @param array $parameters
-     * @param string $template
-     * @return string
-     */
     public function getInfoWindow(
         array $parameters = [],
-        $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>'
-    ) {
+        string $template = '<p><strong>%1$s</strong><br>%2$s<br>%3$s %4$s</p>'
+    ): string {
         $title = isset($parameters['detailLink']) ? sprintf(
             '<a href="%2$s">%1$s</a>',
             $this->getTitle(),

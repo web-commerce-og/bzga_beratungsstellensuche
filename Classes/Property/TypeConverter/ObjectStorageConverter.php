@@ -18,7 +18,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use InvalidArgumentException;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -29,10 +28,8 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
 {
     /**
      * @param mixed $source
-     * @param string $type
-     * @return bool
      */
-    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE): bool
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE): bool
     {
         if (!$source instanceof ObjectStorage) {
             return false;
@@ -42,9 +39,7 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param DomainObjectInterface[]|ObjectStorage $source
-     * @param AbstractEntity|array|null $configuration
-     * @return string
+     * @param mixed $source
      */
     public function convert($source, array $configuration = null): string
     {

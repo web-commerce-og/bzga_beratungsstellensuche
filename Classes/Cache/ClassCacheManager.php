@@ -15,10 +15,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Cache;
  * The TYPO3 project - inspiring people to share!
  */
 use Exception;
-use InvalidArgumentException;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -34,14 +32,12 @@ class ClassCacheManager implements SingletonInterface
 {
 
     /**
-     * Extension key
-     *
      * @var string
      */
     protected $extensionKey = 'bzga_beratungsstellensuche';
 
     /**
-     * @var array Cache configurations
+     * @var array[]
      */
     protected $cacheConfiguration = [
         'bzga_beratungsstellensuche' => [
@@ -57,19 +53,12 @@ class ClassCacheManager implements SingletonInterface
      */
     protected $cacheInstance;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->initializeCache();
     }
 
-    /**
-     * Initialize cache instance to be ready to use
-     * @throws NoSuchCacheException
-     */
-    protected function initializeCache()
+    protected function initializeCache(): void
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /* @var $objectManager ObjectManager */
@@ -87,12 +76,7 @@ class ClassCacheManager implements SingletonInterface
         $this->cacheInstance = $cacheManager->getCache($this->extensionKey);
     }
 
-    /**
-     * Builds and caches the proxy files
-     *
-     * @throws Exception
-     */
-    public function build()
+    public function build(): void
     {
         $extensibleExtensions = $this->getExtensibleExtensions();
         $entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extensionKey]['entities'];
@@ -129,11 +113,6 @@ class ClassCacheManager implements SingletonInterface
         }
     }
 
-    /**
-     * Get all loaded extensions which try to extend EXT:static_info_tables
-     *
-     * @return array
-     */
     protected function getExtensibleExtensions(): array
     {
         $loadedExtensions = array_unique(ExtensionManagementUtility::getLoadedExtensionListArray());
@@ -154,18 +133,7 @@ class ClassCacheManager implements SingletonInterface
         return $extensibleExtensions;
     }
 
-    /**
-     * Parse a single file and does some magic
-     * - Remove the php tags
-     * - Remove the class definition (if set)
-     *
-     * @param string $filePath path of the file
-     * @param bool $removeClassDefinition If class definition should be removed
-     * @return string path of the saved file
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
-    public function parseSingleFile($filePath, $removeClassDefinition = true): string
+    public function parseSingleFile(string $filePath, bool $removeClassDefinition = true): string
     {
         if (!is_file($filePath)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be found', $filePath));
@@ -175,15 +143,7 @@ class ClassCacheManager implements SingletonInterface
         return $this->changeCode($code, $filePath, $removeClassDefinition);
     }
 
-    /**
-     * @param string $code
-     * @param string $filePath
-     * @param bool $removeClassDefinition
-     * @param bool $renderPartialInfo
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    protected function changeCode($code, $filePath, $removeClassDefinition = true, $renderPartialInfo = true): string
+    protected function changeCode(string $code, string $filePath, bool $removeClassDefinition = true, bool $renderPartialInfo = true): string
     {
         if (empty($code)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
@@ -216,29 +176,18 @@ class ClassCacheManager implements SingletonInterface
         return $code . LF . LF;
     }
 
-    /**
-     * @param string $filePath
-     * @return string
-     */
     protected function getPartialInfo(string $filePath): string
     {
         return '/*' . str_repeat('*', 70) . LF .
         ' * this is partial from: ' . $filePath . LF . str_repeat('*', 70) . '*/' . LF . TAB;
     }
 
-    /**
-     * @param $code
-     * @return string
-     */
-    protected function closeClassDefinition($code)
+    protected function closeClassDefinition(string $code): string
     {
         return $code . LF . '}';
     }
 
-    /**
-     * Clear the class cache
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->cacheInstance->flush();
         if (isset($GLOBALS['BE_USER'])) {
@@ -253,12 +202,7 @@ class ClassCacheManager implements SingletonInterface
         }
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @throws Exception
-     */
-    public function reBuild(array $parameters = [])
+    public function reBuild(array $parameters = []): void
     {
         $isValidCall = (
             empty($parameters)
