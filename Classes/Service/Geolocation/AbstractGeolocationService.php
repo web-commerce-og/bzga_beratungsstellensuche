@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 
@@ -31,17 +30,17 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     /**
      * @var string
      */
-    const DISTANCE_SQL_FIELD = '(6371.01 * acos(cos(radians(%1$f)) * cos(radians(latitude)) * cos(radians(longitude) - radians(%2$f)) + sin(radians(%1$f) ) * sin(radians(latitude))))';
+    public const DISTANCE_SQL_FIELD = '(6371.01 * acos(cos(radians(%1$f)) * cos(radians(latitude)) * cos(radians(longitude) - radians(%2$f)) + sin(radians(%1$f) ) * sin(radians(latitude))))';
 
     /**
      * @var float
      */
-    const EARTH_RADIUS = 6371.01;
+    public const EARTH_RADIUS = 6371.01;
 
     /**
      * @var int
      */
-    const DEFAULT_RADIUS = 10;
+    public const DEFAULT_RADIUS = 10;
 
     /**
      * @var SettingsService
@@ -53,16 +52,11 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
      */
     protected $geocoder;
 
-    /**
-     * AbstractGeolocationService constructor.
-     *
-     * @param SettingsService $settingsService
-     */
     public function __construct(SettingsService $settingsService)
     {
         $this->settingsService = $settingsService;
-        $adapter               = HttpClientFactory::createInstance();
-        $this->geocoder        = GeocoderFactory::createInstance(
+        $adapter = HttpClientFactory::createInstance();
+        $this->geocoder = GeocoderFactory::createInstance(
             $this->settingsService->getByPath('geocoder'),
             $adapter,
             $this->settingsService->getByPath('map.region'),
@@ -70,13 +64,7 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
         );
     }
 
-    /**
-     * @param GeopositionInterface $demandPosition
-     * @param GeopositionInterface $locationPosition
-     *
-     * @return float
-     */
-    public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition)
+    public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition): float
     {
         return self::EARTH_RADIUS * acos(
                 cos(deg2rad($demandPosition->getLatitude())) * cos(deg2rad($locationPosition->getLatitude())) * cos(
@@ -86,19 +74,15 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     }
 
     /**
-     * @param GeoPositionDemandInterface $demandPosition
-     * @param string $table
-     * @param string $alias
-     *
      * @return mixed
      */
-    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
+    public function getDistanceSqlField(GeoPositionDemandInterface $demandPosition, string $table, string $alias = 'distance'): string
     {
         return sprintf(
-            self::DISTANCE_SQL_FIELD,
-            $demandPosition->getLatitude(),
-            $demandPosition->getLongitude(),
-                $demandPosition->getKilometers()
-        ) . ' AS ' . $alias;
+                   self::DISTANCE_SQL_FIELD,
+                   $demandPosition->getLatitude(),
+                   $demandPosition->getLongitude(),
+                   $demandPosition->getKilometers()
+               ) . ' AS ' . $alias;
     }
 }

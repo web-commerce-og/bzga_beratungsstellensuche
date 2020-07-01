@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -21,11 +20,5 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  */
 interface MapWindowInterface
 {
-
-    /**
-     * @param array $parameters
-     * @param string $template
-     * @return mixed
-     */
-    public function getInfoWindow(array $parameters = [], $template = '');
+    public function getInfoWindow(array $parameters = [], string $template = ''): string;
 }

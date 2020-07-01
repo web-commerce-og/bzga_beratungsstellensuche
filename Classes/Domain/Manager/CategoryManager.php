@@ -1,8 +1,9 @@
 <?php
 
-
+declare(strict_types = 1);
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 
 /**
@@ -32,12 +33,12 @@ class CategoryManager extends AbstractManager
     /**
      * @return CategoryRepository
      */
-    public function getRepository()
+    public function getRepository(): AbstractBaseRepository
     {
         return $this->repository;
     }
 
-    public function injectRepository(CategoryRepository $repository)
+    public function injectRepository(CategoryRepository $repository): void
     {
         $this->repository = $repository;
     }

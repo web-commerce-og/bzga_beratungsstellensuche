@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer;
 
@@ -19,11 +18,11 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber
@@ -90,7 +89,7 @@ class EntryNormalizerTest extends UnitTestCase
             'kurztext' => 'Teaser',
             'plz' => 'Zip',
             'ort' => 'City',
-            'logo' => 'Image',
+            'logo' => 'https://www.domain.com/logo.png',
             'strasse' => 'Street',
             'telefon' => 'Telephone',
             'fax' => 'Telefax',
@@ -106,7 +105,6 @@ class EntryNormalizerTest extends UnitTestCase
             'suchcontent' => 'Keywords',
             'beratungsart' => [],
         ];
-
         $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
         $this->countryZoneRepository->expects($this->once())->method('findOneByExternalId')->willReturn($countryZoneMock);
 
@@ -117,8 +115,8 @@ class EntryNormalizerTest extends UnitTestCase
         self::assertSame('Title', $object->getTitle());
         self::assertSame('Subtitle', $object->getSubtitle());
         self::assertSame('Contact Person', $object->getContactPerson());
-        self::assertSame('Latitude', $object->getLatitude());
-        self::assertSame('Longitude', $object->getLongitude());
+        self::assertSame(0.0, $object->getLatitude());
+        self::assertSame(0.0, $object->getLongitude());
         self::assertSame('Teaser', $object->getTeaser());
         self::assertSame('Zip', $object->getZip());
         self::assertSame('City', $object->getCity());

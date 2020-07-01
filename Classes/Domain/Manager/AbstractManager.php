@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
@@ -15,12 +15,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Countable;
-use InvalidArgumentException;
 use IteratorAggregate;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
@@ -71,13 +69,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      */
     private $logger;
 
-    /**
-     * AbstractManager constructor.
-     *
-     * @param DataHandler $dataHandler
-     * @param DataMap $dataMapFactory
-     * @param PropertyMapper $propertyMapper
-     */
     public function __construct(
         DataHandler $dataHandler,
         DataMap $dataMapFactory,
@@ -87,7 +78,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
         $this->dataHandler->admin = true;
-        $this->dataHandler->enableLogging = false;
+        $this->dataHandler->enableLogging = true;
         $this->dataHandler->checkStoredRecords = false;
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
@@ -95,11 +86,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->logger = $logManager->getLogger(__CLASS__);
     }
 
-    /**
-     * @param AbstractEntity|ExternalIdTrait $entity
-     *
-     * @throws InvalidArgumentException
-     */
     public function create(AbstractEntity $entity)
     {
         $tableName = $this->dataMapFactory->getTableNameByClassName(get_class($entity));
@@ -147,9 +133,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         }
     }
 
-    /**
-     */
-    public function persist()
+    public function persist(): void
     {
         if (!empty($this->dataMap)) {
             $this->dataHandler->start($this->dataMap, []);
@@ -161,20 +145,12 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         }
     }
 
-    /**
-     * @param $tableName
-     * @param $tableUid
-     * @param array $data
-     */
-    public function addDataMap($tableName, $tableUid, array $data)
+    public function addDataMap(string $tableName, string $tableUid, array $data): void
     {
         $this->dataMap[$tableName][$tableUid] = $data;
     }
 
-    /**
-     * @see \Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor
-     */
-    public function cleanUp()
+    public function cleanUp(): void
     {
         $repository = $this->getRepository();
         $table = $this->dataMapFactory->getTableNameByClassName($repository->getObjectType());
@@ -190,30 +166,20 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataHandler->process_cmdmap();
     }
 
-    /**
-     * @return \SplObjectStorage
-     */
-    public function getIterator()
+    public function getIterator(): \SplObjectStorage
     {
         return $this->entries;
     }
 
-    /**
-     * @return int
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->entries);
     }
 
-    /**
-     * @return AbstractBaseRepository
-     */
-    abstract public function getRepository();
+    abstract public function getRepository(): AbstractBaseRepository;
 
     /**
-     * @param AbstractEntity $entity
-     * @return int|string
+     * @return int|string|null
      */
     private function getUid(AbstractEntity $entity)
     {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
@@ -21,11 +21,7 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class FormFields implements SingletonInterface
 {
-
-    /**
-     * @return array
-     */
-    public function getAvailableFormFields()
+    public function getAvailableFormFields(): array
     {
         $formFields = [];
 

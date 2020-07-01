@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
 
@@ -16,15 +15,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Netzmacht\LeafletPHP\Definition\UI\Popup as CorePopUp;
+
 interface PopUpInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getPopUp();
+    public function getPopUp(): CorePopUp;
 
-    /**
-     * @param array $options
-     */
-    public function setOptions(array $options);
+    public function setOptions(array $options): void;
 }

@@ -1,13 +1,13 @@
-RTE.default.tx_linkhandler {
-    tx_bzgaberatungsstellensuche_domain_model_entry {
-        label = Beratungsstellen
-        listTables = tx_bzgaberatungsstellensuche_domain_model_entry
-    }
-}
-
-mod.tx_linkhandler {
-    tx_bzgaberatungsstellensuche_domain_model_entry {
-        label = Beratungsstellen
-        listTables = tx_bzgaberatungsstellensuche_domain_model_entry
-    }
+# tx_news is an identifier, don't chage it after links have been created
+TCEMAIN.linkHandler.tx_bzgaberatungsstellensuche_domain_model_entry {
+   handler = TYPO3\CMS\Recordlist\LinkHandler\RecordLinkHandler
+   label = Beratungsstellen
+   configuration {
+      table = tx_bzgaberatungsstellensuche_domain_model_entry
+      # Default storage pid
+      storagePid = 2
+      # Hide the page tree by setting it to 1
+      hidePageTree = 1
+   }
+   scanAfter = page
 }

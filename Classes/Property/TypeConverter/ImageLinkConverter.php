@@ -1,8 +1,9 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,8 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
@@ -25,6 +24,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Resource\File as FalFile;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
@@ -38,19 +38,19 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * Folder where the file upload should go to (including storage).
      */
-    const CONFIGURATION_UPLOAD_FOLDER = 1;
+    public const CONFIGURATION_UPLOAD_FOLDER = 1;
 
     /**
      * How to handle a upload when the name of the uploaded file conflicts.
      */
-    const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
+    public const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
 
     /**
      * Whether to replace an already present resource.
      * Useful for "maxitems = 1" fields and properties
      * with no ObjectStorage annotation.
      */
-    const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
+    public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
     /**
      * @var string
@@ -71,7 +71,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
      */
     private $resourceFactory;
 
@@ -94,11 +93,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     private $dataHandler;
 
-    /**
-     * ImageLinkConverter constructor.
-     *
-     * @param DataHandler|object|null $dataHandler
-     */
     public function __construct(DataHandler $dataHandler = null)
     {
         if (null === $dataHandler) {
@@ -110,12 +104,9 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param ImageLink|mixed $source
-     * @param string $type
-     *
-     * @return bool
+     * @inheritDoc
      */
-    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         if (! $source instanceof ImageLink) {
             return false;
@@ -124,12 +115,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         return true;
     }
 
-    /**
-     * @param ImageLink $source
-     * @param AbstractEntity|array $configuration
-     *
-     * @return int
-     */
     public function convert($source, array $configuration = null)
     {
         // Check if we have no image url, return 0 if not
@@ -175,14 +160,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         return 0;
     }
 
-    /**
-     * @param ImageLink $source
-     * @param ExternalIdInterface $entity
-     *
-     * @return string
-     * @throws DownloadException
-     * @throws TypeConverterException
-     */
     private function downloadFile(ImageLink $source, ExternalIdInterface $entity): string
     {
         $imageContent = GeneralUtility::getUrl($source->getExternalUrl());
@@ -202,13 +179,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         return $pathToUploadFile;
     }
 
-    /**
-     * @param string $tempFilePath
-     *
-     * @return FalFile
-     * @throws TypeConverterException
-     */
-    private function importResource($tempFilePath)
+    private function importResource(string $tempFilePath): FalFile
     {
         if (! GeneralUtility::verifyFilenameAgainstDenyPattern($tempFilePath)) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
@@ -220,19 +191,14 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param string $mimeType
-     *
      * @return mixed
      */
-    private function getExtensionFromMimeType($mimeType)
+    private function getExtensionFromMimeType(string $mimeType)
     {
         return array_search($mimeType, self::$imageMimeTypes, false);
     }
 
-    /**
-     * @param array $fileReferenceData
-     */
-    private function deleteOldFileReferences(array $fileReferenceData)
+    private function deleteOldFileReferences(array $fileReferenceData): void
     {
         if (isset($fileReferenceData['uid_local'])) {
             unset($fileReferenceData['uid_local']);
@@ -247,25 +213,15 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         $databaseConnection->delete('sys_file_reference', $where);
     }
 
-    /**
-     * @param string $table
-     *
-     * @return Connection
-     */
     private function getDatabaseConnectionForTable(string $table): Connection
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
     }
 
     /**
-     * @param ImageLink $source
      * @param AbstractEntity|ExternalIdInterface $entity
-     *
-     * @return int
-     * @throws TypeConverterException
-     * @throws DownloadException
      */
-    private function getFileUid(ImageLink $source, $entity)
+    private function getFileUid(ImageLink $source, $entity): ?int
     {
         // First we check if we already have a file with the identifier in the database
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
@@ -292,5 +248,10 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    public function injectResourceFactory(ResourceFactory $resourceFactory): void
+    {
+        $this->resourceFactory = $resourceFactory;
     }
 }

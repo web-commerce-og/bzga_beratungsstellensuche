@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service;
 
@@ -24,7 +24,7 @@ class SessionService
     /**
      * @var string
      */
-    const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
+    public const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
 
     /**
      * @var FrontendUserAuthentication
@@ -36,25 +36,21 @@ class SessionService
      */
     private $sessionNamespace;
 
-    /**
-     * SessionService constructor.
-     * @param string $sessionNamespace
-     */
     public function __construct(
-        $sessionNamespace = 'beratungsstellendatenbank'
+        string $sessionNamespace = 'beratungsstellendatenbank'
     ) {
         $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         $this->sessionNamespace = $sessionNamespace;
     }
 
     /**
-     * @return array|null
+     * @return array|mixed|null
      */
     public function restoreFromSession()
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);
-            $data = unserialize($sessionData);
+            $data = unserialize((string)$sessionData);
             if (is_array($data) && !empty($data)) {
                 foreach ($data as $key => $value) {
                     if (empty($value)) {
@@ -67,10 +63,7 @@ class SessionService
         return null;
     }
 
-    /**
-     * @param object $object
-     */
-    public function writeToSession($object)
+    public function writeToSession($object): void
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = serialize($object);
@@ -78,19 +71,14 @@ class SessionService
         }
     }
 
-    /**
-     */
-    public function cleanUpSession()
+    public function cleanUpSession(): void
     {
         if ($this->hasValidFrontendUser()) {
             $this->frontendUser->setKey('ses', $this->sessionNamespace, null);
         }
     }
 
-    /**
-     * @return bool
-     */
-    protected function hasValidFrontendUser()
+    protected function hasValidFrontendUser(): bool
     {
         if ($this->frontendUser instanceof FrontendUserAuthentication) {
             return true;

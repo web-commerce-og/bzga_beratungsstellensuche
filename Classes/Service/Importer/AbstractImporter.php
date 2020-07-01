@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
 
@@ -50,14 +49,7 @@ abstract class AbstractImporter implements ImporterInterface
      */
     protected $signalSlotDispatcher;
 
-    /**
-     * @param string $file
-     * @param int $pid
-     *
-     * @throws FileDoesNotExistException
-     * @throws ContentCouldNotBeFetchedException
-     */
-    public function importFromFile($file, $pid = 0)
+    public function importFromFile(string $file, int $pid = 0): void
     {
         $file = GeneralUtility::getFileAbsFileName($file);
 
@@ -68,14 +60,7 @@ abstract class AbstractImporter implements ImporterInterface
         $this->importFromSource($file, $pid);
     }
 
-    /**
-     * @param string $url
-     * @param int $pid
-     *
-     * @throws UnexpectedValueException
-     * @throws ContentCouldNotBeFetchedException
-     */
-    public function importFromUrl($url, $pid = 0)
+    public function importFromUrl(string $url, int $pid = 0): void
     {
         if (! GeneralUtility::isValidUrl($url)) {
             throw new UnexpectedValueException(sprintf('This is not a valid url: %s', $url));
@@ -84,33 +69,27 @@ abstract class AbstractImporter implements ImporterInterface
         $this->importFromSource($url, $pid);
     }
 
-    public function injectCategoryManager(CategoryManager $categoryManager)
+    public function injectCategoryManager(CategoryManager $categoryManager): void
     {
         $this->categoryManager = $categoryManager;
     }
 
-    public function injectEntryManager(EntryManager $entryManager)
+    public function injectEntryManager(EntryManager $entryManager): void
     {
         $this->entryManager = $entryManager;
     }
 
-    public function injectSerializer(Serializer $serializer)
+    public function injectSerializer(Serializer $serializer): void
     {
         $this->serializer = $serializer;
     }
 
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
-    /**
-     * @param string $source
-     * @param int $pid
-     *
-     * @throws ContentCouldNotBeFetchedException
-     */
-    private function importFromSource($source, $pid)
+    private function importFromSource(string $source, int $pid): void
     {
         $content = GeneralUtility::getUrl($source);
         if (false === $content) {

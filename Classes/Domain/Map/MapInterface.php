@@ -16,26 +16,18 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Netzmacht\LeafletPHP\Definition\Map as LeafletMap;
+
 interface MapInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getMap();
+    public function getMap(): LeafletMap;
 
     /**
-     * @param string $key
      * @param mixed $value
      */
     public function setOption(string $key, $value);
 
-    /**
-     * @param CoordinateInterface $coordinate
-     */
     public function setCenter(CoordinateInterface $coordinate);
 
-    /**
-     * @param MarkerInterface $marker
-     */
     public function addMarker(MarkerInterface $marker);
 }

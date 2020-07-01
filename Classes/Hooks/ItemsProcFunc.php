@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
@@ -23,13 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ItemsProcFunc
 {
-
-    /**
-     * Itemsproc function to extend the selection of templateLayouts in the plugin
-     *
-     * @param array &$config configuration array
-     */
-    public function user_templateLayout(array &$config)
+    public function user_templateLayout(array &$config): void
     {
         $templateLayoutsUtility = GeneralUtility::makeInstance(TemplateLayout::class);
         /** @var TemplateLayout $templateLayoutsUtility */
@@ -43,10 +37,7 @@ class ItemsProcFunc
         }
     }
 
-    /**
-     * @param array $config
-     */
-    public function user_formFields(array &$config)
+    public function user_formFields(array &$config): void
     {
         $formFieldsUtility = GeneralUtility::makeInstance(FormFields::class);
         /** @var FormFields $formFieldsUtility */

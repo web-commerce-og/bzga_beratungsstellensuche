@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
 /**
@@ -28,7 +28,7 @@ trait DummyTrait
     /**
      * @return bool
      */
-    public function getIsDummyRecord()
+    public function getIsDummyRecord(): bool
     {
         return $this->isDummyRecord;
     }
@@ -36,7 +36,7 @@ trait DummyTrait
     /**
      * @param bool $isDummyRecord
      */
-    public function setIsDummyRecord($isDummyRecord)
+    public function setIsDummyRecord(bool $isDummyRecord): void
     {
         $this->isDummyRecord = $isDummyRecord;
     }

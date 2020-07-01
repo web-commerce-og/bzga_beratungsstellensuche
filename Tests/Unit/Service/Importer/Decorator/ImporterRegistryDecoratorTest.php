@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
 
@@ -17,8 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
  */
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Decorator\ImporterRegistryDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Registry;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber

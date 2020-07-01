@@ -1,8 +1,8 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,11 +15,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
+use Geocoder\Model\Address;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface as CacheInterface;
 
 /**
@@ -37,24 +37,13 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
      */
     protected $geolocationService;
 
-    /**
-     * GeolocationServiceCacheDecorator constructor.
-     *
-     * @param GeolocationServiceInterface $geolocationService
-     * @param CacheFactory $cacheFactory
-     */
     public function __construct(GeolocationServiceInterface $geolocationService, CacheFactory $cacheFactory)
     {
         $this->geolocationService = $geolocationService;
         $this->cache              = $cacheFactory->createInstance();
     }
 
-    /**
-     * @param Demand $demand
-     *
-     * @return \Geocoder\Model\Address|null
-     */
-    public function findAddressByDemand(Demand $demand)
+    public function findAddressByDemand(Demand $demand): ?Address
     {
         $cacheIdentifier = sha1($demand->getAddressToGeocode());
 
@@ -69,21 +58,14 @@ class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
     }
 
     /**
-     * @param GeoPositionDemandInterface $demandPosition
-     * @param string $table
-     * @param string $alias
-     *
      * @return mixed
      */
-    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance')
+    public function getDistanceSqlField(GeoPositionDemandInterface $demandPosition, string $table, string $alias = 'distance')
     {
         return $this->geolocationService->getDistanceSqlField($demandPosition, $table, $alias);
     }
 
     /**
-     * @param GeopositionInterface $demandPosition
-     * @param GeopositionInterface $locationPosition
-     *
      * @return mixed
      */
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition)

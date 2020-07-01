@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
@@ -23,12 +22,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility as CoreExtensionManagement
  */
 class ExtensionManagementUtility
 {
-
-    /**
-     * @param array $additionalFields
-     * @param $table
-     */
-    public static function addAdditionalFieldsToTable(array $additionalFields, $table)
+    public static function addAdditionalFieldsToTable(array $additionalFields, string $table): void
     {
         foreach ($additionalFields as $sourceField => $destField) {
             $additionalColumns = [];
@@ -41,20 +35,14 @@ class ExtensionManagementUtility
         }
     }
 
-    /**
-     * @param $fields
-     */
-    public static function addAdditionalFormFields(array $fields)
+    public static function addAdditionalFormFields(array $fields): void
     {
         foreach ($fields as $field) {
             self::addAdditionalFormField($field);
         }
     }
 
-    /**
-     * @param array $field
-     */
-    public static function addAdditionalFormField(array $field)
+    public static function addAdditionalFormField(array $field): void
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'] = [];
@@ -62,11 +50,7 @@ class ExtensionManagementUtility
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['formFields'][] = $field;
     }
 
-    /**
-     * @param string $extensionKey
-     * @param int $priority
-     */
-    public static function registerExtensionKey($extensionKey, $priority)
+    public static function registerExtensionKey(string $extensionKey, int $priority): void
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'] = [];
@@ -74,10 +58,7 @@ class ExtensionManagementUtility
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'][$priority] = $extensionKey;
     }
 
-    /**
-     * @return array
-     */
-    public static function getRegisteredExtensionKeys()
+    public static function getRegisteredExtensionKeys(): array
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys'])) {
             return [];
@@ -86,13 +67,7 @@ class ExtensionManagementUtility
         return array_reverse($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['extensionKeys']);
     }
 
-    /**
-     * Register a type converter by class name.
-     *
-     * @param string $typeConverterClassName
-     * @api
-     */
-    public static function registerTypeConverter($typeConverterClassName)
+    public static function registerTypeConverter(string $typeConverterClassName): void
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['typeConverters'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['typeConverters'] = [];
@@ -100,10 +75,7 @@ class ExtensionManagementUtility
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['typeConverters'][] = $typeConverterClassName;
     }
 
-    /**
-     * @return array
-     */
-    public static function getRegisteredTypeConverters()
+    public static function getRegisteredTypeConverters(): array
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bzga_beratungsstellensuche']['typeConverters'])) {
             return [];

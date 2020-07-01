@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche;
 
@@ -27,14 +27,14 @@ final class Events
      *
      * @var string
      */
-    const PRE_IMPORT_SIGNAL = 'preImport';
+    public const PRE_IMPORT_SIGNAL = 'preImport';
 
     /**
      * Signal is emitted after the import process.
      *
      * @var string
      */
-    const POST_IMPORT_SIGNAL = 'postImport';
+    public const POST_IMPORT_SIGNAL = 'postImport';
 
     /**
      * Signal is emitted before the mapping of the converter starts.
@@ -42,28 +42,28 @@ final class Events
      *
      * @var string
      */
-    const SIGNAL_MAP_NAMES = 'mapNames';
+    public const SIGNAL_MAP_NAMES = 'mapNames';
 
     /**
      * Signal is emitted in the entry controller. So you can extend the view with your own variables.
      *
      * @var string
      */
-    const LIST_ACTION_SIGNAL = 'entry.list.action';
+    public const LIST_ACTION_SIGNAL = 'entry.list.action';
 
     /**
      * Signal is emitted in the entry controller. So you can extend the view with your own variables.
      *
      * @var string
      */
-    const SHOW_ACTION_SIGNAL = 'entry.show.action';
+    public const SHOW_ACTION_SIGNAL = 'entry.show.action';
 
     /**
      * Signal is emitted in the entry controller. So you can extend the view with your own variables.
      *
      * @var string
      */
-    const FORM_ACTION_SIGNAL = 'entry.form.action';
+    public const FORM_ACTION_SIGNAL = 'entry.form.action';
 
     /**
      * Signal is emitted in the entry controller. This signal is especially useful if you would like to extend the demand object
@@ -71,14 +71,14 @@ final class Events
      *
      * @var string
      */
-    const INITIALIZE_ACTION_SIGNAL = 'entry.initialize.action';
+    public const INITIALIZE_ACTION_SIGNAL = 'entry.initialize.action';
 
     /**
      * Signal is emitted in the serializer constructor so you can add some custom normalizers to the serializer
      *
      * @var string
      */
-    const ADDITIONAL_NORMALIZERS_SIGNAL = 'serializer.normalizers';
+    public const ADDITIONAL_NORMALIZERS_SIGNAL = 'serializer.normalizers';
 
     /**
      * Signal is emitted in the normalizer classes, so you can add some more callback functions to the normalizer.
@@ -88,7 +88,7 @@ final class Events
      * @see \Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer::prepareForDenormalization()
      * @var string
      */
-    const DENORMALIZE_CALLBACKS_SIGNAL = 'denormalizer.callbacks';
+    public const DENORMALIZE_CALLBACKS_SIGNAL = 'denormalizer.callbacks';
 
     /**
      * Signal is emitted in the repository class if truncation is going on.
@@ -97,7 +97,7 @@ final class Events
      * @see \Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository::truncateAll()
      * @var string
      */
-    const TABLE_TRUNCATE_ALL_SIGNAL = 'repository.truncateall';
+    public const TABLE_TRUNCATE_ALL_SIGNAL = 'repository.truncateall';
 
     /**
      * Signal is emitted in the entry repository class if the method deleteByUid is called
@@ -106,5 +106,5 @@ final class Events
      * @see \Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository::deleteByUid()
      * @var string
      */
-    const REMOVE_ENTRY_FROM_DATABASE_SIGNAL = 'repository.remove.entry';
+    public const REMOVE_ENTRY_FROM_DATABASE_SIGNAL = 'repository.remove.entry';
 }

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
 
@@ -42,20 +41,18 @@ class PaginateController extends CorePaginateController
      */
     protected $queryParser;
 
-    /**
-     */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         parent::initializeAction();
         $this->demand = $this->widgetConfiguration['demand'];
     }
 
-    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService)
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService): void
     {
         $this->geolocationService = $geolocationService;
     }
 
-    public function injectQueryParser(Typo3DbQueryParser $queryParser)
+    public function injectQueryParser(Typo3DbQueryParser $queryParser): void
     {
         $this->queryParser = $queryParser;
     }
@@ -63,7 +60,7 @@ class PaginateController extends CorePaginateController
     /**
      * @param int $currentPage
      */
-    public function indexAction($currentPage = 1)
+    public function indexAction($currentPage = 1): void
     {
         // set current page
         $this->currentPage = (int)$currentPage;
@@ -91,12 +88,7 @@ class PaginateController extends CorePaginateController
         $this->view->assign('pagination', $this->buildPagination());
     }
 
-    /**
-     * @param QueryInterface $query
-     * @param Demand $demand
-     * @return int|string
-     */
-    private function createSqlFromQuery(QueryInterface $query, Demand $demand)
+    private function createSqlFromQuery(QueryInterface $query, Demand $demand): string
     {
         $queryBuilder = $this->queryParser->convertQueryToDoctrineQueryBuilder($query);
         $fromParts = $queryBuilder->getQueryPart('from');

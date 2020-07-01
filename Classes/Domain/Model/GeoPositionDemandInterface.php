@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -21,14 +20,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  */
 interface GeoPositionDemandInterface extends GeopositionInterface
 {
+    public function getKilometers(): int;
 
-    /**
-     * @return int
-     */
-    public function getKilometers();
-
-    /**
-     * @return string
-     */
-    public function getAddressToGeocode();
+    public function getAddressToGeocode(): string;
 }

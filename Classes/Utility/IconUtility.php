@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
@@ -33,9 +32,6 @@ class IconUtility
      */
     private $iconFactory;
 
-    /**
-     * IconUtility constructor.
-     */
     public function __construct()
     {
         if (class_exists(IconFactory::class)) {
@@ -43,12 +39,7 @@ class IconUtility
         }
     }
 
-    /**
-     * @param string $table
-     * @param array $record
-     * @return string
-     */
-    public function getIconForRecord($table, $record)
+    public function getIconForRecord(string $table, array $record): string
     {
         if ($this->iconFactory instanceof IconFactory) {
             $data = '<span data-toggle="tooltip" data-placement="top" data-title="id=' . $record['uid'] . '">'
@@ -90,15 +81,7 @@ class IconUtility
         return $content;
     }
 
-    /**
-     * Build a backend edit link based on given record.
-     *
-     * @param array $row Current record row from database.
-     * @param int $currentPageUid current page uid
-     * @return string Link to open an edit window for record.
-     * @see \TYPO3\CMS\Backend\Utility\BackendUtilityCore::readPageAccess()
-     */
-    protected function getEditLink($row, $currentPageUid)
+    protected function getEditLink(array $row, int $currentPageUid): string
     {
         $editLink = '';
         $localCalcPerms = $GLOBALS['BE_USER']->calcPerms(BackendUtilityCore::getRecord('pages', $row['uid']));
@@ -113,22 +96,12 @@ class IconUtility
         return $editLink;
     }
 
-    /**
-     * Return language service instance
-     *
-     * @return \TYPO3\CMS\Lang\LanguageService
-     */
-    public function getLanguageService()
+    public function getLanguageService(): \TYPO3\CMS\Core\Localization\LanguageService
     {
         return $GLOBALS['LANG'];
     }
 
-    /**
-     * Get the DocumentTemplate
-     *
-     * @return DocumentTemplate
-     */
-    private function getDocumentTemplate()
+    private function getDocumentTemplate(): DocumentTemplate
     {
         return $GLOBALS['SOBE']->doc;
     }

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -21,14 +20,13 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  */
 interface ExternalIdInterface
 {
-
     /**
-     * @return int
+     * @return mixed
      */
     public function getExternalId();
 
     /**
-     * @param int $externalId
+     * @param mixed $externalId
      */
     public function setExternalId($externalId);
 }

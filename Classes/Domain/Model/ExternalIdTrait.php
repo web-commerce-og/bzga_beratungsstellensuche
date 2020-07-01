@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -22,12 +22,11 @@ trait ExternalIdTrait
 {
     /**
      * @var int
-     * @validate NotEmpty
      */
     protected $externalId;
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getExternalId()
     {
@@ -35,9 +34,9 @@ trait ExternalIdTrait
     }
 
     /**
-     * @param int $externalId
+     * @param mixed $externalId
      */
-    public function setExternalId($externalId)
+    public function setExternalId($externalId): void
     {
         $this->externalId = $externalId;
     }

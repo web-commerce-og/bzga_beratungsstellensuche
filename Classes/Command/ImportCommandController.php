@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Bzga\BzgaBeratungsstellensuche\Command;
 
 /**
@@ -15,14 +17,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
-use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
-use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 use UnexpectedValueException;
 
 /**
@@ -46,30 +44,12 @@ class ImportCommandController extends CommandController
      */
     protected $signalSlotDispatcher;
 
-    /**
-     * Delete all entries, files and relations from database
-     * @throws IllegalObjectTypeException
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    public function truncateAllCommand()
+    public function truncateAllCommand(): void
     {
         $this->entryRepository->truncateAll();
     }
 
-    /**
-     * Import from file
-     *
-     * @param string $file Path to xml file
-     * @param int $pid Storage folder uid
-     * @param bool $forceReImport
-     *
-     * @throws ContentCouldNotBeFetchedException
-     * @throws IllegalObjectTypeException
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    public function importFromFileCommand($file, $pid = 0, $forceReImport = false)
+    public function importFromFileCommand(string $file, int $pid = 0, bool $forceReImport = false): void
     {
         try {
             $this->xmlImporter->importFromFile($file, $pid);
@@ -79,19 +59,7 @@ class ImportCommandController extends CommandController
         }
     }
 
-    /**
-     * Import from url
-     *
-     * @param string $url Url to import the data
-     * @param int $pid Storage folder uid
-     * @param bool $forceReImport
-     *
-     * @throws ContentCouldNotBeFetchedException
-     * @throws IllegalObjectTypeException
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    public function importFromUrlCommand($url, $pid = 0, $forceReImport = false)
+    public function importFromUrlCommand(string $url, int $pid = 0, bool $forceReImport = false): void
     {
         try {
             $this->xmlImporter->importFromUrl($url, $pid);
@@ -101,29 +69,22 @@ class ImportCommandController extends CommandController
         }
     }
 
-    public function injectEntryRepository(EntryRepository $entryRepository)
+    public function injectEntryRepository(EntryRepository $entryRepository): void
     {
         $this->entryRepository = $entryRepository;
     }
 
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher)
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
-    public function injectXmlImporter(XmlImporter $xmlImporter)
+    public function injectXmlImporter(XmlImporter $xmlImporter): void
     {
         $this->xmlImporter = $xmlImporter;
     }
 
-    /**
-     * @param bool $forceReImport
-     *
-     * @throws IllegalObjectTypeException
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    private function import($forceReImport = false)
+    private function import(bool $forceReImport = false): void
     {
         if ($forceReImport) {
             $this->entryRepository->truncateAll();

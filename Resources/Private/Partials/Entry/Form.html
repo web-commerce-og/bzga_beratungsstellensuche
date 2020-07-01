@@ -1,4 +1,6 @@
-{namespace bzga=Bzga\BzgaBeratungsstellensuche\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bzga="http://typo3.org/ns/Bzga/BzgaBeratungsstellensuche/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 <div class="form-box">
 <f:form pageUid="{settings.listPid}" method="post" noCacheHash="TRUE" controller="Entry" action="list" name="demand"
         object="{demand}">
@@ -9,3 +11,4 @@
     <f:render partial="Entry/FormFields/Reset" arguments="{_all}"/>
 </f:form>
 </div>
+</html>

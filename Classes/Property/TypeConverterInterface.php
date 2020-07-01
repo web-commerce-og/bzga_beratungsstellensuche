@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Property;
 
@@ -25,23 +24,21 @@ interface TypeConverterInterface
     /**
      * @var string
      */
-    const CONVERT_BEFORE = 'before.converter';
+    public const CONVERT_BEFORE = 'before.converter';
 
     /**
      * @var string
      */
-    const CONVERT_AFTER = 'after.converter';
+    public const CONVERT_AFTER = 'after.converter';
 
     /**
      * @param mixed $source
-     * @param string $type
-     * @return bool
+     * @return bool|TypeConverterInterface
      */
-    public function supports($source, $type = self::CONVERT_BEFORE);
+    public function supports($source, string $type = self::CONVERT_BEFORE);
 
     /**
      * @param mixed $source
-     * @param array $configuration
      * @return mixed
      */
     public function convert($source, array $configuration = null);

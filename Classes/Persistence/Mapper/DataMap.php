@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Persistence\Mapper;
 
@@ -24,7 +23,7 @@ class DataMap
 {
 
     /**
-     * @var array
+     * @var string[]
      */
     private $cachedTableNames = [];
 
@@ -33,21 +32,12 @@ class DataMap
      */
     private $dataMapFactory;
 
-    /**
-     * DataMap constructor.
-     *
-     * @param DataMapFactory $dataMapFactory
-     */
     public function __construct(DataMapFactory $dataMapFactory)
     {
         $this->dataMapFactory = $dataMapFactory;
     }
 
-    /**
-     * @param $className
-     * @return mixed
-     */
-    public function getTableNameByClassName($className)
+    public function getTableNameByClassName(string $className): string
     {
         if (!isset($this->cachedTableNames[$className])) {
             $dataMap = $this->dataMapFactory->buildDataMap($className);

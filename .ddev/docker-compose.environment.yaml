@@ -1,0 +1,10 @@
+version: '3.6'
+
+services:
+    web:
+        environment:
+            - TZ=Europe/Berlin
+            - TYPO3_CONTEXT=Development
+    db:
+        environment:
+            - TZ=Europe/Berlin

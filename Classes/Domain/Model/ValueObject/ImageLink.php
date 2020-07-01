@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
 
@@ -29,42 +29,31 @@ class ImageLink
     /**
      * @var string
      */
-    private $identifier;
+    private $identifier = '';
 
-    /**
-     * ImageLink constructor.
-     * @param string $externalUrl
-     */
-    public function __construct($externalUrl)
+    public function __construct(string $externalUrl)
     {
         $this->externalUrl = $externalUrl;
         $this->setIdentifier($externalUrl);
     }
 
-    /**
-     * @return string
-     */
-    public function getExternalUrl()
+    public function getExternalUrl(): string
     {
         return $this->externalUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @param $externalUrl
-     */
-    private function setIdentifier($externalUrl)
+    private function setIdentifier(string $externalUrl): void
     {
         $urlSegments = parse_url($externalUrl);
-        parse_str($urlSegments['query'], $querySegments);
 
-        $this->identifier = $querySegments['id'];
+        if (array_key_exists('query', $urlSegments)) {
+            parse_str($urlSegments['query'], $querySegments);
+            $this->identifier = $querySegments['id'];
+        }
     }
 }

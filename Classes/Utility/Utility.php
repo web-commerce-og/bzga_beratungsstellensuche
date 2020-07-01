@@ -1,8 +1,8 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -23,12 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  */
 class Utility
 {
-
-    /**
-     * @param QueryResultInterface $queryResult
-     * @return ObjectStorage
-     */
-    public static function transformQueryResultToObjectStorage(QueryResultInterface $queryResult)
+    public static function transformQueryResultToObjectStorage(QueryResultInterface $queryResult): ObjectStorage
     {
         $objectStorage = new ObjectStorage();
         foreach ($queryResult as $item) {
@@ -38,12 +33,8 @@ class Utility
         return $objectStorage;
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function stripPathSite($string)
+    public static function stripPathSite(string $string): string
     {
-        return substr($string, strlen(PATH_site));
+        return substr($string, strlen(Environment::getPublicPath()));
     }
 }

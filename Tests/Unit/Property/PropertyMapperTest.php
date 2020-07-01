@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
 
@@ -18,8 +18,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class PropertyMapperTest extends UnitTestCase
 {
@@ -47,7 +47,7 @@ class PropertyMapperTest extends UnitTestCase
     public function supportsReturnsTypeConverter()
     {
         $typeConverter = $this->setUpTypeConverter();
-        $this->assertSame($typeConverter, $this->subject->supports('array'));
+        $this->assertSame($typeConverter, $this->subject->supports($typeConverter));
     }
 
     /**

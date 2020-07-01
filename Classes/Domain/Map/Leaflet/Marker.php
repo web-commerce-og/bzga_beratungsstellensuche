@@ -35,36 +35,22 @@ final class Marker implements MarkerInterface
         $this->marker = new LeafletMarker($identifier, $coordinate->getCoordinate());
     }
 
-    /**
-     * @return LeafletMarker
-     */
     public function getMarker(): LeafletMarker
     {
         return $this->marker;
     }
 
-    /**
-     * @param array $options
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->marker->setOptions($options);
     }
 
-    /**
-     * @param string $iconPath
-     */
-    public function addIconFromPath(string $iconPath)
+    public function addIconFromPath(string $iconPath): void
     {
         $this->marker->setIcon(new ImageIcon('icon', $iconPath));
     }
 
-    /**
-     * @param PopUpInterface $popUp
-     * @param string $content
-     * @param bool $open
-     */
-    public function addPopUp(PopUpInterface $popUp, string $content, bool $open = false)
+    public function addPopUp(PopUpInterface $popUp, string $content, bool $open = false): void
     {
         $this->marker->bindPopup($popUp->getPopUp());
         $this->marker->setPopupContent($content);

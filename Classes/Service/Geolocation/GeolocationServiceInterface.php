@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Geolocation;
 
@@ -26,22 +25,16 @@ interface GeolocationServiceInterface
 {
 
     /**
-     * @param Demand $demand
      * @return mixed
      */
     public function findAddressByDemand(Demand $demand);
 
     /**
-     * @param GeoPositionDemandInterface $demandPosition
-     * @param string $table
-     * @param string $alias
      * @return mixed
      */
-    public function getDistanceSqlField(GeopositionDemandInterface $demandPosition, $table, $alias = 'distance');
+    public function getDistanceSqlField(GeoPositionDemandInterface $demandPosition, string $table, string $alias = 'distance');
 
     /**
-     * @param GeopositionInterface $demandPosition
-     * @param GeopositionInterface $locationPosition
      * @return mixed
      */
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition);

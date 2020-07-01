@@ -17,6 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\PopUpInterface;
+use Netzmacht\LeafletPHP\Definition\UI\Popup as CorePopUp;
 
 final class PopUp implements PopUpInterface
 {
@@ -26,29 +27,18 @@ final class PopUp implements PopUpInterface
      */
     private $popUp;
 
-    /**
-     * PopUp constructor.
-     *
-     * @param string $identifier
-     */
     public function __construct(string $identifier)
     {
-        $this->popUp = new \Netzmacht\LeafletPHP\Definition\UI\Popup($identifier);
+        $this->popUp = new CorePopUp($identifier);
         $this->popUp->setAutoPan(true);
     }
 
-    /**
-     * @return \Netzmacht\LeafletPHP\Definition\UI\Popup
-     */
-    public function getPopUp(): \Netzmacht\LeafletPHP\Definition\UI\Popup
+    public function getPopUp(): CorePopUp
     {
         return $this->popUp;
     }
 
-    /**
-     * @param array $options
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->popUp->setOptions($options);
     }

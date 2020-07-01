@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Math;
 
@@ -15,25 +14,32 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Math;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use Closure;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * @author Sebastian Schreiber
  */
 class RoundViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
 
-    /**
-     * @param float|null $number
-     * @param int $precision
-     * @return float
-     */
-    public function render($number = null, $precision = 2)
+    public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
+        $number = $arguments['number'];
+        $precision = $arguments['precision'];
         if (null === $number) {
-            $number = $this->renderChildren();
+            $number = $renderChildrenClosure();
         }
-
         return round($number, $precision);
+    }
+
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('number', 'float|null', '', false, null);
+        $this->registerArgument('precision', 'int', '', false, 2);
     }
 }

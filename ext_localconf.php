@@ -1,6 +1,5 @@
 <?php
 
-
 if (! defined('TYPO3_MODE')) {
     die('Access denied.');
 }
@@ -16,14 +15,22 @@ call_user_func(function ($packageKey) {
         ['Entry' => 'list,form,autocomplete']
     );
 
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    if (TYPO3_MODE === 'BE') {
+        $icons = [
+            'ext-bzgaberatungsstellensuche-wizard-icon' => 'plugin_wizard.svg',
+        ];
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        foreach ($icons as $identifier => $path) {
+            if (!$iconRegistry->isRegistered($identifier)) {
+                $iconRegistry->registerIcon(
+                    $identifier,
+                    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+                    ['source' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/' . $path]
+                );
+            }
+        }
+    }
 
-    // Wizard configuration
-    $iconRegistry->registerIcon(
-        'ext-bzgaberatungsstellensuche-wizard-icon',
-        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-        ['source' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/ce_wiz.png']
-    );
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/ContentElementWizard.txt">');
 
     // Modify flexform values
@@ -82,25 +89,19 @@ call_user_func(function ($packageKey) {
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter::class);
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter::class);
 
-    // Google Sitemap based on dd_googlesitemap
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('dd_googlesitemap')) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['dd_googlesitemap']['sitemap']['bzga_beratungsstellensuche']
-            = 'Bzga\\BzgaBeratungsstellensuche\\Hooks\\SitemapGenerator->main';
-    }
-
-    // Auto RealUrl Configuration
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration']['bzga_beratungsstellensuche'] =
-            'Bzga\\BzgaBeratungsstellensuche\\Hooks\\RealUrlAutoConfiguration->addConfig';
-    }
-
     // Linkvalidator
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkvalidator')) {
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkvalidator.txt">');
     }
 
-    // Linkhandler
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler')) {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkhandler.txt">');
-    }
 }, 'bzga_beratungsstellensuche');
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(trim('
+    config.pageTitleProviders {
+        beratungsstelle {
+            provider = Bzga\BzgaBeratungsstellensuche\PageTitle\PageTitleProvider
+            before = record
+            after = altPageTitle
+        }
+    }
+'));

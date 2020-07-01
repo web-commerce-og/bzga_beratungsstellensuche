@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
 
@@ -25,13 +24,9 @@ interface ManagerInterface
 {
 
     /**
-     * @param AbstractEntity $entity
      * @return mixed
      */
     public function create(AbstractEntity $entity);
 
-    /**
-     * @return AbstractBaseRepository
-     */
-    public function getRepository();
+    public function getRepository(): AbstractBaseRepository;
 }

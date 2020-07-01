@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -20,17 +20,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
  */
 interface GeopositionInterface
 {
-    /**
-     * Returns latitude of item.
-     *
-     * @return float
-     */
-    public function getLatitude();
+    public function getLatitude(): float;
 
-    /**
-     * Returns longitude of item.
-     *
-     * @return float
-     */
-    public function getLongitude();
+    public function getLongitude(): float;
 }

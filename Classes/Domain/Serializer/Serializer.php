@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer;
 
@@ -72,9 +71,8 @@ class Serializer extends BaseSerializer
 
     /**
      * @param array $normalizers
-     * @return array
      */
-    private function emitAdditionalNormalizersSignal(array $normalizers)
+    private function emitAdditionalNormalizersSignal(array $normalizers): array
     {
         $signalArguments = [];
         $signalArguments['extendedNormalizers'] = [];

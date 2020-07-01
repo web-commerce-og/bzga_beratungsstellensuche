@@ -1,13 +1,13 @@
-{namespace bzga=Bzga\BzgaBeratungsstellensuche\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <address>
     <f:if condition="{entry.street}">{entry.street}<br></f:if>
     <f:if condition="{entry.zip}">{entry.zip} </f:if><f:if condition="{entry.city}">{entry.city}<br></f:if>
     <br>
-    <f:if condition="{entry.telephone}"><bzga:translate key="telephone" />: {entry.telephone}<br></f:if>
-    <f:if condition="{entry.telefax}"><bzga:translate key="telefax" />: {entry.telefax}<br></f:if>
-    <f:if condition="{entry.hotline}"><bzga:translate key="hotline" />: {entry.hotline}<br></f:if>
-    <f:if condition="{entry.email}"><bzga:translate key="email" />: <f:link.email email="{entry.email}"/><br></f:if>
-    <f:if condition="{entry.website}"><bzga:translate key="website" />: <f:link.external uri="{entry.website}">{entry.website}</f:link.external><br></f:if>
+    <f:if condition="{entry.telephone}"><f:translate key="telephone" />: {entry.telephone}<br></f:if>
+    <f:if condition="{entry.telefax}"><f:translate key="telefax" />: {entry.telefax}<br></f:if>
+    <f:if condition="{entry.hotline}"><f:translate key="hotline" />: {entry.hotline}<br></f:if>
+    <f:if condition="{entry.email}"><f:translate key="email" />: <f:link.email email="{entry.email}"/><br></f:if>
+    <f:if condition="{entry.website}"><f:translate key="website" />: <f:link.external uri="{entry.website}">{entry.website}</f:link.external><br></f:if>
 </address>
 
 <f:if condition="{entry.contactPerson}">
@@ -16,6 +16,7 @@
         <f:if condition="{entry.contactEmail}"><f:link.email email="{entry.contactEmail}"/></f:if>
     </address>
 </f:if>
+</html>
 
 
 

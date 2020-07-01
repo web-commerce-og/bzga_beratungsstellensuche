@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConverter;
 
@@ -15,9 +14,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\NameConver
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Persistence\Mapper;
 
@@ -16,9 +15,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Persistence\Mapper;
  * The TYPO3 project - inspiring people to share!
  */
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMap as CoreDataMap;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * @author Sebastian Schreiber
@@ -29,12 +28,12 @@ class DataMapTest extends UnitTestCase
     /**
      * @var DataMap
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @var DataMapFactory|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $dataMapFactory;
+    protected $dataMapFactory;
 
     /**
      */

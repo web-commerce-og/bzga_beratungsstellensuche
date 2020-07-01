@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Report;
 
@@ -26,15 +26,10 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
     /**
      * @var string
      */
-    const MESSAGE = 'allow_url_fopen must be on or curl must be enabled to allow
+    public const MESSAGE = 'allow_url_fopen must be on or curl must be enabled to allow
 				communication between TYPO3 and the remote Server to fetch the XML-Url.';
 
-    /**
-     * Checks whether allow_url_fopen is enabled.
-     *
-     * @see StatusProviderInterface::getStatus()
-     */
-    public function getStatus()
+    public function getStatus(): array
     {
         $reports = [];
         $severity = Status::OK;

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Factories;
 
@@ -23,10 +22,6 @@ use Http\Client\HttpClient;
  */
 class HttpClientFactory
 {
-
-    /**
-     * @return HttpClient
-     */
     public static function createInstance(): HttpClient
     {
         $httpOptions = $GLOBALS['TYPO3_CONF_VARS']['HTTP'];

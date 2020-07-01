@@ -16,22 +16,13 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Netzmacht\LeafletPHP\Plugins\MarkerCluster\MarkerClusterGroup;
+
 interface MarkerClusterInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getMarkerCluster();
+    public function getMarkerCluster(): MarkerClusterGroup;
 
-    /**
-     * @param array $options
-     */
     public function setOptions(array $options);
 
-    /**
-     * @param MarkerInterface $marker
-     *
-     * @return mixed
-     */
-    public function addMarker(MarkerInterface $marker);
+    public function addMarker(MarkerInterface $marker): void;
 }

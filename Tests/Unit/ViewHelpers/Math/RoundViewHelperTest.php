@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Math;
 
@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Math;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Math\RoundViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class RoundViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -40,7 +40,8 @@ class RoundViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithRenderChildrenValue($input, $expected, $precision)
     {
         $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render(null, $precision));
+        $this->subject->setArguments(['number' => null, 'precision' => $precision]);
+        $this->assertEquals($expected, $this->subject->render());
     }
 
     /**

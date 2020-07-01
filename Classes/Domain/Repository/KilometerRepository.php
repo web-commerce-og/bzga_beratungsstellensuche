@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
@@ -22,12 +21,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class KilometerRepository
 {
-
-    /**
-     * @param array $settings
-     *
-     * @return array
-     */
     public function findKilometersBySettings(array $settings): array
     {
         $kilometersFromSettings = $settings['form']['kilometers'] ?? '10:10,20:20,50:50,100:100';

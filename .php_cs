@@ -38,6 +38,7 @@ if (PHP_SAPI !== 'cli') {
 // Exclude some directories that are excluded by Git anyways to speed up the sniffing
 $finder = PhpCsFixer\Finder::create()
                                          ->exclude('Libraries')
+                                         ->exclude('var')
                                          ->in(__DIR__);
 
 // Return a Code Sniffing configuration using
@@ -86,6 +87,6 @@ return PhpCsFixer\Config::create()
         'return_type_declaration' => ['space_before' => 'none'],
         'cast_spaces' => ['space' => 'none'],
         'declare_equal_normalize' => ['space' => 'single'],
-        'dir_constant' => true,
+        'dir_constant' => true
     ))
     ->setFinder($finder);

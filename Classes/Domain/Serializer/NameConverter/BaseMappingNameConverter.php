@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
 
@@ -71,7 +70,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
     /**
      * @param array $mapNames
      */
-    public function addAdditionalMapNames(array $mapNames)
+    public function addAdditionalMapNames(array $mapNames): void
     {
         ArrayUtility::mergeRecursiveWithOverrule($this->mapNames, $mapNames);
         $this->mapNamesFlipped();
@@ -79,7 +78,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 
     /**
      */
-    private function mapNamesFlipped()
+    private function mapNamesFlipped(): void
     {
         $this->mapNamesFlipped = array_flip($this->mapNames);
     }
@@ -99,7 +98,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 
     /**
      */
-    protected function emitMapNamesSignal()
+    protected function emitMapNamesSignal(): void
     {
         $signalArguments = [];
         $signalArguments['extendedMapNames'] = [];

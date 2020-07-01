@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Factories;
 
@@ -27,25 +27,19 @@ class CacheFactory
     /**
      * @var string
      */
-    const CACHE_KEY = 'bzgaberatungsstellensuche_cache_coordinates';
+    public const CACHE_KEY = 'bzgaberatungsstellensuche_cache_coordinates';
 
     /**
      * @var CacheManager
      */
     protected $cacheManager;
 
-    /**
-     * @param CacheManager $cacheManager
-     */
-    public function injectCacheManager(CacheManager $cacheManager)
+    public function injectCacheManager(CacheManager $cacheManager): void
     {
         $this->cacheManager = $cacheManager;
     }
 
-    /**
-     * @return FrontendInterface
-     */
-    public function createInstance()
+    public function createInstance(): FrontendInterface
     {
         return $this->cacheManager->getCache(self::CACHE_KEY);
     }

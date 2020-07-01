@@ -1,9 +1,9 @@
 <?php
+declare(strict_types = 1);
 
+namespace Bzga\BzgaBeratungsstellensuche\PageTitle;
 
-namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
-
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -15,12 +15,13 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Fluid\ViewHelpers\TranslateViewHelper as CoreTranslateViewHelper;
 
-/**
- * @author Sebastian Schreiber
- * @deprecated This ViewHelper is not needed anymore. Just use the f:translate ViewHelper
- */
-class TranslateViewHelper extends CoreTranslateViewHelper
+use TYPO3\CMS\Core\PageTitle\AbstractPageTitleProvider;
+
+final class PageTitleProvider extends AbstractPageTitleProvider
 {
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
 }

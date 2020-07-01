@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
 
@@ -21,25 +20,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
  */
 interface ImporterInterface
 {
+    public function importFromFile(string $file, int $pid = 0): void;
 
-    /**
-     * @param $file
-     * @param int $pid
-     * @return mixed
-     */
-    public function importFromFile($file, $pid = 0);
+    public function importFromUrl(string $url, int $pid = 0): void;
 
-    /**
-     * @param $url
-     * @param int $pid
-     * @return mixed
-     */
-    public function importFromUrl($url, $pid = 0);
-
-    /**
-     * @param $content
-     * @param int $pid
-     * @return mixed
-     */
-    public function import($content, $pid = 0);
+    public function import(string $content, int $pid = 0): void;
 }

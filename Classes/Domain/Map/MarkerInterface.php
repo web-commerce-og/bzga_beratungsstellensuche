@@ -16,27 +16,15 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Netzmacht\LeafletPHP\Definition\UI\Marker as LeafletMarker;
+
 interface MarkerInterface
 {
-    /**
-     * @param array $options
-     */
     public function setOptions(array $options);
 
-    /**
-     * @return mixed
-     */
-    public function getMarker();
+    public function getMarker(): LeafletMarker;
 
-    /**
-     * @param string $iconPath
-     */
     public function addIconFromPath(string $iconPath);
 
-    /**
-     * @param PopUpInterface $popUp
-     * @param string $content
-     * @param bool $open
-     */
     public function addPopUp(PopUpInterface $popUp, string $content, bool $open = false);
 }

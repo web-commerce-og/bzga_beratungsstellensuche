@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
 
@@ -16,7 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format\UppercaseFirstLetterViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -39,8 +39,9 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithRenderChildren($input, $expected)
     {
+        $this->setArgumentsUnderTest($this->subject);
         $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render(null));
+        $this->assertEquals($expected, $this->subject->render());
     }
 
     /**
@@ -49,7 +50,8 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderThrowsInvalidArgumentException()
     {
-        $this->subject->render(new \stdClass());
+        $this->setArgumentsUnderTest($this->subject, ['subject' => new \stdClass()]);
+        $this->subject->render();
     }
 
     /**

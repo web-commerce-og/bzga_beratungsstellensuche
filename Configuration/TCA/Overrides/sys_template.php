@@ -16,18 +16,25 @@ $extKey = 'bzga_beratungsstellensuche';
     'Beratungsstellensuche - Leaflet Resources'
 );
 
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler')) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $extKey,
-        'Configuration/TypoScript/linkhandler',
-        'Beratungsstellensuche - Linkhandler'
-    );
-}
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $extKey,
+    'Configuration/TypoScript/linkhandler',
+    'Beratungsstellensuche - Linkhandler'
+);
 
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('solr')) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         $extKey,
-        'Configuration/TypoScript/linkhandler',
+        'Configuration/TypoScript/solr',
         'Beratungsstellensuche - Solr'
     );
 }
+
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('seo')) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $extKey,
+        'Configuration/TypoScript/seo',
+        'Beratungsstellensuche - Sitemap'
+    );
+}
+unset($extKey);

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Hooks;
 
@@ -26,15 +25,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class DataHandlerProcessor
 {
-
-    /**
-     * @param string $table
-     * @param int $id
-     * @param int $recordToDelete
-     * @param bool $recordWasDeleted
-     * @param DataHandler $tceMain
-     */
-    public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $tceMain)
+    public function processCmdmap_deleteAction(string $table, int $id, int $recordToDelete, bool &$recordWasDeleted, DataHandler $tceMain): void
     {
         if ($table === EntryRepository::ENTRY_TABLE) {
             /** @var $objectManager ObjectManager */
@@ -46,21 +37,7 @@ class DataHandlerProcessor
         }
     }
 
-    /**
-     * Checks if the fields defined in $checkFields are set in the data-array of pi_flexform. If a field is
-     * present and contains an empty value, the field is unset.
-     *
-     * Structure of the checkFields array:
-     *
-     * array('sheet' => array('field1', 'field2'));
-     *
-     * @param string $status
-     * @param string $table
-     * @param string $id
-     * @param array $fieldArray
-     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $reference
-     */
-    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$reference)
+    public function processDatamap_postProcessFieldArray(string $status, string $table, string $id, array &$fieldArray, DataHandler &$reference): void
     {
         if ($table === 'tt_content' && $status === 'update' && isset($fieldArray['pi_flexform'])) {
             $checkFields = [

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
@@ -18,7 +18,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\DistanceViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class DistanceViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -49,6 +49,10 @@ class DistanceViewHelperTest extends ViewHelperBaseTestcase
         $this->geolocationService->expects($this->once())->method('calculateDistance')->willReturn(1);
         $demandPosition = $this->getMockBuilder(GeopositionInterface::class)->getMock();
         $location = $this->getMockBuilder(GeopositionInterface::class)->getMock();
-        $this->assertEquals(1, $this->subject->render($demandPosition, $location));
+        $this->subject->setArguments([
+            'demandPosition' => $demandPosition,
+            'location' => $location
+        ]);
+        $this->assertEquals(1, $this->subject->render());
     }
 }

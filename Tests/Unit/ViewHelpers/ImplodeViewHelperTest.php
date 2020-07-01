@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
@@ -16,8 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
  */
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\ImplodeViewHelper;
-use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class ImplodeViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -41,7 +41,9 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
     public function renderPossibleValues($input, $expected)
     {
         $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render(null));
+
+        $this->setArgumentsUnderTest($this->subject);
+        $this->assertEquals($expected, $this->subject->render());
     }
 
     /**
@@ -51,13 +53,14 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderThrowsException($pieces)
     {
-        $this->subject->render($pieces);
+        $this->setArgumentsUnderTest($this->subject, ['pieces' => $pieces]);
+        $this->subject->render();
     }
 
     /**
      * @return array
      */
-    public function possibleInvalidValues()
+    public function possibleInvalidValues(): array
     {
         $objectStorage = new ObjectStorage();
         $objectStorage->attach(new \stdClass());

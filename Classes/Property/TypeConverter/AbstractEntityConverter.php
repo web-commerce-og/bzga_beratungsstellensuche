@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
@@ -26,11 +25,9 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class AbstractEntityConverter implements TypeConverterBeforeInterface
 {
     /**
-     * @param mixed $source
-     * @param string $type
-     * @return bool
+     * @inheritDoc
      */
-    public function supports($source, $type = TypeConverterInterface::CONVERT_BEFORE)
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         if (!$source instanceof AbstractEntity) {
             return false;
@@ -40,11 +37,9 @@ class AbstractEntityConverter implements TypeConverterBeforeInterface
     }
 
     /**
-     * @param $source
-     * @param AbstractEntity|array|null $configuration
-     * @return int
+     * @param mixed $source
      */
-    public function convert($source, array $configuration = null)
+    public function convert($source, array $configuration = null): int
     {
         if (!$source instanceof AbstractEntity) {
             throw new InvalidArgumentException('The type is not allowed');

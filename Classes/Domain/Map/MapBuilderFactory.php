@@ -1,6 +1,5 @@
 <?php
 declare(strict_types = 1);
-
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
 
 /*
@@ -26,19 +25,11 @@ final class MapBuilderFactory
      */
     private $objectManager;
 
-    /**
-     * MapBuilderFactory constructor.
-     *
-     * @param ObjectManagerInterface $objectManager
-     */
     public function __construct(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * @return MapBuilderInterface
-     */
     public function createMapBuilder(): MapBuilderInterface
     {
         return $this->objectManager->get(MapBuilder::class);

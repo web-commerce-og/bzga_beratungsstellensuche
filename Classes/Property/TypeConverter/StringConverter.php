@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
@@ -25,23 +25,17 @@ final class StringConverter implements TypeConverterBeforeInterface
     private $allowedTags = '<p><ul><li><em><i><b><br>';
 
     /**
-     * @param mixed $source
-     * @param string $type
-     *
-     * @return bool
+     * @inheritDoc
      */
-    public function supports($source, $type = self::CONVERT_BEFORE): bool
+    public function supports($source, string $type = self::CONVERT_BEFORE)
     {
         return is_string($source) && $source !== strip_tags($source, $this->allowedTags);
     }
 
     /**
      * @param mixed $source
-     * @param array $configuration
-     *
-     * @return mixed
      */
-    public function convert($source, array $configuration = null)
+    public function convert($source, array $configuration = null): string
     {
         return strip_tags($source, $this->allowedTags);
     }

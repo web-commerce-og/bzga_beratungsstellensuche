@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Cache;
 
@@ -16,7 +17,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Cache;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -28,51 +28,30 @@ class CachedClassLoader
 {
 
     /**
-     * Extension key
-     *
      * @var string
      */
     protected static $extensionKey = 'bzga_beratungsstellensuche';
 
     /**
-     * Cached class loader class name
-     *
      * @var string
      */
     protected static $className = __CLASS__;
 
     /**
-     * Namespace of the Domain Model of Beratungsstellensuche
-     *
      * @var string
      */
     protected static $namespace = 'Bzga\\BzgaBeratungsstellensuche\\Domain\\Model\\';
 
-    /**
-     * The class loader is static, thus we do not allow instances of this class.
-     */
     private function __construct()
     {
     }
 
-    /**
-     * Registers the cached class loader
-     *
-     * @return bool TRUE in case of success
-     */
-    public static function registerAutoloader()
+    public static function registerAutoloader(): bool
     {
         return spl_autoload_register(static::$className . '::autoload', true, true);
     }
 
-    /**
-     * Autoload function for cached classes
-     *
-     * @param string $className Class name
-     *
-     * @throws NoSuchCacheException
-     */
-    public static function autoload($className)
+    public static function autoload(string $className): void
     {
         $className = ltrim($className, '\\');
         if (strpos($className, static::$namespace) !== false) {

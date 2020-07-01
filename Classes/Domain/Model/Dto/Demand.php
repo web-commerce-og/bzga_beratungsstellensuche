@@ -1,7 +1,9 @@
 <?php
-
+declare(strict_types = 1);
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -14,9 +16,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
+use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Geocoder\Location as GeocoderAddress;
+use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -30,7 +32,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     /**
      * @var string
      */
-    protected $keywords;
+    protected $keywords = '';
 
     /**
      * @var string
@@ -40,7 +42,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     /**
      * @var string
      */
-    protected $location;
+    protected $location = '';
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
@@ -59,7 +61,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
 
     /**
      * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
-     * @inject
      */
     protected $geolocationService;
 
@@ -71,115 +72,72 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         $this->categories = new ObjectStorage();
     }
 
-    /**
-     * @return ObjectStorage
-     */
-    public function getCategories()
+    public function getCategories(): ?ObjectStorage
     {
         return $this->categories;
     }
 
-    /**
-     * @param ObjectStorage $categories
-     */
-    public function setCategories($categories)
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }
 
-    /**
-     * @return string
-     */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * @param string $location
-     */
-    public function setLocation($location)
+    public function setLocation(string $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddressToGeocode()
+    public function getAddressToGeocode(): string
     {
         return sprintf('Deutschland, %s', $this->location);
     }
 
-    /**
-     * @return int
-     */
-    public function getKilometers()
+    public function getKilometers(): int
     {
         return $this->kilometers;
     }
 
-    /**
-     * @param int $kilometers
-     */
-    public function setKilometers($kilometers)
+    public function setKilometers(int $kilometers): void
     {
         $this->kilometers = $kilometers;
     }
 
-    /**
-     * @return string
-     */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
 
-    /**
-     * @param string $keywords
-     */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords): void
     {
         $this->keywords = $keywords;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchFields(): string
     {
         return $this->searchFields;
     }
 
-    /**
-     * @param string $searchFields
-     */
-    public function setSearchFields($searchFields)
+    public function setSearchFields(string $searchFields): void
     {
         $this->searchFields = $searchFields;
     }
 
-    /**
-     * @return \SJBR\StaticInfoTables\Domain\Model\CountryZone
-     */
-    public function getCountryZone()
+    public function getCountryZone(): ?CountryZone
     {
         return $this->countryZone;
     }
 
-    /**
-     * @param \SJBR\StaticInfoTables\Domain\Model\CountryZone $countryZone
-     */
-    public function setCountryZone($countryZone)
+    public function setCountryZone(?CountryZone $countryZone): void
     {
         $this->countryZone = $countryZone;
     }
 
-    /**
-     * Returns the longitude.
-     * @return float $longitude
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
         if (empty($this->longitude)) {
             $this->updateLatitudeLongitude();
@@ -188,11 +146,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         return $this->longitude;
     }
 
-    /**
-     * Returns the latitude.
-     * @return float $latitude
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
         if (empty($this->latitude)) {
             $this->updateLatitudeLongitude();
@@ -201,9 +155,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         return $this->latitude;
     }
 
-    /**
-     */
-    private function updateLatitudeLongitude()
+    private function updateLatitudeLongitude(): void
     {
         $address = $this->geolocationService->findAddressByDemand($this);
         if ($address instanceof GeocoderAddress) {
@@ -212,12 +164,14 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         }
     }
 
-    /**
-     * @return bool
-     */
     public function hasValidCoordinates(): bool
     {
         $this->updateLatitudeLongitude();
         return $this->latitude !== null && $this->longitude !== null;
+    }
+
+    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService): void
+    {
+        $this->geolocationService = $geolocationService;
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
 
@@ -15,8 +15,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class TranslateViewHelperTest extends FunctionalTestCase
 {
@@ -34,7 +34,7 @@ class TranslateViewHelperTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function translateFromDefaultExtension()
+    public function translateFromDefaultExtension(): void
     {
         $this->assertSame('vorherige Seite', LocalizationUtility::translate('previous-page', 'bzga_beratungsstellensuche'));
     }

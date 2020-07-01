@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Service\Importer\Decorator;
 
@@ -28,12 +27,12 @@ class ImporterRegistryDecorator extends AbstractImporter
     /**
      * @var string
      */
-    const REGISTRY_NAMESPACE = 'tx_bzgaberatungsstellensuche';
+    public const REGISTRY_NAMESPACE = 'tx_bzgaberatungsstellensuche';
 
     /**
      * @var string
      */
-    const REGISTRY_KEY = 'import';
+    public const REGISTRY_KEY = 'import';
 
     /**
      * @var ImporterInterface
@@ -45,21 +44,13 @@ class ImporterRegistryDecorator extends AbstractImporter
      */
     protected $registry;
 
-    /**
-     * ImporterRegistryDecorator constructor.
-     * @param ImporterInterface $importer
-     */
     public function __construct(ImporterInterface $importer, Registry $registry)
     {
         $this->importer = $importer;
         $this->registry = $registry;
     }
 
-    /**
-     * @param $content
-     * @param int $pid
-     */
-    public function import($content, $pid = 0)
+    public function import(string $content, int $pid = 0): void
     {
         // If nothing has changed in the content, we do nothing
         $hash = md5($content);

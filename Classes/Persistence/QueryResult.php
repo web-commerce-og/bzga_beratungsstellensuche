@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Persistence;
 
@@ -27,10 +26,8 @@ class QueryResult extends CoreQueryResult
      *
      * When the query contains a $statement the query is regularly executed and the number of results is counted
      * instead of the original implementation which tries to create a custom COUNT(*) query and delivers wrong results.
-     *
-     * @return int The number of matching objects
      */
-    public function count()
+    public function count(): int
     {
         if ($this->numberOfResults === null) {
             if (is_array($this->queryResult)) {

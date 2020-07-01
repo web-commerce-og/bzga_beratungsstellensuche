@@ -44,12 +44,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 final class MapBuilder implements MapBuilderInterface
 {
-
-    /**
-     * @param EventDispatcher $dispatcher
-     *
-     * @return callable
-     */
     private function mapFactory(EventDispatcher $dispatcher): callable
     {
         return static function (Output $output) use ($dispatcher) {
@@ -63,9 +57,6 @@ final class MapBuilder implements MapBuilderInterface
         };
     }
 
-    /**
-     * @return EventDispatcher
-     */
     private function dispatcherFactory(): EventDispatcher
     {
         $dispatcher = new EventDispatcher();
@@ -80,11 +71,6 @@ final class MapBuilder implements MapBuilderInterface
         return $dispatcher;
     }
 
-    /**
-     * @param MapInterface $map
-     *
-     * @return string
-     */
     public function build(MapInterface $map): string
     {
         $dispatcher = $this->dispatcherFactory();
@@ -93,11 +79,6 @@ final class MapBuilder implements MapBuilderInterface
         return $mapBuilder->build($map->getMap());
     }
 
-    /**
-     * @param string $mapId
-     *
-     * @return MapInterface
-     */
     public function createMap(string $mapId): MapInterface
     {
         $map = new LeafletMap($mapId, $mapId);
@@ -115,45 +96,21 @@ final class MapBuilder implements MapBuilderInterface
         return new Map($map);
     }
 
-    /**
-     * @param string $identifier
-     * @param CoordinateInterface $coordinate
-     *
-     * @return MarkerInterface
-     */
     public function createMarker(string $identifier, CoordinateInterface $coordinate): MarkerInterface
     {
         return new Marker($identifier, $coordinate);
     }
 
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return CoordinateInterface
-     */
     public function createCoordinate(float $latitude, float $longitude): CoordinateInterface
     {
         return new Coordinate($latitude, $longitude);
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @return PopUpInterface
-     */
     public function createPopUp(string $identifier): PopUpInterface
     {
         return new PopUp($identifier);
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @param MapInterface $map
-     *
-     * @return MarkerClusterInterface
-     */
     public function createMarkerCluster(string $identifier, MapInterface $map): MarkerClusterInterface
     {
         $markerCluster = new MarkerCluster($identifier);
