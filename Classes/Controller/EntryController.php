@@ -40,16 +40,6 @@ class EntryController extends ActionController
     public const GERMANY_ISOCODENUMBER = 276;
 
     /**
-     * @var string
-     */
-    const TYPE_JS = 'js';
-
-    /**
-     * @var string
-     */
-    const TYPE_CSS = 'css';
-
-    /**
      * @var EntryRepository
      */
     protected $entryRepository;
