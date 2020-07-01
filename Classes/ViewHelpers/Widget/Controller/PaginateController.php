@@ -16,6 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\Controller;
  */
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Fluid\ViewHelpers\Widget\Controller\PaginateController as CorePaginateController;
@@ -73,6 +74,7 @@ class PaginateController extends CorePaginateController
         } else {
             // modify query
             $itemsPerPage = (int)$this->configuration['itemsPerPage'];
+            /** @var Query $query */
             $query = $this->objects->getQuery();
             $query->setLimit($itemsPerPage);
             if ($this->currentPage > 1) {

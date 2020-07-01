@@ -48,7 +48,7 @@ class CachedClassLoader
 
     public static function registerAutoloader(): bool
     {
-        return spl_autoload_register(static::$className . '::autoload', true, true);
+        return spl_autoload_register([self::class, 'autoload'], true, true);
     }
 
     public static function autoload(string $className): void
@@ -59,11 +59,9 @@ class CachedClassLoader
             $entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][static::$extensionKey]['entities'];
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             $cacheManager = $objectManager->get(CacheManager::class);
-            /* @var $cacheManager CacheManager */
             $classCacheManager = $objectManager->get(ClassCacheManager::class);
-            /* @var $classCacheManager ClassCacheManager */
+            /** @var PhpFrontend $classCache */
             $classCache = $cacheManager->getCache(static::$extensionKey);
-            /* @var $classCache PhpFrontend */
             foreach ($entities as $entity) {
                 $entityClassName = static::$namespace . str_replace('/', '\\', $entity);
                 if ($className === $entityClassName) {

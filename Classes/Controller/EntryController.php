@@ -104,12 +104,12 @@ class EntryController extends ActionController
             $propertyMappingConfiguration->allowAllProperties();
             $propertyMappingConfiguration->setTypeConverterOption(
                 PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                (string)PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
                 true
             );
             $propertyMappingConfiguration->setTypeConverterOption(
                 PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_MODIFICATION_ALLOWED,
+                (string)PersistentObjectConverter::CONFIGURATION_MODIFICATION_ALLOWED,
                 true
             );
             $propertyMappingConfiguration->forProperty('categories')->allowAllProperties();

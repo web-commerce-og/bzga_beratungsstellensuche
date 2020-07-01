@@ -19,9 +19,10 @@ use Bzga\BzgaBeratungsstellensuche\Utility\IconUtility;
 use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * @author Sebastian Schreiber
@@ -80,7 +81,7 @@ class PageLayoutView
     {
         $actionTranslationKey = '';
 
-        $result = '<strong>' . $this->sL('pi1_title', true) . '</strong><br>';
+        $result = '<strong>' . $this->sL('pi1_title') . '</strong><br>';
 
         if ($params['row']['list_type'] == self::KEY . '_pi1') {
             $this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
@@ -214,23 +215,30 @@ class PageLayoutView
         $pageRecord = BackendUtilityCore::getRecord('pages', $detailPid);
 
         if (is_array($pageRecord)) {
-            $content = $this->iconUtility->getIconForRecord('pages', $pageRecord);
-        } else {
-            $text = sprintf(
-                $this->sL('pagemodule.pageNotAvailable', true),
-                $detailPid
-            );
-            $message = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                $text,
-                '',
-                FlashMessage::WARNING
-            );
-            /** @var $message FlashMessage */
-            $content = $message->render();
+            return $this->iconUtility->getIconForRecord('pages', $pageRecord);
         }
 
-        return $content;
+        $this->addFlashMessage($detailPid);
+
+        return '';
+    }
+
+    private function addFlashMessage(int $detailPid): void
+    {
+        $text = sprintf(
+            $this->sL('pagemodule.pageNotAvailable'),
+            $detailPid
+        );
+        /** @var FlashMessage $message */
+        $message = GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $text,
+            '',
+            FlashMessage::WARNING
+        );
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+        $defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+        $defaultFlashMessageQueue->enqueue($message);
     }
 
     private function getTemplateLayoutSettings(int $pageUid): void
@@ -286,7 +294,7 @@ class PageLayoutView
 
             if (! empty($recursiveLevelText)) {
                 $recursiveLevelText = '<br />' .
-                                      $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive', true) . ' ' .
+                                      $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive') . ' ' .
                                       $recursiveLevelText;
             }
 
@@ -326,12 +334,12 @@ class PageLayoutView
         return null;
     }
 
-    private function sL(string $label, bool $hsc = false): string
+    private function sL(string $label): string
     {
         $registeredExtensionKeys = ExtensionManagementUtility::getRegisteredExtensionKeys();
         foreach ($registeredExtensionKeys as $extensionKey) {
             $fullPathToLabel = sprintf(self::LLPATH, $extensionKey) . $label;
-            $translation = $this->getLanguageService()->sL($fullPathToLabel, $hsc);
+            $translation = $this->getLanguageService()->sL($fullPathToLabel);
             if ('' !== $translation) {
                 return $translation;
             }

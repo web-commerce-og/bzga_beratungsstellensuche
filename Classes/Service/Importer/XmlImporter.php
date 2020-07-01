@@ -18,6 +18,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\AbstractEntity;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Countable;
@@ -106,7 +107,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
     {
         $externalId = (integer)$relationData->index;
         $objectToPopulate = $manager->getRepository()->findOneByExternalId($externalId);
-        /** @var AbstractEntity|ExternalIdTrait $relationObject */
+        /** @var AbstractEntity $relationObject */
         $relationObject = $this->serializer->deserialize(
             $relationData->asXml(),
             $relationClassName,

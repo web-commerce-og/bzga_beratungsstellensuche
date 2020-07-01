@@ -51,13 +51,13 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      *
      * @param array|null $attributes
      * @param bool $lowerCamelCase
-     * @param Dispatcher|object|null $signalSlotDispatcher
+     * @param Dispatcher|null $signalSlotDispatcher
      */
     public function __construct(array $attributes = null, $lowerCamelCase = true, Dispatcher $signalSlotDispatcher = null)
     {
         parent::__construct($attributes, $lowerCamelCase);
 
-        if (null === $signalSlotDispatcher) {
+        if (!$signalSlotDispatcher instanceof Dispatcher) {
             $signalSlotDispatcher = GeneralUtility::makeInstance(ObjectManager::class)->get(Dispatcher::class);
         }
 

@@ -20,6 +20,7 @@ use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Factories\HttpClientFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\SettingsService;
 use Geocoder\Geocoder;
+use Geocoder\Provider\Provider;
 
 /**
  * @author Sebastian Schreiber
@@ -48,7 +49,7 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     protected $settingsService;
 
     /**
-     * @var Geocoder
+     * @var Provider
      */
     protected $geocoder;
 
@@ -73,9 +74,6 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
             );
     }
 
-    /**
-     * @return mixed
-     */
     public function getDistanceSqlField(GeoPositionDemandInterface $demandPosition, string $table, string $alias = 'distance'): string
     {
         return sprintf(

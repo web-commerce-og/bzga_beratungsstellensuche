@@ -15,6 +15,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Manager;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
@@ -94,7 +95,10 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
         // Add external uid to stack of updated, or inserted entries, we need this for the clean up
         $this->entries->attach($entity);
-        $this->externalUids[] = $entity->getExternalId();
+
+        if ($entity instanceof ExternalIdInterface) {
+            $this->externalUids[] = $entity->getExternalId();
+        }
 
         $data = [
             'pid' => $entity->getPid()
@@ -127,7 +131,13 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
         // We only update the entry if something has really changed. Speeding up import drastically
         $entryHash = md5(serialize($data));
-        if (0 === $this->getRepository()->countByExternalIdAndHash($entity->getExternalId(), $entryHash)) {
+
+        $hasChanged = true;
+        if ($entity instanceof ExternalIdInterface) {
+            $hasChanged = 0 === $this->getRepository()->countByExternalIdAndHash($entity->getExternalId(), $entryHash);
+        }
+
+        if ($hasChanged) {
             $data['hash'] = $entryHash;
             $this->dataMap[$tableName][$tableUid] = $data;
         }
@@ -156,13 +166,12 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $table = $this->dataMapFactory->getTableNameByClassName($repository->getObjectType());
         $oldEntries = $repository->findOldEntriesByExternalUidsDiffForTable($table, $this->externalUids);
 
-        // Now we delete then entries via the datahandler, the actual deletion is done by a HOOK
         $cmd = [];
         foreach ($oldEntries as $oldEntry) {
             $cmd[$table][$oldEntry['uid']] = ['delete' => ''];
         }
 
-        $this->dataHandler->start(null, $cmd);
+        $this->dataHandler->start([], $cmd);
         $this->dataHandler->process_cmdmap();
     }
 
@@ -179,7 +188,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
     abstract public function getRepository(): AbstractBaseRepository;
 
     /**
-     * @return int|string|null
+     * @return int|string
      */
     private function getUid(AbstractEntity $entity)
     {

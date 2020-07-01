@@ -64,9 +64,6 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
      */
     protected $geolocationService;
 
-    /**
-     * Demand constructor.
-     */
     public function __construct()
     {
         $this->categories = new ObjectStorage();

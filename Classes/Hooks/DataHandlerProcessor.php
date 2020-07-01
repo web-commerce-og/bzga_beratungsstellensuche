@@ -28,9 +28,7 @@ class DataHandlerProcessor
     public function processCmdmap_deleteAction(string $table, int $id, int $recordToDelete, bool &$recordWasDeleted, DataHandler $tceMain): void
     {
         if ($table === EntryRepository::ENTRY_TABLE) {
-            /** @var $objectManager ObjectManager */
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-            /** @var $entryRepository EntryRepository */
             $entryRepository = $objectManager->get(EntryRepository::class);
             $entryRepository->deleteByUid($id);
             $recordWasDeleted = true;
@@ -67,7 +65,6 @@ class DataHandlerProcessor
                 }
             }
 
-            /** @var $flexFormTools $flexFormTools */
             $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
             $fieldArray['pi_flexform'] = $flexFormTools->flexArray2Xml($flexformData, true);
         }

@@ -1,0 +1,57 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#4 \\$jsonEncodeFlags of class Netzmacht\\\\LeafletPHP\\\\Leaflet constructor expects null, int given\\.$#"
+			count: 1
+			path: Classes/Domain/Map/Leaflet/MapBuilder.php
+
+		-
+			message: "#^Property Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Model\\\\Dto\\\\Demand\\:\\:\\$categories \\(iterable\\<Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Model\\\\Category\\>&TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\) does not accept TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\.$#"
+			count: 2
+			path: Classes/Domain/Model/Dto/Demand.php
+
+		-
+			message: "#^Property Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Model\\\\Entry\\:\\:\\$categories \\(iterable\\<Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Model\\\\Category\\>&TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\) does not accept TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\.$#"
+			count: 2
+			path: Classes/Domain/Model/Entry.php
+
+		-
+			message: "#^Method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\:\\:like\\(\\) invoked with 3 parameters, 2 required\\.$#"
+			count: 2
+			path: Classes/Domain/Repository/EntryRepository.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\:\\:statement\\(\\)\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/EntryRepository.php
+
+		-
+			message: "#^Elseif branch is unreachable because previous condition is always true\\.$#"
+			count: 1
+			path: Classes/Persistence/QueryResult.php
+
+		-
+			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+			count: 1
+			path: Classes/Persistence/QueryResult.php
+
+		-
+			message: "#^Call to sprintf contains 2 placeholders, 3 values given\\.$#"
+			count: 1
+			path: Classes/Service/Geolocation/AbstractGeolocationService.php
+
+		-
+			message: "#^Access to private property \\$beratungsarten of parent class SimpleXMLElement\\.$#"
+			count: 1
+			path: Classes/Service/Importer/XmlImporter.php
+
+		-
+			message: "#^Access to private property \\$entrys of parent class SimpleXMLElement\\.$#"
+			count: 1
+			path: Classes/Service/Importer/XmlImporter.php
+
+		-
+			message: "#^Access to private property \\$index of parent class SimpleXMLElement\\.$#"
+			count: 1
+			path: Classes/Service/Importer/XmlImporter.php
+

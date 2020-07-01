@@ -62,7 +62,6 @@ class PropertyMapper implements TypeConverterInterface
      */
     public function convert($source, array $configuration = null)
     {
-        /** @var $typeConverter TypeConverterInterface */
         foreach ($this->typeConverters as $typeConverter) {
             if (true === $typeConverter->supports($source)) {
                 return $typeConverter->convert($source, $configuration);

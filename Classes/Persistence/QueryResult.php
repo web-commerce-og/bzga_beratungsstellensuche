@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Persistence;
 
@@ -32,16 +32,14 @@ class QueryResult extends CoreQueryResult
         if ($this->numberOfResults === null) {
             if (is_array($this->queryResult)) {
                 $this->numberOfResults = count($this->queryResult);
+            } elseif ($this->query->getStatement() instanceof Statement) {
+                $this->initialize();
+                $this->numberOfResults = count($this->queryResult);
             } else {
-                $statement = $this->query->getStatement();
-                if ($statement instanceof Statement) {
-                    $this->initialize();
-                    $this->numberOfResults = count($this->queryResult);
-                } else {
-                    return parent::count();
-                }
+                return parent::count();
             }
         }
+
         return $this->numberOfResults;
     }
 }

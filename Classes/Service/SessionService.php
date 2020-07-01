@@ -27,7 +27,7 @@ class SessionService
     public const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
 
     /**
-     * @var FrontendUserAuthentication
+     * @var FrontendUserAuthentication|null
      */
     private $frontendUser;
 
@@ -39,7 +39,7 @@ class SessionService
     public function __construct(
         string $sessionNamespace = 'beratungsstellendatenbank'
     ) {
-        $this->frontendUser = $GLOBALS['TSFE']->fe_user;
+        $this->frontendUser = $GLOBALS['TSFE'] ? $GLOBALS['TSFE']->fe_user : null;
         $this->sessionNamespace = $sessionNamespace;
     }
 

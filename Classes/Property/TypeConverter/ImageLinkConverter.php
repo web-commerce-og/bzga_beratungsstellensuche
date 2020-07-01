@@ -123,7 +123,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         }
 
         // First of all we delete the old references
-        /** @var $entity ExternalIdInterface|AbstractEntity */
+        /** @var ExternalIdInterface|AbstractEntity $entity */
         $entity = $configuration['entity'];
 
         $fileReferenceData = [

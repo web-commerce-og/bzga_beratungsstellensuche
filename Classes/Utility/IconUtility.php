@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
@@ -28,54 +28,39 @@ class IconUtility
 {
 
     /**
-     * @var IconFactory|null
+     * @var IconFactory
      */
     private $iconFactory;
 
     public function __construct()
     {
-        if (class_exists(IconFactory::class)) {
-            $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-        }
+        $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
     }
 
     public function getIconForRecord(string $table, array $record): string
     {
-        if ($this->iconFactory instanceof IconFactory) {
-            $data = '<span data-toggle="tooltip" data-placement="top" data-title="id=' . $record['uid'] . '">'
-                    . $this->iconFactory->getIconForRecord($table, $record, Icon::SIZE_SMALL)->render()
-                    . '</span> ';
-            $content = BackendUtilityCore::wrapClickMenuOnIcon(
-                $data,
-                $table,
-                $record['uid'],
-                true,
-                '',
-                '+info,edit,history'
-            );
+        $data = '<span data-toggle="tooltip" data-placement="top" data-title="id='.$record['uid'].'">'
+                .$this->iconFactory->getIconForRecord($table, $record, Icon::SIZE_SMALL)->render()
+                .'</span> ';
+        $content = BackendUtilityCore::wrapClickMenuOnIcon(
+            $data,
+            $table,
+            $record['uid'],
+            '',
+            '',
+            '+info,edit,history'
+        );
 
-            $linkTitle = htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));
+        $linkTitle = htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));
 
-            if ($table === 'pages') {
-                $id = $record['uid'];
-                $currentPageId = (int)GeneralUtility::_GET('id');
-                $link = htmlspecialchars($this->getEditLink($record, $currentPageId));
-                $switchLabel = $this->getLanguageService()->sL(PageLayoutView::LLPATH . 'pagemodule.switchToPage');
-                $content .= ' <a href="#" data-toggle="tooltip" data-placement="top" data-title="' . $switchLabel . '" onclick=\'top.jump("' . $link . '", "web_layout", "web", ' . $id . ');return false\'>' . $linkTitle . '</a>';
-            } else {
-                $content .= $linkTitle;
-            }
+        if ($table === 'pages') {
+            $id = $record['uid'];
+            $currentPageId = (int)GeneralUtility::_GET('id');
+            $link = htmlspecialchars($this->getEditLink($record, $currentPageId));
+            $switchLabel = $this->getLanguageService()->sL(PageLayoutView::LLPATH.'pagemodule.switchToPage');
+            $content .= ' <a href="#" data-toggle="tooltip" data-placement="top" data-title="'.$switchLabel.'" onclick=\'top.jump("'.$link.'", "web_layout", "web", '.$id.');return false\'>'.$linkTitle.'</a>';
         } else {
-            $data = CoreIconUtility::getSpriteIconForRecord($table, $record)
-                    . htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));
-            $content = $this->getDocumentTemplate()->wrapClickMenuOnIcon(
-                $data,
-                $table,
-                $record['uid'],
-                true,
-                '',
-                '+info,edit'
-            );
+            $content .= $linkTitle;
         }
 
         return $content;
@@ -90,9 +75,10 @@ class IconUtility
             $returnUrl = BackendUtilityCore::getModuleUrl('web_layout', ['id' => $currentPageUid]);
             $editLink = BackendUtilityCore::getModuleUrl('web_layout', [
                 'id' => $row['uid'],
-                'returnUrl' => $returnUrl
+                'returnUrl' => $returnUrl,
             ]);
         }
+
         return $editLink;
     }
 

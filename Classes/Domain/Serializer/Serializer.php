@@ -39,7 +39,7 @@ class Serializer extends BaseSerializer
      *
      * @param array $normalizers
      * @param array $encoders
-     * @param Dispatcher|object|null $signalSlotDispatcher
+     * @param Dispatcher|null $signalSlotDispatcher
      */
     public function __construct(array $normalizers = [], array $encoders = [], Dispatcher $signalSlotDispatcher = null)
     {
