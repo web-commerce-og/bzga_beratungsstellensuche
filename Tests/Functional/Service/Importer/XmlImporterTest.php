@@ -72,9 +72,8 @@ class XmlImporterTest extends FunctionalTestCase
         $objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
         $this->subject = $objectManager->get(XmlImporter::class);
 
-        $this->importDataSet('ntf://Database/pages.xml');
-        $this->importDataSet('ntf://Database/sys_file_storage.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_file_storage.xml');
     }
 
     /**

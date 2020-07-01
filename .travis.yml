@@ -35,8 +35,6 @@ before_install:
 before_script:
   - phpenv config-rm xdebug.ini
   - composer require "typo3/minimal:${TYPO3_VERSION}"
-  - if [[ "$COVERAGE" == "1" ]]; then composer require "phpunit/phpcov ^5"; fi
-  - mkdir cov
   # Restore composer.json
   - git checkout composer.json
 
@@ -55,4 +53,4 @@ script:
     export typo3DatabaseHost="localhost";
     export typo3DatabaseUsername="root";
     export typo3DatabasePassword="";
-    .Build/vendor/bin/phpunit --coverage-php cov/coverage-functional.cov --colors -c Tests/Build/FunctionalTests.xml Tests/Functional/
+    .Build/vendor/bin/phpunit --colors -c Tests/Build/FunctionalTests.xml Tests/Functional/
