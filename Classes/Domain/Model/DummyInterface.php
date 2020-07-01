@@ -22,8 +22,5 @@ interface DummyInterface
 {
     public function getIsDummyRecord(): bool;
 
-    /**
-     * @param bool $isDummyRecord
-     */
     public function setIsDummyRecord(bool $isDummyRecord);
 }

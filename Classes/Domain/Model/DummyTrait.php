@@ -23,7 +23,7 @@ trait DummyTrait
     /**
      * @var bool
      */
-    protected $isDummyRecord = 0;
+    protected $isDummyRecord = false;
 
     /**
      * @return bool

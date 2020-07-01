@@ -97,7 +97,7 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function deleteByUid(): void
     {
-        $this->importDataSet('ntf://Database/sys_file_storage.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_file_storage.xml');
 
         $this->setUpBackendUserFromFixture(1);
         $this->entryRepository->deleteByUid(self::ENTRY_DEFAULT_FIXTURE_UID);
