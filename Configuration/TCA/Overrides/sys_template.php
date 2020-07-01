@@ -27,7 +27,16 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkhandler'))
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('solr')) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         $extKey,
-        'Configuration/TypoScript/linkhandler',
+        'Configuration/TypoScript/solr',
         'Beratungsstellensuche - Solr'
     );
 }
+
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('seo')) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $extKey,
+        'Configuration/TypoScript/seo',
+        'Beratungsstellensuche - Sitemap'
+    );
+}
+unset($extKey);

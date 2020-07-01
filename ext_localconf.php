@@ -90,12 +90,6 @@ call_user_func(function ($packageKey) {
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter::class);
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter::class);
 
-    // Google Sitemap based on dd_googlesitemap
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('dd_googlesitemap')) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['dd_googlesitemap']['sitemap']['bzga_beratungsstellensuche']
-            = 'Bzga\\BzgaBeratungsstellensuche\\Hooks\\SitemapGenerator->main';
-    }
-
     // Linkvalidator
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkvalidator')) {
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkvalidator.txt">');

@@ -16,3 +16,4 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bzgaberatung
     'bzgaberatungsstellensuche_pi1',
     'FILE:EXT:' . $extKey . '/Configuration/FlexForms/flexform_beratungsstellensuche.xml'
 );
+unset($extKey);

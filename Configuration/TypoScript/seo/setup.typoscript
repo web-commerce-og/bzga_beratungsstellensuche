@@ -1,0 +1,29 @@
+@import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
+
+plugin.tx_seo {
+    config {
+        xmlSitemap {
+            sitemaps {
+                beratungsstellen {
+                    provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+                    config {
+                        table = tx_bzgaberatungsstellensuche_domain_model_entry
+                        sortField = title
+                        pid = {$plugin.tx_bzgaberatungsstellensuche.persistence.storagePid}
+                        url {
+                            pageId = {$plugin.tx_bzgaberatungsstellensuche.settings.singlePid}
+                            fieldToParameterMap {
+                                uid = tx_bzgaberatungsstellensuche_pi1[entry]
+                            }
+                            additionalGetParameters {
+                              tx_bzgaberatungsstellensuche_pi1.controller = Entry
+                              tx_bzgaberatungsstellensuche_pi1.action = show
+                            }
+                            useCacheHash = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

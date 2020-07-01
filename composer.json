@@ -44,15 +44,13 @@
         "friendsofphp/php-cs-fixer": "^2.0",
         "typo3/testing-framework": "^4.0",
         "typo3/cms-tstemplate": "^9.0",
+        "typo3/cms-seo": "^9.0",
         "typo3/cms-fluid-styled-content": "^9.0",
         "typo3/cms-extensionmanager": "^9.0",
         "typo3/cms-belog": "^9.0",
         "typo3/cms-rte-ckeditor": "^9.0",
         "helhum/typo3-console": "5.*",
         "ssch/typo3-rector": "^0.2.0"
-    },
-    "suggest": {
-        "dmitryd/typo3-dd-googlesitemap": "We need it to generate a sitemap for the Beratungsstellen"
     },
     "replace": {
         "typo3-ter/bzga-beratungsstellensuche": "self.version"
