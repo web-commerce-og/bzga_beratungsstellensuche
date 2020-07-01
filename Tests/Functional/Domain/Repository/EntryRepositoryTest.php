@@ -18,6 +18,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
+use Bzga\BzgaBeratungsstellensuche\Tests\Functional\DatabaseTrait;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
@@ -26,6 +28,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class EntryRepositoryTest extends FunctionalTestCase
 {
+    use DatabaseTrait;
 
     /**
      * @var ObjectManagerInterface
@@ -104,7 +107,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         $this->assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
         $this->assertEquals(
             0,
-            $this->getDatabaseConnection()->selectCount(
+            $this->selectCount(
                 '*',
                 'tx_bzgaberatungsstellensuche_entry_category_mm',
                 'uid_local = ' . self::ENTRY_DEFAULT_FIXTURE_UID
@@ -112,7 +115,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         );
         $this->assertEquals(
             0,
-            $this->getDatabaseConnection()->selectCount(
+            $this->selectCount(
                 '*',
                 'sys_file_reference',
                 'deleted = 0 AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID
@@ -120,7 +123,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         );
         $this->assertEquals(
             0,
-            $this->getDatabaseConnection()->selectCount(
+            $this->selectCount(
                 '*',
                 'sys_file_metadata',
                 'file = 10014'
@@ -128,7 +131,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         );
         $this->assertEquals(
             0,
-            $this->getDatabaseConnection()->selectCount(
+            $this->selectCount(
                 '*',
                 'sys_file',
                 'uid = 10014'
@@ -167,4 +170,5 @@ class EntryRepositoryTest extends FunctionalTestCase
     {
         unset($this->entryRepository, $this->objectManager);
     }
+
 }

@@ -1,0 +1,10 @@
+parameters:
+  level: 5
+  paths:
+    - "Classes/"
+
+  inferPrivatePropertyTypeFromConstructor: true
+  checkMissingIterableValueType: false
+  checkGenericClassInNonGenericObjectType: false
+
+  ignoreErrors:

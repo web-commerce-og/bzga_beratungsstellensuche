@@ -74,7 +74,7 @@ abstract class AbstractBaseRepository extends Repository
             ->fetchAll();
     }
 
-    public function countByExternalIdAndHash(int $externalId, string $hash): int
+    public function countByExternalIdAndHash($externalId, string $hash): int
     {
         $query = $this->createQuery();
         $constraints = [];

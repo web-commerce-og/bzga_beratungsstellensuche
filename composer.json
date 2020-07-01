@@ -50,7 +50,8 @@
         "typo3/cms-belog": "^9.0",
         "typo3/cms-rte-ckeditor": "^9.0",
         "helhum/typo3-console": "5.*",
-        "ssch/typo3-rector": "^0.2.0"
+        "ssch/typo3-rector": "^0.2.0",
+        "saschaegerer/phpstan-typo3": "^0.13.1"
     },
     "replace": {
         "typo3-ter/bzga-beratungsstellensuche": "self.version"

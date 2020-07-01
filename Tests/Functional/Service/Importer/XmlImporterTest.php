@@ -17,6 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Service\Importer;
 
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
+use Bzga\BzgaBeratungsstellensuche\Tests\Functional\DatabaseTrait;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -25,6 +26,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class XmlImporterTest extends FunctionalTestCase
 {
+    use DatabaseTrait;
 
     /**
      * @var string
@@ -94,8 +96,8 @@ class XmlImporterTest extends FunctionalTestCase
         }
         $this->subject->persist();
 
-        $this->assertEquals(3, $this->getDatabaseConnection()->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_category'));
-        $this->assertEquals(1, $this->getDatabaseConnection()->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
-        $this->assertEquals(2, $this->getDatabaseConnection()->selectCount('*', 'tx_bzgaberatungsstellensuche_entry_category_mm'));
+        $this->assertEquals(3, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_category'));
+        $this->assertEquals(1, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
+        $this->assertEquals(2, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_entry_category_mm'));
     }
 }
