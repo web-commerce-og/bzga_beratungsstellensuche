@@ -86,7 +86,7 @@ class MapController extends AbstractWidgetController
         $this->demand = $this->widgetConfiguration['demand'];
         ArrayUtility::mergeRecursiveWithOverrule(
             $this->styleSheetOptions,
-            $this->widgetConfiguration['styleSheetOptions'],
+            (array)$this->widgetConfiguration['styleSheetOptions'],
             false
         );
     }

@@ -132,7 +132,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         return $this->countryZone;
     }
 
-    public function setCountryZone(CountryZone $countryZone): void
+    public function setCountryZone(?CountryZone $countryZone): void
     {
         $this->countryZone = $countryZone;
     }

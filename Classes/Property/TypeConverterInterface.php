@@ -34,8 +34,9 @@ interface TypeConverterInterface
 
     /**
      * @param mixed $source
+     * @return bool|TypeConverterInterface
      */
-    public function supports($source, string $type = self::CONVERT_BEFORE): bool;
+    public function supports($source, string $type = self::CONVERT_BEFORE);
 
     /**
      * @param mixed $source

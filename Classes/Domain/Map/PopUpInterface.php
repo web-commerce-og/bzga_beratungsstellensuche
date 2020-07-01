@@ -16,11 +16,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet\PopUp;
+use Netzmacht\LeafletPHP\Definition\UI\Popup as CorePopUp;
 
 interface PopUpInterface
 {
-    public function getPopUp(): Popup;
+    public function getPopUp(): CorePopUp;
 
     public function setOptions(array $options): void;
 }

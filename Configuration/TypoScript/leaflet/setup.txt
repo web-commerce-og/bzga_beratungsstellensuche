@@ -1,4 +1,4 @@
-[globalVar = GP:tx_bzgaberatungsstellensuche_pi1|entry > 0]
+[request.getQueryParams()['tx_bzgaberatungsstellensuche_pi1']['entry'] > 0] || [request.getParsedBody()['tx_bzgaberatungsstellensuche_pi1']['entry'] > 0]
     page.includeCSS {
         leaflet = https://unpkg.com/leaflet@1.5.1/dist/leaflet.css
         leaflet.external = 1
@@ -23,4 +23,4 @@
         markercluster = https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js
         markercluster.external = 1
     }
-[global]
+[end]

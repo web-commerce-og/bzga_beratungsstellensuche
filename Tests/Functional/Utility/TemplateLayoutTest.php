@@ -16,11 +16,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Utility;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
-use Nimut\TestingFramework\Exception\Exception;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class TemplateLayoutTest extends FunctionalTestCase
 {
@@ -35,22 +34,19 @@ class TemplateLayoutTest extends FunctionalTestCase
      */
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche'];
 
-    /**
-     * @throws Exception
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $backendUser = $this->setUpBackendUserFromFixture(1);
         $backendUser->workspace = 0;
-        Bootstrap::getInstance()->initializeLanguageObject();
+        Bootstrap::initializeLanguageObject();
         $this->subject = GeneralUtility::makeInstance(TemplateLayout::class);
     }
 
     /**
      * @test
      */
-    public function getAvailableTemplateLayouts()
+    public function getAvailableTemplateLayouts(): void
     {
         ExtensionManagementUtility::addPageTSConfig(
             '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/TSconfig/Beratungsstellensuche.txt">'

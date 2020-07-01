@@ -41,9 +41,9 @@ class PropertyMapper implements TypeConverterInterface
     }
 
     /**
-     * @param mixed $source
+     * @inheritDoc
      */
-    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE): bool
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         foreach ($this->typeConverters as $typeConverter) {
             if (true === $typeConverter->supports($source, $type) && $this->converterSupportsType(
@@ -51,7 +51,7 @@ class PropertyMapper implements TypeConverterInterface
                     $type
             )
             ) {
-                return true;
+                return $typeConverter;
             }
         }
 
@@ -59,9 +59,7 @@ class PropertyMapper implements TypeConverterInterface
     }
 
     /**
-     * @param mixed $source
-     *
-     * @return mixed
+     * @inheritDoc
      */
     public function convert($source, array $configuration = null)
     {

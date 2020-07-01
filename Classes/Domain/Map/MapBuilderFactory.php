@@ -26,17 +26,12 @@ final class MapBuilderFactory
      */
     private $objectManager;
 
-    /**
-     * MapBuilderFactory constructor.
-     *
-     * @param ObjectManagerInterface $objectManager
-     */
     public function __construct(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
-    public function createMapBuilder(): object
+    public function createMapBuilder(): MapBuilderInterface
     {
         return $this->objectManager->get(MapBuilder::class);
     }

@@ -27,9 +27,9 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class ObjectStorageConverter implements TypeConverterBeforeInterface
 {
     /**
-     * @param mixed $source
+     * @inheritDoc
      */
-    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE): bool
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         if (!$source instanceof ObjectStorage) {
             return false;

@@ -85,7 +85,7 @@ abstract class AbstractBaseRepository extends Repository
         return $query->matching($query->logicalAnd($constraints))->execute()->count();
     }
 
-    public function findOneByExternalId(int $externalId): object
+    public function findOneByExternalId(int $externalId): ?object
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);

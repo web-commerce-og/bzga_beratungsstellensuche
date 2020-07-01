@@ -58,6 +58,9 @@ class PaginateController extends CorePaginateController
         $this->queryParser = $queryParser;
     }
 
+    /**
+     * @param int $currentPage
+     */
     public function indexAction($currentPage = 1): void
     {
         // set current page

@@ -17,6 +17,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\PopUpInterface;
+use Netzmacht\LeafletPHP\Definition\UI\Popup as CorePopUp;
 
 final class PopUp implements PopUpInterface
 {
@@ -28,11 +29,11 @@ final class PopUp implements PopUpInterface
 
     public function __construct(string $identifier)
     {
-        $this->popUp = new Popup($identifier);
+        $this->popUp = new CorePopUp($identifier);
         $this->popUp->setAutoPan(true);
     }
 
-    public function getPopUp(): Popup
+    public function getPopUp(): CorePopUp
     {
         return $this->popUp;
     }

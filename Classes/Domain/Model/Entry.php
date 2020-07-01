@@ -2,6 +2,7 @@
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +16,7 @@ use SJBR\StaticInfoTables\Domain\Model\CountryZone;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Backend\Backend\Avatar\Image;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -342,12 +344,18 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
         $this->website = $website;
     }
 
-    public function getImage(): ?FileReference
+    /**
+     * @return FileReference|ImageLink
+     */
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(FileReference $image): void
+    /**
+     * @param FileReference|ImageLink $image
+     */
+    public function setImage($image): void
     {
         $this->image = $image;
     }

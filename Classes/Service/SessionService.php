@@ -43,7 +43,10 @@ class SessionService
         $this->sessionNamespace = $sessionNamespace;
     }
 
-    public function restoreFromSession(): ?array
+    /**
+     * @return array|mixed|null
+     */
+    public function restoreFromSession()
     {
         if ($this->hasValidFrontendUser()) {
             $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);

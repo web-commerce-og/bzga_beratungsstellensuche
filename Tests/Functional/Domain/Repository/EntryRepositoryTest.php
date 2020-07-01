@@ -18,12 +18,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
-use Nimut\TestingFramework\Exception\Exception;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class EntryRepositoryTest extends FunctionalTestCase
 {
@@ -50,12 +49,9 @@ class EntryRepositoryTest extends FunctionalTestCase
         'typo3conf/ext/bzga_beratungsstellensuche/Tests/Functional/Fixtures/Files/fileadmin/user_upload' => 'fileadmin/user_upload',
     ];
 
-    const ENTRY_DEFAULT_FIXTURE_UID = 1;
+    private const ENTRY_DEFAULT_FIXTURE_UID = 1;
 
-    /**
-     * @throws Exception
-     */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         GeneralUtility::writeFile(__DIR__ . '/../../Fixtures/Files/fileadmin/user_upload/claim.png', '');
@@ -69,7 +65,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findDemanded()
+    public function findDemanded(): void
     {
         /** @var Demand $demand */
         $demand = $this->objectManager->get(Demand::class);
@@ -81,7 +77,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function countByExternalIdAndHash()
+    public function countByExternalIdAndHash(): void
     {
         $this->assertEquals(1, $this->entryRepository->countByExternalIdAndHash(1, '32dwwes8'));
     }
@@ -89,7 +85,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findOneByExternalId()
+    public function findOneByExternalId(): void
     {
         /** @var Entry $entry */
         $entry = $this->entryRepository->findOneByExternalId(1);
@@ -98,9 +94,8 @@ class EntryRepositoryTest extends FunctionalTestCase
 
     /**
      * @test
-     * @throws Exception
      */
-    public function deleteByUid()
+    public function deleteByUid(): void
     {
         $this->importDataSet('ntf://Database/sys_file_storage.xml');
 
@@ -144,7 +139,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findOldEntriesByExternalUidsDiffForTable()
+    public function findOldEntriesByExternalUidsDiffForTable(): void
     {
         $oldEntries      = $this->entryRepository->findOldEntriesByExternalUidsDiffForTable(
             'tx_bzgaberatungsstellensuche_domain_model_entry',
@@ -158,12 +153,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         $this->assertEquals($expectedEntries, $oldEntries);
     }
 
-    /**
-     * @param QueryResultInterface $items
-     *
-     * @return string
-     */
-    protected function getIdListOfItems(QueryResultInterface $items)
+    protected function getIdListOfItems(QueryResultInterface $items): string
     {
         $idList = [];
         foreach ($items as $item) {
@@ -173,9 +163,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         return implode(',', $idList);
     }
 
-    /**
-     */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->entryRepository, $this->objectManager);
     }

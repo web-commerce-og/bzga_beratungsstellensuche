@@ -25,9 +25,9 @@ final class StringConverter implements TypeConverterBeforeInterface
     private $allowedTags = '<p><ul><li><em><i><b><br>';
 
     /**
-     * @param mixed $source
+     * @inheritDoc
      */
-    public function supports($source, string $type = self::CONVERT_BEFORE): bool
+    public function supports($source, string $type = self::CONVERT_BEFORE)
     {
         return is_string($source) && $source !== strip_tags($source, $this->allowedTags);
     }

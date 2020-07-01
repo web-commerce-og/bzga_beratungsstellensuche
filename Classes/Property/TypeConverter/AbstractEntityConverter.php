@@ -26,9 +26,9 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class AbstractEntityConverter implements TypeConverterBeforeInterface
 {
     /**
-     * @param mixed $source
+     * @inheritDoc
      */
-    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE): bool
+    public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         if (!$source instanceof AbstractEntity) {
             return false;

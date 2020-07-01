@@ -17,12 +17,11 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Service\Importer;
 
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
-use Nimut\TestingFramework\Exception\Exception;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class XmlImporterTest extends FunctionalTestCase
 {
@@ -30,7 +29,7 @@ class XmlImporterTest extends FunctionalTestCase
     /**
      * @var string
      */
-    const SYS_FOLDER_FOR_ENTRIES = 10001;
+    private const SYS_FOLDER_FOR_ENTRIES = 10001;
 
     /**
      * @var XmlImporter
@@ -64,15 +63,12 @@ class XmlImporterTest extends FunctionalTestCase
         ]
     ];
 
-    /**
-     * @throws Exception
-     */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $backendUser = $this->setUpBackendUserFromFixture(1);
         $backendUser->workspace = 0;
-        Bootstrap::getInstance()->initializeLanguageObject();
+        Bootstrap::initializeLanguageObject();
         $objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
         $this->subject = $objectManager->get(XmlImporter::class);
 
@@ -84,7 +80,7 @@ class XmlImporterTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function importFromFile()
+    public function importFromFile(): void
     {
         try {
             $this->subject->importFromFile(
