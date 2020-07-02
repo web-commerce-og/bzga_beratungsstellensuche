@@ -83,7 +83,6 @@ class XmlImporterTest extends FunctionalTestCase
      */
     public function importFromFile(): void
     {
-        $this->markTestIncomplete('Test is failing with message PHP Fatal error:  Uncaught Exception: Serialization of \'SimpleXMLIterator\'');
         $this->subject->importFromFile(
             'EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/Import/beratungsstellen.xml',
             self::SYS_FOLDER_FOR_ENTRIES
@@ -97,5 +96,10 @@ class XmlImporterTest extends FunctionalTestCase
         $this->assertEquals(3, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_category'));
         $this->assertEquals(1, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
         $this->assertEquals(2, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_entry_category_mm'));
+    }
+
+    public function tearDown(): void
+    {
+        unset($this->subject);
     }
 }
