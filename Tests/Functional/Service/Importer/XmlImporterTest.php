@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Service\Importer;
 
@@ -52,7 +52,7 @@ class XmlImporterTest extends FunctionalTestCase
      * @var array
      */
     protected $additionalFoldersToCreate = [
-        'fileadmin/user_upload/tx_bzgaberatungsstellensuche'
+        'fileadmin/user_upload/tx_bzgaberatungsstellensuche',
     ];
 
     /**
@@ -62,7 +62,7 @@ class XmlImporterTest extends FunctionalTestCase
     protected $configurationToUseInTestInstance = [
         'SYS' => [
             'setDBinit' => 'SET SESSION sql_mode = \'\';',
-        ]
+        ],
     ];
 
     public function setUp(): void
@@ -71,11 +71,11 @@ class XmlImporterTest extends FunctionalTestCase
         $backendUser = $this->setUpBackendUserFromFixture(1);
         $backendUser->workspace = 0;
         Bootstrap::initializeLanguageObject();
-        $objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->subject = $objectManager->get(XmlImporter::class);
 
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_file_storage.xml');
+        $this->importDataSet(__DIR__.'/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__.'/../../Fixtures/sys_file_storage.xml');
     }
 
     /**
@@ -83,14 +83,11 @@ class XmlImporterTest extends FunctionalTestCase
      */
     public function importFromFile(): void
     {
-        try {
-            $this->subject->importFromFile(
-                'EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/Import/beratungsstellen.xml',
-                self::SYS_FOLDER_FOR_ENTRIES
-            );
-        } catch (ContentCouldNotBeFetchedException $e) {
-        } catch (FileDoesNotExistException $e) {
-        }
+        $this->subject->importFromFile(
+            'EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/Import/beratungsstellen.xml',
+            self::SYS_FOLDER_FOR_ENTRIES
+        );
+
         foreach ($this->subject as $value) {
             $this->subject->importEntry($value);
         }
