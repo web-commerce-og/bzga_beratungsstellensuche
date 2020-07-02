@@ -23,12 +23,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class ext_update
 {
-    /**
-     * Main function, returning the HTML content
-     *
-     * @return string HTML
-     */
-    public function main()
+    public function main(): string
     {
         $content = '';
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
@@ -47,9 +42,7 @@ class ext_update
         return $content;
     }
 
-    /**
-     */
-    private function createImageUploadFolder()
+    private function createImageUploadFolder(): void
     {
         $storageRepository = ResourceFactory::getInstance()->getDefaultStorage();
         $storageFolder = $storageRepository->getDefaultFolder()->getPublicUrl();
@@ -59,10 +52,7 @@ class ext_update
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function access()
+    public function access(): bool
     {
         return true;
     }
