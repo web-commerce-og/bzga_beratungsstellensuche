@@ -11,9 +11,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'dividers2tabs' => true,
-        'versioningWS' => 2,
-        'versioning_followPages' => true,
+        'versioningWS' => true,
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -31,7 +29,7 @@ return [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, categories, image, website, teaser, zip, city, street, state, longitude, latitude, description, contact_person, contact_email, telephone, telefax, email, hotline, notice, keywords, institution, association',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, slug, subtitle, image, teaser, notice, description, keywords, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.relations, categories, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.address, street, zip, city, state, longitude, latitude, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.contact, contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:tabs.access,starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, slug, subtitle, image, teaser, notice, description, keywords, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.relations, categories, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.address, street, zip, city, state, longitude, latitude, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.contact, contact_person, contact_email, telephone, telefax, email, website, hotline, institution, association, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:tabs.access,starttime, endtime'],
     ],
     'palettes' => [
         '1' => ['showitem' => ''],
@@ -53,22 +51,27 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => 1,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
-                'foreign_table_where' => 'AND tx_bzgaberatungsstellensuche_domain_model_entry.pid=###CURRENT_PID### AND tx_bzgaberatungsstellensuche_domain_model_entry.sys_language_uid IN (-1,0)',
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
+                'size' => 1,
+                'maxitems' => 1,
+                'minitems' => 0,
+                'default' => 0,
             ],
+        ],
+        'l10n_source' => [
+            'config' => [
+                'type' => 'passthrough'
+            ]
         ],
         'l10n_diffsource' => [
             'config' => [
                 'type' => 'passthrough',
-            ],
+                'default' => ''
+            ]
         ],
         't3ver_label' => [
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
@@ -79,43 +82,47 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
-            ],
+                'renderType' => 'checkboxToggle',
+                'default' => 0,
+                'items' => [
+                    [
+                        0 => '',
+                        1 => '',
+                    ]
+                ],
+            ]
         ],
         'starttime' => [
-            'exclude' => 1,
-            'l10n_mode' => 'mergeIfNotBlank',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'exclude' => true,
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel',
             'config' => [
                 'type' => 'input',
-                'size' => 13,
-                'max' => 20,
-                'eval' => 'datetime',
-                'checkbox' => 0,
+                'renderType' => 'inputDateTime',
+                'size' => 16,
+                'eval' => 'datetime,int',
                 'default' => 0,
-                'range' => [
-                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true,
                 ],
-            ],
+            ]
         ],
         'endtime' => [
-            'exclude' => 1,
-            'l10n_mode' => 'mergeIfNotBlank',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'exclude' => true,
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
             'config' => [
                 'type' => 'input',
-                'size' => 13,
-                'max' => 20,
-                'eval' => 'datetime',
-                'checkbox' => 0,
+                'renderType' => 'inputDateTime',
+                'size' => 16,
+                'eval' => 'datetime,int',
                 'default' => 0,
-                'range' => [
-                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true,
                 ],
-            ],
+            ]
         ],
         'external_id' => [
             'config' => [
@@ -160,25 +167,12 @@ return [
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.contact_email',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputLink',
                 'size' => 30,
-                'eval' => 'trim',
-                'softref' => 'email',
-                'wizards' => [
-                    '_PADDING' => 2,
-                    'link' => [
-                        'type' => 'popup',
-                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
-                        'icon' => 'link_popup.gif',
-                        'module' => [
-                            'name' => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
-                    ]
-                ],
-            ],
+                'max' => 255,
+                'eval' => 'trim,required',
+                'softref' => 'email[subst]',
+            ]
         ],
         'telephone' => [
             'exclude' => 0,
@@ -203,25 +197,12 @@ return [
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.email',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputLink',
                 'size' => 30,
-                'eval' => 'trim',
-                'softref' => 'email',
-                'wizards' => [
-                    '_PADDING' => 2,
-                    'link' => [
-                        'type' => 'popup',
-                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
-                        'icon' => 'link_popup.gif',
-                        'module' => [
-                            'name' => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
-                    ]
-                ],
-            ],
+                'max' => 255,
+                'eval' => 'trim,required',
+                'softref' => 'email[subst]',
+            ]
         ],
         'hotline' => [
             'exclude' => 0,
@@ -256,25 +237,12 @@ return [
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.link',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputLink',
                 'size' => 30,
-                'eval' => 'trim',
-                'softref' => 'typolink,url',
-                'wizards' => [
-                    '_PADDING' => 2,
-                    'link' => [
-                        'type' => 'popup',
-                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
-                        'icon' => 'link_popup.gif',
-                        'module' => [
-                            'name' => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
-                    ]
-                ],
-            ],
+                'max' => 255,
+                'eval' => 'trim,required',
+                'softref' => 'typolink_tag,email[subst],url',
+            ]
         ],
         'teaser' => [
             'exclude' => 0,
