@@ -148,6 +148,7 @@ return [
             'label' => 'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tx_bzgaberatungsstellensuche_domain_model_entry.is_dummy_record',
             'config' => [
                 'type' => 'check',
+                'default' => 0
             ],
         ],
     ],
