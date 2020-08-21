@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class DataHandlerProcessor
 {
-    public function processCmdmap_deleteAction(string $table, int $id, int $recordToDelete, bool &$recordWasDeleted, DataHandler $tceMain): void
+    public function processCmdmap_deleteAction(string $table, int $id, array $recordToDelete, bool &$recordWasDeleted, DataHandler $tceMain): void
     {
         if ($table === EntryRepository::ENTRY_TABLE) {
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
